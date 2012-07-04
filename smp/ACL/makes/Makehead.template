@@ -1,0 +1,49 @@
+# This the SunOS specific portion of the make file.  
+#
+# Modify these variables as necessary for your specific
+# environment.
+#
+#
+
+# C Compiler information
+# CC            = gcc
+# CFLAGS        = -g -Wall -DSUNOS
+
+# C++ Compiler information
+CXX           = g++
+#
+#  -U__GNUC__ is necessary because there is a bug in the streambuf.h include
+#  file that comes with GCC 2.7.2.  It defines NULL as (void*)0 when it
+#  should be (0).  If you are using a newer version of GCC you probably
+#  won't need this flag.
+#
+#CXXFLAGS      = -g -DSUNOS -DGNUG272 -DSM_FREE_USED -DSM_RSA_USED -DSNACC_DEEP_COPY -U__GNUC__ -fhandle-exceptions -fno-implicit-templates
+
+CXXFLAGS      = -DSUNOS -DGNUG272 -DSM_FREE_USED -DSNACC_DEEP_COPY -U__GNUC__ -fhandle-exceptions -fno-implicit-templates
+
+# DO NOT MODIFY these varialbles unless you have to.
+#
+
+# Directory where SNACC header files reside was installed in
+#
+SNACCDIR      = ../../include/snacc/c++
+
+# Directory where Crypto++ headers are
+#
+CRYPTO++      = ../../include/cyrpto++
+
+#
+# END OF NOT MODIFY
+
+# Directory where SNACC compiler lives.  This is a only used if if the .asn
+# files in the ./libsrc/asn1 directory need to be compiled.
+#
+SNACC         = /mr2/local/bin/snacc
+SNACCFLAGS    = -D -C -u../../include/snacc/asn1/asn-useful.asn1
+
+# Directory where CI Library was installed
+#
+# CI_PATH       = /u2/crypt_int/litronic
+
+# Indicate whether this system uses 'ranlib'.  
+RANLIB        = ranlib

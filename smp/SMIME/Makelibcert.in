@@ -1,0 +1,45 @@
+
+
+LIBRARY=libcert.a
+
+TARGETS: libcert
+#TARGETS: libcert $(LIBRARY)
+
+clean:
+	(cd ./asn1; make clean)
+	(cd ./src; make clean)
+
+bare: clean
+	rm -f ../lib/$(LIBRARY)
+
+# Build the ASN.1 Modules first
+# Move the ASN.1 Module headers into ../inc
+# Build the support source
+#
+buildobjs:
+	(cd ./asn1; make)
+	(cd ./src; make)
+
+
+# Create the library
+#
+libcert: buildobjs dynamiclink
+#libcert: buildobjs $(LIBRARY) $(RANLIB)
+
+#must explicitely specify libcert.a because shared object has the same name
+LIBPATH = -L../lib -L../../SMPDist/util/VDASnacc/cpplib/lib
+LIBS    = $(LIBPATH) \
+	-lasn1c++ -lsocket
+#	../lib/libcert.a -lasn1c++ -lsocket
+
+dynamiclink:
+	$(CXX) -G ./src/*.o ./asn1/*.o $(LIBS) -o ../lib/libcert.so
+
+$(LIBRARY): 
+	rm -f $(LIBRARY)
+	ar ruv ../lib/$(LIBRARY) ./src/*.o ./asn1/*.o
+
+ranlib:
+	ranlib ../lib/$(LIBSM)
+
+

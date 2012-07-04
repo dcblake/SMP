@@ -1,0 +1,12 @@
+.SUFFIXES : .asn .cpp .cpp.o 
+
+.c.o:
+	-$(CC) -c $(CFLAGS) $(CMNFLGS) $(INCLUDE) $<
+
+.cpp.o:
+	-$(CXX) -c $(CXXFLAGS) $(CMNFLGS) $(INCLUDE) $< 
+
+.asn.cpp: 
+	${(SNACC) $(SNACCFLAGS) $<
+	mv $*.h ../../include
+	mv $*.C $*.cpp

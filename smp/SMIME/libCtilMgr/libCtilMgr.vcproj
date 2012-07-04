@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="libCtilMgr"
+	ProjectGUID="{3D56A8CF-1600-48B0-852D-E4E9D6C2AA21}">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory=".\..\..\..\SMPDist\lib"
+			IntermediateDirectory=".\Release"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="./inc;../../../SNACC;&quot;../../../SNACC/c++-lib/inc&quot;;./AES"
+				PreprocessorDefinitions="LIBCTILMGRDLL_EXPORTS;WIN32;NDEBUG;_WINDOWS;_USRDLL;VDASNACCDLL_API_EXPORTS"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				PrecompiledHeaderFile=".\Release/libCtilMgr.pch"
+				AssemblerListingLocation=".\Release/"
+				ObjectFile=".\Release/"
+				ProgramDataBaseFileName=".\Release/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying $(TargetPath) to system32 directory..."
+				CommandLine="copy &quot;$(TargetPath)&quot; %WINDIR%\system32
+"
+				Outputs="$(WINDIR)\system32\$(TargetName).dll"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="odbc32.lib odbccp32.lib"
+				OutputFile=".\..\..\..\SMPDist\lib/libCtilMgr.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				ImportLibrary=".\..\..\..\SMPDist\lib/libCtilMgr.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\..\..\SMPDist\lib/libCtilMgr.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory=".\..\..\..\SMPDist\lib"
+			IntermediateDirectory=".\Debug"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="./inc;../../../SNACC;&quot;../../../SNACC/c++-lib/inc&quot;;./AES"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;LIBCTILMGRDLL_EXPORTS;VDASNACCDLL_API_EXPORTS"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				PrecompiledHeaderFile=".\Debug/libCtilMgr.pch"
+				AssemblerListingLocation=".\Debug/"
+				ObjectFile=".\Debug/"
+				ProgramDataBaseFileName=".\Debug/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="1"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying $(TargetPath) to system32 directory..."
+				CommandLine="copy &quot;$(TargetPath)&quot; %WINDIR%\system32
+"
+				Outputs="$(WINDIR)\system32\$(TargetName).dll;"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="odbc32.lib odbccp32.lib"
+				OutputFile="..\..\..\SMPDist\lib/libCtilMgrd.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				GenerateDebugInformation="TRUE"
+				ImportLibrary=".\..\..\..\SMPDist\lib/libCtilMgrd.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\..\..\SMPDist\lib/libCtilMgr.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
+			<File
+				RelativePath="src\fortezza.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="LIBCTILMGRDLL_EXPORTS;WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;VDASNACCDLL_API_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;LIBCTILMGRDLL_EXPORTS;VDASNACCDLL_API_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="libCtilMgr.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="LIBCTILMGRDLL_EXPORTS;WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;VDASNACCDLL_API_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;LIBCTILMGRDLL_EXPORTS;VDASNACCDLL_API_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\src\sha256ref.c">
+			</File>
+			<File
+				RelativePath="src\sm_Alg.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="LIBCTILMGRDLL_EXPORTS;WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;VDASNACCDLL_API_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;LIBCTILMGRDLL_EXPORTS;VDASNACCDLL_API_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="src\sm_BaseTokenInterface.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="LIBCTILMGRDLL_EXPORTS;WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;VDASNACCDLL_API_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;LIBCTILMGRDLL_EXPORTS;VDASNACCDLL_API_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="src\sm_buffer.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="LIBCTILMGRDLL_EXPORTS;WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;VDASNACCDLL_API_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;LIBCTILMGRDLL_EXPORTS;VDASNACCDLL_API_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="src\sm_common.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="LIBCTILMGRDLL_EXPORTS;WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;VDASNACCDLL_API_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;LIBCTILMGRDLL_EXPORTS;VDASNACCDLL_API_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="src\sm_CtilInst.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="LIBCTILMGRDLL_EXPORTS;WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;VDASNACCDLL_API_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;LIBCTILMGRDLL_EXPORTS;VDASNACCDLL_API_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="src\sm_CtilMgr.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="LIBCTILMGRDLL_EXPORTS;WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;VDASNACCDLL_API_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;LIBCTILMGRDLL_EXPORTS;VDASNACCDLL_API_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="src\sm_CTthreads.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="LIBCTILMGRDLL_EXPORTS;WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;VDASNACCDLL_API_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;LIBCTILMGRDLL_EXPORTS;VDASNACCDLL_API_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="src\sm_DLLInterface.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="LIBCTILMGRDLL_EXPORTS;WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;VDASNACCDLL_API_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;LIBCTILMGRDLL_EXPORTS;VDASNACCDLL_API_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="src\sm_usefulTypes.asn1">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Compiling $(InputPath)"
+						CommandLine="type &quot;$(InputPath)&quot;  &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
+cd &quot;$(InputDir)&quot;
+attrib -r &quot;$(InputName)&quot;.cpp
+attrib -r ..\inc\&quot;$(InputName)&quot;.h
+..\..\..\..\SMPDist\bin\esnacc -VDAexport -C -I ..\..\..\cml\cmlasn\modules &quot;$(InputName)&quot;.asn1
+move &quot;$(InputName)&quot;.h ..\inc
+"
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe;"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Compiling $(InputPath)"
+						CommandLine="type &quot;$(InputPath)&quot;  &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
+cd &quot;$(InputDir)&quot;
+attrib -r &quot;$(InputName)&quot;.cpp
+attrib -r ..\inc\&quot;$(InputName)&quot;.h
+..\..\..\..\SMPDist\bin\esnaccd -VDAexport -C -I ..\..\..\cml\cmlasn\modules &quot;$(InputName)&quot;.asn1
+move &quot;$(InputName)&quot;.h ..\inc
+"
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe;"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="src\sm_usefulTypes.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="LIBCTILMGRDLL_EXPORTS;WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;VDASNACCDLL_API_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;LIBCTILMGRDLL_EXPORTS;VDASNACCDLL_API_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="StdAfx.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="LIBCTILMGRDLL_EXPORTS;WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;VDASNACCDLL_API_EXPORTS;$(NoInherit)"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="stdafx.h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;LIBCTILMGRDLL_EXPORTS;VDASNACCDLL_API_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="stdafx.h"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl">
+			<File
+				RelativePath="inc\fortezzaVDA.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="inc\sha256.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="inc\sm_apicCtilMgr.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="inc\sm_apiCtilMgr.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="inc\sm_buffer.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="inc\sm_common.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="inc\sm_DLLInterface.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="inc\sm_tlistC.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="inc\sm_usefulTypes.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="inc\sm_vdasnaccMgr.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to system32 directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
+		</Filter>
+		<File
+			RelativePath="ReadMe.txt">
+		</File>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

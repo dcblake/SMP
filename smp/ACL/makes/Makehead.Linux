@@ -1,0 +1,62 @@
+#
+# Modify these variables as necessary for your specific
+# environment.
+#
+#
+
+# C++ Compiler information
+CC            = gcc
+CXX           = g++
+
+# AR information
+AR            = ar
+ARFLAGS       = ruv
+
+# OS Name
+OS=`uname -s`
+
+# OS FLAG
+OSFLAG=LINUX
+
+##RWC;5/1/01;CFLAGS        = -Wall -ftraditional-cpp -DLINUX -DSTDC_HEADERS -U__GNUC__
+CFLAGS        = -Wall $(BUILD_FLAG) -ftraditional-cpp -D$(OSFLAG) -DSTDC_HEADERS
+CXXFLAGS      = -Wall $(BUILD_FLAG) -D$(OSFLAG) -DSTDC_HEADERS 
+LDAP		= openldap
+#LFLAG1		= -shared -g -rdynamic -Wl,-soname,$(LIBRARYOUT)
+LFLAG1		= -shared
+LFLAG2		=
+# DO NOT MODIFY these varialbles unless you have to.
+#
+
+# Directory where SNACC header files reside was installed in
+#
+SNACCDIR      = ../../SMPDist/esnacc/c++/inc
+
+# Directory where Crypto++ headers are
+#
+#CRYPTO3++      = ../../../crypto++.30
+#CRYPTO3++      = ../../../SMPDist/Algs/crypto++3.2
+CRYPTO++      = ../../SMPDist/Algs/crypto++4.1
+
+# Directory where CMAPI headers are located
+#
+CMAPI         = ../../SMPDist/cml/inc
+
+# Directory where BSAFE was installed
+BSAFE         = ../../SMPDist/Algs/BSAFE/Bsafe42/solaris/sparc_v8/library
+
+# Directory where CI Library was installed
+#
+CI_PATH       = /usr2/msp/litronic
+
+
+#
+# END OF NOT MODIFY
+
+# Directory where SNACC compiler lives.  This is a only used if if the .asn
+# files in the ./libsrc/asn1 directory need to be compiled.
+#
+SNACC         = ../../../SMPDist/bin/snacc
+
+# Indicate whether this system uses 'ranlib'.  
+RANLIB        =

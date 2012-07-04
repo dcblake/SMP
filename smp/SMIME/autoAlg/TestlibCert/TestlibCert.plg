@@ -1,0 +1,86 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: libcert - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP2.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "./include" /I "../include" /I "../include/snacc/c++" /I "../include/cmapi" /I "./" /D "_DEBUG" /D "SNACC_DEEP_COPY" /D "VDADER_RULES" /D "_MBCS" /D "_LIB" /D "WIN32" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_Alg.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_AttrBase.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_BaseTokenInterface.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libsrc\asn1\sm_BigIntegerStr.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_certChoice.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_CertificateList.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_common.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_CSInst.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_CsmDn.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_CSMime.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_DLLInterface.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_GenName.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_Identifier.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_Issuer.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_listCert.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_mabRout.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_MsgCertCrls.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_Oid.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\src\sm_SignBuf.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\asn1\sm_VDASupport_asn.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\asn1\sm_vdatypes.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\asn1\sm_x411mtsas.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\asn1\sm_x411ub.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\asn1\sm_x501if.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\asn1\sm_x501ud.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\asn1\sm_x509af.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\asn1\sm_x509ce.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\asn1\sm_x509cmn.cpp"
+"D:\devel.d\vda_snacc.d\smimeR1.2\libcert\asn1\sm_x520sa.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP2.tmp" 
+Creating temporary file "C:\TEMP\RSP3.tmp" with contents
+[
+/nologo /out:"..\lib\libcertd.lib" 
+.\Debug\sm_Alg.obj
+.\Debug\sm_AttrBase.obj
+.\Debug\sm_BaseTokenInterface.obj
+.\Debug\sm_BigIntegerStr.obj
+.\Debug\sm_certChoice.obj
+.\Debug\sm_CertificateList.obj
+.\Debug\sm_common.obj
+.\Debug\sm_CSInst.obj
+.\Debug\sm_CsmDn.obj
+.\Debug\sm_CSMime.obj
+.\Debug\sm_DLLInterface.obj
+.\Debug\sm_GenName.obj
+.\Debug\sm_Identifier.obj
+.\Debug\sm_Issuer.obj
+.\Debug\sm_listCert.obj
+.\Debug\sm_mabRout.obj
+.\Debug\sm_MsgCertCrls.obj
+.\Debug\sm_Oid.obj
+.\Debug\sm_SignBuf.obj
+.\Debug\sm_VDASupport_asn.obj
+.\Debug\sm_vdatypes.obj
+.\Debug\sm_x411mtsas.obj
+.\Debug\sm_x411ub.obj
+.\Debug\sm_x501if.obj
+.\Debug\sm_x501ud.obj
+.\Debug\sm_x509af.obj
+.\Debug\sm_x509ce.obj
+.\Debug\sm_x509cmn.obj
+.\Debug\sm_x520sa.obj
+]
+Creating command line "link.exe -lib @C:\TEMP\RSP3.tmp"
+<h3>Output Window</h3>
+Compiling...
+sm_Alg.cpp
+sm_AttrBase.cpp
+sm_BaseTokenInterface.cpp
+cl.exe terminated at user request.
+
+</pre>
+</body>
+</html>

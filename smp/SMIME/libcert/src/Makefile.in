@@ -1,0 +1,28 @@
+include @SMP_BUILDDIR@/build/Makehead
+#
+# Make information specific to the ASN.1 directory
+#
+
+# these variables are specific to this makefile
+# 
+TARGET        =  allobjs
+INCLUDE       = -I. \
+                -I../../inc \
+                -I$(CMLINC) \
+                -I../../libCtilMgr/inc 
+DEPENDENCIES  = ../../inc/sm_api.h
+CPPSRCS       = $(wildcard *.cpp)
+CPPOBJS       = ${CPPSRCS:.cpp=.o}
+CSRCS       = $(wildcard *.c)
+COBJS       = ${CSRCS:.c=.o}
+
+CFLAGS = @CFLAGS@
+CXXFLAGS = @CXXFLAGS@
+
+allobjs: $(CPPOBJS) $(COBJS)
+
+$(OBJS): $(DEPENDENCIES)
+
+clean:
+	rm -f *.o
+include ../../../build/Maketail.in

@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="sm_rsaDLL"
+	ProjectGUID="{EF8E0C1A-35E7-4106-AD05-3A44A898CD5E}"
+	SccProjectName="sm_rsaDLL"
+	SccLocalPath="..\..">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory=".\Debug"
+			IntermediateDirectory=".\Debug"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zm200 "
+				Optimization="0"
+				AdditionalIncludeDirectories="../../../../SMPDist/Algs/bsafe60/library/include,../sm_rsa,../lolevel,../../inc,../../libCtilMgr/inc,../../../../SMPDist/include/esnacc/c++,../../../cml/cmlasn/inc,../../../../SMPDist/include/smp,../../../../SMPDist/include/pkcs11"
+				PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;WIN32"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				PrecompiledHeaderFile=".\Debug/sm_rsaDLL.pch"
+				AssemblerListingLocation=".\Debug/"
+				ObjectFile=".\Debug/"
+				ProgramDataBaseFileName=".\Debug/"
+				BrowseInformation="1"
+				WarningLevel="4"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="1"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"
+				Outputs="..\..\..\..\SMPDist\include\modules\$(InputName).asn"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="../../../../SMPDist/Algs/bsafe60/Library/lib/bsafe60.lib wsock32.lib"
+				OutputFile="../../../../SMPDist/lib/sm_rsaDLLd.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile=".\Debug/sm_rsaDLLd.pdb"
+				ImportLibrary=".\Debug/sm_rsaDLLd.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\Debug/sm_rsaDLL.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Debug Bsafe60|Win32"
+			OutputDirectory=".\sm_rsaDLL___Win32_Debug_Bsafe60"
+			IntermediateDirectory=".\sm_rsaDLL___Win32_Debug_Bsafe60"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="../../../SMPDist/Algs/bsafe60/Include,../../include,../../libcert/include,../../libCtilMgr/include,../../../SMPDist/util/VDASnacc/cpplib/inc,../../include/cmapi,../../../SMPDist/CML/include,../../../SMPDist/Algs/bsafe42/library/include,../sm_rsa,../lolevel,../../inc/cmapi,../../inc,../../libCtilMgr/inc,../../../SMPDist/esnacc/c++/inc,../../../cml/cmlasn/inc"
+				PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;WIN32"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				PrecompiledHeaderFile=".\sm_rsaDLL___Win32_Debug_Bsafe60/sm_rsaDLL.pch"
+				AssemblerListingLocation=".\sm_rsaDLL___Win32_Debug_Bsafe60/"
+				ObjectFile=".\sm_rsaDLL___Win32_Debug_Bsafe60/"
+				ProgramDataBaseFileName=".\sm_rsaDLL___Win32_Debug_Bsafe60/"
+				WarningLevel="4"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="1"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="../../../SMPDist/Algs/bsafe60/lib/intel_ia32/bsafe60.lib ../../libCert/libCertDLL/Debug/libCertDLLd.lib wsock32.lib ../../../SMPDist/Cml/lib/cmlasn_d.lib ../../lib/libCtilMgrd.lib ../../../SMPDist/util/VDASnacc/cpplib/lib/snaccCpp_d.lib"
+				OutputFile="../../test/sm_rsaDLLd.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile=".\sm_rsaDLL___Win32_Debug_Bsafe60/sm_rsaDLLd.pdb"
+				ImportLibrary=".\sm_rsaDLL___Win32_Debug_Bsafe60/sm_rsaDLLd.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\sm_rsaDLL___Win32_Debug_Bsafe60/sm_rsaDLL.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory=".\Release"
+			IntermediateDirectory=".\Release"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zm200 "
+				Optimization="2"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="../../../../SMPDist/Algs/bsafe60/library/include,../sm_rsa,../lolevel,../../inc,../../libCtilMgr/inc,../../../../SMPDist/include/esnacc/c++,../../../cml/cmlasn/inc,../../../../SMPDist/include/smp,../../../../SMPDist/include/pkcs11"
+				PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;SM_RSA_USED;WIN32;NDEBUG"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				PrecompiledHeaderFile=".\Release/sm_rsaDLL.pch"
+				AssemblerListingLocation=".\Release/"
+				ObjectFile=".\Release/"
+				ProgramDataBaseFileName=".\Release/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"
+				Outputs="..\..\..\..\SMPDist\include\modules\$(InputName).asn"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="../../../../SMPDist/Algs/bsafe60/Library/lib/bsafe60.lib wsock32.lib"
+				OutputFile="../../../../SMPDist/lib/sm_rsaDLL.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				ProgramDatabaseFile=".\Release/sm_rsaDLL.pdb"
+				ImportLibrary=".\Release/sm_rsaDLL.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\Release/sm_rsaDLL.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
+			<File
+				RelativePath="..\..\libsrc\asn1\sm_cms.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Bsafe60|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;SM_RSA_USED;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\lolevel\sm_CryptoKeysBase.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Bsafe60|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;SM_RSA_USED;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_CryptoKeysRsa.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Bsafe60|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;SM_RSA_USED;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_rsa.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Bsafe60|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;SM_RSA_USED;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_rsa_asn.asn1">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot;  ..\..\..\..\SMPDist\include\Modules
+..\..\..\..\SMPDist\bin\esnaccd -a 600 -C &quot;$(InputName)&quot;.asn1
+"
+						Outputs="$(InputName).h;$(InputName).cpp"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Bsafe60|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot;  ..\..\..\..\SMPDist\include\Modules
+copy &quot;$(InputPath)&quot; &quot;$(IntDir)&quot;
+..\..\..\..\SMPDist\bin\esnaccd -a 600 -D -C &quot;$(InputName)&quot;.asn1
+"
+						Outputs="$(InputName).h;$(InputName).cpp"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot;  ..\..\..\..\SMPDist\include\Modules
+..\..\..\..\SMPDist\bin\esnacc -a 600 -C &quot;$(InputName)&quot;.asn1
+"
+						Outputs="$(InputName).h;$(InputName).cpp"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_rsa_asn.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Bsafe60|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;SM_RSA_USED;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_rsaDLL.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Bsafe60|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;SM_RSA_USED;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="StdAfx.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Bsafe60|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="stdafx.h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;SM_RSA_USED;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\Bsafe60\Library\Source\tstdlib.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Bsafe60|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;BOOL_BUILTIN;USE_NIBBLE_MEMORY=0;USE_GEN_BUF;NO_SCCS_ID;SM_RSA_USED;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_RSADLL_EXPORTS;SM_RSA_USED;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl">
+			<File
+				RelativePath="sm_CryptoKeysRsa.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).asn"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Bsafe60|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\sfl\alg_libs\sm_rsa
+"
+						Outputs="..\..\..\SMPDist\sfl\alg_libs\sm_rsa\$(InputName).asn"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).asn"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_CryptoKeysRsaExport.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).asn"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Bsafe60|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\sfl\alg_libs\sm_rsa
+"
+						Outputs="..\..\..\SMPDist\sfl\alg_libs\sm_rsa\$(InputName).asn"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).asn"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_rsa.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\SMPDist\include\smp\$(InputName).asn"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug Bsafe60|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\sfl\alg_libs\sm_rsa
+"
+						Outputs="..\..\..\SMPDist\sfl\alg_libs\sm_rsa\$(InputName).asn"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).asn"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_rsaDLL.h">
+			</File>
+			<File
+				RelativePath="StdAfx.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
+		</Filter>
+		<File
+			RelativePath="..\..\..\..\smpdist\lib\cmapi.lib">
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cmapi_d.lib">
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cmlasn.lib">
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cmlasn_d.lib">
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cppasn1.lib">
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cppasn1_d.lib">
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\libCert.lib">
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\libCertd.lib">
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\libCtilMgr.lib">
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\libCtilMgrd.lib">
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="ReadMe.txt">
+		</File>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

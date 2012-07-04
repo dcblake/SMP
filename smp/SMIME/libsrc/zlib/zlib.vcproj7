@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding = "Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.00"
+	Name="zlib"
+	ProjectGUID="{A95A368A-CEA5-49F2-AA5E-38A4BD0D50C2}"
+	SccProjectName=""
+	SccLocalPath=""
+	Keyword="MakeFileProj">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory=".\Debug"
+			IntermediateDirectory=".\Debug"
+			ConfigurationType="10"
+			UseOfMFC="0">
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory=".\Release"
+			IntermediateDirectory=".\Release"
+			ConfigurationType="10"
+			UseOfMFC="0">
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+		</Configuration>
+	</Configurations>
+	<Files>
+		<Filter
+			Name="libs"
+			Filter="">
+			<File
+				RelativePath=".\libcharset-1.dll">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; $(WINDIR)\system32
+copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\lib
+"
+						Outputs="$(WINDIR)\system32\$(InputName).dll"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; $(WINDIR)\system32
+copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\lib
+"
+						Outputs="$(WINDIR)\system32\$(InputName).dll"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\libiconv-2.dll">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; $(WINDIR)\system32
+copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\lib
+"
+						Outputs="$(WINDIR)\system32\$(InputName).dll"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; $(WINDIR)\system32
+copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\lib
+"
+						Outputs="$(WINDIR)\system32\$(InputName).dll"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\libintl-2.dll">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; $(WINDIR)\system32
+copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\lib
+"
+						Outputs="$(WINDIR)\system32\$(InputName).dll"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; $(WINDIR)\system32
+copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\lib
+"
+						Outputs="$(WINDIR)\system32\$(InputName).dll"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

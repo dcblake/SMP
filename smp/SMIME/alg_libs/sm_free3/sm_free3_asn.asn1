@@ -1,0 +1,273 @@
+-- @(#) sm_free3_asn.asn 1.25 02/07/00 04:22:00 
+
+-- sm_free_asn.asn
+-- ASN.1 module for SFL free CTI supporting 3DES, DSA, and DH
+--
+
+SMFREE DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+IMPORTS
+
+  pkcs-9 
+    FROM SelectedAttributeTypes
+
+  AlgorithmIdentifier
+    FROM AuthenticationFramework --RWC;SmUsefulTypes 
+
+  Name, Attribute
+    FROM InformationFramework { joint-iso-itu-t ds1 modules informationFramework1 3 }
+
+  --RWC;AlgorithmIdentifier, AttributeCertificate, Certificate,
+  Certificate, CertificateList, CertificateSerialNumber
+    FROM AuthenticationFramework { authenticationFramework }
+
+  AttributeCertificate
+    FROM AttributeCertificateDefinitions
+
+  ContentInfo, OriginatorPublicKey, UserKeyingMaterial
+               --, DigestInfo (RWC;defined in this file for convenience)
+    FROM CryptographicMessageSyntax  
+
+  PrivateKeyInfo, EncryptedPrivateKeyInfo -- moved here from sm_free3_asn.asn 
+    FROM VDAConventientDefinitions ;
+
+-- OIDs from X9.42
+
+id-dhStatic OBJECT IDENTIFIER ::= { iso(1) member-body(2) us(840)
+      ansi-x942(10046) mechanism(3) dhStatic(1) }
+
+
+-- PKCS#5 password based encryption parameters
+
+PBEParameter ::= SEQUENCE {
+   salt OCTET STRING,
+   iterationCount INTEGER }
+
+--
+--
+-- RWC; Support for Password Import/Export operations (PKCS-12)
+--
+--
+
+PFX ::= SEQUENCE {
+  version       PKCS12Version,
+  authSafe      ContentInfo,
+    -- signedData in public-key integrity mode, and
+    -- data in password integrity mode.  See PKCS #7
+  macData       MacData       OPTIONAL
+    -- present only in password integrity mode
+}
+
+MacData ::= SEQUENCE {
+  safeMac       DigestInfo,   -- see PKCS #7
+  macSalt       OCTET STRING,
+  macIterationCount  INTEGER DEFAULT 1
+            -- if you want to be compatible with a certain release from
+            -- Microsoft, you should use the value 1 and not place the
+            -- macIterationCount field's encoding in the PDU's
+            -- BER-encoding.  Unfortunately, using a value of 1 here
+            -- means that there's no point in having a value other
+            -- than 1 for any password-based encryption in the PDU that
+            -- uses the same password as is used for password-based
+            -- authentication
+}
+
+AuthenticatedSafe ::= SEQUENCE {
+  version       PKCS12Version,
+  safe      [0] ContentInfo          OPTIONAL,
+    -- contentType is encryptedData in password privacy mode,
+    -- and envelopedData in public-key privacy mode
+  baggage   [1] SafeContents         OPTIONAL
+    -- stuff that's not subject to PFX encryption
+}
+
+-- PL renamed to PKCS12Version to avoid conflicts with other modules
+--
+-- Version ::= INTEGER (v2(2))
+
+PKCS12Version ::= INTEGER --(v2(2))
+
+
+SafeBag ::= SEQUENCE {
+  safeBagType         OBJECT IDENTIFIER,
+  safeBagContent  [0] EXPLICIT ANY,    -- DEFINED BY safeBagType,
+  --safeBagName         BMPString OPTIONAL
+  safeBagAttributes Attributes OPTIONAL
+}
+--bagAttributes Attributes OPTIONAL }
+
+
+Attributes ::= SET OF Attribute    -- from X.501
+-- in pre-1994 ASN.1, Attribute looks like:
+-- Attribute ::= SEQUENCE {
+--      type OBJECT IDENTIFIER,
+--      values SET OF ANY DEFINED BY type }
+
+SafeContents ::= SEQUENCE OF SafeBag
+
+KeyBag ::= SEQUENCE {
+  pvkData       PVKSupportingData,
+  pkcs8data     PrivateKeyInfo  -- see PKCS†#8
+}
+
+PVKSupportingData ::= SEQUENCE {
+  assocCerts     [0] SEQUENCE OF Thumbprint OPTIONAL,
+  regenInfo      [1] RegenInfo OPTIONAL,
+  pvkAdditional  [2] SEQUENCE OF PVKAdditional OPTIONAL
+}
+
+Thumbprint ::=  DigestInfo    -- see PKCS #7
+
+secsig          OBJECT IDENTIFIER ::=
+  {iso(1) identified-organization(3) oiw(14) secsig(3)}
+
+-- RWC; id-sha1         OBJECT IDENTIFIER ::= {secsig 2 26}
+
+
+RegenInfo ::= SEQUENCE {
+  regenOID         OBJECT IDENTIFIER,
+  regenParams  [0] EXPLICIT ANY DEFINED BY regenOID
+}
+
+PVKAdditional ::= SEQUENCE {
+  pvkAdditionalType         OBJECT IDENTIFIER,
+  pvkAdditionalContent  [0] EXPLICIT ANY DEFINED BY pvkAdditionalType
+}
+
+Pkcs-8ShroudedKeyBag ::= SEQUENCE {
+  pvkData            PVKSupportingData,
+  shroudedpkcs8data  EncryptedPrivateKeyInfo  -- see PKCS†#8
+}
+
+CertCRLBag ::= SEQUENCE {
+  bagId         OBJECT IDENTIFIER,
+  value         ANY     -- DEFINED BY BagId
+}
+
+pkcs-12CertBagIds OBJECT IDENTIFIER ::= {pkcs-12 4}
+x509CertCRLBagId  OBJECT IDENTIFIER ::= {pkcs-12CertBagIds 1}
+sDSICertBagId     OBJECT IDENTIFIER ::= {pkcs-12CertBagIds 2}
+
+X509Bag ::= ContentInfo       -- see PKCS #7
+
+SDSIBag ::= SEQUENCE OF IA5String
+
+SecretBag ::= SEQUENCE {
+  secretType         OBJECT IDENTIFIER,
+  secretContent  [0] EXPLICIT ANY DEFINED BY secretType
+}
+
+
+
+
+pkcs-12 OBJECT IDENTIFIER ::= { iso(1) member-body(2) 
+   us(840) rsadsi(113549) pkcs(1) 12 }
+
+
+pkcs-12PbeIds  OBJECT IDENTIFIER ::= { pkcs-12 1 }
+
+pbeWithSHAAnd128BitRC4           OBJECT IDENTIFIER ::=
+  {pkcs-12PbeIds 1}
+pbeWithSHAAnd40BitRC4            OBJECT IDENTIFIER ::=
+  {pkcs-12PbeIds 2}
+pbeWithSHAAnd3-KeyTripleDES-CBC  OBJECT IDENTIFIER ::=
+  {pkcs-12PbeIds 3}
+pbeWithSHAAnd2-KeyTripleDES-CBC  OBJECT IDENTIFIER ::=
+  {pkcs-12PbeIds 4}
+pbeWithSHAAnd128BitRC2-CBC       OBJECT IDENTIFIER ::=
+  {pkcs-12PbeIds 5}
+pbewithSHAAnd40BitRC2-CBC        OBJECT IDENTIFIER ::=
+  {pkcs-12PbeIds 6}
+
+Pkcs-12PbeParams ::= OCTET STRING
+
+
+-- From PKCS-7v1.5
+DigestInfo ::= SEQUENCE {
+  digestAlgorithm DigestAlgorithmIdentifier,
+  digest          Digest
+}
+
+Digest ::= OCTET STRING
+
+DigestAlgorithmIdentifier ::=
+  AlgorithmIdentifier    -- {{DigestAlgorithms}}
+
+-- RWC; FROM PKCS-9
+pkcs-9-at-friendlyName                  		OBJECT IDENTIFIER ::= {pkcs-9 20}
+pkcs-9-at-localKeyId                    		OBJECT IDENTIFIER ::= {pkcs-9 21}
+
+--RWC;friendlyName ATTRIBUTE ::= {
+--RWC;	WITH SYNTAX BMPString (SIZE(1..pkcs-9-ub-friendlyName))
+--RWC;	EQUALITY MATCHING RULE caseIgnoreMatch
+--RWC;	SINGLE VALUE TRUE
+--RWC;	ID pkcs-9-at-friendlyName
+--RWC;}
+
+--RWC;localKeyId ATTRIBUTE ::= {
+--RWC;	WITH SYNTAX OCTET STRING
+--RWC;	EQUALITY MATCHING RULE octetStringMatch
+--RWC;	SINGLE VALUE TRUE
+--RWC;	ID pkcs-9-at-localKeyId
+--RWC;}
+
+
+
+
+--RWC;MOVED TO CMS;OtherInfo ::= SEQUENCE {
+--RWC;MOVED TO CMS;  keyInfo KeySpecificInfo,
+--RWC;MOVED TO CMS;  pubInfo [2] OCTET STRING OPTIONAL
+--RWC;MOVED TO CMS;}
+
+--PL;MOVED TO CMS;KeySpecificInfo ::= SEQUENCE {
+--PL;MOVED TO CMS;  algorithm OBJECT IDENTIFIER,
+--PL;MOVED TO CMS;  counter OCTET STRING (SIZE (4..4))
+--PL;MOVED TO CMS;}
+
+
+KeyWrapAlgorithm ::= AlgorithmIdentifier
+
+  -- RWC; Modified names to not interfere with Apps that include Fortezza.
+id-fortezzaConfidentialityAlgorithmF3 OBJECT IDENTIFIER ::= {joint-iso-ccitt(2) 
+  country(16) us(840) organization(1) gov(101) dod(2) infosec(1) 
+  algorithms(1) fortezzaConfidentialityAlgorithm (4)}
+
+id-fortezzaWrap80F3 OBJECT IDENTIFIER ::= {joint-iso-ccitt(2) country(16) 
+  us(840) organization(1) gov(101) dod(2) infosec(1) algorithms(1) 
+  fortezzaWrap80Algorithm (23)}
+
+id-kEAKeyEncryptionAlgorithmF3 OBJECT IDENTIFIER ::= {joint-iso-ccitt(2) 
+  country(16) us(840) organization(1) gov(101) dod(2) infosec(1) 
+  algorithms(1) kEAKeyEncryptionAlgorithm (24)} 
+
+dES-CBC OBJECT IDENTIFIER ::=
+    {iso(1) identified-organization(3) oiw(14) secsig(3) algorithm(2) 7}
+
+md5WithRSAEncryptionOIW OBJECT IDENTIFIER ::=
+    { 1 3 14 3 2 3 }
+
+--##################################
+VDASafeBlob ::=  [0] EXPLICIT OCTET STRING
+--##################################
+
+--########################################################################
+-- RWC;6/15/03; Added these definitions in support of ECDH (Elliptic Curve)
+--  (not sure where they are defined, copied them from RFC3278 which references
+--   IEEE 1363) AND X.93.
+
+
+      MQVuserKeyingMaterial ::= SEQUENCE {
+         ephemeralPublicKey OriginatorPublicKey,
+         addedukm [0] EXPLICIT UserKeyingMaterial OPTIONAL  }
+
+
+      ECC-CMS-SharedInfo ::= SEQUENCE {
+         keyInfo AlgorithmIdentifier,
+         entityUInfo [0] EXPLICIT OCTET STRING OPTIONAL,
+         suppPubInfo [2] EXPLICIT OCTET STRING   }
+
+
+END
+
+-- EOF sm_free3_asn.asn

@@ -1,0 +1,9 @@
+CC            = gcc
+CFLAGS        = -g -Wall -DSUNOS
+CXX           = g++
+CXXFLAGS      = -g -Wall -U__GNUC__  -DSUNOS -fhandle-exceptions
+SNACCDIR      = /mr2/local
+SNACCFLAGS    = -D -C -u/mr2/local/include/snacc/asn1/asn-useful.asn1
+CMAPI         = /mr2/local
+RANLIB        = ranlib
+ERRLOG        = 

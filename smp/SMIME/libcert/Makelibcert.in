@@ -1,0 +1,46 @@
+
+
+LIBRARY=libcert.a
+#LIBRARYOUT=libcert.so
+
+#TARGETS: libcert SMPlibcertDist
+TARGETS: libcert $(LIBRARY)
+
+clean:
+	(cd ./src; make clean)
+	(cd ./asn1; make clean)
+	rm -f ./*.so
+
+bare: clean
+	rm -f ./$(LIBRARY) ./*.so
+
+#SMPlibcertDist:
+#	(cd ./SMP_libcert_Dist;./SMP_libcert_Dist.sh;cd ..)
+
+# Build the ASN.1 Modules first
+# Move the ASN.1 Module headers into ./include
+# Build the support source
+#
+buildobjs:
+	(cd ./asn1; make)
+	(cd ./src; make)
+
+
+# Create the library
+#
+#libcert: buildobjs dynamiclink
+libcert: buildobjs $(LIBRARY) $(RANLIB)
+
+#must explicitely specify libcert.a because shared object has the same name
+LIBPATH = -L../../SMPDist/esnacc/c++/lib -L../libCtilMgr
+LIBS    = $(LIBPATH)  -lc++asn1 -lctil
+
+dynamiclink:
+	$(CXX)  $(LFLAG1) $(LFLAG2) ./src/*.o ./asn1/*.o $(LIBS) -o ./libcert.so
+
+$(LIBRARY): 
+	rm -f $(LIBRARY)
+	ar ruv ./$(LIBRARY) ./src/*.o ./asn1/*.o
+
+$(RANLIB):
+	$(RANLIB $(LIBRARY)

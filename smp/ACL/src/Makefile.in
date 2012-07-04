@@ -1,0 +1,108 @@
+include @SMP_BUILDDIR@/build/Makehead
+SNACCFLAGS	= -C
+SNACCOPTIONS	= -I ../../cml/cmlasn/Modules -I ../../SMIME/libCtilMgr/src
+#
+# Modify these variables as necessary for your specific
+# environment.
+#
+#
+ifeq ($(RANLIB),)
+RANLIB	= echo
+endif
+LFLAG1		= @SMP_LDFLAG@
+CMAPI	= ../../cml/cmapi/inc
+CMLASNINC	= ../../cml/cmlasn/inc
+SRLINC		= ../../cml/srl/inc
+CTILMGRINC	= ../../SMIME/libCtilMgr/inc
+PKCS11INC	= ../../pkcs11_cryptopp/inc
+STAGINGDIR	= $(SMPDISTDIR)/lib
+ASN_H_PATH	= ../inc
+
+## Specify the asn.1 modules
+ASNMODULES	= $(wildcard *.asn1)
+ASNMODCPP	= ${ASNMODULES:.asn1=.cpp}
+ASNMODOBJS	= ${ASNMODULES:.asn1=.o}
+ASNMODHDR	= ${ASNMODULES:.asn1=.h}
+
+## Specify the library name
+ifeq ($(USEDEBUGLIB), no)
+ifeq ($(HAVELBER), yes)
+CMAPI_LIBS	= -lcmlasn -lctil -lc++asn1
+else
+CMAPI_LIBS	= -lcmlasn -lctil -lc++asn1
+endif
+TARGET	= $(STAGINGDIR)/libacl.@SHEXT@
+else
+ifeq ($(HAVELBER), yes)
+CMAPI_LIBS	= -lcmlasn_d -lctil_d -lc++asn1
+else
+CMAPI_LIBS	= -lcmlasn_d -lctil_d -lc++asn1
+endif
+TARGET	= $(STAGINGDIR)/libacl_d.@SHEXT@
+endif
+
+ifeq ($(ENABLESTATIC),yes)
+ifeq ($(USEDEBUGLIB), yes)
+TARGET2	= $(STAGINGDIR)/libacl_d.a
+else
+TARGET2	= $(STAGINGDIR)/libacl.a
+endif
+endif
+## Needed includes
+INCLUDE       += -I$(PKCS11INC) -I$(CMAPI) -I$(CMLASNINC) -I$(CTILMGRINC) -I$(SRLINC) \
+		 -I../inc
+
+## Specify the sources
+CSRCS		= $(wildcard *.c)
+CPPSRCS	= $(wildcard *.cpp)
+COBJS	= $(CSRCS:.c=.o)	
+CPPOBJS	= $(ASNMODOBJS) $(CPPSRCS:.cpp=.o)
+
+# Compiler information
+CC	= @CC@
+CXX	= @CXX@
+CPP		=  @CPP@
+
+LIBS += $(CMAPI_LIBS) @LIBS@
+
+DEPENDENCIES	= ../inc/acl_api.h \
+	../inc/aclerror.h \
+	../inc/aclinternal.h \
+	../inc/aclintexcept.h
+
+#determine what platform we are on
+OS	= @OS@
+
+# Add in the C Flags and C++ Flags
+CFLAGS	= @CFLAGS@ -D_UNIX
+CXXFLAGS	= @CXXFLAGS@ -D_UNIX
+
+#
+# End of Low Level specific make information
+#
+
+.SUFFIXES : .cpp .cpp.o
+
+all: $(COBJS) $(CPPOBJS) $(TARGET) $(TARGET2)
+
+clean:
+	rm -f *.o
+	rm -f $(ASNMODCPP)
+	rm -f $(ASNMODHDR)
+
+$(CPPOBJS): $(DEPENDENCIES)
+$(COBJS): $(DEPENDENCIES)
+$(ASNMODOBJS): $(SANMODCPP)
+$(ASNMODCPP): $(ASNMODULES)
+
+$(TARGET): $(COBJS) $(CPPOBJS)
+	$(CXX) $(LFLAG1) *.o -o $(TARGET) -L $(STAGINGDIR) -L $(SNACCLIBDIR) $(LIBS)
+	/bin/sh $(top_builddir)/build/install-sh -c -m 644 $(TARGET) $(SMPDISTDIR)/lib
+
+$(TARGET2): $(COBJS) $(CPPOBJS)
+	$(AR) ruv $(TARGET2) *.o
+	$(RANLIB) $(TARGET2)
+	/bin/sh $(top_builddir)/build/install-sh -c -m 644 $(TARGET2) $(SMPDISTDIR)/lib
+
+include $(top_builddir)/build/Maketail.in
+include $(top_builddir)/build/Makeinstall.in

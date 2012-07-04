@@ -1,0 +1,176 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "ACL"=.\ACL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cmapi_dll
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cmlasn
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libCtilMgr
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name srl
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "acltool"=.\sample\acltool\acltool.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cmapi_dll
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libCtilMgr
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cmlasn
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name aclutil2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name srl
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "aclutil2"=.\sample\aclutil2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "cmapi_dll"=..\cml\cmapi\cmapi_dll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cmlasn
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libCtilMgr
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "cmlasn"=..\cml\cmlasn\cmlasn.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libCtilMgr
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "cppasn1"="..\..\SNACC\c++-lib\cppasn1\cppasn1.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libCtilMgr"=..\SMIME\libCtilMgr\libCtilMgr.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "srl"=..\cml\srl\srl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cmapi_dll
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cmlasn
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

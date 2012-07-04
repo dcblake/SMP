@@ -1,0 +1,1056 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="sm_free3DLL"
+	ProjectGUID="{39B6783B-D275-44C9-8AF9-2A955C4A93ED}">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug OpenSSL|Win32"
+			OutputDirectory=".\..\..\..\SMPDist\lib"
+			IntermediateDirectory=".\sm_free3DLL___Win32_Debug_OpenSSL"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zm200 "
+				Optimization="0"
+				AdditionalIncludeDirectories="../../../../SMPDist/util/SFLPkcs12,../../../../SMPDist/Algs/crypto++,../../../../SMPDist/include/esnacc/c++,../sm_free3,../lolevel,../../inc,../../libCtilMgr/inc,../../../cml/cmlasn/inc"
+				PreprocessorDefinitions="_DEBUG;OPENSSL_PKCS12_ENABLED;_WINDOWS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				PrecompiledHeaderFile=".\sm_free3DLL___Win32_Debug_OpenSSL/sm_free3DLL.pch"
+				AssemblerListingLocation=".\sm_free3DLL___Win32_Debug_OpenSSL/"
+				ObjectFile=".\sm_free3DLL___Win32_Debug_OpenSSL/"
+				ProgramDataBaseFileName=".\sm_free3DLL___Win32_Debug_OpenSSL/"
+				BrowseInformation="1"
+				WarningLevel="4"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="3"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(OutDir)&quot;/&quot;$(TargetName)&quot;
+"
+				Outputs="$(windir)\system32\$(InputName).dll"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="../../../../SMPDist/lib/cryptlib_d.lib ../../../../SMPDist/util/SFLPkcs12/SFLPkcs12Libd.lib wsock32.lib Advapi32.lib"
+				OutputFile="../../../../SMPDist/lib/sm_free3DLLOpenSSLd.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile=".\sm_free3DLL___Win32_Debug_OpenSSL/sm_free3DLLOpenSSLd.pdb"
+				ImportLibrary=".\sm_free3DLL___Win32_Debug_OpenSSL/sm_free3DLLOpenSSLd.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\sm_free3DLL___Win32_Debug_OpenSSL/sm_free3DLL.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release OpenSSL|Win32"
+			OutputDirectory=".\..\..\..\SMPDist\lib"
+			IntermediateDirectory=".\sm_free3DLL___Win32_Release_OpenSSL"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zm200 "
+				Optimization="2"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="../../../../SMPDist/util/SFLPkcs12,../../../../SMPDist/Algs/crypto++,../../../../SMPDist/include/esnacc/c++,../sm_free3,../lolevel,../../inc,../../libCtilMgr/inc,../../../cml/cmlasn/inc"
+				PreprocessorDefinitions="NDEBUG;OPENSSL_PKCS12_ENABLED;_WINDOWS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				PrecompiledHeaderFile=".\sm_free3DLL___Win32_Release_OpenSSL/sm_free3DLL.pch"
+				AssemblerListingLocation=".\sm_free3DLL___Win32_Release_OpenSSL/"
+				ObjectFile=".\sm_free3DLL___Win32_Release_OpenSSL/"
+				ProgramDataBaseFileName=".\sm_free3DLL___Win32_Release_OpenSSL/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(InputName)&quot;
+"
+				Outputs="$(windir)\system32\$(InputName).dll"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="../../../../SMPDist/lib/cryptlib.lib wsock32.lib ../../../../SMPDist/util/SFLPkcs12/SFLPkcs12Libd.lib Advapi32.lib"
+				OutputFile="../../../../SMPDist/lib/sm_free3DLLOpenSSL.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				ProgramDatabaseFile=".\sm_free3DLL___Win32_Release_OpenSSL/sm_free3DLLOpenSSL.pdb"
+				ImportLibrary=".\sm_free3DLL___Win32_Release_OpenSSL/sm_free3DLLOpenSSL.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\sm_free3DLL___Win32_Release_OpenSSL/sm_free3DLL.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory=".\..\..\..\SMPDist\lib"
+			IntermediateDirectory=".\Release"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zm200 "
+				Optimization="2"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="../../../../SMPDist/Algs/crypto++,../../../../SMPDist/include/esnacc/c++,../sm_free3,../lolevel,../../inc,../../libCtilMgr/inc,../../libCtilMgr/AES,../../../cml/cmlasn/inc,../../../cml/cmapi/inc,../../../pkcs11_cryptopp/inc"
+				PreprocessorDefinitions="NDEBUG;_WINDOWS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				PrecompiledHeaderFile=".\Release/sm_free3DLL.pch"
+				AssemblerListingLocation=".\Release/"
+				ObjectFile=".\Release/"
+				ProgramDataBaseFileName=".\Release/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying $(TargetPath) to system32"
+				CommandLine="copy $(TargetPath) %WINDIR%\system32
+"
+				Outputs="$(windir)\system32\$(TargetName).dll"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="wsock32.lib ../../../../SMPDist/lib/cryptlib.lib Advapi32.lib"
+				OutputFile="../../../../SMPDist/lib/sm_free3DLL.dll "
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				ImportLibrary=".\Release/sm_free3DLL.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\Release/sm_free3DLL.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory=".\..\..\..\SMPDist\lib"
+			IntermediateDirectory=".\Debug"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zm200 "
+				Optimization="0"
+				AdditionalIncludeDirectories="../../../../SMPDist/Algs/crypto++,../../../../SMPDist/include/esnacc/c++,../sm_free3,../lolevel,../../inc,../../libCtilMgr/inc,../../libCtilMgr/AES,../../../cml/cmlasn/inc,../../../cml/cmapi/inc,../../../pkcs11_cryptopp/inc"
+				PreprocessorDefinitions="_DEBUG;DSA_1024_BIT_MODULUS_ONLY=0;_WINDOWS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				PrecompiledHeaderFile=".\Debug/sm_free3DLL.pch"
+				AssemblerListingLocation=".\Debug/"
+				ObjectFile=".\Debug/"
+				ProgramDataBaseFileName=".\Debug/"
+				BrowseInformation="1"
+				WarningLevel="4"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="3"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying $(TargetPath) to system32"
+				CommandLine="copy &quot;$(TargetPath)&quot; $(WINDIR)\system32
+"
+				Outputs="$(WINDIR)\system32\$(TargetName).dll"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="wsock32.lib ../../../../SMPDist/lib/cryptlib_d.lib Advapi32.lib"
+				OutputFile="..\..\..\..\SMPDist\lib\sm_free3DLLd.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile=".\Debug/sm_free3DLLd.pdb"
+				ImportLibrary=".\Debug/sm_free3DLLd.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\Debug/sm_free3DLL.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
+			<File
+				RelativePath=".\sm_aes_wrap.cpp">
+			</File>
+			<File
+				RelativePath="..\..\libsrc\asn1\sm_cms.cpp">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_DEBUG;OPENSSL_PKCS12_ENABLED;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="NDEBUG;OPENSSL_PKCS12_ENABLED;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_DEBUG;DSA_1024_BIT_MODULUS_ONLY=0;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_free3.cpp">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_DEBUG;OPENSSL_PKCS12_ENABLED;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"
+						WarningLevel="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="NDEBUG;OPENSSL_PKCS12_ENABLED;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_DEBUG;DSA_1024_BIT_MODULUS_ONLY=0;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"
+						WarningLevel="3"
+						DebugInformationFormat="1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_free3_asn.asn1">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Compiling ASN.1 module:  $(InputPath)"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(IntDir)&quot;
+..\..\..\..\SMPDist\bin\esnaccd -D -C -I ../../libcert/asn1 -I ../../libsrc/asn1 -I ../../libCtilMgr/src -I ..\..\..\cml\cmlasn\modules &quot;$(InputName)&quot;.asn1
+"
+						AdditionalDependencies="..\..\..\..\SMPDist\bin\esnaccd.exe;"
+						Outputs="$(InputName).h;$(InputName).cpp"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Compiling ASN.1 module:  $(InputPath)"
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;$(IntDir)&quot;
+..\..\..\..\SMPDist\bin\esnacc -D -C -I ../../libcert/asn1 -I ../../libsrc/asn1 -I ../../libCtilMgr/src -I ..\..\..\cml\cmlasn\modules &quot;$(InputName)&quot;.asn1
+"
+						AdditionalDependencies="..\..\..\..\SMPDist\bin\esnacc.exe;"
+						Outputs="$(InputName).h;$(InputName).cpp"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Compiling ASN.1 module:  $(InputPath)"
+						CommandLine="copy &quot;$(InputPath)&quot;  ..\..\..\..\SMPDist\include\Modules
+..\..\..\..\SMPDist\bin\esnacc -C -I ../../libcert/asn1 -I ../../libsrc/asn1 -I ../../libCtilMgr/src -I ..\..\..\cml\cmlasn\modules &quot;$(InputName)&quot;.asn1
+"
+						AdditionalDependencies="..\..\..\..\SMPDist\bin\esnacc.exe;"
+						Outputs="$(InputName).h;$(InputName).cpp"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Compiling ASN.1 module:  $(InputPath)"
+						CommandLine="copy &quot;$(InputPath)&quot;  ..\..\..\..\SMPDist\include\Modules
+..\..\..\..\SMPDist\bin\esnaccd -C -I ../../libcert/asn1 -I ../../libsrc/asn1 -I ../../libCtilMgr/src -I ..\..\..\cml\cmlasn\modules &quot;$(InputName)&quot;.asn1
+"
+						AdditionalDependencies="..\..\..\..\SMPDist\bin\esnaccd.exe;"
+						Outputs="$(InputName).h;$(InputName).cpp"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_free3_asn.cpp">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_DEBUG;OPENSSL_PKCS12_ENABLED;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="NDEBUG;OPENSSL_PKCS12_ENABLED;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_DEBUG;DSA_1024_BIT_MODULUS_ONLY=0;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_free3_RSA.cpp">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_DEBUG;OPENSSL_PKCS12_ENABLED;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"
+						WarningLevel="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="NDEBUG;OPENSSL_PKCS12_ENABLED;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_DEBUG;DSA_1024_BIT_MODULUS_ONLY=0;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"
+						WarningLevel="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_free3DLL.cpp">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_DEBUG;OPENSSL_PKCS12_ENABLED;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="NDEBUG;OPENSSL_PKCS12_ENABLED;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;DSA_1024_BIT_MODULUS_ONLY=0;$(NoInherit)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_DEBUG;DSA_1024_BIT_MODULUS_ONLY=0;_WINDOWS;_MBCS;_USRDLL;SM_FREE3DLL_EXPORTS;SM_FREE3_USED;WIN32;SFLPKCS12_ENABLED;SM_FREE3_RSA_INCLUDED;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl">
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\config.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\cryptlib.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\des.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\dh.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\dh2.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\cryptopp50\ec2n.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\cryptopp50\eccrypto.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\cryptopp50\ecp.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\gfpcrypt.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\integer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\md2.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\md5.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\modes.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\pubkey.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\queue.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\rc2.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\rijndael.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\ripemd.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\rng.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\rsa.h">
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\Algs\crypto++\sha.h">
+			</File>
+			<File
+				RelativePath=".\sm_aes_wrap.h">
+			</File>
+			<File
+				RelativePath="..\..\inc\sm_cms.h">
+			</File>
+			<File
+				RelativePath="sm_free3.h">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_free3_asn.h">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_free3DLL.h">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_vda_cbc.h">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="libs"
+			Filter="*.lib">
+			<File
+				RelativePath="..\..\..\..\SMPDist\lib\cmlasn.lib">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(OutDir)&quot;/&quot;$(TargetName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(InputName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\lib\cmlasn_d.lib">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(OutDir)&quot;/&quot;$(TargetName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(InputName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\lib\cppasn1.lib">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(OutDir)&quot;/&quot;$(TargetName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(InputName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\lib\cppasn1_d.lib">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(OutDir)&quot;/&quot;$(TargetName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(InputName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\lib\libCert.lib">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(OutDir)&quot;/&quot;$(TargetName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(InputName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\lib\libCertd.lib">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(OutDir)&quot;/&quot;$(TargetName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(InputName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\lib\libCtilMgr.lib">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(OutDir)&quot;/&quot;$(TargetName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(InputName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\lib\libCtilMgrd.lib">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(OutDir)&quot;/&quot;$(TargetName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release OpenSSL|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(TargetName)&quot;.dll &quot;$(windir)&quot;\system32
+copy &quot;$(OutDir)&quot;\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+echo &quot;NAME=&quot; &quot;$(InputName)&quot;
+"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
+		</Filter>
+		<File
+			RelativePath="ReadMe.txt">
+		</File>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

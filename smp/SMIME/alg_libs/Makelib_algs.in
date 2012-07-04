@@ -1,0 +1,22 @@
+LIBSMALGS=libsmalgs.a
+
+TARGETS: libsm_free3 libsm_rsa 
+
+clean:
+	(cd ./sm_free3; make clean)
+	(cd ./sm_rsa; make clean)
+	(cd ./sm_fort; make clean)
+	rm ../lib/libsm_*.so
+
+bare: clean
+	(cd ./sm_free3; make bare)
+	(cd ./sm_rsa; make bare)
+	(cd ./sm_fort; make bare)
+
+libsm_rsa:
+	(cd ./sm_rsa; make)
+libsm_free3:
+	(cd ./sm_free3; make clean;make)
+#	(cd ./sm_free3; make clean;make OPENSSL)
+libsm_fort:
+	(cd ./sm_fort; make)

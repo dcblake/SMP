@@ -1,0 +1,101 @@
+#
+# Modify these variables as necessary for your specific
+# environment.
+#
+#
+
+# C++ Compiler information
+CC            = gcc
+CXX           = g++
+
+# AR information
+AR            = ar
+ARFLAGS       = ruv
+
+CFLAGS        = -Wall -ftraditional-cpp -DSOLARIS -DSNACC_DEEP_COPY -DSTDC_HEADERS -DVDADER_RULES -U__GNUC__
+CXXFLAGS      = -Wall -O2 -DSOLARIS -DSNACC_DEEP_COPY -DSTDC_HEADERS -DVDADER_RULES
+#CFLAGS        = -g -mv8 -DSOLARIS -DSM_FREE3_USED -DSNACC_DEEP_COPY -DVDADER_RULES -U__GNUC__
+#CXXFLAGS      = -g -mv8 -DSOLARIS -DSM_FREE3_USED -DSNACC_DEEP_COPY -DVDADER_RULES -U__EXTENSIONS__
+#CFLAGS        = -g -ansi -DSOLARIS -DSM_FREE3_USED -DSNACC_DEEP_COPY -DVDADER_RULES 
+#CXXFLAGS      = -g -ansi -DSOLARIS -DSM_FREE3_USED -DSNACC_DEEP_COPY -DVDADER_RULES 
+
+# DO NOT MODIFY these varialbles unless you have to.
+#
+
+# Directory where SNACC header files reside was installed in
+#
+SNACCDIR      = ../../../SMPDist/util/VDASnacc/cpplib/inc
+
+# Directory where Crypto++ headers are
+#
+#CRYPTO3++      = ../../../crypto++.30
+CRYPTO3++      = ../../../SMPDist/Algs/crypto++3.1
+
+# Directory where CMAPI headers are located
+#
+CMAPI         = ../../include/cmapi
+
+# Directory where BSAFE was installed
+BSAFE         = ../../../SMPDist/Algs/BSAFE/Bsafe42/solaris/sparc_v8/library
+
+# Directory where CI Library was installed
+#
+CI_PATH       = /usr2/msp/litronic
+
+
+#
+# END OF NOT MODIFY
+
+# Directory where SNACC compiler lives.  This is a only used if if the .asn
+# files in the ./libsrc/asn1 directory need to be compiled.
+#
+SNACC         = snacc
+SNACCFLAGS    = -D -C -u ../../../SMPDist/util/VDASnacc/cpplib/asn1/asn-usefulVDA.asn1
+
+# Indicate whether this system uses 'ranlib'.  
+RANLIB        =
+
+
+LIBRARY=libcert.a
+
+TARGETS: libcert
+#TARGETS: libcert $(LIBRARY)
+
+clean:
+	(cd ./asn1; make clean)
+	(cd ./src; make clean)
+
+bare: clean
+	rm -f ../lib/$(LIBRARY)
+
+# Build the ASN.1 Modules first
+# Move the ASN.1 Module headers into ./include
+# Build the support source
+#
+buildobjs:
+	(cd ./asn1; make)
+	(cd ./src; make)
+
+
+# Create the library
+#
+libcert: buildobjs dynamiclink
+#libcert: buildobjs $(LIBRARY) $(RANLIB)
+
+#must explicitely specify libcert.a because shared object has the same name
+LIBPATH = -L../lib -L../../SMPDist/util/VDASnacc/cpplib/lib
+LIBS    = $(LIBPATH) \
+	-lasn1c++ -lsocket
+#	../lib/libcert.a -lasn1c++ -lsocket
+
+dynamiclink:
+	$(CXX) -G ./src/*.o ./asn1/*.o $(LIBS) -o ../lib/libcert.so
+
+$(LIBRARY): 
+	rm -f $(LIBRARY)
+	ar ruv ../lib/$(LIBRARY) ./src/*.o ./asn1/*.o
+
+ranlib:
+	ranlib ../lib/$(LIBSM)
+
+

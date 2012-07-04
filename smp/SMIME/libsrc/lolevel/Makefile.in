@@ -1,0 +1,43 @@
+#
+# Make information specific to the Low Level directory
+#
+include  @SMP_BUILDDIR@/build/Makehead
+CSRCS	      = $(wildcard *.c)
+COBJS         = $(CSRCS:.c=.o)
+SRCS          = $(wildcard *.cpp)
+OBJS          = $(SRCS:.cpp=.o) $(COBJS)
+OS		= `uname -s`
+# these variables are specific to this makefile
+# 
+TARGET        =  allobjs
+CMNFLGS       =           # common variables between compilers
+INCLUDE       = -I. \
+                -I../../inc \
+                -I../zlib/src \
+                -I../../../ACL/inc \
+		-I../../../pkcs11_cryptopp/inc \
+                -I../../../cml/cmapi/inc \
+                -I../../../cml/cmlasn/inc \
+                -I../../../cml/srl/inc \
+                -I../../libCtilMgr/inc  \
+                -I../../../pkcs11_cryptopp/inc
+
+CXX = @CXX@
+CC = @CC@
+CFLAGS = @CFLAGS@
+CXXFLAGS = @CXXFLAGS@ -DSTDC_HEADERS $(CMNFLGS) $(INCLUDE)
+DEPENDENCIES  = ../../inc/sm_api.h 
+
+allobjs: $(OBJS)
+
+$(OBJS): $(DEPENDENCIES)
+
+clean:
+	rm -rf *.o
+
+#
+# End of Low Level specific make information
+#
+
+include ../../../build/Maketail.in
+

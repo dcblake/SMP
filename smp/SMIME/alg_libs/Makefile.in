@@ -1,0 +1,60 @@
+# Include our directory paths
+include @SMP_BUILDDIR@/build/Makehead
+
+# Get the configure settings
+CC = @CC@
+CXX = @CXX@
+CFLAGS = @CFLAGS@
+CXXFLAGS = @CXXFLAGS@
+HASCRYPTOPP = @HasCryptoPP@
+HASBSAFE = @HasBSAFE@
+HASFORTEZZA = @HasFORTEZZA@
+
+
+LIBSMALGS=libsmalgs.a
+
+TARGETS: libsm_free3  libsm_rsa
+	cp -f lolevel/*.h $(SMPDISTDIR)/include/smp
+
+install:
+ifeq ($(HASCRYPTOPP), yes)
+	(cd ./sm_free3; rm StdAfx.* 2>/dev/null; make install)
+endif
+ifeq ($(HASBSAFE), yes)
+	(cd ./sm_rsa; rm sm_rsaDLL.cpp 2>/dev/null;rm StdAfx.* 2>/dev/null; make install)
+endif
+ifeq ($(HASFORTEZZA), yes)
+	(cd ./sm_fort;rm StdAfx.* 2>/dev/null;  make install)
+endif
+
+clean:
+ifeq ($(HASCRYPTOPP), yes)
+	(cd ./sm_free3; make clean)
+endif
+ifeq ($(HASBSAFE), yes)
+	(cd ./sm_rsa; make clean)
+endif
+ifeq ($(FORTEZZA), yes)
+	(cd ./sm_fort; make clean)
+endif
+
+bare: clean
+ifeq ($(HASCRYPTOPP), yes)
+	(cd ./sm_free3; make bare)
+endif
+ifeq ($(HASBSAFE), yes)
+	(cd ./sm_rsa; make bare)
+endif
+ifeq ($(HASFORTEZZA), yes)
+	(cd ./sm_fort; make bare)
+endif
+
+libsm_rsa:
+	(cd ./sm_rsa; rm StdAfx.* 2>/dev/null; rm sm_rsaDLL.cpp 2>/dev/null; make)
+
+libsm_free3:
+	(cd ./sm_free3; rm StdAfx.* 2>/dev/null; make)
+#	(cd ./sm_free3; make clean;make OPENSSL)
+
+libsm_fort:
+	(cd ./sm_fort; make)

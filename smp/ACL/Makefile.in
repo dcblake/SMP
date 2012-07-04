@@ -1,0 +1,58 @@
+SMPDISTDIR = @SMPDISTDIR@
+top_builddir = @top_smpdir@
+BLD_FLAG=-g
+
+# FOR USE WITH ACL DEVELOPMENT TESTING
+#all: acl acltool dist
+
+all: acl
+
+release:
+	make BLD_FLAG="" 
+
+acl:
+	(cd src; make BUILD_FLAG="$(BLD_FLAG)")
+	(cd inc; for files in *.h; do \
+	  /bin/sh $(top_builddir)/build/install-sh -c -m 644 $$files  $(SMPDISTDIR)/include/smp ; \
+	done;)
+
+# FOR USE WITH ACL DEVELOPMENT TESTING
+#acltool:
+#	(cd sample/src; make BUILD_FLAG="$(BLD_FLAG)")
+#	(cd sample/acltool; make BUILD_FLAG="$(BLD_FLAG)")
+
+dist::
+	mkdir -p ../SMPDist/acl/lib
+	mkdir -p ../SMPDist/acl/inc
+	cp inc/acl_api.h ../SMPDist/acl/inc
+	cp inc/aclasn.h ../SMPDist/acl/inc
+	cp inc/aclerror.h ../SMPDist/acl/inc
+	cp ./libacl.@SHEXT@ ../SMPDist/acl/lib
+
+distclean::
+	rm ../SMPDist/acl/inc/*
+	rm ../SMPDist/acl/lib/*
+
+# removes object files only
+#
+clean:
+	(cd ./src; make clean)
+# FOR USE WITH ACL DEVELOPMENT TESTING
+#	(cd sample/src; make clean)
+#	(cd sample/acltool; make clean)
+
+# removes object files and library files 
+#
+bare:
+	(cd ./src; make bare)
+# FOR USE WITH ACL DEVELOPMENT TESTING
+#	(cd sample/src; make bare)
+#	(cd sample/acltool; make bare)
+
+# don't do this unless you have the SNACC compiler installed.
+#
+clean-asn:
+	(cd ./src/asn1; make clean-asn)
+
+install:
+	(cd ./src; make install)

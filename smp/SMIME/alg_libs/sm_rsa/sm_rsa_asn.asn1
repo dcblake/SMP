@@ -1,0 +1,83 @@
+-- @(#) sm_rsa_asn.asn 1.12 8/4/99 12:59:57 
+-- sm_rsa_asn.asn
+-- ASN.1 module for SFL rsa CTI supporting RSA, RC2, MD5 and SHA1
+--
+
+SMRSA DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+IMPORTS
+
+  --RWC;BigIntegerStr
+  --RWC; FROM VdaEnhancedTypes 
+  ;
+
+-- OIDs from PKCS1   (RC2 is incorrect)
+-- ** Key encipherment algorithms **
+
+
+-- RWC; VDA; The following was defined as a way to breakout the RSAPublicKey 
+--  From a BSAFE public key ASN.1 encoded file for compatibility tests with
+--  MS Outlook Express.
+RSAPublicKeyBsafeVDA ::= SEQUENCE {
+  algId BsafePkcsAlgId,
+  rsaPublicKeyBits BIT STRING
+}
+
+--RWC;bsafe-id-sha1 OBJECT IDENTIFIER ::= { iso(1) identified-organization(3) oiw(14)
+--RWC;      secsig(3) algorithm(2) 26 }
+--RWC;bsafe-id-md5 OBJECT IDENTIFIER ::= { iso(1) member(2) us(840) rsadsi(113549)
+--RWC;      digest(2) 5 }
+bsafe-id-rsa-encr OBJECT IDENTIFIER ::= { iso(1) member(2) us(840)
+      rsadsi(113549) pkcs(1) 2 }
+bsafe-id-rc2-encr OBJECT IDENTIFIER ::= { iso(1) member(2) us(840)
+      rsadsi(113549) pkcs(1) 3 }
+
+-- will need RSA parameters
+
+-- RC2 Parameters
+
+RC2Parameters ::= SEQUENCE {
+   iv OCTET STRING,
+   keyBits INTEGER }
+
+-- OID from PKCS#5
+
+bsafepbeWithMD5AndDES-CBC OBJECT IDENTIFIER ::= { iso(1) member(2) us(840)
+      rsadsi(113549) pkcs(1) pkcs5(5) 3 }
+
+-- PKCS#8 Structures
+
+BsafePkcsAttributeAny ::= ANY
+
+BsafePkcsAttribute ::= SEQUENCE {
+   type OBJECT IDENTIFIER,
+   values SET OF BsafePkcsAttributeAny }
+
+BsafePkcsAttributes ::= SET OF BsafePkcsAttribute
+
+BsafePkcsAlgId ::= SEQUENCE {
+   algorithm OBJECT IDENTIFIER,
+   parameters ANY OPTIONAL }
+
+BsafePrivateKeyInfo ::= SEQUENCE {
+   version INTEGER,
+   privateKeyAlgorithm BsafePkcsAlgId,
+   privateKey OCTET STRING,
+   attributes [0] IMPLICIT BsafePkcsAttributes OPTIONAL }
+
+BsafeEncryptedPrivateKeyInfo ::= SEQUENCE {
+   encryptionAlgorithm BsafePkcsAlgId,
+   encryptedData OCTET STRING }
+
+-- PKCS#5 password based encryption parameters
+
+BsafePBEParameter ::= SEQUENCE {
+   salt OCTET STRING,
+   iterationCount INTEGER }
+
+
+
+END
+
+-- EOF sm_rsa_asn.asn

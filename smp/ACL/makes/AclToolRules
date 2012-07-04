@@ -1,0 +1,22 @@
+.SUFFIXES : .asn .cpp .cpp.o 
+
+.asn.cpp: 
+	$(SNACC) $(SNACCFLAGS) $(ASNEXTERN) $(ASNMODULES)
+	make $(ASNMODCPP)
+	make cleanup
+cleanup:
+	for asnfile in $(ASNEXTERN); do \
+	  strip=`basename $$asnfile`; \
+	  strip2=`echo $$strip | sed "s/\.asn//"`; \
+	  rm -f $$strip2.[Ch]; \
+	done
+.c.o:
+	$(CC) -c $(CFLAGS) $(CMNFLGS) $(INCLUDE) $<
+.C.cpp:
+	mv $*.C $*.cpp
+	@if [ ! "$(ASN_H_PATH)" = "" ]; then \
+	    mv $*.h $(ASN_H_PATH); \
+	fi
+.cpp.o:
+	$(CXX) -c $(CXXFLAGS) $(CMNFLGS) $(INCLUDE) $<  -o$*.o
+

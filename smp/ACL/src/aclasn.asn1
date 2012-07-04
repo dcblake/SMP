@@ -1,0 +1,485 @@
+AclModule DEFINITIONS IMPLICIT TAGS ::=
+
+BEGIN
+
+-- EXPORTS All --
+-- The types and values defined in this module are exported for use in the 
+-- other ASN.1 modules contained 
+-- within the Directory Specifications, and for the use of other applications
+-- which will use them to access Directory services. Other applications may 
+-- use them for their own purposes, but this will not constrain
+-- extensions and modifications needed to maintain or improve the Directory 
+-- service.
+
+IMPORTS
+
+   id-at
+   FROM  UsefulDefinitions { usefulDefinitions }
+
+   Name, Attribute, AttributeType
+      FROM InformationFramework  { informationFramework }
+
+   Version, Extensions
+      FROM AuthenticationFramework { authenticationFramework }
+
+   AlgorithmIdentifier
+      FROM AuthenticationFramework --RWC;SmUsefulTypes
+
+   DirectoryString
+	  FROM SelectedAttributeTypes { selectedAttributeTypes  }
+
+   StandardSecurityLabel, SecurityAttribute, ESSSecurityLabel
+       FROM SDN702  { sDN702 }
+
+   ub-integer-options
+        FROM ORAddressModule
+   GeneralNames
+        FROM X509Common ;
+
+
+-- Here is the definition of MessageSecurityData from ACP120
+--
+--MessageSecurityData4 ::= SEQUENCE 
+--{
+--    label
+--        SecurityLabel4,
+--    kmAttrCerts
+--        SEQUENCE OF AttributeCertificationPath4 OPTIONAL 
+--}
+
+-- The following definition will allow SNACC to decode a MessageSecurityData from ACP120.
+-- Note the kmAttrCerts field is not present because no one using it in the ACP120 world.
+--
+--
+ACP120MessageSecurityData ::= SEQUENCE 
+{
+    label ESSSecurityLabel
+}         
+
+-- used for generic sign and verify 
+--
+SignedMacro ::= SEQUENCE
+{
+   dataToSign     ANY,
+   algorithm      AlgorithmIdentifier,
+   signatureValue BIT STRING
+}
+
+
+-- defined in sm_x520sa.asn in libcert
+--
+-- id-at-clearance   OBJECT IDENTIFIER   ::=   {id-at 55}
+
+-- defined in sm_VDASupport_asn.asn in libcert
+--id-aa-securityLabel OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+--    us(840) rsadsi(113549) pkcs(1) pkcs-9(9) smime(16) id-aa(2) 2}
+
+id-missiSecurityCategories OBJECT IDENTIFIER ::= { iso(2) member-body(16)
+    us(840) rsadsi(1) pkcs(101) pkcs-9(2) smime(1) id-aa(8) 1}
+
+id-sigPrivilegeId OBJECT IDENTIFIER ::= {2 16 840 1 101 2 1 10 1}
+id-kmPrivilegeId OBJECT IDENTIFIER  ::=  {2 16 840 1 101 2 1 10 2}
+
+SecurityPolicyIdentifier ::= OBJECT IDENTIFIER
+
+Acspif ::= SEQUENCE {
+    spiftoSign        SpiftoSign,
+    algorithmIdentifier AlgorithmIdentifier,
+    signatureValue      BIT STRING
+}    
+    
+SpiftoSign ::= SEQUENCE{
+    versionInformation
+        VersionInformationData,
+    defaultSecurityPolicyIdData
+        [2] ObjectIdData OPTIONAL,
+    securityPolicyIdData
+        ObjectIdData,
+    securityClassifications
+        SEQUENCE OF SpifSecurityClassification,
+    privilegeID
+        OBJECT IDENTIFIER,
+    rbacId
+        OBJECT IDENTIFIER,
+    securityCategoryTagSets
+	    [0] SecurityCategoryTagSets OPTIONAL,
+--        [0] SEQUENCE OF SecurityCategoryTagSet OPTIONAL,
+    equivalentPolicies
+          [3] EquivalentPolicies OPTIONAL,
+--        [3] SEQUENCE OF EquivalentPolicy OPTIONAL,
+    extensions    
+        [1] Extensions OPTIONAL
+}
+
+-- added by Pierce to clean up code. 
+--    class SecurityCategoryTagSets replaces SpiftoSignSeqOf1
+--    class EquivalentPolicies replaces SpiftoSignSeqOf2
+--
+SecurityCategoryTagSets ::= SEQUENCE OF SecurityCategoryTagSet
+EquivalentPolicies ::= SEQUENCE OF EquivalentPolicy
+--
+-- end of stuff added by Pierce
+
+VersionInformationData ::= SEQUENCE
+{
+    versionNumber    
+        INTEGER,
+    creationDate    
+        GeneralizedTime,
+    originatorDistinguishedName    
+        Name,
+    keyIdentifier    
+        OCTET STRING
+}
+
+ObjectIdData ::= SEQUENCE
+{
+    objectId    
+        OBJECT IDENTIFIER,
+    objectIdName    
+        TeletexString(SIZE (1..ubObjectIdNameLength))
+}
+
+SpifSecurityClassification ::= SEQUENCE 
+{
+    labelAndCertValue
+        INTEGER,
+    classificationName
+        DirectoryString(SIZE(1..ubClassificationNameLength)),
+    equivalentClassifications
+        [0] SEQUENCE OF EquivalentClassification OPTIONAL,
+    hierarchyValue
+        INTEGER,
+    markingData
+        [1] SEQUENCE OF MarkingData OPTIONAL,
+    requiredCategory
+--
+-- See comment below
+--
+--        [2] SEQUENCE OF OptionalCategoryGroup OPTIONAL,
+          [2] RequiredCategories OPTIONAL,
+    obsolete
+-- 
+-- BOOLEAN DEFAULT FALSE WORKS in SNACC so I commented out the
+-- fix we made for DSET
+--
+--       BOOLEAN OPTIONAL
+         BOOLEAN DEFAULT FALSE
+}
+
+-- Pierce created this TYPE make make the snacc class names more logical
+-- this is not actually part of the real SPIF syntax, but it the net
+-- result is the same.  3-2-2000
+--
+RequiredCategories ::= SEQUENCE OF OptionalCategoryGroup
+
+
+EquivalentPolicy ::= SEQUENCE
+{
+    securityPolicyId    
+        OBJECT IDENTIFIER,
+    securityPolicyName
+        DirectoryString(SIZE(1..ubObjectIdNameLength)) OPTIONAL
+}
+
+EquivalentClassification ::= SEQUENCE
+{
+    securityPolicyId    
+        OBJECT IDENTIFIER,
+    labelAndCertValue    
+        INTEGER,
+    applied
+        INTEGER { encrypt (0), decrypt (1), both (2) }
+
+}
+
+MarkingData ::= SEQUENCE
+{
+    markingPhrase    
+        DirectoryString(SIZE(1..ubMarkingPhraseLength)) OPTIONAL,
+    markingCode    
+        SEQUENCE OF MarkingCode OPTIONAL
+}
+
+MarkingCode ::= INTEGER
+{
+    pageTop                 (1),
+    pageBottom              (2),
+    pageTopBottom           (3),
+    documentEnd             (4),
+    noNameDisplay           (5),
+    noMarkingDisplay        (6),
+    unused                  (7),
+    documentStart           (8),
+    suppressClassName       (9) 
+}
+
+OptionalCategoryGroup ::= SEQUENCE
+{
+    operation
+        INTEGER { onlyOne (1), oneOrMore (2), all (3) },
+    categoryGroup
+        OptionalCategoryDataSeqOf
+}
+
+OptionalCategoryDataSeqOf ::= SEQUENCE OF OptionalCategoryData
+
+OptionalCategoryData ::= SEQUENCE
+{
+    securityCategoryTagSetName        
+        OBJECT IDENTIFIER,
+    tagType
+        TagTypeValue,
+    enumType
+        [0] INTEGER OPTIONAL,
+                -- IF tagType is set to Enumerated (2), THEN
+                -- enumType indicates if enumerated tag type is
+                -- permissive (EnumType is 1) or restrictive
+                -- (EnumType is 2).
+    categories
+        CHOICE
+        {
+            labelAndCertValue
+                INTEGER, 
+            all
+                BOOLEAN
+        }
+}
+
+SecurityCategoryTagSet ::= SEQUENCE
+{
+    securityCategoryTagSetName    
+        OBJECT IDENTIFIER,
+    secCatTagSetString
+        TeletexString  (SIZE (1..ubSecCatTagSetStringLength))
+                                           OPTIONAL,
+    securityCategoryTags    
+        SEQUENCE OF SecurityCategoryTag
+}
+
+SecurityCategoryTag ::= SEQUENCE
+{
+    tagType              
+        TagTypeValue,
+    enumType     
+        [0] INTEGER OPTIONAL,
+        -- IF tagType is set to Enumerated (2), THEN
+        -- enumType indicates if enumerated tag type is
+        -- permissive (EnumType is 1) or restrictive
+        -- (EnumType is 2).
+    tag7Encoding
+        [1] INTEGER { bitSetAttributes (1),
+                      securityAttributes (2) } OPTIONAL,
+    securityCategoryTagName
+        TeletexString  (SIZE (1..ubSecCategoryTagNameLength))
+                                                OPTIONAL,
+    tagCategories
+        SEQUENCE OF TagCategories,
+    markingQualifiers
+        MarkingQualifiers OPTIONAL,
+    singleCategorySelectionPolicy 
+        BOOLEAN DEFAULT FALSE
+}
+
+MarkingQualifiers ::= SEQUENCE {
+        markingCode
+               MarkingCode OPTIONAL,
+        qualifiers
+               SEQUENCE OF MarkingQualifier OPTIONAL
+}
+
+MarkingQualifier ::= SEQUENCE {
+        markingQualifier
+               DirectoryString (SIZE (1..ubMarkingPhraseLength)),
+        qualifierCode
+               QualifierCode
+}
+
+QualifierCode ::= INTEGER
+{
+     prefixQualifier
+        (1),
+     suffixQualifier
+        (2),
+     separatorQualifier
+        (3)
+}
+
+TagCategories ::= SEQUENCE {
+        labelAndCertValue
+               INTEGER,
+        secCategoryName
+               DirectoryString (SIZE (1..ubSecCategoryNameLength)),
+        equivalentSecCategoryTags
+               [0] SEQUENCE OF EquivalentSecCategoryTag  OPTIONAL,
+        markingData
+               [1] SEQUENCE OF MarkingData OPTIONAL,
+        requiredClass
+               [2] OptionalClassData  OPTIONAL,
+        excludedClass
+               [3] SEQUENCE OF OptionalClassData OPTIONAL,
+        requiredCategory 
+--
+-- defined type RequiredCategories to replaces "SEQUENCE OF OptionalCategoryGroup" 
+-- so the same SNACC class & code can be used.
+--
+--               [4] SEQUENCE OF OptionalCategoryGroup OPTIONAL,
+               [4] RequiredCategories OPTIONAL,
+        excludedCategory 
+               [5] OptionalCategoryDataSeqOf OPTIONAL,
+        obsolete
+               BOOLEAN DEFAULT FALSE
+}
+
+TagTypeValue ::= INTEGER
+{
+     notApplicable
+        (0),
+     restricted
+        (1),
+     enumerated    
+        (2),
+     permissive    
+        (6),
+     tagType7
+        (7)
+}
+
+EquivalentSecCategoryTag ::= SEQUENCE
+{
+    securityPolicyObjId    
+        OBJECT IDENTIFIER,
+    securityCategoryTagSetName    
+        OBJECT IDENTIFIER,
+    tagType    
+        TagTypeValue,
+    enumType
+         [0] INTEGER OPTIONAL,
+        -- IF tagType is set to Enumerated (2), THEN
+        -- enumType indicates if enumerated tag type is
+        -- permissive (EnumType is 1) or restrictive
+        -- (EnumType is 2).
+    labelAndCertValue    
+        INTEGER,
+    applied
+        INTEGER { encrypt (0), decrypt (1), both (2) }
+}
+
+OptionalClassData ::= INTEGER
+
+MissiSecurityCategories ::= CHOICE
+{
+-- NOT SUPPORTED
+--        lrbacInfo
+--               LrbacInfo,
+        prbacSecurityCategories
+               StandardSecurityLabel
+}
+
+-- Upper Bounds not defined else where
+
+ubObjectIdNameLength INTEGER                     ::= 80
+ubClassificationNameLength INTEGER               ::= 80
+ubMarkingPhraseLength INTEGER                    ::= 80
+ubSecCategoryNameLength INTEGER                  ::= 80
+ubSecCatTagSetStringLength INTEGER  			 ::= 80
+ubSecCategoryTagNameLength INTEGER				 ::= 80
+
+
+-- RSA OIDs
+acl-id-rsa-with-md2  OBJECT IDENTIFIER ::= 
+   {iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1) pkcs-1(1) 2}
+acl-id-rsa-with-md5  OBJECT IDENTIFIER ::= 
+   {iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1) pkcs-1(1) 4}
+acl-id-rsa OBJECT IDENTIFIER ::=
+   {iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1) pkcs-1(1) 1}
+acl-id-rsa-with-sha1 OBJECT IDENTIFIER ::=
+   {iso(1) member-body(2) us(840) rsadsi(113549) pkcs(1) pkcs-1(1) 5}
+
+-- SPIF Signer Attribute
+--acl-id-at-spif-signer OBJECT IDENTIFIER ::= {2 16 124 101 0 8 99}
+acl-id-at-spif-signer OBJECT IDENTIFIER ::= {2 16 124 101 259 8 6 3 1}
+
+spifSignerAttribute OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX 	SpifSignerAttribute
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {acl-id-at-spif-signer}
+
+SpifSignerAttribute ::= SEQUENCE OF OBJECT IDENTIFIER
+
+AclRsaPublicKey ::= SEQUENCE
+{
+   modulus  INTEGER,
+   exponent INTEGER 
+}
+
+-- oids to be identified later - TBD
+acl-id-restrictiveBitMap OBJECT IDENTIFIER ::= {2 16 124 101 259 1 2 3 4}
+acl-id-enumeratedAttributes OBJECT IDENTIFIER ::= {2 16 124 101 259 2 3 4 5}
+acl-id-permissiveBitMap OBJECT IDENTIFIER ::= {2 16 124 101 259 3 4 5 6}
+acl-id-freeFormField OBJECT IDENTIFIER ::= {2 16 124 101 259 4 5 6 7}
+
+missiSecurityCategories OBJECT-TYPE
+	SYNTAX 	MissiSecurityCategories
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-missiSecurityCategories}
+
+natoRestrictiveBitMap OBJECT-TYPE
+	SYNTAX 	RestrictiveTag
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {acl-id-restrictiveBitMap}
+
+RestrictiveTag ::= SEQUENCE
+{
+	tagName			OBJECT IDENTIFIER,
+	attributeFlags	BIT STRING
+}
+
+natoEnumeratedAttributes OBJECT-TYPE
+	SYNTAX 	EnumeratedTag
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {acl-id-enumeratedAttributes}
+
+EnumeratedTag ::= SEQUENCE
+{
+	tagName			OBJECT IDENTIFIER,
+	attributeList	SET OF SecurityAttribute
+}
+
+natoPermissiveBitMap OBJECT-TYPE
+	SYNTAX 	PermissiveTag
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {acl-id-permissiveBitMap}
+
+PermissiveTag ::= SEQUENCE
+{
+	tagName			OBJECT IDENTIFIER,
+	attributeFlags	BIT STRING
+}
+
+natoFreeFormField OBJECT-TYPE
+	SYNTAX 	FreeFormField
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {acl-id-freeFormField}
+
+FreeFormField ::= SEQUENCE
+{
+	tagName			OBJECT IDENTIFIER,
+	field			Field
+}
+
+Field ::= CHOICE 
+{
+    bitSetAttributes
+                BIT STRING,
+    securityAttributes
+                SET OF SecurityAttribute
+}
+
+END

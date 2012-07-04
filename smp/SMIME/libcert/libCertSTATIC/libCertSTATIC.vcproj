@@ -1,0 +1,1008 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="libCertSTATIC"
+	ProjectGUID="{8BE00E59-6066-4A64-91FF-2928624E4309}"
+	RootNamespace="libCertSTATIC">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="StaticSnacc Debug|Win32"
+			OutputDirectory=".\StaticSnacc_Debug"
+			IntermediateDirectory=".\StaticSnacc_Debug"
+			ConfigurationType="4"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="../../inc/cmapi,../../inc,../../../SNACC,../../../SNACC/c++-lib/inc,../../libCtilMgr/inc,../../../cml/cmlasn/inc"
+				PreprocessorDefinitions="LIBCERTDLL_API=&quot;&quot;;LIBCTILMGRDLL_API=&quot;&quot;;SNACCDLL_API=&quot;&quot;;VDASNACCDLL_API=&quot;&quot;;EXPORT_GENSNACC=&quot;&quot;;CMLASN_API=&quot;&quot;;_DEBUG;_LIB;WIN32;VDASNACCDLL_API_EXPORTS"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderFile=".\StaticSnacc_Debug/libCertSTATIC.pch"
+				AssemblerListingLocation=".\StaticSnacc_Debug/"
+				ObjectFile=".\StaticSnacc_Debug/"
+				ProgramDataBaseFileName=".\StaticSnacc_Debug/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="1"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLibrarianTool"
+				OutputFile="..\..\lib\libCertSTATICd.lib"
+				SuppressStartupBanner="TRUE"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory=".\Release"
+			IntermediateDirectory=".\Release"
+			ConfigurationType="4"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="../../../cml/cmapi/inc,../../inc,../../../../SNACC,../../../../SNACC/c++-lib/inc,../../libCtilMgr/inc,../../../cml/cmlasn/inc,../../../pkcs11_cryptopp/inc"
+				PreprocessorDefinitions="_DEBUG;_LIB;WIN32"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderFile=".\Release/libCertSTATIC.pch"
+				AssemblerListingLocation=".\Release/"
+				ObjectFile=".\Release/"
+				ProgramDataBaseFileName=".\Release/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLibrarianTool"
+				OutputFile="../../../../SMPDist/lib/libCert.lib"
+				SuppressStartupBanner="TRUE"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory=".\Debug"
+			IntermediateDirectory=".\Debug"
+			ConfigurationType="4"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="../../../cml/cmapi/inc,../../inc,../../../../SNACC,../../../../SNACC/c++-lib/inc,../../libCtilMgr/inc,../../../cml/cmlasn/inc,../../../pkcs11_cryptopp/inc"
+				PreprocessorDefinitions="_DEBUG;_LIB;WIN32"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderFile=".\Debug/libCertSTATIC.pch"
+				AssemblerListingLocation=".\Debug/"
+				ObjectFile=".\Debug/"
+				ProgramDataBaseFileName=".\Debug/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="1"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLibrarianTool"
+				OutputFile="../../../../SMPDist/lib/libCertd.lib"
+				SuppressStartupBanner="TRUE"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="StaticSnacc Release|Win32"
+			OutputDirectory=".\StaticSnacc_Release"
+			IntermediateDirectory=".\StaticSnacc_Release"
+			ConfigurationType="4"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="../../../SMPDist/pct/include,../../inc/cmapi,../../inc,../../../SNACC,../../../SNACC/c++-lib/inc,../../libCtilMgr/inc,../../../cml/cmlasn/inc"
+				PreprocessorDefinitions="LIBCERTDLL_API=&quot;&quot;;LIBCTILMGRDLL_API=&quot;&quot;;SNACCDLL_API=&quot;&quot;;VDASNACCDLL_API=&quot;&quot;;EXPORT_GENSNACC=&quot;&quot;;CMLASN_API=&quot;&quot;;_DEBUG;_LIB;WIN32;VDASNACCDLL_API_EXPORTS"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderFile=".\StaticSnacc_Release/libCertSTATIC.pch"
+				AssemblerListingLocation=".\StaticSnacc_Release/"
+				ObjectFile=".\StaticSnacc_Release/"
+				ProgramDataBaseFileName=".\StaticSnacc_Release/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLibrarianTool"
+				OutputFile="..\..\lib\libCertSTATIC.lib"
+				SuppressStartupBanner="TRUE"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
+			<File
+				RelativePath="..\src\sm_AppLogin.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\sm_AttrBase.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\sm_certChoice.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\sm_CertificateList.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\sm_CSInst.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\sm_CSMime.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\sm_GenName.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\sm_Identifier.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\sm_Issuer.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\sm_mabRout.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\sm_MsgCertCrls.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\sm_RevocationInfoChoice.cpp">
+			</File>
+			<File
+				RelativePath="..\src\sm_RevocationInfoChoices.cpp">
+			</File>
+			<File
+				RelativePath="..\src\sm_SignBuf.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\sm_VDAStream.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\asn1\sm_VDASupport_asn.asn1">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Compiling ASN.1 module:  $(InputPath)"
+						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
+cd &quot;$(InputDir)&quot;
+..\..\..\..\SMPDist\bin\esnaccd -D -C -I &quot;$(IntDir)&quot; &quot;$(InputName)&quot;.asn1
+move &quot;$(InputName)&quot;.h ..\..\inc
+"
+						AdditionalDependencies="..\..\..\..\SMPDist\bin\esnaccd.exe;"
+						Outputs="..\..\inc\$(InputName).h;$(InputDir)$(InputName).cpp"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Compiling ASN.1 module:  $(InputPath)"
+						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
+cd &quot;$(InputDir)&quot;
+..\..\..\..\SMPDist\bin\esnacc -C -I ..\..\libCtilMgr\src  -I ..\..\..\cml\cmlasn\Modules  &quot;$(InputName)&quot;.asn1
+move &quot;$(InputName)&quot;.h ..\..\inc
+"
+						AdditionalDependencies="..\..\..\..\SMPDist\bin\esnacc.exe;"
+						Outputs="..\..\inc\$(InputName).h;$(InputDir)$(InputName).cpp;..\..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Compiling ASN.1 module:  $(InputPath)"
+						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
+cd &quot;$(InputDir)&quot;
+..\..\..\..\SMPDist\bin\esnaccd -a 900 -C -I ..\..\libCtilMgr\src  -I ..\..\..\cml\cmlasn\Modules  &quot;$(InputName)&quot;.asn1
+move &quot;$(InputName)&quot;.h ..\..\inc
+"
+						AdditionalDependencies="..\..\..\..\SMPDist\bin\esnaccd.exe;"
+						Outputs="..\..\inc\$(InputName).h;$(InputDir)$(InputName).cpp;..\..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Compiling ASN.1 module:  $(InputPath)"
+						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
+cd &quot;$(InputDir)&quot;
+..\..\..\..\SMPDist\bin\esnacc -D -C -I &quot;$(IntDir)&quot; &quot;$(InputName)&quot;.asn1
+move &quot;$(InputName)&quot;.h ..\..\inc
+"
+						AdditionalDependencies="..\..\..\..\SMPDist\bin\esnacc.exe;"
+						Outputs="..\..\inc\$(InputName).h;$(InputDir)$(InputName).cpp"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\asn1\sm_VDASupport_asn.cpp">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl">
+			<File
+				RelativePath="..\..\inc\sm_apicCert.h">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\inc\sm_apiCert.h">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\inc\sm_AppLogin.h">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\inc\sm_VDAStream.h">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\inc\sm_VDASupport_asn.h">
+				<FileConfiguration
+					Name="StaticSnacc Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StaticSnacc Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputPath) to SMPDist..."
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

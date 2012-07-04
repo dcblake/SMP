@@ -1,0 +1,182 @@
+#
+# Make information specific to the Fortezza Token Interface directory
+#
+include  @SMP_BUILDDIR@/build/Makehead
+SNACCFLAGS = @SNACCFLAGS@
+SNACC = @SNACCDIREXEC@/esnacc
+
+ifeq ($(RANLIB),)
+RANLIB = echo
+endif
+
+SNACCOPTIONS = -I $(top_builddir)/cml/cmlasn/Modules -I $(top_builddir)/SMIME/libCtilMgr/src -I $(top_builddir)/SMIME/libsrc/asn1 -I $(top_builddir)/SMIME/libcert/asn1
+HASCRYPTOPP = @HasCryptoPP@
+# Global SNACC include Reference
+SNACCDIRINC = @SNACCINCDIR@/c++
+# Internal SNACC include reference
+SNACCDIRINCINTERNAL = -I@SNACCINCDIR@
+SNACCDIRLIB = @SNACCLIBDIR@
+CXX         = @CXX@
+CXXFLAGS    = @CXXFLAGS@
+USEDEBUGLIB = @USEDEBUGLIB@
+CPPSRCS     = $(wildcard *.cpp) 
+CPPOBJS     = $(CPPSRCS:.cpp=.o) sm_CryptoKeysBase.o
+CPPOBJSP12  = sm_free3P12 sm_CryptoKeysBaseP12
+
+ASNMODULES  = $(wildcard *.asn1)
+ASNMODCPP   = ${ASNMODULES:.asn1=.cpp}
+ASNMODHDR   = ${ASNMODULES:.asn1=.h}
+ASNMODOBJS  = ${ASNMODULES:.asn1=.o}
+
+OBJS        = sm_free3_asn.o \
+              sm_aes_wrap.o \
+              sm_free3.o sm_free3DLL.o sm_free3_RSA.o \
+              sm_vda_cbc_3_2.o sm_vda_cbc.o sm_cms.o 
+CMNFLGS     =  -DSM_FREE3_RSA_INCLUDED
+
+# common variables between compilers
+INCLUDE     = -I. \
+	-I../../inc \
+	-I../lolevel \
+	-I../../libCtilMgr/inc \
+	-I../../libsrc/asn1 \
+	-I../../../pkcs11_cryptopp/inc \
+	-I$(CMLINC) \
+	-I$(CRYPTOPPINCDIR) 
+
+DEPENDENCIES  = ../../inc/sm_api.h ./sm_free3.h
+
+#	CXXFLAGS += $(CMNFLGS) $(INCLUDE)
+ifeq ($(HASCRYPTOPP), yes)
+	LIBPATH = -L$(CRYPTOPPLIBDIR) -L$(SNACCDIRLIB) -L$(SMPDISTDIR)/lib 
+	LFLAG1 = @SMP_LDFLAG@
+
+	ifdef CRYPTOPPDIR
+	LIBPATH += -L$(CRYPTOPPDIR)/lib
+	endif
+	ifdef CRYPTOPPINCDIR
+	INCLUDE += -I$(CRYPTOPPDIR)/include
+	else
+	INCLUDE += -I/usr/local/include/cryptopp
+	endif
+
+.PHONY : warn
+.PHONY : cp_header
+
+
+ifeq ($(USEDEBUGLIB), yes)
+LIBS    = -lcryptopp -lcert_d -lc++asn1  -lcmlasn_d -lctil_d
+ifeq ($(ENABLESTATIC), yes)
+TARGET  =  $(SMPDISTDIR)/lib/libsmfree3_d.a
+else
+TARGET  = $(SMPDISTDIR)/lib/libsm_free3DLL_d.@SHEXT@
+OPENSSLLIBRARYOUT	= $(SMPDISTDIR)/lib/libsm_free3DLLOpenSSL_d.@SHEXT@
+endif
+else
+LIBS    = -lcryptopp -lcert -lc++asn1  -lcmlasn -lctil
+ifeq ($(ENABLESTATIC), yes)
+TARGET  =  $(SMPDISTDIR)/lib/libsmfree3.a
+else
+TARGET  = $(SMPDISTDIR)/lib/libsm_free3DLL.@SHEXT@
+endif
+OPENSSLLIBRARYOUT	= $(SMPDISTDIR)/lib/libsm_free3DLLOpenSSL.@SHEXT@
+endif
+
+$(TARGET): $(OBJS) cp_header
+
+cp_header: $(TARGET)
+	@(for hfile in ./*.h; do \
+		if [ -f $$hfile ]; then \
+			echo "Installing header $$hfile into $(prefix)/include/smp"; \
+			/bin/sh $(top_builddir)/build/install-sh -c -m 644 $$hfile $(SMPDISTDIR)/include/smp; \
+		fi; \
+	done);
+
+#RWC;dynamiclinkPKCS12: $(OBJS)
+#RWC;	$(CXX) *.o $(LFLAG1) $(LIBPATH) $(LIBS) $(PKCS12Libs) \
+#RWC;		-o $(OPENSSLLIBRARYOUT)
+
+##RWC; PRE-Select certain files with special flag for building certs keys.
+#RWC;OPENSSL:	$(ASNMODCPP) $(CPPOBJSP12) $(CPPSRCS:.cpp=.o) dynamiclinkOpenSSL
+
+#RWC;dynamiclinkOpenSSL: PKCS12ObjsCompile $(OBJS) sm_cms.o
+#RWC;	$(CXX) *.o $(LFLAG1) $(LIBPATH) $(LIBS) $(PKCS12Libs) \
+#RWC;		-o $(OPENSSLLIBRARYOUT)
+
+
+#RWC;PKCS12Libs	=-L../../../../SFLPkcs12/openssl-0.9.6a -lcrypto -lssl -lRSAglue
+#RWC;PKCS12FLAGS	= -I../../../../SFLPkcs12/openssl-0.9.6a/apps \
+#RWC;		-I../../../../SFLPkcs12/openssl-0.9.6a/include \
+#RWC;		-I../../../../SFLPkcs12/openssl-0.9.6a/crypto \
+#RWC;		-I../../../../SFLPkcs12/pkcs11Crypto/SFLPkcs12Lib \
+#RWC;		-DOPENSSL_PKCS12_ENABLED -DTHREADS -D_REENTRANT -DL_ENDIAN \
+#RWC;		-Wall -DSHA1_ASM \
+#RWC;		-DMD5_ASM -DRMD160_ASM -DNO_BF -DNO_CAST -DNO_RC5 -DSHA_1
+##RWC;DO NOT USE SINCE IT CAUSES CORE DUMPS WITH EXCEPTIONS;
+##RWC:		-fomit-frame-pointer -Wall -DSHA1_ASM 
+PKCS12Cs	= ../../../../SFLPkcs12/pkcs11Crypto/SFLPkcs12Lib/*.c 
+
+sm_cms.o:
+	$(CXX) -c $(CXXFLAGS) $(CMNFLGS) $(INCLUDE) $(SNACCDIRINCINTERNAL)/c++  ../../libsrc/asn1/sm_cms.cpp
+
+sm_free3.o: sm_free3.cpp
+	$(CXX) -c $(CXXFLAGS) $(CMNFLGS) $(INCLUDE) $(SNACCDIRINCINTERNAL)/c++ sm_free3.cpp
+
+sm_free3P12:
+	$(CXX) -c $(CXXFLAGS) $(CMNFLGS) $(SNACCDIRINCINTERNAL)/c++ $(INCLUDE) \
+		$(PKCS12FLAGS) \
+		sm_free3.cpp sm_CryptoKeysDsa.cpp sm_CryptoKeysF3Rsa.cpp
+#RWC;	$(CXX) -c $(CXXFLAGS) $(CMNFLGS) $(INCLUDE) $(PKCS12FLAGS) sm_free3.cpp
+
+sm_CryptoKeysBase.o:
+	$(CXX) -c $(CXXFLAGS) $(CMNFLGS) -DSM_FREE3_USED $(INCLUDE) \
+		$(SNACCDIRINCINTERNAL)/c++ ../lolevel/$*.cpp
+
+#RWC;sm_CryptoKeysBaseP12:
+#RWC;	$(CXX) -c $(CXXFLAGS) $(CMNFLGS) $(INCLUDE) $(PKCS12FLAGS)  \
+#RWC;		$(SNACCDIRINCINTERNAL) ../lolevel/*.cpp
+
+#RWC;PKCS12ObjsCompile:
+#RWC;	gcc -c $(CFLAGS) $(CMNFLGS) $(PKCS12Cs) $(PKCS12FLAGS)
+
+$(OBJS): $(DEPENDENCIES)
+$(ASNMODOBJS): $(ASNMODCPP)
+$(ASNMODCPP): $(ASNMODULES)
+
+clean-asn: 
+	rm -f $(ASNMODCPP)
+	rm -f $(ASNMODHDR)
+	@echo "removing ASN.1 include files..."
+	(cd ../../inc; rm -f $(ASNMODHDR))
+
+clean: clean-asn
+	rm -f *.o
+
+bare: clean clean-asn
+	rm -f $(LIBRARY)
+
+#
+# End of Fortezza Crypto Token Interface specific stuff
+#
+
+include ../../../build/Maketail.in
+include ../../../build/Makeinstall.in
+
+#install:
+#	@(for hfile in ./*.h; do \
+#	 if [ -f $$hfile ]; then \
+#	    echo "Installing header $$hfile into $(prefix)/include/smp"; \
+#	    /bin/sh $(top_builddir)/build/install-sh -c -m 644 $$hfile $(prefix)/include/smp; \
+#	 fi; \
+#	done);
+#	@(for libfile in ./*.sl ./*.a ./*.so; do \
+#	  if [ -f $$libfile ]; then \
+#	     echo "Installing $$libfile into $(prefix)/lib"; \
+#	  fi; \
+#	done);
+#
+else
+TARGET = library
+warn:
+	@echo "*** Warning Crypto++ v4.2 or v5.0 is required to build this CTIL ***"
+endif

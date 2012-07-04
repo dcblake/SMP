@@ -1,0 +1,65 @@
+include @SMP_BUILDDIR@/build/Makehead
+SNACCFLAGS = @SNACCFLAGS@
+CXX = @CXX@
+CXXFLAGS = @CXXFLAGS@
+HAVE_SNACC = @HAVE_SNACC@
+topbuilddir = @top_builddir@
+
+# these variables are specific to this makefile
+# 
+TARGET        =  allobjs
+CMNFLGS       =                   # common variables between compilers
+INCLUDE       = -I. \
+                -I../../inc \
+                -I../../libCtilMgr/inc \
+                -I../../../cml/cmlasn/inc
+DEPENDENCIES  = ../../inc/sm_api.h
+
+ASNEXTERNB    = sm_usefulTypes.asn1 
+#ASNEXTERN     = ${ASNEXTERNB:%.asn1=../../libCtilMgr/src/%.asn1} \
+#		${ASNEXTERNA:%.asn1=$(SMPDISTDIR)/include/Modules/%.asn1}
+
+ASNMODULES       = sm_VDASupport_asn.asn1
+CUSTOMSNACCFLAGS = -VDAexport
+ASNMODCXX     = ${ASNMODULES:.asn1=.C}
+ASNMODCPP     = ${ASNMODULES:.asn1=.cpp}
+ASNMODHDR     = ${ASNMODULES:.asn1=.h}
+ASNMODOBJS    = ${ASNMODULES:.asn1=.o}
+ASN_H_PATH    = ../../inc
+
+SNACCOPTIONS = -a 600 -I ../../libCtilMgr/src -I ../../../cml/cmlasn/Modules 
+
+ASNMODDEL     = ${ASNEXTERNA:.asn1=.del}
+ASNMODDEL1    = ${ASNEXTERNB:.asn1=.del}
+ASNMODDEL2    = ${ASNMODS:.asn1=.del}
+
+allobjs: $(ASNMODOBJS) $(OBJS)
+
+$(OBJS): $(DEPENDENCIES)
+$(ASNMODOBJS): $(ASNMODCPP)
+$(ASNMODCPP): $(ASNMODULES)
+
+clean-asn: 
+	rm -f $(ASNMODCPP)
+	@echo "removing ASN.1 include files..."
+	(cd ../../inc; rm -f $(ASNMODHDR))
+cleanobjs: 
+	rm -f *.o
+clean: clean-asn cleanobjs
+	rm -f *.o
+
+
+install:
+	/bin/sh $(top_builddir)/build/mkinstalldirs $(SMPDISTDIR)/include/smp/Modules
+	(for files in $(ASNMODULES); do \
+		/bin/sh $(top_builddir)/build/install-sh -c -m 644 $$files $(SMPDISTDIR)/include/smp/Modules; \
+	done; )
+	(for files in $(ASNMODHDR); do \
+		/bin/sh $(top_builddir)/build/install-sh -c -m 644 ../../inc/$$files $(SMPDISTDIR)/include/smp; \
+	done; )
+#
+# End of ASN.1 specific make information
+#
+
+include ../../../build/Maketail.in
+

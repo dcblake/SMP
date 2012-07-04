@@ -1,0 +1,33 @@
+
+
+LIBSM=libsm.a
+
+TARGETS: libasn1 liblo libhi libsm
+
+clean:
+	(cd ./asn1; make clean)
+	(cd ./lolevel; make clean)
+	(cd ./hilevel; make clean)
+
+bare: clean
+	rm -f ../lib/$(LIBSM)
+
+libasn1:
+	(cd ./asn1; make)
+
+liblo:
+	(cd ./lolevel; make)
+
+libhi:
+	(cd ./hilevel; make)
+
+libsm: $(LIBSM) $(RANLIB)
+
+$(LIBSM): 
+	rm -f $(LIBSM)
+	ar ruv ../lib/$(LIBSM) ./asn1/*.o ./lolevel/*.o ./hilevel/*.o
+
+ranlib:
+	ranlib ../lib/$(LIBSM)
+
+

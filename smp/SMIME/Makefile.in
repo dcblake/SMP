@@ -1,0 +1,95 @@
+include @SMP_BUILDDIR@/build/Makehead
+
+##
+## SMP - SMIME
+## Specifiy which subdirectories to make
+# SUBDIRS= libcert libsrc libCtilMgr alg_libs
+HAVE_SNACC = @HAVE_SNACC@
+
+# TARGETS: ctillib certlib libsm libsmalgs distribution
+TARGETS: ctillib certlib libsm libsmalgs 
+# TestTARGETS: libsmutil pkcs12 sm_free3Pkcs12 test_distribution
+# TARGETSWithPKCS12: pkcs12 TARGETS
+
+
+all: cpinc ctillib certlib libsm libsmalgs
+
+cpinc:
+	(cd inc; for files in *.h; do \
+	   /bin/sh $(top_builddir)/build/install-sh -c -m 644 $$files  $(SMPDISTDIR)/include/smp ; \
+	done;)
+
+libsm:
+	(cd libsrc; make )
+	(cd inc; cp -f *.h $(SMPDISTDIR)/include/smp )
+libsmalgs:
+	(cd alg_libs; make )
+certlib:
+	(cd libcert; make )
+ctillib:
+	(cd libCtilMgr; make )
+libsmutil:
+	(cd testsrc; make )
+	(cd testutil/mimelib; make)
+
+cmldependencies: ctillib certlib libsmalgs
+
+
+# removes object files only
+#
+clean:
+	(cd ./libsrc; make clean)
+	(cd ./libCtilMgr; make clean)
+	(cd ./libcert; make clean)
+	(cd ./alg_libs; make clean)
+
+cleanutil:
+	(cd ./testsrc/util; make clean)
+	(cd ./testutil/mimelib; make clean)
+	(cd ./testsrc/hilevel; make clean)
+
+# removes object files and library files 
+#
+bare:
+	(cd ./libsrc; make  bare)
+	(cd ./testsrc; make  bare)
+	(cd ./testsrc/hilevel; make bare)
+	(cd ./alg_libs; make  bare)
+
+# don't do this unless you have the SNACC compiler installed.
+#
+clean-asn:
+ifeq ($(HAVE_SNACC), yes)
+	(cd ./libsrc/asn1; make clean-asn)
+	(cd ./libcert/asn1; make clean-asn)
+	(cd ./alg_libs/sm_rsa; make clean-asn)
+	(cd ./alg_libs/sm_fort; make clean-asn)
+endif
+
+install:
+	(cd ./libsrc; make install)
+	(cd ./libsrc/asn1; make install)
+	(cd ./libCtilMgr; make install)
+	(cd ./libCtilMgr/src; make install)
+	(cd ./libcert; make install)
+	(cd ./alg_libs; make install)
+
+
+doscleanup:
+	chmod 755 gnutools/d2u.sh
+	dos2unix makes/Makehead.solaris
+	dos2unix makes/genmake.sh
+	dos2unix makes/Maketail
+	dos2unix makes/LibsrcRules
+	dos2unix makes/TestsrcRules
+	gnutools/d2u.sh h
+	gnutools/d2u.sh cpp
+	gnutools/d2u.sh c
+	gnutools/d2u.sh cfg
+	gnutools/d2u.sh in
+
+pkcs12:	
+	(cd ../SFLPkcs12/openssl-0.9.6a;config;make)
+
+sm_free3Pkcs12:
+	(cd alg_libs/sm_free3; make OPENSSL)

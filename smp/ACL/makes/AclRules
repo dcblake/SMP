@@ -1,0 +1,22 @@
+.SUFFIXES : .asn .cpp .cpp.o 
+
+.asn.cpp: 
+	$(SNACC) $(SNACCFLAGS) $(CUSTOMSNACCFLAGS) $(ASNEXTERN) $(ASNMODULES)
+	@if [ ! "$(ASN_H_PATH)" = "" ]; then \
+            echo "Moving ASN.1 include files"; \
+	    mv $(ASNMODHDR) $(ASN_H_PATH); \
+	fi
+	@if [ ! "$(ASNEXTERN)" = "" ] ; then \
+		echo Removing external ASN.1 modules sources..; \
+		for asnfile in $(ASNEXTERN); do \
+		    strip=`basename $$asnfile`; \
+		    strip2=`echo $$strip | sed "s/\.asn//"`; \
+		    rm -f $$strip2.*; \
+		done; \
+	fi
+
+.c.o:
+	$(CC) -c $(CFLAGS) $(CMNFLGS) $(INCLUDE) $< -o $@
+.cpp.o:
+	$(CXX) -c $(CXXFLAGS) $(CMNFLGS) $(INCLUDE) $< -o $@
+

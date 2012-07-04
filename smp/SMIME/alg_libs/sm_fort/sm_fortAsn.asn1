@@ -1,0 +1,64 @@
+-- @(#) sm_fortAsn.asn 1.9 8/5/99 14:38:57 
+FortezzaSpecificAsn DEFINITIONS IMPLICIT TAGS ::=
+BEGIN 
+
+IMPORTS
+
+  AlgorithmIdentifier
+    FROM AuthenticationFramework --RWC;SmUsefulTypes 
+  ;
+
+
+
+
+DSASignatureValue ::= SEQUENCE
+{
+    r  INTEGER,
+    s  INTEGER
+}
+
+
+-- ++++++++++++++++++++++++++++++ FROM CMS KEA SPEC +++++++++++++++++++++++++++++++
+
+Skipjack-Parm ::= SEQUENCE 
+{
+   initialization-vector OCTET STRING
+}
+
+-- OIDS
+
+id-us-govt-dod-infosec-algs         OBJECT IDENTIFIER ::= { 2 16 840 1 101 2 1 1 }
+
+id-fortezzaConfidentialityAlgorithm OBJECT IDENTIFIER ::= 
+{ id-us-govt-dod-infosec-algs fortezzaConfidentialityAglorithm(4) }
+
+
+--RWC;NOW IN CML;id-keyExchangeAlgorithm              OBJECT IDENTIFIER ::=
+--RWC;NOW IN CML;{ id-us-govt-dod-infosec-algs keyExchangeAlgorithm(22) }
+
+id-fortezzaWrap80                   OBJECT IDENTIFIER ::=
+{ id-us-govt-dod-infosec-algs fortezzaWrap80Algorithm(23) }
+
+id-kEAKeyEncryptionAlgorithm        OBJECT IDENTIFIER ::=
+{ id-us-govt-dod-infosec-algs kEAKeyEncryptionAlgorithm(24) }
+
+
+-- ############################################
+-- RWC; The following was added to support RSA signing in the PKCS11 CTIL.
+-- From PKCS-7v1.5
+DigestInfo2 ::= SEQUENCE {
+  digestAlgorithm DigestAlgorithmIdentifier2,
+  digest          Digest2
+}
+
+Digest2 ::= OCTET STRING
+
+DigestAlgorithmIdentifier2 ::=
+  AlgorithmIdentifier    -- {{DigestAlgorithms}}
+
+
+
+
+END
+
+

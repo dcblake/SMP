@@ -1,0 +1,404 @@
+
+--
+--  EnrollmentMessageSyntax.asn1
+--  From RFC 2797
+
+EnrollmentMessageSyntax
+   { iso(1) identified-organization(3) dod(4) internet(1)
+   security(5) mechansims(5) pkix(7) id-mod(0) id-mod-cmc(6) }
+
+   DEFINITIONS IMPLICIT TAGS ::=
+   BEGIN
+
+   -- EXPORTS All --
+   -- The types and values defined in this module are exported for use
+   -- in the other ASN.1 modules.  Other applications may use them for
+   -- their own purposes.
+
+   IMPORTS
+
+     -- Information Directory Framework (X.501)
+           Name, Attribute
+              FROM InformationFramework 
+              --RWC;{ joint-iso-itu-t ds(5) modules(1) informationFramework(1) 3 }
+
+     -- Directory Authentication Framework (X.509)
+           AttributeCertificate, IssuerSerial
+    	      FROM AttributeCertificateDefinitions
+           AlgorithmIdentifier, --RWC;AttributeCertificate,-- Certificate,
+           CertificateList, CertificateSerialNumber, Version, Extensions, Time
+              FROM AuthenticationFramework 
+              --RWC; { joint-iso-itu-t ds(5) module(1) authenticationFramework(7) 3 }
+
+     -- PKIX Part 1 - Implicit
+        GeneralName, GeneralNames
+   	          FROM X509Common
+        CRLReason, ReasonFlags
+              FROM CertificateExtensions
+        --RWC;GeneralName, CRLReason, ReasonFlags
+        --RWC;  FROM PKIX1Implicit88  {iso(1) identified-organization(3) dod(6)
+        --RWC;        internet(1) security(5) mechanisms(5) pkix(7) id-mod(0)
+        --RWC;        id-pkix1-implicit-88(2)}
+
+     -- PKIX Part 1 - Explicit
+        SubjectPublicKeyInfo, Extension
+            FROM AuthenticationFramework
+        --RWC;SubjectPublicKeyInfo, Extension
+        --RWC;    FROM PKIX1Explicit88 {iso(1) identified-organization(3) dod(6)
+        --RWC;        internet(1) security(5) mechanisms(5) pkix(7) id-mod(0)
+        --RWC;        id-pkix1-explicit-88(1)}
+
+     -- Cryptographic Message Syntax
+        ContentInfo --RWC, Attribute
+          FROM CryptographicMessageSyntax
+          --RWC;{ 1 2 840 113549 1 9 16 0 1}
+
+        AttributeTypeAndValue          --RWC;NEWLY ADDED
+          FROM EnhancedSecurity
+        UniqueIdentifier               --RWC;NEWLY ADDED
+		  FROM SelectedAttributeTypes ;
+
+     -- CRMF; RWC; ADDED FROM RFC2511
+     --RWC;   CertReqMsg
+     --RWC;   FROM CRMF
+        --RWC;{ 1 3 6 1 5 5 7 0 5 };
+
+
+
+    --###################################
+    --RWC;BEGINNING OF MODULE
+    id-pkix OBJECT IDENTIFIER  ::= { iso(1) identified-organization(3)
+        dod(6) internet(1) security(5) mechanisms(5) pkix(7) }
+
+        id-cmc OBJECT IDENTIFIER ::= {id-pkix 7}   -- CMC controls
+        id-cct OBJECT IDENTIFIER ::= {id-pkix 12}  -- CMC content types
+
+    -- The following controls have simple type content (usually OCTET STRING)
+
+    id-cmc-identification OBJECT IDENTIFIER ::= {id-cmc 2}
+    id-cmc-identityProof OBJECT IDENTIFIER ::= {id-cmc 3}
+    id-cmc-dataReturn OBJECT IDENTIFIER ::= {id-cmc 4}
+    id-cmc-transactionId OBJECT IDENTIFIER ::= {id-cmc 5}
+    id-cmc-senderNonce OBJECT IDENTIFIER ::= {id-cmc 6}
+    id-cmc-recipientNonce OBJECT IDENTIFIER ::= {id-cmc 7}
+    id-cmc-regInfo OBJECT IDENTIFIER ::= {id-cmc 18}
+    id-cmc-responseInfo OBJECT IDENTIFIER ::= {id-cmc 19}
+    id-cmc-queryPending OBJECT IDENTIFIER ::= {id-cmc 21}
+    id-cmc-popLinkRandom OBJECT IDENTIFIER ::= {id-cmc 22 } --RWC; FIXED ')'
+    id-cmc-popLinkWitness OBJECT IDENTIFIER ::= {id-cmc 23 } --RWC; FIXED '()'
+
+    -- This is the content type used for a request message in the protocol
+
+    id-cct-PKIData OBJECT IDENTIFIER ::= { id-cct 2 }
+
+
+    PKIData ::= SEQUENCE {
+        controlSequence    SEQUENCE SIZE(0..MAX) OF TaggedAttribute,
+        reqSequence        SEQUENCE SIZE(0..MAX) OF TaggedRequest,
+        cmsSequence        SEQUENCE SIZE(0..MAX) OF TaggedContentInfo,
+        otherMsgSequence   SEQUENCE SIZE(0..MAX) OF OtherMsg
+    }
+
+    bodyIdMax INTEGER ::= 4294967295
+
+    BodyPartID ::= INTEGER(0..bodyIdMax)
+
+    TaggedAttribute ::= SEQUENCE {
+        bodyPartID         BodyPartID, --RWC;BodyPartId,
+        attrType           OBJECT IDENTIFIER,
+        attrValues         SET OF AttributeValue
+    }
+
+    AttributeValue ::= ANY
+
+    TaggedRequest ::= CHOICE {
+        tcr               [0] TaggedCertificationRequest,
+        crm               [1] CertReqMsg
+    }
+
+    TaggedCertificationRequest ::= SEQUENCE {
+        bodyPartID            BodyPartID,
+        certificationRequest  CertificationRequest
+    }
+
+    CertificationRequest ::= SEQUENCE {
+      certificationRequestInfo  SEQUENCE {
+        version                   INTEGER,
+        subject                   Name,
+        subjectPublicKeyInfo      SEQUENCE {
+          algorithm                 AlgorithmIdentifier,
+          subjectPublicKey          BIT STRING },
+        attributes                [0] IMPLICIT SET OF Attribute },
+      signatureAlgorithm        AlgorithmIdentifier,
+      signature                 BIT STRING
+    }
+
+    TaggedContentInfo ::= SEQUENCE {
+        bodyPartID              BodyPartID, --RWC;BodyPartId,
+        contentInfo             ContentInfo
+    }
+
+    OtherMsg ::= SEQUENCE {
+        bodyPartID        BodyPartID,
+        otherMsgType      OBJECT IDENTIFIER,
+        otherMsgValue     ANY DEFINED BY otherMsgType }
+
+    --  This defines the response message in the protocol
+    id-cct-PKIResponse OBJECT IDENTIFIER ::= { id-cct 3 }
+
+    ResponseBody ::= SEQUENCE {
+        controlSequence   SEQUENCE SIZE(0..MAX) OF TaggedAttribute,
+        cmsSequence       SEQUENCE SIZE(0..MAX) OF TaggedContentInfo,
+        otherMsgSequence  SEQUENCE SIZE(0..MAX) OF OtherMsg
+    }
+
+    -- Used to return status state in a response
+
+    id-cmc-cMCStatusInfo OBJECT IDENTIFIER ::= {id-cmc 1}
+
+    CMCStatusInfo ::= SEQUENCE {
+        cMCStatus       CMCStatus,
+        bodyList        SEQUENCE SIZE (1..MAX) OF INTEGER,
+        statusString    UTF8String OPTIONAL,
+        otherInfo        CHOICE {
+          failInfo         CMCFailInfo,
+          pendInfo         PendInfo } OPTIONAL
+    }
+
+    PendInfo ::= SEQUENCE {
+        pendToken        INTEGER,
+        pendTime         GeneralizedTime --RWC;BUILT-IN;GENERALIZEDTIME
+    }
+
+    CMCStatus ::= INTEGER {
+        success         (0),
+        -- you got exactly what you asked for
+        failed          (2),
+        -- you don't get it, more information elsewhere in the message
+        pending         (3),
+        -- the request body part has not yet been processed,
+        -- requester is responsible to poll back on this
+        noSupport       (4)
+        -- the requested operation is not supported
+    }
+
+    CMCFailInfo ::= INTEGER {
+        badAlg          (0),
+        -- Unrecognized or unsupported algorithm
+        badMessageCheck (1),
+        -- integrity check failed
+        badRequest      (2),
+        -- transaction not permitted or supported
+        badTime         (3),
+        -- Message time field was not sufficiently close to the system time
+        badCertId       (4),
+        -- No certificate could be identified matching the provided criteria
+        unsuportedExt   (5),
+        -- A requested X.509 extension is not supported by the recipient CA.
+        mustArchiveKeys (6),
+        -- Private key material must be supplied
+        badIdentity     (7),
+        -- Identification Attribute failed to verify
+        popRequired     (8),
+        -- Server requires a POP proof before issuing certificate
+        popFailed       (9),
+        -- Server failed to get an acceptable POP for the request
+        noKeyReuse      (10), --RWC; ADDED ','
+        -- Server policy does not allow key re-use
+        internalCAError (11), --RWC; ADDED ','
+        tryLater        (12)
+    }
+
+    -- Used for LRAs to add extensions to certificate requests
+    id-cmc-addExtensions OBJECT IDENTIFIER ::= {id-cmc 8}
+
+    AddExtensions ::= SEQUENCE {
+        pkiDataReference    BodyPartID,
+        certReferences      SEQUENCE OF BodyPartID,
+        extensions          SEQUENCE OF Extension
+    }
+
+
+    id-cmc-encryptedPOP OBJECT IDENTIFIER ::= {id-cmc 9}
+    id-cmc-decryptedPOP OBJECT IDENTIFIER ::= {id-cmc 10}
+
+    EncryptedPOP ::= SEQUENCE {
+                request       TaggedRequest,
+        cms             ContentInfo,
+        thePOPAlgID     AlgorithmIdentifier,
+        witnessAlgID    AlgorithmIdentifier,
+        witness         OCTET STRING
+    }
+
+    DecryptedPOP ::= SEQUENCE {
+        bodyPartID      BodyPartID,
+        thePOPAlgID     AlgorithmIdentifier,
+        thePOP          OCTET STRING
+    }
+
+    id-cmc-lraPOPWitness OBJECT IDENTIFIER ::= {id-cmc 11}
+
+    LraPopWitness ::= SEQUENCE {
+        pkiDataBodyid   BodyPartID,
+        bodyIds         SEQUENCE OF BodyPartID
+    }
+
+
+    --
+    id-cmc-getCert OBJECT IDENTIFIER ::= {id-cmc 15}
+
+    GetCert ::= SEQUENCE {
+        issuerName      GeneralName,
+        serialNumber    INTEGER }
+
+
+    id-cmc-getCRL OBJECT IDENTIFIER ::= {id-cmc 16}
+
+    GetCRL ::= SEQUENCE {
+        issuerName    Name,
+        cRLName       GeneralName OPTIONAL,
+        time          GeneralizedTime OPTIONAL,
+        reasons       ReasonFlags OPTIONAL }
+
+    id-cmc-revokeRequest OBJECT IDENTIFIER ::= {id-cmc 17}
+
+    RevRequest ::= SEQUENCE {
+        issuerName            Name,
+        serialNumber          INTEGER,
+        reason                CRLReason,
+       invalidityDate         GeneralizedTime OPTIONAL,
+        passphrase            OCTET STRING OPTIONAL,
+        comment               UTF8String OPTIONAL }
+
+   --RWC;COULD NOT LOCATE "pkix-cmc";id-cmc-confirmCertAcceptance OBJECT IDENTIFIER ::= {pkix-cmc 24}
+
+   CMCCertId ::= IssuerSerial
+
+   -- The following is used to request V3 extensions be added to a certificate
+
+   id-ExtensionReq OBJECT IDENTIFIER ::= {iso(1) member-body(2) us(840)
+        rsadsi(113549) pkcs(1) pkcs-9(9) 14}
+
+   ExtensionReq ::= SEQUENCE OF Extension
+
+   -- The following exists to allow Diffie-Hellman Certificate Requests 
+   --  Messages to be well-formed
+
+   id-alg-noSignature OBJECT IDENTIFIER ::= {id-pkix id-alg(6) 2}
+
+   NoSignatureValue ::= OCTET STRING
+
+
+   --###############################
+   --###############################
+   --### RWC;Definitions from RFC2511
+    CertReqMsg ::= SEQUENCE {
+        certReq   CertRequest,
+        pop       ProofOfPossession  OPTIONAL,
+        -- content depends upon key type
+        regInfo   SEQUENCE SIZE(1..MAX) OF AttributeTypeAndValue OPTIONAL }
+
+    CertRequest ::= SEQUENCE {
+        certReqId     INTEGER,          -- ID for matching request and reply
+        certTemplate  CertTemplate,  -- Selected fields of cert to be issued
+        controls      Controls OPTIONAL }   -- Attributes affecting issuance
+
+    CertTemplate ::= SEQUENCE {
+        version      [0] Version               OPTIONAL,
+        serialNumber [1] INTEGER               OPTIONAL,
+        signingAlg   [2] AlgorithmIdentifier   OPTIONAL,
+        issuer       [3] Name                  OPTIONAL,
+        validity     [4] OptionalValidity      OPTIONAL,
+        subject      [5] Name                  OPTIONAL,
+        publicKey    [6] SubjectPublicKeyInfo  OPTIONAL,
+        issuerUID    [7] UniqueIdentifier      OPTIONAL,
+        subjectUID   [8] UniqueIdentifier      OPTIONAL,
+        extensions   [9] Extensions            OPTIONAL }
+
+    OptionalValidity ::= SEQUENCE {
+        notBefore  [0] Time OPTIONAL,
+        notAfter   [1] Time OPTIONAL } --at least one MUST be present
+
+    Controls  ::= SEQUENCE SIZE(1..MAX) OF AttributeTypeAndValue
+
+    ProofOfPossession ::= CHOICE {
+        raVerified        [0] NULL,
+        -- used if the RA has already verified that the requester is in
+        -- possession of the private key
+        signature         [1] POPOSigningKey,
+        keyEncipherment   [2] POPOPrivKey,
+        keyAgreement      [3] POPOPrivKey }
+
+    POPOSigningKey ::= SEQUENCE {
+        poposkInput           [0] POPOSigningKeyInput OPTIONAL,
+        algorithmIdentifier   AlgorithmIdentifier,
+        signature             BIT STRING }
+        -- The signature (using "algorithmIdentifier") is on the
+        -- DER-encoded value of poposkInput.  NOTE: If the CertReqMsg
+        -- certReq CertTemplate contains the subject and publicKey values,
+        -- then poposkInput MUST be omitted and the signature MUST be
+        -- computed on the DER-encoded value of CertReqMsg certReq.  If
+        -- the CertReqMsg certReq CertTemplate does not contain the public
+        -- key and subject values, then poposkInput MUST be present and
+        -- MUST be signed.  This strategy ensures that the public key is
+        -- not present in both the poposkInput and CertReqMsg certReq
+        -- CertTemplate fields.
+
+    POPOSigningKeyInput ::= SEQUENCE {
+        authInfo            CHOICE {
+            sender              [0] GeneralName,
+            -- used only if an authenticated identity has been
+            -- established for the sender (e.g., a DN from a
+            -- previously-issued and currently-valid certificate
+            publicKeyMAC        PKMACValue },
+            -- used if no authenticated GeneralName currently exists for
+            -- the sender; publicKeyMAC contains a password-based MAC
+            -- on the DER-encoded value of publicKey
+        publicKey           SubjectPublicKeyInfo }  -- from CertTemplate
+
+    PKMACValue ::= SEQUENCE {
+       algId  AlgorithmIdentifier,
+       -- algorithm value shall be PasswordBasedMac {1 2 840 113533 7 66 13}
+       -- parameter value is PBMParameter
+       value  BIT STRING }
+
+    PBMParameter ::= SEQUENCE {
+          salt                OCTET STRING,
+          owf                 AlgorithmIdentifier,
+          -- AlgId for a One-Way Function (SHA-1 recommended)
+          iterationCount      INTEGER,
+          -- number of times the OWF is applied
+          mac                 AlgorithmIdentifier
+          -- the MAC AlgId (e.g., DES-MAC, Triple-DES-MAC [PKCS11],
+    }   -- or HMAC [RFC2104, RFC2202])
+
+    POPOPrivKey ::= CHOICE {
+        thisMessage       [0] BIT STRING,
+        -- posession is proven in this message (which contains the private
+        -- key itself (encrypted for the CA))
+        subsequentMessage [1] SubsequentMessage,
+        -- possession will be proven in a subsequent message
+        dhMAC             [2] BIT STRING }
+        -- for keyAgreement (only), possession is proven in this message
+        -- (which contains a MAC (over the DER-encoded value of the
+        -- certReq parameter in CertReqMsg, which MUST include both subject
+        -- and publicKey) based on a key derived from the end entity's
+        -- private DH key and the CA's public DH key);
+        -- the dhMAC value MUST be calculated as per the directions given
+        -- in Appendix A.
+
+    SubsequentMessage ::= INTEGER {
+        encrCert (0),
+        -- requests that resulting certificate be encrypted for the
+        -- end entity (following which, POP will be proven in a
+        -- confirmation message)
+        challengeResp (1) }
+        -- requests that CA engage in challenge-response exchange with
+        -- end entity in order to prove private key possession
+
+
+
+
+END
+
+--  END EnrollmentMessageSyntax.asn1

@@ -1,0 +1,55 @@
+include  @SMP_BUILDDIR@/build/Makehead
+
+CXX = @CXX@
+CC = @CC@
+CFLAGS = @CFLAGS@
+CXXFLAGS = @CXXFLAGS@
+STAGINGDIR = $(SMPDISTDIR)/lib
+
+ifeq ($(RANLIB),)
+RANLIB = echo
+endif
+
+ifeq ($(USEDEBUGLIB), yes)
+DEBUGLIB = -g
+LIBSM=libsm_d.a
+else
+DEBUGLIB = 
+LIBSM=libsm.a
+endif
+TARGET = $(SMPDISTDIR)/lib/$(LIBSM)
+TARGETS: libasn1 liblo libhi libzlib libsm
+
+clean:
+	(cd ./asn1; make clean)
+	(cd ./lolevel; make clean)
+	(cd ./hilevel; make clean)
+	(cd ./zlib/src; make clean)
+
+bare: clean
+	rm -f $(STAGINGDIR)/$(LIBSM)
+
+libasn1:
+	(cd ./asn1; make)
+
+liblo:
+	(cd ./lolevel; make)
+
+libhi:
+	(cd ./hilevel; make)
+
+libzlib:
+	(cd ./zlib/src; make)
+
+libsm: $(LIBSM) $(RANLIB)
+
+$(LIBSM): 
+	rm -f $(LIBSM)
+	ar ruv $(STAGINGDIR)/$(LIBSM) ./asn1/*.o ./lolevel/*.o ./hilevel/*.o \
+		./zlib/src/*.o
+
+ranlib:
+	ranlib $(STAGINGDIR)/$(LIBSM)
+
+
+include ../../build/Makeinstall.in

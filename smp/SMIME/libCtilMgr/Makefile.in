@@ -1,0 +1,64 @@
+include @SMP_BUILDDIR@/build/Makehead
+LFLAG1 = @SMP_LDFLAG@
+CXX = @CXX@
+CFLAGS = @CFLAGS@
+CXXFLAGS = @CXXFLAGS@ 
+STAGINGDIR = $(SMPDISTDIR)/lib
+ifeq ($(USEDEBUGLIB), yes)
+LIBRARYOUT=libctil_d.@SHEXT@
+else
+LIBRARYOUT=libctil.@SHEXT@
+endif
+
+ifeq ($(ENABLESTATIC), yes)
+TARGETS: static
+ifeq ($(USEDEBUGLIB), yes)
+LIBRARYOUT=libctil_d.a
+else
+LIBRARYOUT=libctil.a
+endif
+else
+TARGETS: libctil
+endif
+# must explicitely specify libctil.a because shared object has the same name
+#
+CTILLIBS = -lc++asn1 @SOLIB@
+LIBPATH = -L$(SNACCLIBDIR) 
+LIBS    = $(LIBPATH)  $(CTILLIBS)
+
+# Create the library
+#
+libctil: buildobjs dynamiclink 
+
+static: buildobjs staticlink
+# Build the support source
+#
+all: buildobjs dynamiclink
+buildobjs:
+	(cd ./src; make)
+	(cd inc; for files in *.h; do \
+	   /bin/sh $(top_builddir)/build/install-sh -c -m 644 $$files  $(SMPDISTDIR)/include/smp ; \
+	done;)
+
+
+$(LIBRARY): 
+	rm -f $(STAGINGDIR)/$(LIBRARY)
+	ar ruv $(STAGINGDIR)/$(LIBRARY) ./src/*.o 
+
+dynamiclink:
+	$(CXX)  $(LFLAG1) $(LFLAG2) ./src/*.o $(LIBS) -o $(SMPDISTDIR)/lib/$(LIBRARYOUT)
+
+staticlink:
+	$(AR) ruv $(SMPDISTDIR)/lib/$(LIBRARYOUT) ./src/*.o 
+	$(RANLIB) $(SMPDISTDIR)/lib/$(LIBRARYOUT)
+clean:
+	(cd ./src; make clean)
+	rm -f $(STAGINGDIR)/$(LIBRARYOUT)
+
+bare: clean
+
+install:
+	(cd ./src; make install);
+	/bin/sh $(top_builddir)/build/install-sh -c -m 755 $(SMPDISTDIR)/lib/$(LIBRARYOUT) $(prefix)/lib
+
+

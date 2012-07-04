@@ -1,0 +1,85 @@
+include @SMP_BUILDDIR@/build/Makehead
+STAGINGDIR = $(SMPDISTDIR)/lib
+#
+# Modify these variables as necessary for your specific
+# environment.
+#
+#
+
+# Directory where SMP  headers and libraries are located
+#
+LFLAG1		= @SMP_LDFLAG@
+SMPINCDIR	= $(PREFIX)/include/smp
+SMPLIBDIR	= $(PREFIX)/lib
+
+USEDEBUGLIB = @USEDEBUGLIB@
+TARGET = SMP_Check
+## Specify the library name
+ifeq ($(USEDEBUGLIB), no)
+CMAPI_LIBS    = -lcmapi -lsrlapi -lcmlasn -lacl -lsm -lcert -lctil -lc++asn1 
+else
+CMAPI_LIBS    = -lcmapi_d -lsrlapi_d -lcmlasn_d -lacl_d -lsm_d -lcert_d -lctil_d -lc++asn1 
+
+endif
+
+
+
+## Needed includes
+INCLUDE       += -I$(SMPDISTDIR)/include/smp -I$(SMPDISTDIR)/include/pkcs11
+
+## Specify the sources
+CSRCS	      = $(wildcard *.c)
+CPPSRCS       = $(wildcard *.cpp) 
+COBJS         = $(CSRCS:.c=.o) 	
+CPPOBJS       = $(CPPSRCS:.cpp=.o) 
+
+# Compiler information 
+CC            = @CC@
+CXX           = @CXX@
+CPP	     =  @CPP@
+
+LIBS += $(CMAPI_LIBS) @LIBS@
+
+DEPENDENCIES = sm_CM_AC_Support.h
+
+#determine what platform we are on
+OS	= @OS_TYPE@
+
+# Add in the C Flags and C++ Flags
+CFLAGS = @CFLAGS@
+CXXFLAGS = @CXXFLAGS@ 
+
+
+# Solaris requires libresolv other systems don't
+ifeq ($(OS), SunOS)
+LIBS += -lresolv
+endif
+
+ifeq ($(OS), HPUX32)
+LIBS += -lpthread ../../SMPDist/lib/libsmfree3.a -lcryptopp -lcert
+endif
+
+
+#
+# End of Low Level specific make information
+#
+
+.SUFFIXES : .cpp .cpp.o 
+
+
+all: $(COBJS) $(CPPOBJS) $(TARGET)
+
+clean:
+	rm -f *.o
+	rm -f $(TARGET) 2>>/dev/null
+
+install:
+	echo SMP_Check does not get installed
+
+$(CPPOBJS): $(DEPENDENCIES)
+$(COBJS): $(DEPENDENCIES)
+
+$(TARGET): $(COBJS) $(CPPOBJS) Makefile
+	$(CXX) *.o -o $(TARGET)  -L$(SMPDISTDIR)/lib  -L$(SNACCLIBDIR) $(LIBS)
+
+include $(top_builddir)/build/Maketail.in

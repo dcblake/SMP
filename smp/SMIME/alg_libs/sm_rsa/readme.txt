@@ -1,0 +1,1 @@
+They can be contacted at http://www.rsasecurity.com/ for the BSafe crypto library.

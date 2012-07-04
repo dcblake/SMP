@@ -1,0 +1,61 @@
+# Directory where SNACC header files reside was installed in
+#
+SNACCDIR      = ../../../SMPDist/util/VDASnacc/cpplib/
+#../../include/snacc/c++
+SNACC         = ../../../SMPDist/bin/snacc.exe
+SNACCFLAGS    = -VDAexport=SM_FORTEZZADLL -D -C -u../../../SMPDist/util/VDASnacc/cpplib/asn1/asn-usefulVDA.asn1
+
+# Indicate a alternate path for ASN.1 Module Header files
+# Overridden by local makefiles
+#ASN_H_PATH    =
+
+#
+# Make information specific to the Fortezza Token Interface directory
+#
+
+
+ASNEXTERNA    = UsefulDefinitions.asn1 UpperBounds.asn1 InformationFramework.asn1 \
+	SelectedAttributeTypes.asn1 ORAddress.asn1 X509Common.asn1 \
+	AuthenticationFramework.asn1 CertificateExtensions.asn1 \
+	AttributeCertificateDefinitions.asn1 sdn702.asn1 PKIX.asn1
+ASNEXTERNB    = sm_usefulTypes.asn 
+ASNEXTERNC    = sm_VDASupport_asn.asn 
+ASNEXTERND    = sm_cms.asn
+ASNEXTERN     = ${ASNEXTERNB:%.asn=../../libCtilMgr/src/%.asn} \
+				${ASNEXTERNA:%.asn1=../../../SMPDist/cml/asn1/%.asn1} \
+				${ASNEXTERNC:%.asn=../../libcert/asn1/%.asn} \
+				${ASNEXTERND:%.asn=../../libsrc/asn1/%.asn}
+
+ASNMODS       = $(wildcard *.asn)
+ASNMODCPP     = ${ASNMODS:.asn=.cpp}
+ASNMODCXX     = ${ASNMODS:.asn=.C}
+ASNEXTERN_del = ${ASNEXTERNA:.asn1=.del2} ${ASNEXTERNB:.asn=.del2} \
+				${ASNEXTERNC:.asn=.del2} ${ASNEXTERND:.asn=.del2}
+ASNMODDEL     = ${ASNMODS:.asn=.del}
+
+.SUFFIXES : .asn .asn1 .cpp .del .del2 .C
+
+buildasn: $(ASNMODCPP) $(ASNEXTERN_del)
+
+$(ASNEXTERN_del): $(ASNMODCPP)
+
+clean-asn: $(ASNMODDEL)
+
+$(ASNEXTERN_del): $(ASNEXTERN)
+	if exist $*.cpp del $*.cpp
+	if exist $*.h del $*.h
+#	if exist $*.C del $*.C
+
+.asn.cpp: 
+	$(SNACC) $(SNACCFLAGS) $(ASNEXTERN) $<
+#	del $*.cpp
+#	rename $*.C $*.cpp
+
+.asn.del:
+	if exist $*.h del $*.h
+	if exist $*.cpp del $*.cpp
+#	if exist $*.C del $*.C
+
+.asn1.del:
+	if exist $*.h del $*.h
+	if exist $*.cpp del $*.cpp

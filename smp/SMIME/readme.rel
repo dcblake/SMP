@@ -1,0 +1,98 @@
+readme.rel
+1/20/02
+***** NEW SNACC Changes *****
+Lots of SNACC changes, see SNACC readme(s).
+
+***** Crypto++ Changes *****
+The sm_free3 CTIL crypto++ library referencs are now made to general directories in the SMPDist directory to avoid specific version references.  For MS Windows the libs are referenced in SMPDist/lib/cryptlib.lib and cryptlib_d.lib; includes are now in SMPDist/Alg/crypto++.  For this release we are using Crypto++ 5.0 (4.2 can still be used by commenting out the "#define CRYPTOPP_5_0" in smp/SMIME/alg_libs/sm_free3/sm_free3.h and placing the appropriate includes and .lib in SMPDist).
+
+***** SMIME, CML, ACL integration *****
+All 3 libraries (CML, ACL and SFL) are now integrated into the SFL so it is now necessary to build and link all libraries to build the SFL.  In addition, these 3 library sources now reside under an ./smp directory.  This means that the ./SMIME directory has moved to ./smp/SMIME (the ./SMPDist directory is at the same location as ./smp).
+
+***** ENCODE_BUF, DECODE_BUF replaced *****
+Two new methods have been added to the CSM_Buffer class (now in the CTIL namespace, not the SNACC namespace):  
+
+   unsigned long CSM_Buffer::Encode(SNACC::AsnType& snaccObj);
+   unsigned long CSM_Buffer::Decode(SNACC::AsnType& snaccObj) const;
+
+These macros are still available in the SFL, but now reference these methods.
+
+
+
+11/1/01
+
+***** NEW SNACC Changes *****
+The SNACC compiler was modified to provide template implementations of the
+SEQUENCE OF and SET OF lists.  This reduces the produced line of code count.
+IT IS IMPORTANT that all applications re-build the .asn files for their
+projects.
+
+***** NEW CML cmlasn Library Integration *****
+The SFL now links to the cmlasn library for all X.509, X.501, etc. ASN.1 
+references (using SNACC).  The projects expect the CML library and includes 
+to reside in ./SMPDist/cml/include and ./SMPDist/cml/lib.  The .asn1 files are
+also provided in ./SMPDist/cml/asn1 for any application wising to reference
+the ASN.1 definitions (see the projects/makefile(s) in ./SMIME/libsrc/asn1
+for an example).
+
+***** NEW SPLIT OF libCert into libCert and libCtilMgr ****
+All SNACC C++ run-time definitions have been moved to the asn-incl.h include 
+file.  They no longer reside in separate files.
+
+CSM_OID functionality has been moved to the SNACC C++ run-time library.  Most
+source changes are a simple modification to the new AsnOid type; for specific
+function references, see the ./SMPDist/util/VDASnacc/cpplib/inc/asn-incl.h
+definition of AsnOid.
+
+The libCtilMgr library was split out to provide a certificate-less interface
+to the CTILs.  If you reference the CTIL logic directly, you may be able to
+avoid the additional complexity involved with libCert.  Most libCert logic will
+not need to be modified, the class names and most methods are the same.  The
+actual CSM_CSInst class is constructed by the CTIL, so it is possible for the
+application to simply override the simpler CSM_CtilMgr instance with a 
+"(CSM_CSInst *)" to access any certificate specific requests.  This is done
+automatically using the CSMIME class through the "m_pCSInsts2" member variable.
+
+***** NEW CAPI CTIL Interface *****
+The SFL now has a new MS Windows CAPI CTIL.  Since this is new code, please 
+inform us of any problems encountered OR of any additional functionality you
+have added and wish to add to the baseline (especially the startup 
+initilization, which is provider specific).  We can accommodate reasonable 
+requests for software updates.
+
+This CTIL provides the following functionality:
+
+	RC2 content encryption
+	3DES content encryption (if present)
+	SHA-1 hash
+	MD5 hash
+	RSA signing (if a private key can be located)
+	RSA verification
+	RSA encryption
+	RSA decryption (if a private key can be located)
+
+It can be tested using the default crypto provider, but if you import a PKCS12 
+cert/private key, it must follow the MS rules to be recognized as a default
+user key in order to be used for signing or decrypting.  There is a test 
+program to build some internal keys for testing signing/decrypting (e-mail
+me for directions, Robert.Colestock@GetronicsGov.com).
+
+################################################################################
+PREVIOUS VERSION COMMENTS
+DROPPED support for Crypto++ 3.0; you can still backward reference Crypto++3.2
+through the use of the define "CRYPTOPP_3_2" in the sm_free3 project.  The new
+default is Crypto++4.1.
+
+On Linux, the GNU compiler MUST BE UPGADED to 2.95.2 (or higher) to build the
+Crypto++4.2 library.  You get compiler errors if the version is earlier.  If
+this is not convenient, then set the makes/Makehead.linux or .solaris file
+to use the CRYPTOPP_3_2 define and ./alg_libs/sm_free3/Makefile.in library.
+
+
+
+============================================
+Robert Colestock, Robert.Colestock@GetronicsGov.com
+Getronics Government Solutions, LLC
+============================================ 
+
+

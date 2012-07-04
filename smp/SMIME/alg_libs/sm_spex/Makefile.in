@@ -1,0 +1,46 @@
+#
+# Make information specific to the Spex Token Interface directory
+#
+
+
+# these variables are specific to this makefile
+# 
+LIBRARY       =  ../../lib/libsmspex.a
+TARGET        =  library
+CMNFLGS       =                   # common variables between compilers
+INCLUDE       = -I. \
+                -I../../inc \
+                -I$(SNACCINCDIR)/c++ \
+		-I$(CI_PATH)/include
+DEPENDENCIES  = ../../inc/sm_api.h \
+                ./sm_spex.h
+ASNEXTERN     = ../../libcert/src/sm_vdatypes.asn ../../libcert/src/sm_VDASupport_asn.asn
+ASNMODULES    = sm_spex_asn.asn
+ASNMODCXX     = ${ASNMODULES:.asn=.C}
+ASNMODCPP     = ${ASNMODULES:.asn=.cpp}
+ASNMODHDR     = ${ASNMODULES:.asn=.h}
+ASNMODOBJS    = ${ASNMODULES:.asn=.o}
+OBJS          = $(ASNMODOBJS) sm_spex.o
+
+library: $(LIBRARY) $(RANLIB)
+
+$(LIBRARY): $(OBJS)
+	$(AR) $(ARFLAGS) $@ $(OBJS)
+
+$(RANLIB):
+	$(RANLIB) $@
+
+$(OBJS): $(DEPENDENCIES)
+$(ASNMODOBJS): $(ASNMODCPP)
+$(ASNMODCPP): $(ASNMODULES)
+
+clean:
+	rm -f *.o
+bare: clean
+	rm -f $(LIBRARY)
+
+#
+# End of Spex Crypto Token Interface specific stuff
+#
+
+

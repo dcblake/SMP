@@ -1,0 +1,339 @@
+-- @(#) sm_VDASupport_asn.asn 1.9 9/28/99 15:38:12 
+
+VDAConventientDefinitions
+       { 1 2 840 113549 1 9 16 0 1 333 }
+    --RWC;  "modules(0)" interferes with "InformationFramework" "modules(1)" def.
+
+   DEFINITIONS IMPLICIT TAGS ::=
+   BEGIN
+
+   -- EXPORTS All
+   -- The types and values defined in this module are exported for use in
+   -- the other ASN.1 modules.  Other applications may use them for their
+   -- own purposes.
+
+IMPORTS 
+    Attribute, AttributeType
+		FROM InformationFramework 
+
+    AlgorithmIdentifier FROM AuthenticationFramework --RWC;SmUsefulTypes 
+
+     -- Directory Information Framework (X.501)
+           Name
+              FROM InformationFramework { joint-iso-itu-t ds1 modules
+              informationFramework1 3 }
+
+     -- Directory Authentication Framework (X.509)
+           --RWC;AlgorithmIdentifier, AttributeCertificate, Certificate,
+           Certificate,
+           CertificateList, CertificateSerialNumber
+			    FROM AuthenticationFramework { joint-iso-itu-t ds1 --RWC;(5)
+                   module1 authenticationFramework1 3 } 
+
+           AttributeCertificate
+              FROM AttributeCertificateDefinitions
+
+      --R2.0.1;- - ub-security-categories, ub-privacy-mark-length FROM SDN702  
+      --R2.1;--    ub-security-categories FROM SDN702  
+
+      --RWC;4/26/02;--
+      --R2.1;-- ub-privacy-mark-length FROM UpperBounds  
+
+      ub-integer-options   FROM ORAddressModule
+
+      --##############################################
+	--RWC;TMP until AttributeCertificates Resolved.
+	GeneralName, GeneralNames
+ 		FROM X509Common
+      IssuerSerial, AttCertValidityPeriod
+            FROM AttributeCertificateDefinitions
+      Extensions
+		FROM AuthenticationFramework --authenticationFramework
+
+      CPSuri, UserNotice 
+         --R2.1;-- FROM PKIXImplicit88 
+         --RWC;4/26/02;R2.0.1- - FROM PKIX
+	  ;
+
+-- FROM sm_cms.asn specification, moved to libCert.
+
+   CMSVersion ::= INTEGER  { v0(0), v1(1), v2(2), v3(3), v4(4) }
+
+   --RWC;11/15/02;IssuerAndSerialNumber ::= SEQUENCE {
+   --RWC;11/15/02;  issuer Name,
+   --RWC;11/15/02;  serialNumber CertificateSerialNumber }
+
+
+-- IETF RFC 3852
+   CertificateChoices ::= CHOICE {
+      certificate Certificate,
+      extendedCertificate [0] IMPLICIT ExtendedCertificate,  -- Obsolete
+      v1AttrCert [1] IMPLICIT AttributeCertificateV1,        -- Obsolete
+      v2AttrCert [2] IMPLICIT AttributeCertificateV2,
+      other [3] IMPLICIT OtherCertificateFormat }
+
+    AttributeCertificateV1 ::= AttributeCertificate
+    AttributeCertificateV2 ::= AttributeCertificate
+
+    OtherCertificateFormat ::= SEQUENCE {
+      otherCertFormat OBJECT IDENTIFIER,
+      otherCert ANY DEFINED BY otherCertFormat }
+
+
+   CertificateSet ::= SET OF CertificateChoices
+
+   RevocationInfoChoices ::= SET OF ANY    -- SPEC says RevocationInfoChoice
+ 
+   RevocationInfoChoice ::= CHOICE {
+     crl   CertificateList,
+     other [1] IMPLICIT OtherRevocationInfoFormat }
+
+   OtherRevocationInfoFormat ::= SEQUENCE {
+     otherRevInfoFormat OBJECT IDENTIFIER,
+     otherRevInfo ANY DEFINED BY otherRevInfoFormat }
+
+   ExtendedCertificate ::= SEQUENCE {
+     extendedCertificateInfo ExtendedCertificateInfo,
+     signatureAlgorithm AlgorithmIdentifier, --RWC;SignatureAlgorithmIdentifier,
+     signature Signature }
+
+   ExtendedCertificateInfo ::= SEQUENCE {
+     version CMSVersion,
+     certificate Certificate,
+     attributes UnauthAttributes }
+
+   UnauthAttributes ::= SET SIZE (1..MAX) OF Attribute
+
+   --RWC;11/15/02;Attribute ::= SEQUENCE {
+   --RWC;11/15/02;  attrType OBJECT IDENTIFIER,
+   --RWC;11/15/02;  attrValues SET OF AttributeValue }
+
+   AttributeValue ::= ANY
+
+   Signature ::= BIT STRING
+
+
+
+-- DSA Parameters, TBD, modify to use big integers
+FREE-DSAParameters ::= SEQUENCE {
+   p INTEGER, -- modulus p
+   q INTEGER, -- modulus q
+   g INTEGER } -- base/generator g
+
+-- ** Signature algorithms are now defined in sm_cms.asn. ** 
+
+--RWC;11/15/02;RSAPublicKey ::= SEQUENCE {
+--RWC;11/15/02;  modulus INTEGER,        - -n
+--RWC;11/15/02;  publicExponent INTEGER  - -e 
+--RWC;11/15/02;}
+
+-- PKCS#8 Structures
+
+PkcsAttributeAny ::= ANY
+
+PkcsAttribute ::= SEQUENCE {
+   type OBJECT IDENTIFIER,
+   values SET OF PkcsAttributeAny }
+
+PkcsAttributes ::= SET OF PkcsAttribute
+
+PkcsAlgId ::= SEQUENCE {
+   algorithm OBJECT IDENTIFIER,
+   parameters ANY OPTIONAL }
+
+PrivateKeyInfo ::= SEQUENCE {
+   version INTEGER,
+   privateKeyAlgorithm PkcsAlgId,
+   privateKey OCTET STRING,
+   attributes [0] IMPLICIT PkcsAttributes OPTIONAL }
+
+EncryptedPrivateKeyInfo ::= SEQUENCE {
+   encryptionAlgorithm PkcsAlgId,
+   encryptedData OCTET STRING }
+
+-- DH Parameters
+
+DHParameters ::= SEQUENCE {
+   p INTEGER,
+   g INTEGER,
+   iv OCTET STRING }
+
+-- DH Public Key Parameters
+
+DHPublicKeyParams ::= SEQUENCE {
+   p INTEGER,
+   g INTEGER }
+
+
+
+--DSAWithSHA1Parameters ::= SEQUENCE
+--{
+--    p  INTEGER,
+--    q  INTEGER,
+--    g  INTEGER
+--}
+
+-- THE FOLLOWING definitions are used to handle DSS parameters 
+-- from a V1 certificate's SubjectPublicKeyInfo
+--
+
+--KeaDssParms ::= CHOICE
+--{
+--        diffParms
+--                [0] EXPLICIT DiffParms,
+--        commonParms
+--                [1] EXPLICIT CommonParms
+--}
+
+--DiffParms ::= SEQUENCE
+--{
+--        keaParms
+--                KeaParms,
+--        dssParms
+--                DssParms
+--}
+
+--KeaParms ::= SEQUENCE
+--{
+--        p
+--                OCTET STRING ,
+--        q
+--                OCTET STRING ,
+--        g
+--                OCTET STRING
+--}
+
+--DssParms ::= SEQUENCE
+--{
+--        p
+--                OCTET STRING ,
+--        q
+--                OCTET STRING ,
+--        g
+--                OCTET STRING
+--}
+
+
+CommonParms ::= SEQUENCE
+{
+        p
+                OCTET STRING ,
+        q
+                OCTET STRING ,
+        g
+                OCTET STRING
+}
+
+   -- Algorithm Identifiers
+
+   --sha-1 OBJECT IDENTIFIER ::= { iso(1) identified-organization(3)
+   --    oiw(14) secsig(3) algorithm(2) 26 }
+
+   --RWC;md5 OBJECT IDENTIFIER ::= { iso(1) member-body(2) us(840)
+   --RWC;    rsadsi(113549) digestAlgorithm(2) 5 }
+
+   --RWC;rsaEncryption OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+   --RWC;    us(840) rsadsi(113549) pkcs(1) pkcs-1(1) 1 }
+
+   rsa OBJECT IDENTIFIER ::=
+      {joint-iso-ccitt(2) ds(5) algorithm(8) encryptionAlgorithm(1) 1}
+
+   dh-public-number OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+       us(840) ansi-x942(10046) number-type(2) 1 }
+
+   pbeWithMD5AndDES-CBC OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+       us(840) rsadsi(113549) pkcs(1) pkcs5(5) 3}
+
+   pbeWithMD5AndRC2-CBC OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+       us(840) rsadsi(113549) pkcs(1) pkcs5(5) 6}
+
+   des-ede3-cbc OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+       us(840) rsadsi(113549) encryptionAlgorithm(3) 7 }
+
+
+--RWC;DomainParameters ::= SEQUENCE {
+--RWC;    p INTEGER, - - odd prime, p=jq +1
+--RWC;    g INTEGER, - - generator, g
+--RWC;    q INTEGER, - - factor of p-1
+--RWC;    j INTEGER OPTIONAL, - - subgroup factor
+--RWC;    validationParms ValidationParms OPTIONAL }
+
+--RWC;ValidationParms ::= SEQUENCE {
+--RWC;    seed BIT STRING,
+--RWC;    pgenCounter INTEGER }
+
+
+VDAOpenSSLDSAPrivateKey ::= SEQUENCE
+{
+    version INTEGER,
+    p       INTEGER,
+    q       INTEGER,
+    g       INTEGER,
+    pubKey  INTEGER,
+    privKey INTEGER
+}
+
+
+
+
+
+--RWC;11/15/02;Version            ::=   INTEGER { v1(0), v2(1), v3(2) }
+
+--RWC;2/10/04;UniqueIdentifier ::= BIT STRING
+
+
+-- used for generic sign and verify 
+--
+SignedMacroVDA ::= SEQUENCE
+{
+   dataToSign     ANY,
+   algorithm      AlgorithmIdentifier,
+   signatureValue BIT STRING
+}
+
+
+
+--RWC;2/7/02; ADDED to support Canadian MMHS CertificateBuilder extension
+--RWC;2/7/02;  for certificate policies (should have been x509 defs!?)
+
+   Qualifier ::= CHOICE {
+        cPSuri           CPSuri,
+        userNotice       UserNotice }
+
+   --RWC;IN PKIX;CPSuri ::= IA5String
+
+   --RWC;IN PKIX;UserNotice ::= SEQUENCE {
+   --RWC;IN PKIX;        noticeRef        NoticeReference OPTIONAL,
+   --RWC;IN PKIX;        explicitText     DisplayText OPTIONAL}
+
+   --RWC;IN PKIX;   NoticeReference ::= SEQUENCE {
+   --RWC;IN PKIX;        organization     DisplayText,
+   --RWC;IN PKIX;        noticeNumbers    SEQUENCE OF INTEGER }
+
+   --RWC;IN PKIX;   DisplayText ::= CHOICE {
+   --RWC;IN PKIX;        visibleString    VisibleString  (SIZE (1..200)),
+   --RWC;IN PKIX;        bmpString        BMPString      (SIZE (1..200)),
+   --RWC;IN PKIX;        utf8String       UTF8String     (SIZE (1..200)) }
+
+--########################################################################
+-- RWC;6/15/03; Added these definitions in support of ECDH (Elliptic Curve)
+--  (not sure where they are defined, copied them from RFC3278 which references
+--   IEEE 1363) AND X.93.
+
+
+      x9-63-scheme OBJECT IDENTIFIER ::= { iso(1)
+         identified-organization(3) tc68(133) country(16) x9(840)
+         x9-63(63) schemes(0) }
+
+      dhSinglePass-stdDH-sha1kdf-scheme OBJECT IDENTIFIER ::= {
+         x9-63-scheme 2}
+
+      dhSinglePass-cofactorDH-sha1kdf-scheme OBJECT IDENTIFIER ::= {
+         x9-63-scheme 3}
+
+      mqvSinglePass-sha1kdf-scheme OBJECT IDENTIFIER ::= {
+         x9-63-scheme 16}
+
+
+
+END -- of VDAConventientDefinitions

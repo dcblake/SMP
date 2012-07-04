@@ -1,0 +1,148 @@
+readme.gen
+
+
+Getronics Government Solutions (GGS) has delivered Version 1.8 of the S/MIME Freeware Library (SFL) source code.  The SFL source code files are freely available to everyone from the Fortezza Developer's S/MIME Page <http://www.armadillo.huntsville.al.us/software/smime>.  
+
+The SFL implements the IETF S/MIME v3 RFC 2630 Cryptographic Message 
+Syntax (CMS) and RFC 2634 Enhanced Security Services (ESS) specifications. 
+It also implements portions of the RFC 2633 Message Specification and 
+RFC 2632 Certificate Handling document.  When used in conjunction with
+the Crypto++ v3.2 freeware library, the SFL implements the RFC 2631 
+Diffie-Hellman (D-H) Key Agreement Method specification.  It has been 
+successfully tested using the MS Windows NT/95/98, Linux and Solaris 2.7 operating 
+systems.  Further enhancements, ports and testing of the SFL are still in 
+process.  Further releases of the SFL will be provided as significant 
+capabilities are added. 
+
+The SFL has been successfully used to sign, verify, encrypt and decrypt CMS/ESS 
+objects using: S/MIME v3 mandatory-to-implement algorithms (DSA, E-S D-H, 3DES) 
+provided by the Crypto++ v3.2 library; RSA suite of algorithms provided by the 
+RSA BSAFE v4.2 and Crypto++ v3.2 libraries; and Fortezza suite of algorithms 
+provided by the Fortezza Crypto Card.  The v1.8 SFL uses the v1.3 R4 Enhanced SNACC  
+ASN.1 Library to encode/decode objects. The v1.8 SFL release includes: SFL High-
+level library; Free (a.k.a. Crypto++) Crypto Token Interface Library (CTIL); 
+BSAFE CTIL; Fortezza CTIL; SPEX/ CTIL; PKCS #11 CTIL (still being tested); 
+v1.3 R4 Enhanced SNACC ASN.1 Compiler and Library; test utilities; test drivers
+and test data.  All CTILs were tested as Dynamically Linked Libraries (DLL)
+using MS Windows.  The Fortezza, BSAFE and Crypto++ CTILs were tested with
+the respective security libraries as shared objects using Linux and Solaris 2.7.  
+
+The SFL has been successfully used to exchange signedData and envelopedData 
+messages with the Microsoft (MS) Internet Explorer Outlook Express v4.01 and 
+Netscape Communicator 4.X S/MIME v2 products.  Signed messages have been 
+exchanged with the RSA S/MAIL, WorldTalk and Entrust S/MIME v2 products. 
+
+The SFL has also been used to perform S/MIME v3 interoperability testing with 
+Microsoft that exercised the majority of the features specified by RFCs 2630, 
+2631 and 2634.  This testing included the RSA, mandatory S/MIME V3 and Fortezza 
+suites of algorithms.  We used the SFL to successfully process all of the 
+SFL-supported sample data included in the S/MIME WG "Examples of S/MIME Messages"
+document.  We have also performed limited S/MIME v3 testing with Baltimore and
+Entrust.  
+
+The following enhancements are included in the v1.8 SFL release (compared with 
+the v1.7 release):
+
+1) Tested using common v1.3 R4 Enhanced SNACC ASN.1 Library, v1.8 CTILs and LIBCERT libraries shared with the v1.4 Access Control Library (ACL) and v1.8 Certificate Management Library (CML).
+
+2) Added OpenSSL-based PKCS #12 create/read capabilities that can be used in conjunction with any of the CTILs.  For example, we used this capability to import Microsoft-created PKCS #12 files directly into the Crypto++ CTIL.  CTIL logins optionally accept a PCKS #12 file to obtain both the private key and certificate.  
+
+3) Enhanced PKCS #11 CTIL tested with Litronic Maestro v1.0 crypto library.  We successfully used the PKCS #11 CTIL and v1.0 Maestro library to sign/verify and encrypt/decrypt S/MIME v3 messages using a Fortezza Card.  We performed signed and encrypted interoperability testing between the PKCS #11 and Fortezza CTILs.  We also performed signed interoperability testing between the PKCS #11 and Crypto++ CTILs using DSA.  
+
+4) Enhanced SFL and LIBCERT, so LIBCERT can be used independently of SFL (i.e. without SFL source code).  
+
+5) Corrected bugs in Fortezza and SPEX/ CTILs.  
+
+6) Corrected bugs in Enhanced SNACC ASN.1 Library that caused BIT STRINGs and DEFAULT values to be improperly ASN.1 encoded using the Distinguished Encoding Rules
+
+7) Performed regression testing to ensure that aforementioned enhancements did 
+not break existing SFL functionality.
+
+We also delivered the v1.8 SFL Application Programming Interface (API) and v1.8 CTIL API documents. 
+
+We are still in the process of enhancing and testing the SFL.  Future releases 
+will include: additional PKCS #11 CTIL testing; additional SPEX/ CTIL testing; finish CertificateBuilder command line utility; enhancing CertificateBuilder to support creation of Attribute Certificates; add MIME support for test drivers; add "Certificate Management 
+Messages over CMS" ASN.1 encode/decode functions; add enhanced test routines; 
+bug fixes; support for other crypto APIs (possible); and support for other
+operating systems. 
+
+The SFL is developed to maximize portability to 32-bit operating 
+systems.  In addition to testing on MS Windows, Linux and Solaris 2.7, we plan to port 
+the SFL to the following operating systems: HP/UX 11, IBM AIX 3.2 
+(possibly), SCO 5.0 (possibly) and Macintosh (possibly).
+
+The following SFL files are available from the Fortezza Developer's S/MIME Page:
+
+1) SFL Documents: Fact Sheet, Software Design Description, API, CTIL API, 
+Software Test Description, Implementers Guide, Overview Briefing and Public 
+License.
+     
+2) snacc13r?rn.tar.gz: Zip file containing v1.3 R4 Enhanced SNACC ASN.1 Compiler and 
+Library source code compilable for Unix and MS Windows NT/95/98/2000 that has been 
+enhanced by GGS to implement the Distinguished Encoding Rules.  Project files 
+and makefiles are included.  This file includes a sample test project 
+demonstrating the use of the SNACC classes.
+
+3) smimeR?.tar.gz:  Zip file containing all SFL source code including: 
+SFL Hi-Level source code; Enhanced SNACC-generated ASN.1 source 
+code; project files.  This file also contains test driver source code, 
+sample CMS/ESS test data and test X.509 Certificates.  This file also 
+includes test utilities to create X.509 Certificates that each include 
+a D-H, DSA or RSA public key.  SNACC release and debug libraries
+are compiled for MS Windows NT/95/98/2000. MS Windows NT/95/98/2000
+project files and Unix makefiles are included for the SNACC code and
+Crypto++.    
+
+4) smCTIR?.tar.gz:  Source code for the following CTILs: Test (no crypto), 
+Crypto++, BSAFE, Fortezza, SPEX/ and PKCS #11.  The Win95/98/NT/2000 projects are 
+also included.  
+
+5) csmime.mdl contains SFL Class diagrams created using Microsoft 
+Visual Modeler (comes with MS Visual Studio 6.0, Enterprise Tools).
+The file can also be viewed using Rational Rose C++ Demo 4.0
+45 day evaluation copy which can be obtained from
+<http://www.rational.com/uml/resources/practice_uml/index.jtmpl>.
+Not all classes are documented in the MDL file at this time.
+
+All source code for the SFL is being provided at no cost and with no 
+financial limitations regarding its use and distribution. 
+Organizations can use the SFL without paying any royalties or 
+licensing fees.  GGS is developing the SFL under contract to the U.S. 
+Government.  The U.S. Government is furnishing the SFL source code at no 
+cost to the vendor subject to the conditions of the "SFL Public 
+License" available from the Fortezza Developer's S/MIME Page.
+
+On 14 January 2000, the U.S. Department of Commerce, Bureau of 
+Export Administration published a new regulation implementing an update to
+the U.S. Government's encryption export policy 
+<http://www.bxa.doc.gov/Encryption/Default.htm>.  In accordance with the 
+revisions to the Export Administration Regulations (EAR) of 14 Jan 2000,
+the downloading of the SFL source code is not password controlled.
+
+The SFL is composed of a high-level library that performs generic CMS 
+and ESS processing independent of the crypto algorithms used to 
+protect a specific object.  The SFL high-level library makes calls to 
+an algorithm-independent CTIL API.  The underlying, external crypto
+token libraries are not distributed as part of the SFL 
+source code. The application developer must independently obtain these 
+libraries and then link them with the SFL.  For example, the SFL can be 
+used with the freeware Crypto++ library to obtain 3DES, D-H, RSA and DSA.
+To use the SFL with Crypto++ the vendor must download the Crypto++ freeware 
+library from the Crypto++ Web Page <http://www.eskimo.com/~weidai/cryptlib.html>
+and then compile it with the GGS-developed Crypto++ CTIL source code.  
+ 
+The Internet Mail Consortium (IMC) has established an SFL web page
+<http://www.imc.org/imc-sfl>.  The IMC has also established an SFL
+mail list which is used to: distribute information regarding SFL
+releases; discuss SFL-related issues; and provide a means for SFL
+users to provide feedback, comments, bug reports, etc.  Subscription
+information for the imc-sfl mailing list is at the IMC web site
+listed above.
+
+All comments regarding the SFL source code and documents are welcome.  This SFL release announcement was sent to several mail lists, but please send all messages regarding the SFL to the imc-sfl mail list ONLY.  Please do not send messages regarding the SFL to any of the IETF mail lists.  We will respond to all messages sent to the imc-sfl mail list.
+
+============================================
+John Pawling, john.pawling@wang.com
+Getronics Government Solutions, LLC
+============================================ 
+

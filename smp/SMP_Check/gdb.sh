@@ -1,0 +1,1 @@
+gdb -d ../cml/cmapi/src -d ../cml/cmlasn/src -d ../SMIME/testsrc/util -d ../SMIME/libcert/src -d ../SMIME/libsrc/hilevel -d ../SMIME/libsrc/lolevel -d ../SMIME/alg_libs/sm_free3 -d ../../SMPDist/Algs/crypto++/include -d ../../SNACC/c++-lib/src -d ../../SNACC/c++-lib/inc SMP_Check core

@@ -1,0 +1,54 @@
+#
+# Make information specific to the ASN.1 directory
+#
+include @SMP_BUILDDIR@/build/Makehead
+top_srcdir = @top_smpdir@
+
+CC = @CC@
+CXX = @CXX@
+CXXFLAGS = @CXXFLAGS@
+SNACCFLAGS = @SNACCFLAGS@
+SNACCDIRINC = @SNACCDIR@
+SNACCOPTIONS = -a 600 -I ../../libCtilMgr/src -I ../../../cml/cmlasn/Modules -I ../../libcert/asn1
+
+# these variables are specific to this makefile
+# 
+TARGET        =  allobjs
+CMNFLGS       =                   # common variables between compilers
+INCLUDE       = -I. \
+                -I../../inc \
+                -I../../libCtilMgr/inc \
+                -I$(CMLINC)
+DEPENDENCIES  = ../../inc/sm_api.h
+
+ASNMODULES    = sm_cms.asn1 sm_ess.asn1 sm_pkixtsp.asn1
+ASNMODCPP     = ${ASNMODULES:.asn1=.cpp}
+ASNMODHDR     = ${ASNMODULES:.asn1=.h}
+ASNMODOBJS    = ${ASNMODULES:.asn1=.o}
+ASN_H_PATH    = ../../inc
+
+
+allobjs: $(ASNMODOBJS) 
+
+$(ASNMODOBJS): $(ASNMODCPP)
+$(ASNMODCPP): $(ASNMODULES)
+
+clean-asn: 
+	rm -f $(ASNMODCPP)
+	@echo "Removing ASN.1 include files..."
+	(cd ../../inc; rm -f $(ASNMODHDR))
+clean: 
+	rm -f *.cpp
+	rm -f *.o
+
+install:
+	/bin/sh $(top_srcdir)/build/mkinstalldirs $(PREFIX)/include/smp/Modules
+	(for files in $(ASNMODULES); do \
+	  /bin/sh $(top_srcdir)/build/install-sh -c -m 644 $$files $(PREFIX)/include/smp/Modules; \
+	  done;)
+
+#
+# End of ASN.1 specific make information
+#
+include $(top_srcdir)/build/Maketail.in
+

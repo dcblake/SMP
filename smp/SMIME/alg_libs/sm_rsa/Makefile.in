@@ -1,0 +1,140 @@
+# Global variables
+
+include @SMP_BUILDDIR@/build/Makehead
+
+SNACCFLAGS = @SNACCFLAGS@
+CXX = @CXX@
+CC = @CC@
+CXXFLAGS = @CXXFLAGS@
+CFLAGS = @CFLAGS@
+STAGINGDIR = $(SMPDISTDIR)/lib
+HASBSAFE = @HasBSAFE@
+ifeq ($(HASBSAFE), yes)
+BSAFELIB = @BSAFELIBDIR@
+BSAFEINC = @BSAFEINCDIR@
+BSAFESRC = @BSAFESRCDIR@
+endif
+.PHONY : warn
+.PHONY : clean-asn 
+.PHONY : clean  
+.PHONY : clean-extern 
+ 
+
+ifeq ($(RANLIB),)
+RANLIB = echo
+endif
+
+#
+# Make information specific to the Fortezza Token Interface directory
+#
+
+CSRCS            = $(wildcard *.c)
+COBJS            = $(CSRCS:.c=.o)
+CPPSRCS          = $(wildcard *.cpp)
+CPPOBJS          = $(CPPSRCS:.cpp=.o)
+SNACCOPTIONS     = -I../../libCtilMgr/src -I../../libcert/asn1 -I../../libsrc/asn1 -I../../../cml/cmlasn/Modules
+
+ASNMODULES    = $(wildcard *.asn1)
+ASNMODCPP     = ${ASNMODULES:.asn1=.cpp}
+ASNMODHDR     = ${ASNMODULES:.asn1=.h}
+ASNMODOBJS    = ${ASNMODULES:.asn1=.o}
+###########RWC;
+
+# Determine if we build a debug version
+.PHONY : warn
+ifeq ($(USEDEBUGLIB), yes)
+# Debug version
+LIBS	= -lbsafe -lcert_d -lc++asn1 -lcmapi_d
+LFLAG1 += -g
+ifeq ($(ENABLESTATIC), yes)
+TARGET2   = $(STAGINGDIR)/libsm_rsaDLL_d.a
+else
+TARGET   = $(STAGINGDIR)/libsm_rsaDLL_d.@SHEXT@
+endif
+else
+# Release Version
+LIBS	= -lbsafe -lcert -lc++asn1  -lcmapi
+ifeq ($(ENABLESTATIC), yes)
+TARGET2	      =  $(STAGINGDIR)/libsmrsa.a
+else
+TARGET   = $(STAGINGDIR)/libsm_rsaDLL.@SHEXT@
+endif
+endif
+CMNFLGS       =                   # common variables between compilers
+INCLUDE       = -I. \
+                -I../../inc \
+		-I../lolevel \
+                -I../../libCtilMgr/inc \
+                -I$(SFLINC) \
+                -I$(SNACCINCDIR)/c++\
+                -I$(BSAFEINC) \
+                -I../../../cml/cmapi/inc \
+                -I$(SMPDISTDIR)/include/pkcs11
+
+#CXXFLAGS	+= $(INCLUDE)
+
+DEPENDENCIES  = ../../inc/sm_api.h \
+                ./sm_rsa.h
+
+# Ensure we have BSAFE before building sm_rsa
+ifeq ($(HASBSAFE), yes)
+
+
+LIBPATH = -L../../lib -L$(SNACCLIBDIR) \
+	-L$(SMPDISTDIR)/lib
+
+LIBPATH += -L$(BSAFELIB)
+
+#RWC;1/28/02;	  -lbsafe -lcert -lasn1c++ -lsocket
+
+all:  $(ASNMODCPP) $(OBJS) $(TARGET) $(TARGET2)
+
+$(TARGET): tstdlib.o $(CPPOBJS) $(ASNMODOBJS)
+	cp -f *.h $(SMPDISTDIR)/include/smp
+	$(CXX) *.o $(LFLAG1) $(LIBPATH) -o $(TARGET) $(LIBS)
+#RWC;1/28/02;	$(CXX) -G *.o $(LIBS) -o ../../lib/libsm_rsaDLL.@SHEXT@
+
+$(TARGET2): tstdlib.o $(CPPOBJS) $(ASNMODOBJS)
+	cp -f *.h $(SMPDISTDIR)/include/smp
+	$(AR) ruv $(SMPDISTDIR)/lib/$(TARGET2) *.o
+	$(RANLIB) $(TARGET2)
+
+$(COBJS): $(DEPENDENCIES)
+$(CPPOBJS): $(DEPENDENCIES)
+$(ASNMODOBJS): $(ASNMODCPP)
+$(ASNMODCPP): $(ASNMODULES)
+
+tstdlib.c:
+	cp -f $(BSAFESRC)/tstdlib.c tstdlib.c
+
+clean-asn:
+	rm -f $(ASNMODCPP) $(ASNMODHDR)
+clean:	clean-extern clean-asn
+	rm -f *.o
+	rm -f $(LIBRARY)
+
+
+clean-extern:
+	if test -f SelectedAttributeTypes.h ; then \
+		rm  ${ASNEXTERNA:.asn1=.*} ; \
+	fi  
+	if test -f sm_usefulTypes.h ; then \
+		rm  ${ASNEXTERNB:.asn=.*} ; \
+	fi  
+	if test -f sm_VDASupport_asn.h ; then \
+		rm  ${ASNEXTERNC:.asn=.*} ; \
+	fi  
+#
+#
+# End of RSA Crypto Token Interface specific stuff
+#
+
+include ../../../build/Maketail.in
+include ../../../build/Makeinstall.in
+
+else
+warn:
+	@echo Warning BSafe needed to build this CTIL
+
+endif
+

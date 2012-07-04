@@ -1,0 +1,103 @@
+include @SMP_BUDILDDIR@/build/Makehead
+CXX = @CXX@
+CXXFLAGS = @CXXFLAGS@
+USEDEBUGLIB = @USEDEBUGLIB@
+HASFORTEZZA = @HasFORTEZZA@
+STAGINGDIR = $(SMPDISTDIR)/lib
+.PHONY : warn
+#
+# Make information specific to the Fortezza Token Interface directory
+#
+
+CSRCS            = $(wildcard *.c)
+COBJS            = $(CSRCS:.c=.o)
+CPPSRCS          = $(wildcard *.cpp)
+CPPOBJS          = $(CPPSRCS:.cpp=.o)
+
+ASNEXTERNA    = UsefulDefinitions.asn1 UpperBounds.asn1 \
+	InformationFramework.asn1 \
+	SelectedAttributeTypes.asn1 ORAddress.asn1 X509Common.asn1 \
+	AuthenticationFramework.asn1 CertificateExtensions.asn1 \
+	AttributeCertificateDefinitions.asn1 sdn702.asn1 PKIX.asn1
+ASNEXTERNB    = sm_usefulTypes.asn 
+ASNEXTERNC    = sm_VDASupport_asn.asn 
+
+ASNEXTERN     = ${ASNEXTERNB:%.asn=../../libCtilMgr/src/%.asn} \
+		${ASNEXTERNA:%.asn1=../../../SMPDist/cml/asn1/%.asn1} \
+		${ASNEXTERNC:%.asn=../../libcert/asn1/%.asn}
+
+ASNMODULES    = $(wildcard *.asn)
+##ASNMODCXX     = ${ASNMODULES:.asn=.C}
+ASNMODCPP     = ${ASNMODULES:.asn=.cpp}
+ASNMODHDR     = ${ASNMODULES:.asn=.h}
+ASNMODOBJS    = ${ASNMODULES:.asn=.o}
+
+OBJS          = $(ASNMODOBJS) clean-extern $(CPPOBJS) $(COBJS)
+
+# these variables are specific to this makefile
+# 
+LIBRARY       =  ../../lib/libsmfort.a
+TARGET        =  library
+CMNFLGS       =                   # common variables between compilers
+LIBPATH       = -L$(CI_PATH)/lib -L../../lib \
+	-L../../../SMPDist/util/VDASnacc/cpplib/lib \
+	-L../../libcert -L../../libCtilMgr -L../../../SMPDist/cml/lib
+LIBS	= $(LIBPATH) \
+          -lcmlasn -lcert -lasn1c++ -lsocket -lctil
+INCLUDE       = -I. \
+                -I../../inc \
+                -I$(SNACCINCDIR)/c++ \
+                -I../../libCtilMgr/inc \
+                -I$(SMPDist)/cml/include \
+		-I$(SMPDist)/Algs/fortezza \
+                -I$(CML)/include -I$(CI_PATH)/include
+
+CXXFLAGS	+= $(INCLUDE)
+ifeq ($(USEDEBUGLIB), yes)
+	LIBNAME 	= $(STAGINGDIR)/libsm_fortDLL_d.@SHEXT@
+else
+	LIBNAME 	= $(STAGINGDIR)/libsm_fortDLL.@SHEXT@
+endif
+DEPENDENCIES  = ../../inc/sm_api.h \
+               ./sm_fort.h
+
+ifeq ($(HASFORTEZZA), yes)
+library: dynamiclink
+#library: $(LIBRARY) $(RANLIB) dynamiclink
+
+dynamiclink: $(OBJS) 
+	cp -f *.h $(SMPDISTDIR)/include/smp
+	$(CXX) -G *.o $(LIBS) -o $(LIBNAME)
+
+$(OBJS): $(DEPENDENCIES)
+$(ASNMODOBJS): $(ASNMODCPP)
+$(ASNMODCPP): $(ASNMODULES)
+
+clean-asn:
+	rm -f $(ASNMODCPP) $(ASNMODHDR)
+clean: clean-asn clean-extern bare
+	rm -f *.o
+bare: 
+	rm -f $(LIBRARY)
+clean-extern:
+	if test -f SelectedAttributeTypes.h ; then \
+		rm  ${ASNEXTERNA:.asn1=.*} ; \
+	fi  
+	if test -f sm_usefulTypes.h ; then \
+		rm  ${ASNEXTERNB:.asn=.*} ; \
+	fi  
+	if test -f sm_VDASupport_asn.h ; then \
+		rm  ${ASNEXTERNC:.asn=.*} ; \
+	fi  
+#
+
+#
+# End of Fortezza Crypto Token Interface specific stuff
+#
+include ../../../build/Maketail.in
+include ../../../build/Makeinstall.in
+else
+warn:
+	@echo Warning Fortezza Crypto needed to build this CTIL
+endif #HAS FORTEZZA
+

@@ -1,0 +1,35 @@
+readme.thread
+10/31/01
+
+This README provides a few notes on using the SFL in a threaded environment.
+DON'T!  Just kidding.  The SFL itself is thredsafe, but the CTIL crypto-
+libraries may not be.  For the SFL, the sm_free3 CTIL has been updated with
+some thread lock/unlock calls to enforce an architectural rule that requires
+that a Login instance be run in only 1 thread.  This means that multiple 
+threads CANNOT share a common login instance.  For most users, this means that
+you must create a separate login CSMIME container for each thread.  
+
+THIS RULE IS ENFORCED BY THE sm_free3 CTIL!!!!!  It will LOCK on a thread if
+you attempt to use the CTIL from a thread other than the thread that
+created it.  Each CTIL is a special case, but it is easy to enforce this
+rule (see sm_free3.cpp for the CSM_Free3 constructors).
+
+There is a test program demonstrating both techniques (CTILs shared across
+threads, CTILs run from 1 thread only) in 
+./SMIME/testsrc/util/sm_SFLThreadTests.cpp.  With 
+"iGLOBALSeparateLoginPerThreadFlag=0", the sm_free3DLL.dll CITL WILL LOCK.
+If you disable the thread lock/unlock calls in sm_free3.cpp, even this CTIL 
+behaves well in general.  The only problem arise when several threads attempt
+to encrypt; many CTILs require that certain calls be maintained internally
+(basically a state machine, where the final result relies on consecutive
+results).  Multi-threaded applications can interfere with this internal state
+machine.  (e.g. 3DES content encryption key is maintained internally; a 
+separate call is made to wrap this key, RSA for example).
+
+THREAD logic can be disabled in the SFL by adding the DEFINE "SM_NO_THREADS" 
+to the libCtilMgr/src/sm_CTthreads.cpp project file.  The remaining source 
+will still call the lock/unlock methods, but they will simply return.
+
+
+Bob Colestock
+VDA

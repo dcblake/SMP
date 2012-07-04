@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="sm_spexDLL"
+	ProjectGUID="{2F8C82EF-1E1B-4145-827F-65852E461976}"
+	SccProjectName="sm_spexDLL"
+	SccLocalPath="..\..">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory=".\Debug"
+			IntermediateDirectory=".\Debug"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zm200 "
+				Optimization="0"
+				AdditionalIncludeDirectories="./,../../../../SMPDist/Algs/Spex,../../../../SMPDist/Algs/Fortezza,../../inc/cmapi,../lolevel,../../inc,../../libCtilMgr/inc,../../../../SMPDist/include/esnacc/c++,../../../cml/cmlasn/inc"
+				PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_FORTEZZADLL_EXPORTS;SM_SPEXDLL_EXPORTS;_DEBUG;WIN32"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				PrecompiledHeaderFile=".\Debug/sm_spexDLL.pch"
+				AssemblerListingLocation=".\Debug/"
+				ObjectFile=".\Debug/"
+				ProgramDataBaseFileName=".\Debug/"
+				BrowseInformation="1"
+				WarningLevel="4"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="1"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"
+				Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="../../../../SMPDist/Algs/Spex/Lynkes32.lib wsock32.lib"
+				OutputFile="../../../../SMPDist/lib/sm_spexDLLd.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile=".\Debug/sm_spexDLLd.pdb"
+				ImportLibrary=".\Debug/sm_spexDLLd.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\Debug/sm_spexDLL.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory=".\Release"
+			IntermediateDirectory=".\Release"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zm200 /Zm200 "
+				Optimization="2"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="./,../../../../SMPDist/Algs/Spex,../../../../SMPDist/Algs/Fortezza,../../inc/cmapi,../lolevel,../../inc,../../libCtilMgr/inc,../../../../SMPDist/include/esnacc/c++,../../../cml/cmlasn/inc"
+				PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_SPEXDLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;WIN32;NDEBUG"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				PrecompiledHeaderFile=".\Release/sm_spexDLL.pch"
+				AssemblerListingLocation=".\Release/"
+				ObjectFile=".\Release/"
+				ProgramDataBaseFileName=".\Release/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"
+				Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="../../../../SMPDist/Algs/Spex/Lynkes32.lib wsock32.lib"
+				OutputFile="../../../../SMPDist/lib/sm_spexDLL.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				ProgramDatabaseFile=".\Release/sm_spexDLL.pdb"
+				ImportLibrary=".\Release/sm_spexDLL.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\Release/sm_spexDLL.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
+			<File
+				RelativePath="..\sm_fort\Cryptint.h">
+			</File>
+			<File
+				RelativePath="..\sm_fort\sm_fort.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_FORTEZZADLL_EXPORTS;SM_SPEXDLL_EXPORTS;_DEBUG;_MBCS;WIN32;NO_DLL;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_SPEXDLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;WIN32;NDEBUG;_MBCS;NO_DLL;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\sm_fort\sm_fortAsn.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_FORTEZZADLL_EXPORTS;SM_SPEXDLL_EXPORTS;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_SPEXDLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\sm_fort\sm_fortCI.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_FORTEZZADLL_EXPORTS;SM_SPEXDLL_EXPORTS;_DEBUG;_MBCS;WIN32;NO_DLL;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_SPEXDLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\sm_fort\sm_fortDsaParams.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_FORTEZZADLL_EXPORTS;SM_SPEXDLL_EXPORTS;_DEBUG;_MBCS;WIN32;NO_DLL;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_SPEXDLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\sm_fort\sm_fortDsaSigvalue.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_FORTEZZADLL_EXPORTS;SM_SPEXDLL_EXPORTS;_DEBUG;_MBCS;WIN32;NO_DLL;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_SPEXDLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_spex.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories="../sm_fort"
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_FORTEZZADLL_EXPORTS;SM_SPEXDLL_EXPORTS;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="2"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories="../sm_fort"
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_SPEXDLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_spexCI.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories="../sm_fort"
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_FORTEZZADLL_EXPORTS;SM_SPEXDLL_EXPORTS;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="2"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories="../sm_fort"
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_SPEXDLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_spexDLL.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_FORTEZZADLL_EXPORTS;SM_SPEXDLL_EXPORTS;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_SPEXDLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="StdAfx.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_FORTEZZADLL_EXPORTS;SM_SPEXDLL_EXPORTS;_DEBUG;_MBCS;WIN32;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_SPEXDLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;WIN32;NDEBUG;_MBCS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl">
+			<File
+				RelativePath="aaaStdAfx.h">
+			</File>
+			<File
+				RelativePath="LynksApi.h">
+			</File>
+			<File
+				RelativePath="sm_spex.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\sfl\alg_libs\sm_spex\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\sfl\alg_libs\sm_spex\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_spexDLL.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
+		</Filter>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cmlasn.lib">
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cmlasn_d.lib">
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cppasn1.lib">
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cppasn1_d.lib">
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\libCert.lib">
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\libCertd.lib">
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\libCtilMgr.lib">
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\libCtilMgrd.lib">
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="ReadMe.txt">
+		</File>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

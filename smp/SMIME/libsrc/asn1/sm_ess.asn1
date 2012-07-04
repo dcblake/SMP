@@ -1,0 +1,276 @@
+-- @(#) sm_ess.asn 1.18 06/27/00 15:27:25 
+ExtendedSecurityServices
+       { 1 2 840 113549 1 9 16 0 ess(2) }
+       --RWC;{ iso(1) member-body(2) us(840) rsadsi(113549)
+       --RWC;  pkcs(1) pkcs-9(9) smime(16) modules(0) ess(2) }
+ 
+DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+IMPORTS
+ 
+	IssuerSerial
+	    FROM AttributeCertificateDefinitions
+
+    ContentType
+        FROM CryptographicMessageSyntax
+
+    SubjectKeyIdentifier FROM CertificateExtensions
+
+    CertificateSerialNumber FROM AuthenticationFramework  --RWC; Added
+
+    ub-integer-options  FROM ORAddressModule
+
+    ESSSecurityLabel, id-aa-securityLabel, ESSPrivacyMark
+          FROM SDN702 
+
+    SecurityPolicyIdentifier, SecurityClassification, SecurityCategories, 
+	      SecurityCategory, IssuerAndSerialNumber
+          FROM EnhancedSecurity
+
+    PolicyQualifierInfo, PolicyInformation
+		  FROM X509Common
+
+    id-qt-unotice, id-qt-cps 
+          FROM PKIXImplicit88
+
+    GeneralName, GeneralNames
+   	      FROM X509Common;
+
+
+
+-- Extended Security Services
+
+-- The construct "SEQUENCE SIZE (1..MAX) OF" appears in several ASN.1
+-- constructs in this module. A valid ASN.1 SEQUENCE can have zero or
+-- more entries. The SIZE (1..MAX) construct constrains the SEQUENCE to 
+-- have at least one entry. MAX indicates the upper bound is unspecified.
+-- Implementations are free to choose an upper bound that suits their
+-- environment.
+
+--RWC;MOVED TO "asn-useful.asn1" SNACC;
+--RWC; UTF8String ::= [UNIVERSAL 12] IMPLICIT OCTET STRING
+    -- The contents are formatted as described in [UTF8]
+
+-- Section 2.7
+
+ReceiptRequest ::= SEQUENCE {
+  signedContentIdentifier ContentIdentifier,
+  receiptsFrom ReceiptsFrom,
+  receiptsTo SEQUENCE SIZE (1..ub-receiptsToVDA) OF GeneralNames }
+
+ub-receiptsToVDA INTEGER ::= 16
+--RWC;6/26/00; MODIFIED to avoid msp4 build error in p48.asn1
+
+id-aa-receiptRequest OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+    us(840) rsadsi(113549) pKcs(1) pKcs-9(9) smime(16) id-aa(2) 1}
+
+ContentIdentifier ::= OCTET STRING
+
+id-aa-contentIdentifier OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+    us(840) rsadsi(113549) pKcs(1) pKcs-9(9) smime(16) id-aa(2) 7}
+
+ReceiptsFrom ::= CHOICE {
+  allOrFirstTier [0] AllOrFirstTier,
+  -- formerly "allOrNone [0]AllOrNone"
+  receiptList [1] SEQUENCE OF GeneralNames }
+
+AllOrFirstTier ::= INTEGER { -- Formerly AllOrNone
+  allReceipts (0),
+  firstTierRecipients (1) }
+
+
+-- Section 2.8
+
+Receipt ::= SEQUENCE {
+  version ESSVersion,
+  contentType ContentType,
+  signedContentIdentifier ContentIdentifier,
+  originatorSignatureValue OCTET STRING }
+
+id-ct-receipt OBJECT IDENTIFIER ::= { iso(1) member-body(2) us(840) 
+   rsadsi(113549) pKcs(1) pKcs-9(9) smime(16) id-ct(1) 1}
+
+ESSVersion ::= INTEGER  { v1(1) }
+
+-- Section 2.9
+
+ContentHints ::= SEQUENCE {
+  contentDescription UTF8String (SIZE (1..MAX)) OPTIONAL,
+  contentType ContentType }
+
+id-aa-contentHint OBJECT IDENTIFIER ::= { iso(1) member-body(2) us(840) 
+    rsadsi(113549) pKcs(1) pKcs-9(9) smime(16) id-aa(2) 4}
+
+-- Section 2.10
+
+MsgSigDigest ::= OCTET STRING
+
+id-aa-msgSigDigest OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+    us(840) rsadsi(113549) pKcs(1) pKcs-9(9) smime(16) id-aa(2) 5}
+
+-- Section 2.11
+
+ContentReference ::= SEQUENCE {
+  contentType ContentType,
+  signedContentIdentifier ContentIdentifier,
+  originatorSignatureValue OCTET STRING }
+
+id-aa-contentReference   OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+    us(840) rsadsi(113549) pKcs(1) pKcs-9(9) smime(16) id-aa(2) 10 }
+
+
+
+
+-- Section 3.2
+
+--RWC;12/7/00; The following definitions were moved to 
+--RWC;12/7/00;   sm_VDASupport_asn.asn in support of the ACL library.
+
+--ESSSecurityLabel ::= SET {
+--  security-policy-identifier SecurityPolicyIdentifier,
+--  security-classification SecurityClassification OPTIONAL,
+--  privacy-mark ESSPrivacyMark OPTIONAL,
+--  security-categories SecurityCategories OPTIONAL }
+
+--id-aa-securityLabel OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+--    us(840) rsadsi(113549) pkcs(1) pkcs-9(9) smime(16) id-aa(2) 2}
+
+--SecurityPolicyIdentifier ::= OBJECT IDENTIFIER
+
+--SecurityClassification ::= INTEGER {
+--  unmarked (0),
+--  unclassified (1),
+--  restricted (2),
+--  confidential (3),
+--  secret (4),
+--  top-secret (5) } (0..ub-integer-options)
+
+--RWC;Already in "sm_x411ub.asn";ub-integer-options INTEGER ::= 256
+
+--ESSPrivacyMark ::= CHOICE {
+--    pString      PrintableString (SIZE (1..ub-privacy-mark-length)),
+--    utf8String   UTF8String (SIZE (1..MAX))
+--}
+
+--RWC;Already in "sm_x411ub.asn";ub-privacy-mark-length INTEGER ::= 128
+
+--SecurityCategories ::= SET SIZE (1..ub-security-categories) OF
+--        SecurityCategory
+
+--RWC;Already in "sm_x411ub.asn";ub-security-categories INTEGER ::= 64
+
+--SecurityCategory ::= SEQUENCE {
+--  type  [0] OBJECT IDENTIFIER,
+--  value [1] ANY  -RWC;DEFINED BY type - defined by type
+--}
+
+--Note: The aforementioned SecurityCategory syntax produces identical
+--hex encodings as the following SecurityCategory syntax that is
+--documented in the X.411 specification:
+--
+--SecurityCategory ::= SEQUENCE {
+--     type  [0]  SECURITY-CATEGORY,
+--     value [1]  ANY DEFINED BY type }
+--
+--SECURITY-CATEGORY MACRO ::=
+--BEGIN
+--TYPE NOTATION ::= type | empty
+--VALUE NOTATION ::= value (VALUE OBJECT IDENTIFIER)
+--END
+
+-- RWC;12/7/00; END CHANGE move to sm_VDASupport_asn.asn
+
+-- Section 3.4
+
+EquivalentLabels ::= SEQUENCE OF ESSSecurityLabel
+
+id-aa-equivalentLabels OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+    us(840) rsadsi(113549) pKcs(1) pKcs-9(9) smime(16) id-aa(2) 9}
+
+
+-- Section 4.4
+
+MLExpansionHistory ::= SEQUENCE
+        SIZE (1..ub-ml-expansion-history) OF MLData
+
+id-aa-mlExpandHistory OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+    us(840) rsadsi(113549) pKcs(1) pKcs-9(9) smime(16) id-aa(2) 3}
+
+ub-ml-expansion-history INTEGER ::= 64
+
+MLData ::= SEQUENCE {
+  mailListIdentifier EntityIdentifier,
+  expansionTime GeneralizedTime,
+  mlReceiptPolicy MLReceiptPolicy OPTIONAL }
+
+EntityIdentifier ::= CHOICE {
+  issuerAndSerialNumber IssuerAndSerialNumber,
+  subjectKeyIdentifier SubjectKeyIdentifier }   
+
+MLReceiptPolicy ::= CHOICE {
+  none [0] NULL,
+  insteadOf [1] SEQUENCE SIZE (1..MAX) OF GeneralNames,
+  inAdditionTo [2] SEQUENCE SIZE (1..MAX) OF GeneralNames }
+
+
+-- Section 5.4
+
+SigningCertificate ::=  SEQUENCE {
+    certs        SEQUENCE OF ESSCertID,
+    policies     SEQUENCE OF PolicyInformation OPTIONAL
+}
+
+id-aa-signingCertificate OBJECT IDENTIFIER ::= { iso(1)
+    member-body(2) us(840) rsadsi(113549) pKcs(1) pKcs9(9)
+    smime(16) id-aa(2) 12 }
+
+ESSCertID ::=  SEQUENCE {
+     certHash                 CertHash,   --RWC;"Hash" interferes with crypto LIB.
+     issuerSerial             IssuerSerial OPTIONAL
+}
+
+--RWC; Hash ::= ...
+CertHash ::= OCTET STRING -- SHA1 hash of entire certificate
+
+--RWC;11/15/02;IssuerSerial ::= SEQUENCE {
+--RWC;11/15/02;     issuer                   GeneralNames,
+--RWC;11/15/02;     serialNumber             CertificateSerialNumber
+--RWC;11/15/02;}
+
+
+
+--RWC;#########
+--RWC;######### Added for completeness
+--RWC;#########
+
+   --RWC;11/15/02;PolicyInformation ::= SEQUENCE {
+   --RWC;11/15/02;     policyIdentifier   CertPolicyId,
+   --RWC;11/15/02;     policyQualifiers   SEQUENCE SIZE (1..MAX) OF
+   --RWC;11/15/02;                             PolicyQualifierInfo OPTIONAL }
+
+   CertPolicyId ::= OBJECT IDENTIFIER
+
+   --RWC;11/15/02;PolicyQualifierInfo ::= SEQUENCE {
+   --RWC;11/15/02;     policyQualifierId  PolicyQualifierId,
+   --RWC;11/15/02;     qualifier          ANY } - -RWC;DEFINED BY policyQualifierId }
+
+   -- policyQualifierIds for Internet policy qualifiers
+
+   --RWC;id-pkix  OBJECT IDENTIFIER  ::=
+   --RWC;            { iso(1) identified-organization(3) dod(6) internet(1)
+   --RWC;                    security(5) mechanisms(5) pkix(7) }
+
+   --RWC;id-qt          OBJECT IDENTIFIER ::=  { id-pkix 2 }
+   --RWC;id-qt-cps      OBJECT IDENTIFIER ::=  { id-qt 1 }
+   --RWC;id-qt-unotice  OBJECT IDENTIFIER ::=  { id-qt 2 }
+
+
+   PolicyQualifierId ::=
+        OBJECT IDENTIFIER ( id-qt-cps | id-qt-unotice )
+
+
+
+
+
+END -- of ExtendedSecurityServices

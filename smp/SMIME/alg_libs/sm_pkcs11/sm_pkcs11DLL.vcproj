@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="sm_pkcs11DLL"
+	ProjectGUID="{07FDE747-77AC-4B91-A413-1C94FA11DA0B}"
+	RootNamespace="sm_pkcs11DLL"
+	SccProjectName="sm_pkcs11DLL"
+	SccLocalPath="..\..">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory=".\Debug"
+			IntermediateDirectory=".\Debug"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zm200 "
+				Optimization="0"
+				AdditionalIncludeDirectories="./;../sm_fort;../../inc;../../inc/cmapi;../lolevel;../../libCtilMgr/inc;&quot;../../../../SMPDist/include/esnacc/c++&quot;;../../../cml/cmlasn/inc;../../../cml/cmapi/inc;../../../../SMPDist/include/smp;../../../pkcs11_cryptopp/inc"
+				PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;_DEBUG;WIN32;PKCS11_PRINT"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				PrecompiledHeaderFile=".\Debug/sm_pkcs11DLL.pch"
+				AssemblerListingLocation=".\Debug/"
+				ObjectFile=".\Debug/"
+				ProgramDataBaseFileName=".\Debug/"
+				BrowseInformation="1"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="1"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying $(TargetPath) to system32"
+				CommandLine="copy &quot;$(TargetPath)&quot; $(WINDIR)\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"
+				Outputs="$(WINDIR)\system32\$(TargetName).dll"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="wsock32.lib ../../../../SMPDist/lib/cmapi_d.lib"
+				OutputFile="../../../../SMPDist/lib/sm_pkcs11DLLd.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile=".\Debug/sm_pkcs11DLLd.pdb"
+				ImportLibrary=".\Debug/sm_pkcs11DLLd.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\Debug/sm_pkcs11DLL.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory=".\Release"
+			IntermediateDirectory=".\Release"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zm200 "
+				Optimization="2"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="./;../sm_fort;../../inc/cmapi;../lolevel;../../inc;../../libCtilMgr/inc;&quot;../../../../SMPDist/include/esnacc/c++&quot;;../../../cml/cmlasn/inc;../../../cml/cmapi/inc;../../../pkcs11_cryptopp/inc"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SNACC_DEEP_COPY;VDADER_RULES;SM_FORTEZZADLL_EXPORTS"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				PrecompiledHeaderFile=".\Release/sm_pkcs11DLL.pch"
+				AssemblerListingLocation=".\Release/"
+				ObjectFile=".\Release/"
+				ProgramDataBaseFileName=".\Release/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying $(TargetPath) to system32"
+				CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"
+				Outputs="$(WINDIR)\system32\$(TargetName).dll"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="wsock32.lib ../../../../SMPDist/lib/cmapi.lib"
+				OutputFile="../../../../SMPDist/lib/sm_pkcs11DLL.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				ProgramDatabaseFile=".\Release/sm_pkcs11DLL.pdb"
+				ImportLibrary=".\Release/sm_pkcs11DLL.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\Release/sm_pkcs11DLL.tlb"
+				HeaderFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
+			<File
+				RelativePath="..\..\libsrc\asn1\sm_cms.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;_DEBUG;_MBCS;WIN32;PKCS11_PRINT;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_PKCS11DLL_EXPORTS;SNACC_DEEP_COPY;VDADER_RULES;SM_FORTEZZADLL_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\sm_fort\sm_fortAsn.asn1">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot;  ..\..\..\..\SMPDist\include\Modules
+copy &quot;$(InputPath)&quot; &quot;$(IntDir)&quot;
+cd &quot;$(InputDir)&quot;
+..\..\..\..\SMPDist\bin\esnaccd -C -I ../../libcert/asn1 -I ../../libsrc/asn1 -I ../../libCtilMgr/src -I ..\..\..\cml\cmlasn\modules &quot;$(InputName)&quot;.asn1
+"
+						Outputs="$(InputDir)$(InputName).h;$(InputDir)$(InputName).cpp"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot;  ..\..\..\..\SMPDist\include\Modules
+copy &quot;$(InputPath)&quot; &quot;$(IntDir)&quot;
+cd &quot;$(InputDir)&quot;
+..\..\..\..\SMPDist\bin\esnacc -C -I ../../libcert/asn1 -I ../../libsrc/asn1 -I ../../libCtilMgr/src -I ..\..\..\cml\cmlasn\modules  &quot;$(InputName)&quot;.asn1
+"
+						Outputs="$(InputDir)$(InputName).h;$(InputDir)$(InputName).cpp"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\sm_fort\sm_fortAsn.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;_DEBUG;_MBCS;WIN32;PKCS11_PRINT;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_PKCS11DLL_EXPORTS;SNACC_DEEP_COPY;VDADER_RULES;SM_FORTEZZADLL_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_pkcs11.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;_DEBUG;_MBCS;WIN32;PKCS11_PRINT;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_PKCS11DLL_EXPORTS;SNACC_DEEP_COPY;VDADER_RULES;SM_FORTEZZADLL_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_pkcs11DLL.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;_DEBUG;_MBCS;WIN32;PKCS11_PRINT;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_PKCS11DLL_EXPORTS;SNACC_DEEP_COPY;VDADER_RULES;SM_FORTEZZADLL_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_pkcs11DSASig.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;_DEBUG;_MBCS;WIN32;PKCS11_PRINT;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_PKCS11DLL_EXPORTS;SNACC_DEEP_COPY;VDADER_RULES;SM_FORTEZZADLL_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_pkcs11Functions.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;_DEBUG;_MBCS;WIN32;PKCS11_PRINT;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_PKCS11DLL_EXPORTS;SNACC_DEEP_COPY;VDADER_RULES;SM_FORTEZZADLL_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_pkcs11FunctionWrappers.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;_DEBUG;_MBCS;WIN32;PKCS11_PRINT;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_PKCS11DLL_EXPORTS;SNACC_DEEP_COPY;VDADER_RULES;SM_FORTEZZADLL_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_pkcs11Mechanism.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;_DEBUG;_MBCS;WIN32;PKCS11_PRINT;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_PKCS11DLL_EXPORTS;SNACC_DEEP_COPY;VDADER_RULES;SM_FORTEZZADLL_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_pkcs11Oids.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;_DEBUG;_MBCS;WIN32;PKCS11_PRINT;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_PKCS11DLL_EXPORTS;SNACC_DEEP_COPY;VDADER_RULES;SM_FORTEZZADLL_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_pkcs11Slot.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;_DEBUG;_MBCS;WIN32;PKCS11_PRINT;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_PKCS11DLL_EXPORTS;SNACC_DEEP_COPY;VDADER_RULES;SM_FORTEZZADLL_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_pkcs11SMTI.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;_DEBUG;_MBCS;WIN32;PKCS11_PRINT;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_PKCS11DLL_EXPORTS;SNACC_DEEP_COPY;VDADER_RULES;SM_FORTEZZADLL_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_pkcs11Supplement.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="_WINDOWS;_USRDLL;SM_PKCS11DLL_EXPORTS;SM_FORTEZZADLL_EXPORTS;_DEBUG;_MBCS;WIN32;PKCS11_PRINT;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;SM_PKCS11DLL_EXPORTS;SNACC_DEEP_COPY;VDADER_RULES;SM_FORTEZZADLL_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl">
+			<File
+				RelativePath=".\sm_pkcs11.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_pkcs11DSASig.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_pkcs11Functions.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="sm_pkcs11Oids.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\..\SMPDist\include\smp
+"
+						Outputs="..\..\..\..\SMPDist\include\smp\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
+		</Filter>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cmlasn.lib">
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cmlasn_d.lib">
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cppasn1.lib">
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cppasn1_d.lib">
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\libCert.lib">
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\libCertd.lib">
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\libCtilMgr.lib">
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\libCtilMgrd.lib">
+			<FileConfiguration
+				Name="Debug|Win32">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
+copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="ReadMe.txt">
+		</File>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

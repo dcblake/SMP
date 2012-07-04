@@ -1,0 +1,35 @@
+LIBRARY=libctil.a
+LIBRARYOUT=libctil.so
+
+# must explicitely specify libctil.a because shared object has the same name
+#
+LIBPATH = -L../../SMPDist/esnacc/c++/lib 
+LIBS    = $(LIBPATH)  -lc++asn1
+TARGETS: libctil dist
+
+# Create the library
+#
+libctil: buildobjs dynamiclink 
+
+# Build the support source
+#
+buildobjs:
+	(cd ./src; make)
+
+$(LIBRARY): 
+	rm -f $(LIBRARY)
+	ar ruv ./$(LIBRARY) ./src/*.o 
+
+dynamiclink:
+	$(CXX)  $(LFLAG1) $(LFLAG2) ./src/*.o $(LIBS) -o ./libctil.so
+
+clean:
+	(cd ./src; make clean)
+	rm -f ./*.so
+
+bare: clean
+	rm -f ./$(LIBRARY) ./*.so
+
+dist:
+	(cd ./SMP_libCtilMgr_Dist; . ./SMP_libCtilMgr_Dist.sh)
+

@@ -1,0 +1,106 @@
+#
+# Make information specific to the Fortezza Token Interface directory
+#
+include  @SMP_BUILDDIR@/build/Makehead
+SNACCFLAGS = @SNACCFLAGS@
+SNACC = @SNACCDIREXEC@/esnacc
+
+ifeq ($(RANLIB),)
+RANLIB = echo
+endif
+
+SNACCOPTIONS = -I $(top_builddir)/cml/cmlasn/Modules -I $(top_builddir)/SMIME/libCtilMgr/src -I $(top_builddir)/SMIME/libsrc/asn1 -I $(top_builddir)/SMIME/libcert/asn1
+# Global SNACC include Reference
+SNACCDIRINC = @SNACCINCDIR@/c++
+# Internal SNACC include reference
+SNACCDIRINCINTERNAL = -I@SNACCINCDIR@
+SNACCDIRLIB = @SNACCLIBDIR@
+CXX         = @CXX@
+CXXFLAGS    = @CXXFLAGS@
+USEDEBUGLIB = @USEDEBUGLIB@
+CPPSRCS     = $(wildcard *.cpp) 
+CPPOBJS     = $(CPPSRCS:.cpp=.o) 
+
+ASNMODULES  = $(wildcard *.asn1)
+ASNMODCPP   = ${ASNMODULES:.asn1=.cpp}
+ASNMODHDR   = ${ASNMODULES:.asn1=.h}
+ASNMODOBJS  = ${ASNMODULES:.asn1=.o}
+
+OBJS        =  sm_fortAsn.o sm_pkcs11.o sm_pkcs11DSASig.o \
+	sm_pkcs11Functions.o sm_pkcs11FunctionWrappers.o sm_pkcs11Mechanism.o \
+	sm_pkcs11Oids.o sm_pkcs11Slot.o sm_pkcs11SMTI.o sm_pkcs11Supplement.o
+CMNFLGS     =  
+
+# common variables between compilers
+INCLUDE     = -I. \
+	-I../../inc \
+	-I../lolevel \
+	-I../../libCtilMgr/inc \
+	-I../../libsrc/asn1 \
+	-I$(CMLINC) 
+
+DEPENDENCIES  = ../../inc/sm_api.h
+
+#	CXXFLAGS += $(CMNFLGS) $(INCLUDE)
+	LIBPATH = -L$(SNACCDIRLIB) -L$(SMPDISTDIR)/lib 
+	LFLAG1 = @SMP_LDFLAG@
+
+
+.PHONY : warn
+.PHONY : cp_header
+
+
+ifeq ($(USEDEBUGLIB), yes)
+LIBS    = -lcert_d -lc++asn1  -lcmlasn_d -lctil_d
+ifeq ($(ENABLESTATIC), yes)
+TARGET  =  $(SMPDISTDIR)/lib/libsmpkcs11_d.a
+else
+TARGET  = $(SMPDISTDIR)/lib/libsm_pkcs11_d.@SHEXT@
+endif
+else
+LIBS    = -lcert -lc++asn1  -lcmlasn -lctil
+ifeq ($(ENABLESTATIC), yes)
+TARGET  =  $(SMPDISTDIR)/lib/libsmpkcs11.a
+else
+TARGET  = $(SMPDISTDIR)/lib/libsm_pkcs11.@SHEXT@
+endif
+endif
+
+$(TARGET)2: sm_fortAsn.asn1 
+	make $(TARGET)
+
+$(TARGET): $(OBJS) cp_header 
+
+sm_fortAsn.asn1:
+	cp ../sm_fort/*.asn1 .
+
+cp_header: $(TARGET)
+	@(for hfile in ./*.h; do \
+		if [ -f $$hfile ]; then \
+			echo "Installing header $$hfile into $(prefix)/include/smp"; \
+			/bin/sh $(top_builddir)/build/install-sh -c -m 644 $$hfile $(SMPDISTDIR)/include/smp; \
+		fi; \
+	done);
+
+$(OBJS): $(DEPENDENCIES)
+$(ASNMODOBJS): $(ASNMODCPP)
+$(ASNMODCPP): $(ASNMODULES)
+
+clean-asn: 
+	rm -f $(ASNMODCPP)
+	rm -f $(ASNMODHDR)
+	@echo "removing ASN.1 include files..."
+	(cd ../../inc; rm -f $(ASNMODHDR))
+
+clean: clean-asn
+	rm -f *.o
+
+bare: clean clean-asn
+	rm -f $(LIBRARY)
+
+#
+#
+
+include ../../../build/Maketail.in
+include ../../../build/Makeinstall.in
+

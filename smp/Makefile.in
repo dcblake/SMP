@@ -1,0 +1,237 @@
+#!/bin/sh
+
+
+srcdir = @srcdir@
+top_srcdir = @top_smpdir@
+VPATH = @srcdir@
+prefix = @prefix@
+top_builddir = @SMP_BUILDDIR@ 
+exec_prefix = @exec_prefix@
+HOST = @host@
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+LFLAG1 = @SMP_LDFLAG@
+includedir = @includedir@
+oldincludedir = /usr/include
+SMPDISTDIR = @SMPDISTDIR@
+OPENSSLDIR = @OPENSSLDIR@
+CI_PATH = @FORTEZZADIR@
+SNACCDIR = @SNACCDIR@
+SNACCLIBDIR = @SNACCLIBDIR@
+SNACCINCDIR = @SNACCINCDIR@
+USETHREADS = @USETHREADS@
+DESTDIR = 
+HAVE_LBER = @HAVE_LBER@
+SHEXT = @SHEXT@
+
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+
+
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+transform = @program_transform_name@
+
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+CC = @CC@
+CXX = @CXX@
+YACC = @YACC@
+LEX = @LEX@
+CFLAGS = @CFLAGS@ -Wswitch
+CXXFLAGS = @CXXFLAGS@ -Wswitch
+BSAFEINCDIR = @BSAFEINCDIR@
+BSAFELIBDIR = @BSAFELIBDIR@
+BSAFESRCDIR = @BSAFESRCDIR@
+OPENSSLDIR = @OPENSSLDIR@
+CRYPTOPPDIR = @CRYPTOPPDIR@
+CRYPTOPPINCDIR = @CRYPTOPPINCDIR@
+CRYPTOPPLIBDIR = @CRYPTOPPLIBDIR@
+CRYPTOPPINCUSERSET = @CRYPTOPPINCUSERSET@
+SNACCFLAGS = @SNACCFLAGS@
+SNACCPRESENT = @ac_cv_snacc_present@
+SNACCDIREXEC = @SNACCDIREXEC@
+HAVE_SNACC = @HAVE_SNACC@
+INCLUDES=@includedir@
+SHELL = @SHELL@
+#
+## SMP Specific defines are here only for debuging
+## the configure process. Most of the local defines
+## are set in aclocal.m4
+# 
+RANLIB = @RANLIB@
+HASBSAFE = @HasBSAFE@
+HASOPENSSL = @HasOPENSSL@
+HASFORTEZZA = @HasFORTEZZA@
+USEDEBUGLIB = @USEDEBUGLIB@
+enablestatic = @enablestatic@
+HASCRYPTOPP = @HasCryptoPP@
+ONLYCML = @onlycml@
+#
+# SUBDIRS are placed in the order in which to run the makes
+#
+ifeq ($(ONLYCML), yes)
+SUBDIRS = pkcs11_cryptopp cml
+else
+SUBDIRS = SMIME/libCtilMgr pkcs11_cryptopp cml ACL SMIME SMP_Check
+endif
+
+# Dist Clean files
+DISTROCLEAN = config.h config.cache config.log config.status
+
+mkinstalldirs = $(SHELL) $(top_srcdir)/build/mkinstalldirs
+CONFIG_CLEAN_FILES = 
+DIST_COMMON =  COPYING INSTALL Makefile.am Makefile.in aclocal.m4 \
+configure configure.in install-sh missing mkinstalldirs
+
+
+PACKAGE = @PACKAGE@
+VERSION = @VERSION@
+
+DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
+
+TAR = gtar
+GZIP_ENV = --best
+all: all-redirect
+.SUFFIXES:
+
+
+$(srcdir)/configure: $(srcdir)/configure.in $(ACLOCAL_M4) $(CONFIGURE_DEPENDENCIES)
+
+@SET_MAKE@
+
+all:
+# Ensure our SMPDIST is set up correctly
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	/bin/sh @top_srcdir@/build/mkinstalldirs @SMPDISTDIR@/lib; \
+	/bin/sh @top_srcdir@/build/mkinstalldirs @SMPDISTDIR@/bin; \
+	/bin/sh @top_srcdir@/build/mkinstalldirs @SMPDISTDIR@/include/smp; \
+	/bin/sh @top_srcdir@/build/mkinstalldirs @SMPDISTDIR@/include/smp/Modules; \
+	/bin/sh @top_srcdir@/build/mkinstalldirs @SMPDISTDIR@/include/pkcs11; \
+	/bin/sh @top_srcdir@/build/mkinstalldirs @SMPDISTDIR@/include/esnacc; \
+	/bin/sh @top_srcdir@/build/mkinstalldirs @SMPDISTDIR@/include/esnacc/c++; \
+	/bin/sh @top_srcdir@/build/mkinstalldirs @SMPDISTDIR@/include/esnacc/c; \
+# 	
+	dot_seen=no; \
+	target=`echo $@ | sed s/-recursive//`; \
+	list='$(SUBDIRS)'; \
+	for subdir in $$list; do \
+	  echo "Making $$target in $$subdir"; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done; \
+
+top_distdir = $(distdir)
+
+dist: 
+# WE MAY WANT THIS LATER ON	distdir
+#	-chmod -R a+r $(distdir)
+#	GZIP=$(GZIP_ENV) $(TAR) chozf $(distdir).tar.gz $(distdir)
+#	-rm -rf $(distdir)
+#distdir: $(DISTFILES)
+#	-rm -rf $(distdir)
+#	mkdir $(distdir)
+#	-chmod 777 $(distdir)
+#	here=`cd $(top_builddir) && pwd`; \
+#	top_distdir=`cd $(distdir) && pwd`; \
+#	distdir=`cd $(distdir) && pwd`; \
+#	cd $(top_srcdir) \
+#	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu Makefile
+#	@for file in $(DISTFILES); do \
+#	  d=$(srcdir); \
+#	  if test -d $$d/$$file; then \
+#	    cp -pr $$d/$$file $(distdir)/$$file; \
+#	  else \
+#	    test -f $(distdir)/$$file \
+#	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
+#	    || cp -p $$d/$$file $(distdir)/$$file || :; \
+#	  fi; \
+#	done
+#	for subdir in $(SUBDIRS); do \
+#	  if test "$$subdir" = .; then :; else \
+#	    test -d $(distdir)/$$subdir \
+#	    || mkdir $(distdir)/$$subdir \
+#	    || exit 1; \
+#	    chmod 777 $(distdir)/$$subdir; \
+#	    (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) top_distdir=../$(distdir) distdir=../$(distdir)/$$subdir distdir) \
+#	      || exit 1; \
+#	  fi; \
+#	done
+check-am: 
+
+check: 
+	(cd SMP_Check; make; ./SMP_Check)
+
+install: 
+	@echo "Making install in `$(PWD)`"
+	@for i in $(SUBDIRS) ; do \
+		echo " Entering subdirectory $$I"; \
+		( cd $$i; $(MAKE) $(MFLAGS) install ) ; \
+	done
+
+clean: 
+	@echo "Making clean in `$(PWD)`"
+	@for i in $(SUBDIRS) ; do \
+		echo " Entering subdirectory $$I"; \
+		( cd $$i; $(MAKE) $(MFLAGS) clean ) ; \
+	done
+	@echo "Cleaning $(SMPDISTDIR)"
+	@(cd $(SMPDISTDIR)/lib; for files in *.a ; do \
+		if test -f $$files ; then \
+		  echo "Removing $$files"; \
+		  rm -f $$files; \
+		fi; \
+		done )
+	@(cd $(SMPDISTDIR)/lib; for files in *.@SHEXT@ ; do \
+		if test -f $$files ; then \
+		  echo "Removing $$files"; \
+		  rm -f $$files; \
+		fi; \
+		done )
+	@(cd $(SMPDISTDIR)/include/smp/Modules; for files in *.asn1 ; do \
+		if test -f $$files ; then \
+		  echo "Removing $$files"; \
+		  rm -f $$files; \
+		fi; \
+		done )
+	@(cd $(SMPDISTDIR)/include/smp; for files in *.h ; do \
+		if test -f $$files ; then \
+		  echo "Removing $$files"; \
+		  rm -f $$files; \
+		fi; \
+		done )
+
+
+distclean:
+	@(list='$(DISTROCLEAN)'; \
+	for files in $$list; do \
+	 if test -f $$files ; then \
+	   echo "Removing $$files"; \
+	   rm -f $$files; \
+         fi; \
+	done )
+
+ .PHONY: all-redirect
+
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

@@ -1,0 +1,50 @@
+include @SMP_BUILDDIR@/build/Makehead 
+STAGINGDIR = $(SMPDISTDIR)/lib
+USEDEBUGLIB = @USEDEBUGLIB@
+
+SRCS = $(wildcard ./src/*.cpp)
+ASNMODULES = $(wildcard ./asn1/*.asn1)
+ASNMODSRC  = ${ASNMODULES:.asn1=.cpp}
+ASN_H_PATH = ../inc
+
+OBJS = ${ASNMODULES:.asn1=.o} ${SRCS:.cpp=.o} 
+       
+
+SNACCFLAGS = @SNACCFLAGS@
+CXXFLAGS = @CXXFLAGS@
+HAVE_SNACC = @HAVE_SNACC@
+topbuilddir = @top_builddir@
+
+SNACCOPTIONS = -a 600 -I../libCtilMgr/src -I../../cml/cmlasn/Modules 
+
+INCLUDE = -I../inc -I$(CMLINC) -I../libCtilMgr/inc -I../../cml/cmlasn/inc -I../../pkcs11_cryptopp/inc
+
+LIBPATH = -L$(PREFIX)/lib -L../libCtilMgr -L$(SNACCLIBDIR)
+
+ifeq ($(USEDEBUGLIB), yes)
+LIBS    = $(LIBPATH)  -lc++asn1 -lctil_d
+TARGET=$(STAGINGDIR)/libcert_d.a
+else
+LIBS    = $(LIBPATH)  -lc++asn1 -lctil 
+TARGET=$(STAGINGDIR)/libcert.a
+endif
+
+all: $(TARGET) 
+
+$(TARGET): $(ASNMODSRC) $(OBJS)
+
+clean-asn:
+	rm -f $(ASNMODSRC)
+	
+clean:
+	rm -f ./src/*.o
+	rm -f ./asn1/*.o
+
+bare: clean
+	rm -f $(TARGET) 
+
+install:
+	echo Nothing to install.
+
+include ../../build/Maketail.in
+

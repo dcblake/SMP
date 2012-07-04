@@ -1,0 +1,264 @@
+readme.smp
+5/??/02
+IMPORTANT UPGRADE NOTE:::
+SNACC libraries have become "eSnacc".  There were a number of updates performed on the SNACC compiler, including the user API, so it will be important that any .asn files will have to be re-built.
+The SNACC compiler has been moved from ./SMPDist/bin to ./SMPDist/esnacc/bin AND all includes and libraries for esnacc have been moved to ./SMPDist/inc and ./SMPDist/lib.  PLEASE DELETE THE OLD REFERENCES IN ./SMPDist/bin AND ./SMPDist/util/VDASNACC; this includes the actual directories AND project references to includes and libs to avoid confusion.
+
+ALL OF THE SFL libraries are now loaded directly into ../SMPDist/sfl/lib AND ../SMPDist/sfl/alg_libs/sm_free3, etc.  They are no longer loaded into ./SMIME/test, so any references that expect the binary .DLL to be present in the test directory need to be updated.  Project .dll files are copied directly to %windir%/system32 on MS Windows systems.
+
+On MS Windows platforms, the libCert project has been made static (it was a dynamic link .dll file).
+
+The SFL CSM_ListC, in ./SMIME/libCtilMgr/inc/sm_tlistC.h, now inherits the SNACC::List<T> template class for better compatibility with ACL and SNACC.  There is no memory associated with the "CSM_ListC" class, so an application can use this class if the extra functionality is useful.  All parameters to SFL calls use the SNACC::List<T> class directly, so input or results from the SFL can be used directly with ACL.  In addition, a constructor and an additional method have been added to the SNACC::List<T> class to take in/provide std::list versions of our lists for direct use with the CML.  This SFL modification required a number of "const" updates, so application code that references various SFL classes may have to accommodate the new "const" rules (some overrides and some declaration updates may be necessary during integration).
+
+
+
+
+
+1/31/02 NOTES
+
+IMPORTANT UPGRADE NOTE:::
+The libCtilMgr container contains logins that correspond to the 
+logins in the CSMIME class (which allow certificate access).  
+In order to keep these 2 containers in
+synch, the CSMIME::AddLogin(...) method adds the newly generated
+CSM_CtilMgr::AddLogin(...) result to both lists.  This works fine
+except for those logins that create multiple logins (e.g. Fortezza
+or PKCS11).  For these cases it is necessary to call an additional
+routine that will bring the 2 lists in synch:  
+"void CSMIME::CheckLoginLists()".  IT SHOULD BE CALLED AFTER ALL 
+LOGINS HAVE BEEN CREATED.  It will only fill in missing items if
+they support the CSM_CSInst login instance (i.e. if they supply
+certificate information back to the application).
+
+INTEGRATION ISSUE:
+If you encounter errors dealing with a missing "cmd.exe" when building
+some of the SFL projects (e.g. libCtilMgr, sm_usefulTypes.asn has a
+CUSTOM BUILD list of commands), then check that you do not have any
+spaces, " ", in the directory where the SFL projects reside.  Our
+commands reference executables like ../../../SMPDist/bin/SNACC.exe;
+unfortunately the MS Visual Studio does not quote the full string
+when executing, so there end up being too many parameters.  The
+solution is to move the SFL development to a directory path with
+no spaces in any of the directory names (e.g. do no place the SFL
+under c:\Program Files).
+
+OTHER ISSUES:
+MS CAPI CTIL has been added.  It supports any CAPI CSP interface, but 
+has been tested with the default MS CSPs using imported PKCS12 files.
+It has also been tested with the DataKey smartcards (see notes under
+./SMIME/alg_libs/sm_capiDLL/readme.txt).
+
+There are a number of changes to the CertificateBuilder utility 
+(see the readme(s) under ./SMIME/CertificateBuilder).
+
+There is a new example program under ./SMIME/testutil/testTripleWrap.
+It demonstrates multiple logins, multiple RecipientInfo loads for
+encryption and provides a PKCS12 file and password for the demonstration.
+It uses the sm_free3 and CAPI CTILs.  The triple wrap refers to 
+Sign/Encrypt/Sign enveloping.  There are numerous comments and no
+references to our utility library; all references are directly to
+files.  This program creates a triple wrapped message, then decode/decrypts
+the message twice to demonstrate how to use the login lists.
+
+The sm_free3 CTIL PKCS12 input processing now supports "NID_keyBag"; 
+previously it only supported "NID_pkcs8ShroudedKeyBag" AND certificates.
+This update allows the sm_free3 CTIL to read PKCS12 files built by
+Baltimore technologies CAs.
+
+
+11/01 NOTES
+
+Newly added libCtilMgr which is a split from the libCert.  This new 
+library is required by the CML.  The remaining SFL libs require the
+CML, so it is important to build the libCtilMgr, then the CML before
+finalizing the SMIME build.
+
+On Linux:
+	cd SMIME
+	make setup
+	make ctillib
+	cd ../cml
+	make
+
+On MS Windows:
+	<bring up the smime.dsw workspace>
+	< build the libCtilMgr project>
+	< bring up the cml.dsw workspace>
+	< build CM_Tool>
+	< brint up the smime.dsw workspace>
+	< buildAll...>
+
+
+
+
+##################################################################
+PREVIOUS NOTES
+
+IMPORTANT:  In order to take advantage of the newly defined default
+CTIL that can process DSA, AES content encryption, SHA-1 and
+SHA-256, the application must call the CSMIME::SetDefaultCTIL()
+method directly.  Our ./SMIME/testsrc/util/sm_CfgLogins.cpp source
+performs this operation:
+
+   if (pCsmime->m_pCSInsts == NULL)
+       pCsmime->SetDefaultCTIL();
+
+This feature does not need a separate crypto library nor a CTIL
+DLL to provide DSA verification (with SHA-1 or SHA-256).
+
+For WIN98, please read the new ReadmeWin98.txt file, describing 
+certain problems with executing the SNACC compiler commands through 
+a batch file.  Basically Win98 users MUST execute the clean and 
+genasn.bat files through the explorer (once only).
+
+The SNACC_DEEP_COPY and VDADER_RULES compile defines are now defined
+in the SNACC include file "asn-config.h".  All users can now remove
+these definitions from their project C/C++ pre-processor settings.
+
+During execution, if you see an error indicating that the SNACC 
+DLL does not resolve a reference to sm_decodeBuf (newly added
+to the SNACC library), then you have an old SNACC DLL in your path.
+Our projects load the SNACC DLL directly to the %windir%/system32.
+The SNACC DLL names are "snaccCpp.dll", "snaccCpp_d.dll".
+
+There was an addition made to the CTIL interface; a third 
+parameter was added to 
+"CSM_Common::LoadParams(CSM_Buffer &IV, CSM_Buffer *pParameters)".
+The 3DES, RC2 and AES parameters are now handled in CSM_Common for 
+all CTILs (to avoid confusion and duplication of decode/encode logic).
+It is still possible for a CTIL crypto-library to override the load/
+unload logic since they are still declared virtual.
+
+The sm_free3 CTIL was upgraded to use the newest Crypto++ 4.1 library
+available from Wei Dei ("http://www.eskimo.com/~weidai/cryptlib.html").
+The include files are expected to be in SMPDist/Algs/crypto++4.1 
+and library binaries in ./Debug and ./Release respectively.
+
+NOTE For releases after 1.7 SFL:
+
+There is a new SMPDist directory created by all of the WGSI-supplied
+freeware libraries.  The intent of this distribution directory is to
+allow applications to link and reference project include files from 
+a consistent location AND to provide a consistent library to all 
+related projects.  This avoids the problem where one application 
+(or library) uses an older version of SNACC for example.  This 
+directory structure should be built automatically by the Windows 
+and Unix versions of the Makefiles for the respective projects, but 
+like all first time attempts at such an architectural change there
+may be flaws; please check that the appropriate directory is being 
+built during a build, once built it should work flawlessly.
+
+In addition to our logic utilizing the SMPDist directory, we now 
+reference the CTIL support libraries and include files under this 
+distribution directory structure.  It will be necessary for you to 
+create (by hand) the first time the appropriate directories and
+ place the appropriate include and library file in their respective 
+subdirectories.  The SFL supported CTIL conventions are listed below:
+
+	./SMPDist/Algs/fortezza/Cryptint.h
+	./SMPDist/Algs/fortezza/TSSP32.lib
+	./SMPDist/Algs/spex
+	./SMPDist/Algs/maestro.d		#for PKCS11
+	./SMPDist/Algs/crypto++3.2
+	./SMPDist/Algs/crypto++3.2/Release	#for libs
+	./SMPDist/Algs/crypto++3.2/Debug
+	./SMPDist/Algs/Bsafe42/Library/...	#all of the BSafe
+                                                  distribution.
+    ./SMPDist/Algs/Pkcs11/include/pkcs11.h
+
+
+This readme file only describes the build procedures/environment for the 
+smime libraries.  These libraries have been tested on Linux, Windows 95/98/NT,
+and Solaris.
+
+PLEASE BUILD the SNACC Debug and Release versions before building the SFL;
+the SNACC release lib is linked during the Debug SFL build due to the
+various mis-matched configuration names.
+
+Them make procedure for the SFL is
+
+	make setup
+	make
+        # it may be necessary to perform make 2ce, error.
+	make   
+
+<<< Crypto++3.2 NO LONGER SUPPORTED >>>>
+The Crypto++3.2 library is now used in the sm_free3 CTIL.  The older 
+Crypto++3.1 library can now be referenced by the makefile(s) through the 
+define "CRYPTOPP_3_2" (and the include/lib directory references in SMPDist).
+For LINUX, the makefile for Crypto++3.2 must be modified to remove 
+"-f permissive" fro the compile line.  You must move the includes and
+resulting lib(s) to the proper SMPDist/Algs/crypto++3.2 directory for proper
+SFL building.  The include files are stored in SMPDist/Algs/crypto++3.2, 
+the libraries are stored in SMPDist/Algs/crypto++3.2/Release/cryptlib.lib
+and SMPDist/Algs/crypto++3.2/Debug/cryptlib.lib.  (You could simply build
+the entire Crypto++ source in this directory as well.)
+For MS Windows, be sure to modify the default Crypto++3.2 *.dsp project to
+reference the Debug Multi-threaded DLL/Multi-threaded DLL for consistent
+linkage with the SFL.
+
+For MS Windows 98/NT machines, the SFL workspace requires the execution of GNU
+makefiles (we provide the GNU "make.exe" for convenience).  This requires 
+a config.sys change to the system allowing the MS Visual Studio to execute
+batch files:
+
+	in C:\config.sys add the following line
+SHELL=C:%windir%\command.com /E:4096 /P
+
+to avoid the out of environment space error (and of course the failure of the
+command).  These makes perform the snacc ASN.1 file compilations.
+
+PKCS12 file input has been added to the sm_free3 CTIL.  The syntax of the 
+arguments to CSM_AppLogin are "sm_free3DLL pkcsFile.pfx password".  This 
+feature is new, with limited testing, please let us know if you encounter
+any problems.  There is a capability to build PKCS12 files given a 
+private key and certificate; see the 
+SFLPkcs12.d/pkcs11Crypto/SFLPkcs12Lib/SFLpkcs12_support.h include file for
+supported interfaces (you could of course use any of the openssl library 
+calls, the functions defined in this include are for direct SFL use).
+
+
+SYSTEM SPECIFIC NOTES:
+
+Windows 98:  The ASN.1 build batch files hang the MS Visual C++
+environment for some reason.  This requires that Windows 98 users hand
+execute the batch files in the ./SMIME directory to clear, then build
+the ASN.1 support files (i.e.  GENASNClean2.bat and Genasn.bat).
+SOLARIS:  the PKCS12 library was not built and tested; it should work fine if 
+you have perl.
+UNIX:  on Unix machines in general, be sure to set LD_LIBRARY_PATH to the 
+proper locations (e.g. ~sfl/deliver.d/SMPDist/sfl/alg_libs/sm_free3:
+~sfl/deliver.d/SMPDist/sfl/libcert:
+~sfl/deliver.d/SMPDist/util/VDASnacc/cpplib/lib etc.) for proper load of the 
+shared objects.
+
+As with all of the VDA supplied freeware, there is now a distribution 
+directory created to handle binary distribution/links independent of version.
+The SFL makefile now copies shared object and static libraries and includes
+to ../SMPDist/sfl/ subdirectory.  This is done through the 
+./SMP_SFL_Dist/SMP_SFL_Dist.sh shell file.
+
+All VDA supplied freeware is expected to reside in a common directory, with
+a common SMPDist directory referenced by each (e.g. SNACC, ACL, CML, PCT/MSPi
+libraries and SNACC would all reside parallel with the SMPDist directory).
+
+
+
+SOME GENERAL COMMENTS FOR LIBRARY USAGE
+
+Given that, the classes in the ./SMIME/testsrc/util directory (or the libsmutil project) will provide examples of our class use. As an example, the CL_MsgToSign class simply fills the appropriate items for our CSM_MsgToSign library class to perform the actual signing details. The "Fill(...)" method demonstrates loading data (we load strings from a configuration text file, can't get any easier). We demonstrate filling all SMIME V3 data structures; most names match the ASN.1 definition names, it should be somewhat intuitive (at least we tried to make it that way). 
+
+As to how to build an application, look at the test program "auto_hi"; its include file directories and link statements work for projects within the SFL. This can get you started in building an application. When I build a new project I tend to create a new workspace, create my main project, then INSERT the "auto_hi" project from the SFL for the appropriate include paths and libs. The relative path names will be off slightly, but the main text will be correct. 
+
+Long term you will want to point directly to the SMPDist directory binaries. This directory is parallel with SMIME (and SNACC, CML, and ACL, msp403 (for PCT), SFLPkcs12 and any other library features we may come across). The intent of this directory is for binary distribution of our various libraries (described in the README files). Since all of our libraries cross-use each other, we needed a common location for the delivered includes and libs. I have some projects that use these libraries, but they are at the bottom of the priority list, so they are immature as demonstrations (these projects are in the SMIME R1.9 delivery, but missing the buildAll project). If you want to see how an outside application (like yours) should use our SMPDist directory, see the vdaAllProjects workspace for the TestAll project (no guarantees, yet). 
+
+One last comment, I am currently working on a non-restricted MIME encode/decode library capability for the SFL as well as some demonstration programs for higher level encode/decode operations. The MIME++ library license restrictons were combersome and Mozilla was unusable as a low-level library (I could not even link the SFL to Mozilla properly on Linux). Some of this logic is currently working (though undocumented) in the upcomming release (about to be released this week). In this version, the TestAll project from the vdaAllProjects workspace builds correctly for the SFL and it links to the SMPDist settings as should your final application. 
+
+There are only a few libraries of interest: libcert, libsm and perhaps the libsmutil (if you use our utilities). The CTILs are separete files for the Crypto algs. Some applications use only the libcert library; you will need the libsm as well since your interest is in SMIME V3, not just certificate details. Many of the other projects are utility in nature; report_tool will take any file type and attempt to decode/verify the results (very handy). It can handle EnvelopedData, SignedData, ContentInfo, Certificate, MIME encoded messages with any of the above. It even attempts decryption (in this soon-to-be released version). It is a good utility, but not a good demo of using our library due to its dynamic nature. The CertificateBuilder utility can decode various certificates, construct certificates, sign them, and build private/public key pairs for DSA, DH and RSA. It generates PKCS12 format output files (password protected). The other utilities are more special purpose; they reside in testsrc/hilevel and testutil. Most of our test functionality is available throuth the auto_hi program.
+
+
+
+
+Robert Colestock, Robert.Colestock@GetronicsGov.com
+Getronics Government Solutions, LLC
+11/1/01

@@ -1,0 +1,96 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: SMP_OpenSSL_Dist - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP750.bat" with contents
+[
+@echo off
+SMP_OpenSSL_Dist.bat
+]
+Creating command line "C:\TEMP\RSP750.bat"
+<h3>Output Window</h3>
+Performing Custom Build Step on .\SMP_OpenSSL_Dist.bat
+SMP_OpenSSL_Dist.bat batch file.
+0 File(s) copied
+        1 file(s) copied.
+        1 file(s) copied.
+<h3>
+--------------------Configuration: sm_free3DLL - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+<h3>
+--------------------Configuration: autoAlg - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP751.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "../../SMPDist/Algs/bsafe42/library/include" /I "../../SMPDist/Algs/crypto++3.2" /I "../include" /I "../../SMPDist/util/VDASnacc/cpplib/inc" /I "../testsrc/include" /I "../../SMPDist/util/mimepp-1.1/src" /I "../include/cmapi" /I "../alg_libs/sm_free3" /I "../alg_libs/sm_rsa" /I "../libcert/include" /D "NDEBUG" /D "VDADER_RULES" /D "SM_RSA_USED" /D "MIME_INCLUDED" /D "_CONSOLE" /D "_MBCS" /D "WIN32" /D "SNACC_DEEP_COPY" /D "CRYPTOPP_3_2" /Fp"Release/autoAlg.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"I:\devel.d\vda_snacc.d\smimeR1.8\testsrc\hilevel\sm_AutoAlg.cpp"
+"I:\devel.d\vda_snacc.d\smimeR1.8\testsrc\utilAlgs\sm_AutoAlgf.cpp"
+"I:\devel.d\vda_snacc.d\smimeR1.8\testsrc\utilAlgs\sm_CfgFree.cpp"
+"I:\devel.d\vda_snacc.d\smimeR1.8\testsrc\utilAlgs\sm_CfgRsa.cpp"
+"I:\devel.d\vda_snacc.d\smimeR1.8\testsrc\utilAlgs\sm_CTILAppLogin.cpp"
+"I:\devel.d\vda_snacc.d\smimeR1.8\alg_libs\sm_free3\sm_free3_asn.cpp"
+"I:\devel.d\vda_snacc.d\smimeR1.8\alg_libs\sm_rsa\sm_rsa_asn.cpp"
+"I:\devel.d\vda_snacc.d\smimeR1.8\alg_libs\sm_rsa\sm_tstdlib.c"
+]
+Creating command line "cl.exe @C:\TEMP\RSP751.tmp" 
+Creating temporary file "C:\TEMP\RSP752.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "../../SMPDist/Algs/bsafe42/library/include" /I "../../SMPDist/Algs/crypto++3.2" /I "../include" /I "../../SMPDist/util/VDASnacc/cpplib/inc" /I "../testsrc/include" /I "../../SMPDist/util/mimepp-1.1/src" /I "../include/cmapi" /I "../alg_libs/sm_free3" /I "../alg_libs/sm_rsa" /I "../libcert/include" /D "NDEBUG" /D "VDADER_RULES" /D "SM_RSA_USED" /D "MIME_INCLUDED" /D "_CONSOLE" /D "_MBCS" /D "WIN32" /D "SNACC_DEEP_COPY" /D "CRYPTOPP_3_2" /Fo"Release/" /Fd"Release/" /FD /c 
+"I:\devel.d\vda_snacc.d\smimeR1.8\testsrc\utilAlgs\sm_CfgLoginsAlg.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP752.tmp" 
+Creating temporary file "C:\TEMP\RSP753.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "../../SMPDist/Algs/bsafe42/library/include" /I "../../SMPDist/Algs/crypto++3.2" /I "../include" /I "../../SMPDist/util/VDASnacc/cpplib/inc" /I "../testsrc/include" /I "../../SMPDist/util/mimepp-1.1/src" /I "../include/cmapi" /I "../alg_libs/sm_free3" /I "../alg_libs/sm_rsa" /I "../libcert/include" /I "../alg_libs/sm_spex" /I "../alg_libs/sm_fort" /D "NDEBUG" /D "VDADER_RULES" /D "SM_RSA_USED" /D "MIME_INCLUDED" /D "_CONSOLE" /D "_MBCS" /D "WIN32" /D "SNACC_DEEP_COPY" /D "CRYPTOPP_3_2" /Fp"Release/autoAlg.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"I:\devel.d\vda_snacc.d\smimeR1.8\testsrc\utilAlgs\sm_CfgSpex.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP753.tmp" 
+Creating temporary file "C:\TEMP\RSP754.tmp" with contents
+[
+../../SMPDist/Algs/crypto++3.2/release/cryptlib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ../../SMPDist/Algs/bsafe42/library/lib/bsafe42.lib ../lib/libCertDLL.lib ../alg_libs/sm_rsaDLL/Release/sm_rsaDLL.lib ../alg_libs/sm_free3DLL/Release/sm_free3DLL.lib ../lib/libsmutil.lib ../lib/libsm.lib ../../SMPDist/util/VDASnacc/cpplib/lib/snaccCpp.lib wsock32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/autoAlg.pdb" /machine:I386 /out:"../test/autoAlg.exe" 
+.\Release\sm_AutoAlg.obj
+.\Release\sm_AutoAlgf.obj
+.\Release\sm_CfgFree.obj
+.\Release\sm_CfgLoginsAlg.obj
+.\Release\sm_CfgRsa.obj
+.\Release\sm_CfgSpex.obj
+.\Release\sm_CTILAppLogin.obj
+.\Release\sm_free3_asn.obj
+.\Release\sm_rsa_asn.obj
+.\Release\sm_tstdlib.obj
+\devel.d\vda_snacc.d\smimeR1.8\lib\libsm.lib
+\devel.d\vda_snacc.d\smimeR1.8\lib\libsmutil.lib
+\devel.d\vda_snacc.d\smimeR1.8\alg_libs\sm_rsaDLL\Release\sm_rsaDLL.lib
+\devel.d\vda_snacc.d\smimeR1.8\alg_libs\sm_TestDLL\Release\sm_TestDLL.lib
+\devel.d\vda_snacc.d\smimeR1.8\alg_libs\sm_free3DLL\Release\sm_free3DLL.lib
+]
+Creating command line "link.exe @C:\TEMP\RSP754.tmp"
+<h3>Output Window</h3>
+Compiling...
+sm_AutoAlg.cpp
+sm_AutoAlgf.cpp
+sm_CfgFree.cpp
+sm_CfgRsa.cpp
+sm_CTILAppLogin.cpp
+sm_free3_asn.cpp
+sm_rsa_asn.cpp
+sm_tstdlib.c
+Compiling...
+sm_CfgLoginsAlg.cpp
+Compiling...
+sm_CfgSpex.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+autoAlg.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
