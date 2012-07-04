@@ -569,228 +569,10 @@ bool SecurityLabel::check(Session *s, SPIF &spif)
                         // do error handling
                         throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
                      }
-
-                     // Set cat_count (local long) to 0.
-                     long cat_count = 0;
-
-                     // LOOP thru attributeFlags until end of array:
-                     size_t i = pSecTag->restrictivebitMap->attributeFlags.BitLen();
-                     size_t j = 0;
-                     for (j = 0; j <= i; j++)
-                     {
-                        // IF current securityLabel bit position is set to 1 THEN:
-                        if (CAsnBits::checkBit(pSecTag->restrictivebitMap->
-                            attributeFlags, j))
-                        {
-                           // LOOP thru SPIF SecurityCategoryTagSets linked list
-                           // until pMatchCat != NULL OR end of list:
-                           SecurityCategoryTagSets::iterator  pSecCatTag;
-                           SecurityCategoryTagSetSeqOf::iterator owner;
-                           SecurityCategoryTagSeqOf::iterator pMatchCat;
-                           bool foundMatchCat = false;
-
-                           for (pSecCatTag = spif.spiftoSign.securityCategoryTagSets->begin();
-                                pSecCatTag != spif.spiftoSign.securityCategoryTagSets->end() &&
-                                ! foundMatchCat; pSecCatTag++)
-                           {
-                              // IF current securityLabel tag_set_name == current
-                              // SPIF securityCategoryTagSetName THEN (found
-                              // correct SPIF SecurityCategoryTagSet)
-                              if (pSSL->tagSetName ==
-                                  pSecCatTag->securityCategoryTagSetName)
-                              {
-                                 // LOOP thru current SPIF securityCategoryTags
-                                 // linked list until pMatchCat != NULL OR end of
-                                 // list:
-                                 SecurityCategoryTagSetSeqOf::iterator pSecCat;
-
-                                 for (pSecCat = pSecCatTag->securityCategoryTags.begin();
-                                      pSecCat != pSecCatTag->securityCategoryTags.end() &&
-                                      ! foundMatchCat; pSecCat++)
-                                 {
-                                    // IF current securityLabel tag_type ==
-                                    // current SPIF tag_type THEN (found correct
-                                    // SPIF SecurityCategoryTag)
-                                    if (CSecurityTag::isTagTypeEqual(*pSecTag, *pSecCat))
-                                    {
-                                       // LOOP thru current SPIF tagCategories
-                                       // linked list until pMatchCat != NULL OR
-                                       // end of list:
-                                       SecurityCategoryTagSeqOf::iterator pTagCats;
-
-                                       for (pTagCats = pSecCat->tagCategories.begin();
-                                            pTagCats != pSecCat->tagCategories.end();
-                                            pTagCats++)
-                                       {
-                                          // IF current securityLabel bit position
-                                          // indicated by current tagCategories
-                                          // tag_label_cert is set to 1 THEN (found
-                                          // correct TagCategories) set pMatchCat
-                                          // to point to current SPIF tagCategories
-                                          if (pTagCats->labelAndCertValue ==
-                                              (const AsnIntType &) j)
-                                          {
-                                             foundMatchCat = true;
-                                             pMatchCat = pTagCats;
-                                             owner = pSecCat;
-                                             break;
-                                          }
-                                       } // ENDLOOP
-                                    }
-                                 } // ENDLOOP
-                              }
-                           } // ENDLOOP
-
-                           // IF pMatchCat == NULL THEN (SPIF does not include
-                           // securityLabel security category value so return error)
-                           if (! foundMatchCat)
-                           {
-                              char errStr[ACL_STR_BUF_LEN];
-                              long labelcert = j;
-                              AsnOid tmpOid(pSSL->tagSetName);
-                              long tagType = pSecTag->choiceId;
-                              SecurityCategoryTagSet *pSPIFsecCatTags=NULL;
-                              char *pszSPIF_secCattagSecSetString =
-                                    PrintableLabel::DetermineSPIF_secCatTagSetString(
-                                                spif, pSSL->tagSetName, pSPIFsecCatTags);
-                              if (pszSPIF_secCattagSecSetString == NULL)
-                                  pszSPIF_secCattagSecSetString = "";
-
-                              sprintf(errStr, "%s%s=%s(%s)%s=%ld %s %s%s=0x%02X",
-                                 "Bad labelAndCert value:",
-                                 "\n\tTag Set Name", (const char *) tmpOid,
-                                 pszSPIF_secCattagSecSetString,
-                                 "\n\ttagType", tagType,
-                                 "(0=restrictive, 1=enumerated,",
-                                 "2=permissive, or 3=freeform)\n\t",
-                                 "hex labelAndCertValue",
-                                 (unsigned int) labelcert);
-                              if (pszSPIF_secCattagSecSetString[0] != '\0')
-                                   free(pszSPIF_secCattagSecSetString);
-
-                              // do error handling
-                              throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
-                           }
-
-                           // Increment cat_count.
-                           cat_count++;
-
-                           // IF owner->singleCategorySelectionPolicy == 1 AND
-                           // cat_count > 1 THEN
-                           if ((owner->singleCategorySelectionPolicy != NULL) &&
-                              (*owner->singleCategorySelectionPolicy == 1) &&
-                               (cat_count > 1))
-                           {
-                              // do error handling
-                              char errStr[ACL_STR_BUF_LEN*2];
-                              long labelcert = j;
-                              long tagType = pSecTag->choiceId;
-                              CreateErrorStringForLabel(errStr,
-                                      "Single category error\n\tTag Set Name",
-                                      tagType, labelcert, spif, pSSL->tagSetName,
-                                      "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
-                                      &(*pMatchCat));
-
-                              throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
-                           }
-
-                           // IF pMatchCat->requiredClass != NULL AND pMatchCat->
-                           // requiredClass != securityLabel->sec_class THEN
-                           if (pMatchCat->requiredClass != NULL)
-                              if ((this->security_classification == NULL) ||
-                                  (*pMatchCat->requiredClass !=
-                                  *this->security_classification))
-                              {
-                                 // do error handling
-                                  char errStr[ACL_STR_BUF_LEN*2];
-                                  long labelcert = j;
-                                  long tagType = pSecTag->choiceId;
-                                  CreateErrorStringForLabel(errStr,
-                                          "requiredClass doesn't match:\n\tTag Set Name",
-                                          tagType, labelcert, spif, pSSL->tagSetName,
-                                          "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
-                                          &(*pMatchCat));       //  RWC;TESTED
-                                  char errStr2[ACL_STR_BUF_LEN*2];
-
-                                  sprintf(errStr2, "\n\trequiredClass=%d", (unsigned int)*pMatchCat->requiredClass);
-                                  strcat(errStr, errStr2);     // ADD requiredClass description to error string.
-
-                                 throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
-                              }
-
-                              if (this->security_classification != NULL)
-                              {
-                                 // IF pMatchCat->excludedClass != NULL THEN
-                                 if (pMatchCat->excludedClass != NULL)
-                                 {
-                                    // LOOP thru pMatchCat->excludedClass linked
-                                    // list until end of list:
-                                    TagCategoriesSeqOf2::iterator pOptClassData;
-
-                                    for (pOptClassData = pMatchCat->excludedClass->begin();
-                                         pOptClassData != pMatchCat->excludedClass->end();
-                                         pOptClassData++)
-                                    {
-                                       // IF current pMatchCat->excludedClass->
-                                       // pOptClassData == securityLabel->sec_class THEN
-                                       if (*pOptClassData ==
-                                           *this->security_classification)
-                                       {
-                                          AclString errStr;
-                                          AsnOid tmpOid(pSSL->tagSetName);
-                                          long sec_class = *this->security_classification;
-                                          long labelcert = j;
-
-                                          errStr << "Found Excluded Classification: "
-                                             << sec_class << "\n"
-                                             << "Excluded by:\n"
-                                             << "tag_set_name=" << (const char *) tmpOid << "\n";
-                                          CSecurityTag::getTagTypeStr(*pSecTag, errStr);
-                                          errStr << "\nLACV=" << labelcert;
-                                          // do error handling
-                                          throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr.str());
-                                       }
-                                    } // ENDLOOP
-                                 }  // ENDIF pMatchCat->excludedClass != NULL
-                              }
-
-                              // IF pMatchCat->excludedCategory != NULL then call
-                              // excludedCatCheck to ensure that none of the excluded
-                              // categories listed in the SPIF for the security
-                              // category value are present in the security label.
-                              if (pMatchCat->excludedCategory != NULL)
-                              {
-                                 excludedCatCheck(*pMatchCat->excludedCategory, spif);
-                              }
-
-                              // IF pMatchCat->requiredCategory != NULL then call
-                              // requiredCatCheck to ensure that the required
-                              // categories listed in the SPIF for the security
-                              // category value are present in the security label.
-                              if (pMatchCat->requiredCategory != NULL)
-                              {
-                                 requiredCatCheck(*pMatchCat->requiredCategory, spif, &(*pMatchCat));
-                              }
-
-                              // IF m_obsAccept != 1 AND pMatchCat->obsolete == 1 THEN
-                              if ((this->m_obsAccept != true) &&
-                                  (pMatchCat->obsolete != NULL) &&
-                                  (*pMatchCat->obsolete == 1))
-                              {
-                                 char errStr[ACL_STR_BUF_LEN*2];
-                                 long tagType = pSecTag->choiceId;
-                                 long labelcert = j;
-                                 CreateErrorStringForLabel(errStr,
-                                          "Obsolete category error:\n\tTag Set Name",
-                                          tagType, labelcert, spif, pSSL->tagSetName,
-                                          "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
-                                          &(*pMatchCat));
-
-                                 // do error handling
-                                 throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
-                              }
-                        }
-                     }
+                     
+                     // Check the bit string
+                     checkBitString(pSecTag->restrictivebitMap->attributeFlags,
+                                    pSSL->tagSetName, pSecTag->choiceId, spif);
                   }
                   else if (pSecTag->choiceId ==
                            SecurityTag::enumeratedAttributesCid)
@@ -832,200 +614,10 @@ bool SecurityLabel::check(Session *s, SPIF &spif)
                         throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
                      }
 
-                     // Set cat_count (local long) to 0.
-                     long cat_count = 0;
+                     // Check the Security Attributes
+                     checkSecurityAttributes(pSecTag->enumeratedAttributes->attributeFlags,
+                                             pSSL->tagSetName, pSecTag->choiceId, spif);
 
-                     // LOOP thru attributeFlags until end of array:
-                     SecurityTagSeq1SetOf::iterator pSecAttr;
-                     for(pSecAttr = pSecTag->enumeratedAttributes->attributeFlags.begin();
-                         pSecAttr != pSecTag->enumeratedAttributes->attributeFlags.end();
-                         pSecAttr++)
-                     {
-                        // LOOP thru SPIF SecurityCategoryTagSets linked list
-                        // until pMatchCat != NULL OR end of list:
-                        SecurityCategoryTagSets::iterator pSecCatTag;
-                        SecurityCategoryTagSetSeqOf::iterator owner;
-                        bool foundMatchCat = false;
-                        SecurityCategoryTagSeqOf::iterator pMatchCat;
-
-                        for (pSecCatTag = spif.spiftoSign.securityCategoryTagSets->begin();
-                            pSecCatTag != spif.spiftoSign.securityCategoryTagSets->end() &&
-                            ! foundMatchCat; pSecCatTag++)
-                        {
-                           // IF current securityLabel tag_set_name == current
-                           // SPIF securityCategoryTagSetName THEN (found
-                           // correct SPIF SecurityCategoryTagSet)
-                           if (pSSL->tagSetName ==
-                               pSecCatTag->securityCategoryTagSetName)
-                           {
-                              // LOOP thru current SPIF securityCategoryTags
-                              // linked list until pMatchCat != NULL OR end of
-                              // list:
-                              SecurityCategoryTagSetSeqOf::iterator pSecCat;
-                              for (pSecCat = pSecCatTag->securityCategoryTags.begin();
-                                   pSecCat != pSecCatTag->securityCategoryTags.end() &&
-                                   ! foundMatchCat; pSecCat++)
-                              {
-                                 // IF current securityLabel tag_type ==
-                                 // current SPIF tag_type THEN (found correct
-                                 // SPIF SecurityCategoryTag)
-                                 if (CSecurityTag::isTagTypeEqual(*pSecTag, *pSecCat))
-                                 {
-                                    // LOOP thru current SPIF tagCategories
-                                    // linked list until pMatchCat != NULL OR
-                                    // end of list:
-                                    SecurityCategoryTagSeqOf::iterator pTagCats;
-                                    for (pTagCats = pSecCat->tagCategories.begin();
-                                         pTagCats != pSecCat->tagCategories.end() &&
-                                         ! foundMatchCat; pTagCats++)
-                                    {
-                                       // IF current SPIF labelAndCertValue ==
-                                       // current securityLabel SecurityAttribute
-                                       // (1rst array value) THEN (found correct
-                                       // SPIF TagCategories) set pMatchCat to
-                                       // point to current SPIF tagCategories
-                                       if (pTagCats->labelAndCertValue ==
-                                           *pSecAttr)
-                                       {
-                                          foundMatchCat = true;
-                                          pMatchCat = pTagCats;
-                                          owner = pSecCat;
-                                       }
-                                    } // ENDLOOP
-                                 }
-                              } // ENDLOOP
-                           }
-                        } // ENDLOOP
-
-                        // IF pMatchCat == NULL THEN (SPIF does not include
-                        // securityLabel security category value so return error)
-                        if (!foundMatchCat)
-                        {
-                           char errStr[ACL_STR_BUF_LEN];
-                           long labelcert = *pSecAttr;
-                           AsnOid tmpOid(pSSL->tagSetName);
-                           long tagType = pSecTag->choiceId;
-
-                           sprintf(errStr, "%s%s=%s%s=%ld %s %s=0x%02X",
-                              "Bad labelAndCert value:\n\t",
-                              "Tag Set Name", (const char *) tmpOid,
-                              "\n\ttagType", tagType,
-                              "(0=restrictive, 1=enumerated, 2=permissive,",
-                              "or 3=freeform)\n\thex labelAndCertValue",
-                              (unsigned int) labelcert);
-
-                           // do error handling
-                           throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
-                        }
-
-                        // Increment cat_count.
-                        cat_count++;
-
-                        // IF owner->singleCategorySelectionPolicy == 1 AND
-                        // cat_count > 1 THEN
-                        if ((owner->singleCategorySelectionPolicy != NULL) &&
-                            (*owner->singleCategorySelectionPolicy == 1) &&
-                            (cat_count > 1))
-                        {
-                           // do error handling
-                          char errStr[ACL_STR_BUF_LEN*2];
-                          long labelcert = *pSecAttr;
-                          long tagType = pSecTag->choiceId;
-                          CreateErrorStringForLabel(errStr,
-                                  "Single category error:\n\tTag Set Name",
-                                  tagType, labelcert, spif, pSSL->tagSetName,
-                                  "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
-                                  &(*pMatchCat));       //  RWC;TESTED
-
-                           throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
-                        }
-
-                        // IF pMatchCat->requiredClass != NULL AND pMatchCat->
-                        // requiredClass != securityLabel->sec_class THEN
-                        if ((pMatchCat->requiredClass != NULL) &&
-                            (*pMatchCat->requiredClass !=
-                            *this->security_classification))
-                        {
-                          char errStr[ACL_STR_BUF_LEN*2];
-                          long labelcert = *pSecAttr;
-                          long tagType = pSecTag->choiceId;
-                          CreateErrorStringForLabel(errStr,
-                                  "requiredClass doesn't match:\n\tTag Set Name",
-                                  tagType, labelcert, spif, pSSL->tagSetName,
-                                  "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
-                                  &(*pMatchCat));       //  RWC;TESTED
-
-                          throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
-                        }
-
-                        // IF pMatchCat->excludedClass != NULL THEN
-                        if (pMatchCat->excludedClass != NULL)
-                        {
-                           // LOOP thru pMatchCat->excludedClass linked list
-                           // until end of list:
-                           TagCategoriesSeqOf2::iterator pOptClassData;
-                           for (pOptClassData = pMatchCat->excludedClass->begin();
-                                pOptClassData != pMatchCat->excludedClass->end();
-                                pOptClassData++)
-                           {
-                              // IF current pMatchCat->excludedClass->
-                              // pOptClassData == securityLabel->sec_class THEN
-                              if (*pOptClassData ==
-                                  *this->security_classification)
-                              {
-                                 AclString errStr;
-                                 AsnOid tmpOid(pSSL->tagSetName);
-                                 long sec_class = *this->security_classification;
-                                 long labelcert = *pSecAttr;
-
-                                 errStr << "Found Excluded Classification: "
-                                        << sec_class << "\n"
-                                        << "Excluded by:\n"
-                                        << "tag_set_name=" << (const char *) tmpOid << "\n";
-                                 CSecurityTag::getTagTypeStr(*pSecTag, errStr);
-                                 errStr << "\nLACV=" << labelcert;
-
-                                 // do error handling
-                                 throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr.str());
-                              }
-                           } // ENDLOOP
-                        }  // ENDIF pMatchCat->excludedClass != NULL
-
-                        // IF pMatchCat->excludedCategory != NULL then call
-                        // excludedCatCheck to ensure that none of the excluded
-                        // categories listed in the SPIF for the security
-                        // category value are present in the security label.
-                        if (pMatchCat->excludedCategory != NULL)
-                        {
-                           excludedCatCheck(*pMatchCat->excludedCategory, spif);
-                        }
-
-                        // IF pMatchCat->requiredCategory != NULL then call
-                        // requiredCatCheck to ensure that the required
-                        // categories listed in the SPIF for the security
-                        // category value are present in the security label.
-                        if (pMatchCat->requiredCategory != NULL)
-                        {
-                           requiredCatCheck(*pMatchCat->requiredCategory, spif, &(*pMatchCat));
-                        }
-
-                        // IF m_obsAccept != 1 AND pMatchCat->obsolete == 1 THEN
-                        if ((this->m_obsAccept != true) && (pMatchCat->obsolete != NULL) &&
-                            (*pMatchCat->obsolete == 1))
-                        {
-                          char errStr[ACL_STR_BUF_LEN*2];
-                          long labelcert = *pSecAttr;
-                          long tagType = pSecTag->choiceId;
-                          CreateErrorStringForLabel(errStr,
-                             "single category error:\n\tTag Set Name",
-                              tagType, labelcert, spif, pSSL->tagSetName,
-                              "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
-                              &(*pMatchCat));
-
-                           // do error handling
-                           throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
-                        }
-                     }
                   }
                   else if (pSecTag->choiceId ==
                            SecurityTag::permissivebitMapCid)
@@ -1067,206 +659,38 @@ bool SecurityLabel::check(Session *s, SPIF &spif)
                         // do error handling
                         throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
                      }
+                     
+                     // Check the bit string
+                     checkBitString(pSecTag->permissivebitMap->attributeFlags,
+                                    pSSL->tagSetName, pSecTag->choiceId, spif);
 
-                     // Set cat_count (local long) to 0.
-                     long cat_count = 0;
-                     SecurityCategoryTagSetSeqOf::iterator  pSecCat;
-
-                     // LOOP thru attributeFlags until end of array:
-                     size_t i = pSecTag->permissivebitMap->attributeFlags.BitLen();
-                     size_t j = 0;
-                     for (j = 0; j <= i; j++)
-                     {
-                        // IF current securityLabel bit position is set to 1 THEN:
-                        if (CAsnBits::checkBit(pSecTag->permissivebitMap->
-                            attributeFlags, j))
-                        {
-                           // LOOP thru SPIF SecurityCategoryTagSets linked list
-                           // until pMatchCat != NULL OR end of list:
-                           SecurityCategoryTagSets::iterator pSecCatTag;
-                           SecurityCategoryTagSetSeqOf::iterator owner;
-                           SecurityCategoryTagSeqOf::iterator pMatchCat;
-                           bool foundMatchCat = false;
-                           for (pSecCatTag = spif.spiftoSign.securityCategoryTagSets->begin();
-                                pSecCatTag != spif.spiftoSign.securityCategoryTagSets->end() &&
-                                ! foundMatchCat; pSecCatTag++)
-                           {
-                              // IF current securityLabel tag_set_name == current
-                              // SPIF securityCategoryTagSetName THEN (found
-                              // correct SPIF SecurityCategoryTagSet)
-                              if (pSSL->tagSetName ==
-                                  pSecCatTag->securityCategoryTagSetName)
-                              {
-                                 // LOOP thru current SPIF securityCategoryTags
-                                 // linked list until pMatchCat != NULL OR end of
-                                 // list:
-                                 for (pSecCat = pSecCatTag->securityCategoryTags.begin();
-                                      pSecCat != pSecCatTag->securityCategoryTags.end() &&
-                                      ! foundMatchCat; pSecCat++)
-                                 {
-                                    // IF current securityLabel tag_type ==
-                                    // current SPIF tag_type THEN (found correct
-                                    // SPIF SecurityCategoryTag)
-                                    if (CSecurityTag::isTagTypeEqual(*pSecTag, *pSecCat))
-                                    {
-                                       // LOOP thru current SPIF tagCategories
-                                       // linked list until pMatchCat != NULL OR
-                                       // end of list:
-                                       SecurityCategoryTagSeqOf::iterator pTagCats;
-                                       for (pTagCats = pSecCat->tagCategories.begin();
-                                            pTagCats != pSecCat->tagCategories.end() &&
-                                            ! foundMatchCat; pTagCats++)
-                                       {
-                                          // IF current securityLabel bit position
-                                          // indicated by current tagCategories
-                                          // tag_label_cert is set to 1 THEN (found
-                                          // correct TagCategories) set pMatchCat to
-                                          // point to current SPIF tagCategories
-                                          if (pTagCats->labelAndCertValue == (AsnInt)j)
-                                          {
-                                             foundMatchCat = true;
-                                             pMatchCat = pTagCats;
-                                             owner = pSecCat;
-                                          }
-                                       } // ENDLOOP
-                                    }
-                                 } // ENDLOOP
-                              }
-                           } // ENDLOOP
-
-                           // IF pMatchCat == NULL THEN (SPIF does not include
-                           // securityLabel security category value so return error)
-                           if (!foundMatchCat || pMatchCat  == pSecCat->tagCategories.end())
-                           {
-                              AclString errStr;
-                              long labelcert = j;
-                              AsnOid tmpOid(pSSL->tagSetName);
-
-
-                              errStr << "SPIF does not contain value asserted in label:\n"
-                                 << "tag_set_name=" << (const char *) tmpOid << "\n";
-                              CSecurityTag::getTagTypeStr(*pSecTag, errStr);
-                              errStr << "\nLACV: " << labelcert;
-
-                              // do error handling
-                              throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr.str());
-                           }
-
-                           // Increment cat_count.
-                           cat_count++;
-
-                           // IF owner->singleCategorySelectionPolicy == 1 AND
-                           // cat_count > 1 THEN
-                           if ((owner != NULL) &&
-                               (owner->singleCategorySelectionPolicy != NULL) &&
-                               (*owner->singleCategorySelectionPolicy == 1) &&
-                               (cat_count > 1))
-                           {
-                              // do error handling
-                              char errStr[ACL_STR_BUF_LEN*2];
-                              long labelcert = j;
-                              long tagType = pSecTag->choiceId;
-                              CreateErrorStringForLabel(errStr,
-                                 "single category error:\n\tTag Set Name",
-                                  tagType, labelcert, spif, pSSL->tagSetName,
-                                  "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
-                                  &(*pMatchCat));
-
-                              throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
-                           }
-
-                           // IF pMatchCat->requiredClass != NULL AND pMatchCat->
-                           // requiredClass != securityLabel->sec_class THEN
-                           if ((pMatchCat->requiredClass != NULL) &&
-                               (*pMatchCat->requiredClass !=
-                               *this->security_classification))
-                           {
-                              char errStr[ACL_STR_BUF_LEN*2];
-                              long labelcert = j;
-                              long tagType = pSecTag->choiceId;
-                              CreateErrorStringForLabel(errStr,
-                                 "requiredClass doesn't match:\n\tTag Set Name",
-                                  tagType, labelcert, spif, pSSL->tagSetName,
-                                  "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
-                                  &(*pMatchCat));
-
-                              throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
-                           }
-
-                           // IF pMatchCat->excludedClass != NULL THEN
-                           if (pMatchCat->excludedClass != NULL)
-                           {
-                              // LOOP thru pMatchCat->excludedClass linked list
-                              // until end of list:
-                              TagCategoriesSeqOf2::iterator pOptClassData;
-                              for (pOptClassData = pMatchCat->excludedClass->begin();
-                                   pOptClassData != pMatchCat->excludedClass->end();
-                                   pOptClassData++)
-                              {
-                                 // IF current pMatchCat->excludedClass->
-                                 // pOptClassData == securityLabel->sec_class THEN
-                                 if (*pOptClassData ==
-                                     *this->security_classification)
-                                 {
-                                    AclString errStr;
-                                    AsnOid tmpOid(pSSL->tagSetName);
-                                    long sec_class = *this->security_classification;
-                                    long labelcert = j;
-
-                                    errStr << "Found Excluded Classification: "
-                                           << sec_class << "\n"
-                                           << "Excluded by:\n"
-                                           << "tag_set_name=" << (const char *) tmpOid << "\n";
-                                    CSecurityTag::getTagTypeStr(*pSecTag, errStr);
-                                    errStr << "\nLACV=" << labelcert;
-
-                                    // do error handling
-                                    throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr.str());
-                                 }
-                              } // ENDLOOP
-                           }  // ENDIF pMatchCat->excludedClass != NULL
-
-                           // IF pMatchCat->excludedCategory != NULL then call
-                           // excludedCatCheck to ensure that none of the excluded
-                           // categories listed in the SPIF for the security
-                           // category value are present in the security label.
-                           if (pMatchCat->excludedCategory != NULL)
-                           {
-                              excludedCatCheck(*pMatchCat->excludedCategory, spif);
-                           }
-
-                           // IF pMatchCat->requiredCategory != NULL then call
-                           // requiredCatCheck to ensure that the required
-                           // categories listed in the SPIF for the security
-                           // category value are present in the security label.
-                           if (pMatchCat->requiredCategory != NULL)
-                           {
-                              requiredCatCheck(*pMatchCat->requiredCategory, spif, &(*pMatchCat));
-                           }
-
-                           // IF m_obsAccept != 1 AND pMatchCat->obsolete == 1 THEN
-                           if ((this->m_obsAccept != true) && (pMatchCat->obsolete)
-                            && (*pMatchCat->obsolete == 1))
-                           {
-                              char errStr[ACL_STR_BUF_LEN*2];
-                              long labelcert = j;
-                              long tagType = pSecTag->choiceId;
-                              CreateErrorStringForLabel(errStr,
-                                 "Obsolete category error:\n\tTag Set Name =",
-                                  tagType, labelcert, spif, pSSL->tagSetName,
-                                  "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
-                                  &(*pMatchCat));
-
-                              // do error handling
-                              throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
-                           }
-                        }
-                     }     // END FOR each pSecTag->permissivebitMap->attributeFlags.BitLen()
-                  }        // END IF SecurityTag::permissivebitMapCid
+                  } // END IF SecurityTag::permissivebitMapCid
                   else if (pSecTag->choiceId ==
                            SecurityTag::freeFormFieldCid)
                   {
-                     // no securityLevel - do nothing
+                     // Decode the Tag Type 7 data if necessary
+                     TagType7Data& secTag = GetDecodedTagType7(*pSecTag->freeFormField);
+
+                     // Check to see if this security tag is bitSet Attributes 
+                     // or security Attributes
+                     if (secTag.choiceId == TagType7Data::bitSetAttributesCid)
+                     {
+                        if (secTag.bitSetAttributes != NULL)
+                        {
+                           // Check the bit string
+                           checkBitString(*secTag.bitSetAttributes, 
+                              pSSL->tagSetName, pSecTag->choiceId, spif);
+                        }
+                     }
+                     else
+                     {
+                        if (secTag.securityAttributes != NULL)
+                        {
+                           // Check the Security Attributes
+                           checkSecurityAttributes(*secTag.securityAttributes,
+                              pSSL->tagSetName, pSecTag->choiceId, spif);
+                        }
+                     }
                   }
                   else
                   {
@@ -1306,13 +730,9 @@ bool SecurityLabel::check(Session *s, SPIF &spif)
 // This member ensures that the required categories listed in the SPIF are
 // present in the security label.
 //
-void SecurityLabel::requiredCatCheck(RequiredCategories &reqCat, SPIF &spif,
+void SecurityLabel::requiredCatCheck(RequiredCategories &reqCat, const SPIF &spif,
                                      const SNACC::TagCategories *pSpifTagCat)  // ONLY FOR REPORTING
 {
-   OptionalCategoryData *pCatData = NULL;
-   long found_cat = 0;
-   long stop_search = 0;
-   long found_cat_pif = 0;
 
    FUNC("SecurityLabel::requiredCatCheck");
    try
@@ -1320,6 +740,9 @@ void SecurityLabel::requiredCatCheck(RequiredCategories &reqCat, SPIF &spif,
       RequiredCategories::iterator iReqCat;
       for (iReqCat = reqCat.begin(); iReqCat != reqCat.end(); iReqCat++)
       {
+         long found_cat = 0;
+         long stop_search = 0;
+         long found_cat_pif = 0;
          OptionalCategoryDataSeqOf::iterator pCatData;
 
          for (pCatData = iReqCat->categoryGroup.begin();
@@ -1343,7 +766,7 @@ void SecurityLabel::requiredCatCheck(RequiredCategories &reqCat, SPIF &spif,
                   if (iReqCat->operation == 3)
                   {
                      char errStr[ACL_STR_BUF_LEN*2];
-                     long tagType = pCatData->tagType;
+                     int tagType = pCatData->tagType;
                      long labelcert = *pCatData->categories.labelAndCertValue;
                      CreateErrorStringForLabel(errStr,
                               "Missing required category:\n\tTag Set Name",
@@ -1365,7 +788,7 @@ void SecurityLabel::requiredCatCheck(RequiredCategories &reqCat, SPIF &spif,
                      if (found_cat > 1)
                      {
                         char errStr[ACL_STR_BUF_LEN*2];
-                        long tagType = pCatData->tagType;
+                        int tagType = pCatData->tagType;
                         long labelcert = *pCatData->categories.labelAndCertValue;
                         CreateErrorStringForLabel(errStr,
                               "operation == 1 and found_cat > 1:\n\tTag Set Name",
@@ -1444,7 +867,7 @@ void SecurityLabel::requiredCatCheck(RequiredCategories &reqCat, SPIF &spif,
                                  {
                                     // findCat failed, do error handling
                                     char errStr[ACL_STR_BUF_LEN*2];
-                                    long tagType = pCatData->tagType;
+                                    int tagType = pCatData->tagType;
                                     // SET labelAndCertValue TO -1 BECAUSE CHOICE IS allCid
                                     long labelcert = -1;
                                     CreateErrorStringForLabel(errStr,
@@ -1468,7 +891,7 @@ void SecurityLabel::requiredCatCheck(RequiredCategories &reqCat, SPIF &spif,
                                     if (found_cat > 1)
                                     {
                                        char errStr[ACL_STR_BUF_LEN*2];
-                                       long tagType = pCatData->tagType;
+                                       int tagType = pCatData->tagType;
                                        // SET labelAndCertValue TO -1 BECAUSE CHOICE IS allCid
                                        long labelcert = -1;
                                        CreateErrorStringForLabel(errStr,
@@ -1501,15 +924,30 @@ void SecurityLabel::requiredCatCheck(RequiredCategories &reqCat, SPIF &spif,
             }  // ENDELSE check all SecurityTags in SPIF indicated by req_cats
          }
 
-         // IF found_cat == 0 THEN return NO_REQ_CATS (>5000) error code.
+         // IF found_cat == 0 THEN return ACL_REQ_CAT_NOT_FOUND error code.
          // (Note: In this case, the security label did not include any of
          // the Required Categories indicated by the SPIF for the chk_val
          // security label value, but that could be 1 or more possible
          // values.
          if (found_cat == 0)
          {
-            throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR,
-               "No Req Cats (>5000) error::requiredCatCheck");
+            AclString errStr;
+            errStr << "Missing required category from OptionalCategoryGroup, operation = ";
+               
+            switch (iReqCat->operation)
+            {
+            case OptionalCategoryGroupInt::onlyOne:
+               errStr << "onlyOne";
+               break;
+            case OptionalCategoryGroupInt::oneOrMore:
+               errStr << "oneOrMore";
+               break;
+            case OptionalCategoryGroupInt::all:
+               errStr << "all";
+               break;
+            }
+
+            throw ACL_EXCEPT(ACL_REQ_CAT_NOT_FOUND, errStr.str());
          }
       }
    }
@@ -1549,7 +987,7 @@ void SecurityLabel::requiredCatCheck(RequiredCategories &reqCat, SPIF &spif,
 void SecurityLabel::CreateErrorStringForLabel(
                char *errStrOut,     // MEMORY INPUT, DATA OUT from this method
                const char *pszIncomingErrorDescription,     // IN
-               const long ltagType,                         // IN
+               const int tagType,                           // IN
                const long labelcert,                        // IN
                const SPIF &spif,                            // IN
                const AsnOid SNACCOid,                       // IN
@@ -1587,7 +1025,7 @@ void SecurityLabel::CreateErrorStringForLabel(
               pSecCat != pSPIFsecCatTags->securityCategoryTags.end() && ! bfoundMatchCat;
               pSecCat++)
          {
-            if (ltagType == pSecCat->tagType)
+            if (tagType == pSecCat->tagType)
             {
                for (pTagCats =  pSecCat->tagCategories.begin();
                     pTagCats != pSecCat->tagCategories.end();
@@ -1638,7 +1076,7 @@ void SecurityLabel::CreateErrorStringForLabel(
       sprintf(errStrOut, "%s %s \n\t%s=%s(%s)%s=%ld %s %s",
          pszWorkingLabelDescription, pszSPIF_Working_secCategoryName,
          pszIncomingErrorDescription, (const char *) SNACCOid,
-         pszSPIF_secCattagSecSetString, "\n\ttagType", ltagType,
+         pszSPIF_secCattagSecSetString, "\n\ttagType", tagType,
          pszOptionalTagTypeDescription, "\n\tlabelAndCertValue=allCid(TRUE)");
    }
    else
@@ -1646,7 +1084,7 @@ void SecurityLabel::CreateErrorStringForLabel(
       sprintf(errStrOut, "%s %s \n\t%s=%s(%s)%s=%ld %s %s=0x%02X(%s)",
          pszWorkingLabelDescription, pszSPIF_Working_secCategoryName,
          pszIncomingErrorDescription, (const char *) SNACCOid,
-         pszSPIF_secCattagSecSetString, "\n\ttagType", ltagType,
+         pszSPIF_secCattagSecSetString, "\n\ttagType", tagType,
          pszOptionalTagTypeDescription, "\n\thex labelAndCertValue",
          labelcert, pszSPIF_secCategoryName);
    }
@@ -1672,7 +1110,7 @@ void SecurityLabel::CreateErrorStringForLabel(
 // are present in the security label.
 //
 void SecurityLabel::excludedCatCheck(OptionalCategoryDataSeqOf &excCat,
-                                     SPIF &spif)
+                                     const SPIF &spif)
 {
    OptionalCategoryDataSeqOf::iterator pCatData;
    long found_cat = 0;
@@ -1700,7 +1138,7 @@ void SecurityLabel::excludedCatCheck(OptionalCategoryDataSeqOf &excCat,
             {
                char errStr[ACL_STR_BUF_LEN];
                AsnOid tmpOid(pCatData->securityCategoryTagSetName);
-               long tagType = pCatData->tagType;
+               int tagType = pCatData->tagType;
                long labelcert = *pCatData->categories.labelAndCertValue;
                SecurityCategoryTagSet *pSPIFsecCatTags=NULL;
 
@@ -1783,7 +1221,7 @@ void SecurityLabel::excludedCatCheck(OptionalCategoryDataSeqOf &excCat,
                               // findCat found excluded category, do error handling
                               char errStr[ACL_STR_BUF_LEN];
                               AsnOid tmpOid(pCatData->securityCategoryTagSetName);
-                              long tagType = pCatData->tagType;
+                              int tagType = pCatData->tagType;
                               // DO NOT SET labelAndCertValue BECAUSE CHOICE IS allCid
                               // long labelcert = pTagCat->labelAndCertValue;
                               SecurityCategoryTagSet *pSPIFsecCatTags=NULL;
@@ -2166,6 +1604,428 @@ bool SecurityLabel::freeFormOnlyCheck(void)
    return retVal;
 } // END OF MEMBER FUNCTION freeFormOnlyCheck
 
+void SecurityLabel::checkBitString(const SNACC::AsnBits& attributeFlags,
+                          const SNACC::TagSetName& tagSetName,
+                          int tagType,
+                          const SPIF &spif)
+{   
+   FUNC("SecurityLabel::checkBitString");
+   AsnOid tagSetNameOid(tagSetName);
+   
+   // Set cat_count (local long) to 0.
+   long cat_count = 0;
+   
+   // LOOP thru attributeFlags until end of array:
+   size_t i = attributeFlags.BitLen();
+   size_t j = 0;
+   for (j = 0; j <= i; j++)
+   {
+      // IF current securityLabel bit position is set to 1 THEN:
+      if (CAsnBits::checkBit(attributeFlags, j))
+      {
+         // LOOP thru SPIF SecurityCategoryTagSets linked list
+         // until pMatchCat != NULL OR end of list:
+         SecurityCategoryTagSets::iterator  pSecCatTag;
+         SecurityCategoryTagSetSeqOf::iterator owner;
+         SecurityCategoryTagSeqOf::iterator pMatchCat;
+         bool foundMatchCat = false;
+         
+         for (pSecCatTag = spif.spiftoSign.securityCategoryTagSets->begin();
+              pSecCatTag != spif.spiftoSign.securityCategoryTagSets->end() &&
+              ! foundMatchCat; pSecCatTag++)
+         {
+            // IF current securityLabel tag_set_name == current
+            // SPIF securityCategoryTagSetName THEN (found
+            // correct SPIF SecurityCategoryTagSet)
+            if (tagSetName == pSecCatTag->securityCategoryTagSetName)
+            {
+               // LOOP thru current SPIF securityCategoryTags
+               // linked list until pMatchCat != NULL OR end of
+               // list:
+               SecurityCategoryTagSetSeqOf::iterator pSecCat;
+               
+               for (pSecCat = pSecCatTag->securityCategoryTags.begin();
+                    pSecCat != pSecCatTag->securityCategoryTags.end() &&
+                    ! foundMatchCat; pSecCat++)
+               {
+                  // IF current securityLabel tag_type ==
+                  // current SPIF tag_type THEN (found correct
+                  // SPIF SecurityCategoryTag)
+                  if (CSecurityTag::isTagTypeEqual(tagType, *pSecCat))
+                  {
+                     // LOOP thru current SPIF tagCategories
+                     // linked list until pMatchCat != NULL OR
+                     // end of list:
+                     SecurityCategoryTagSeqOf::iterator pTagCats;
+                     
+                     for (pTagCats = pSecCat->tagCategories.begin();
+                          pTagCats != pSecCat->tagCategories.end();
+                          pTagCats++)
+                     {
+                        // IF current securityLabel bit position
+                        // indicated by current tagCategories
+                        // tag_label_cert is set to 1 THEN (found
+                        // correct TagCategories) set pMatchCat
+                        // to point to current SPIF tagCategories
+                        if (pTagCats->labelAndCertValue ==
+                           (AsnIntType) j)
+                        {
+                           foundMatchCat = true;
+                           pMatchCat = pTagCats;
+                           owner = pSecCat;
+                           break;
+                        }
+                     } // ENDLOOP
+                  }
+               } // ENDLOOP
+            }
+         } // ENDLOOP
+         
+         // IF pMatchCat == NULL THEN (SPIF does not include
+         // securityLabel security category value so return error)
+         if (! foundMatchCat)
+         {
+            char errStr[ACL_STR_BUF_LEN];
+            long labelcert = j;
+            SecurityCategoryTagSet *pSPIFsecCatTags=NULL;
+            char *pszSPIF_secCattagSecSetString =
+               PrintableLabel::DetermineSPIF_secCatTagSetString(
+               spif, tagSetName, pSPIFsecCatTags);
+            if (pszSPIF_secCattagSecSetString == NULL)
+               pszSPIF_secCattagSecSetString = "";
+            
+            sprintf(errStr, "%s%s=%s(%s)%s=%ld %s %s%s=0x%02X",
+               "Bad labelAndCert value:",
+               "\n\tTag Set Name", (const char *) tagSetNameOid,
+               pszSPIF_secCattagSecSetString,
+               "\n\ttagType", tagType,
+               "(0=restrictive, 1=enumerated,",
+               "2=permissive, or 3=freeform)\n\t",
+               "hex labelAndCertValue",
+               (unsigned int) labelcert);
+            if (pszSPIF_secCattagSecSetString[0] != '\0')
+               free(pszSPIF_secCattagSecSetString);
+            
+            // do error handling
+            throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
+         }
+         
+         // Increment cat_count.
+         cat_count++;
+         
+         // IF owner->singleCategorySelectionPolicy == 1 AND
+         // cat_count > 1 THEN
+         if ((owner->singleCategorySelectionPolicy != NULL) &&
+            (*owner->singleCategorySelectionPolicy == 1) &&
+            (cat_count > 1))
+         {
+            // do error handling
+            char errStr[ACL_STR_BUF_LEN*2];
+            long labelcert = j;
+            CreateErrorStringForLabel(errStr,
+               "Single category error\n\tTag Set Name",
+               tagType, labelcert, spif, tagSetName,
+               "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
+               &(*pMatchCat));
+            
+            throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
+         }
+         
+         // IF pMatchCat->requiredClass != NULL AND pMatchCat->
+         // requiredClass != securityLabel->sec_class THEN
+         if ((pMatchCat->requiredClass != NULL) &&
+            (*pMatchCat->requiredClass !=
+            *this->security_classification))
+         {
+            // do error handling
+            char errStr[ACL_STR_BUF_LEN*2];
+            long labelcert = j;
+            CreateErrorStringForLabel(errStr,
+               "requiredClass doesn't match:\n\tTag Set Name",
+               tagType, labelcert, spif, tagSetName,
+               "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
+               &(*pMatchCat));       //  RWC;TESTED
+            char errStr2[ACL_STR_BUF_LEN*2];
+            
+            sprintf(errStr2, "\n\trequiredClass=%d", (unsigned int)*pMatchCat->requiredClass);
+            strcat(errStr, errStr2);     // ADD requiredClass description to error string.
+            
+            throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
+         }
+         
+         if (this->security_classification != NULL)
+         {
+            // IF pMatchCat->excludedClass != NULL THEN
+            if (pMatchCat->excludedClass != NULL)
+            {
+               // LOOP thru pMatchCat->excludedClass linked
+               // list until end of list:
+               TagCategoriesSeqOf2::iterator pOptClassData;
+               
+               for (pOptClassData = pMatchCat->excludedClass->begin();
+                    pOptClassData != pMatchCat->excludedClass->end();
+                    pOptClassData++)
+               {
+                  // IF current pMatchCat->excludedClass->
+                  // pOptClassData == securityLabel->sec_class THEN
+                  if (*pOptClassData ==
+                     *this->security_classification)
+                  {
+                     AclString errStr;
+                     long sec_class = *this->security_classification;
+                     long labelcert = j;
+                     
+                     errStr << "Found Excluded Classification: "
+                        << sec_class << "\n"
+                        << "Excluded by:\n"
+                        << "tag_set_name=" << (const char *) tagSetNameOid << "\n";
+                     CSecurityTag::getTagTypeStr(tagType, errStr);
+                     errStr << "\nLACV=" << labelcert;
+                     // do error handling
+                     throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr.str());
+                  }
+               } // ENDLOOP
+            }  // ENDIF pMatchCat->excludedClass != NULL
+         }
+         
+         // IF pMatchCat->excludedCategory != NULL then call
+         // excludedCatCheck to ensure that none of the excluded
+         // categories listed in the SPIF for the security
+         // category value are present in the security label.
+         if (pMatchCat->excludedCategory != NULL)
+         {
+            excludedCatCheck(*pMatchCat->excludedCategory, spif);
+         }
+         
+         // IF pMatchCat->requiredCategory != NULL then call
+         // requiredCatCheck to ensure that the required
+         // categories listed in the SPIF for the security
+         // category value are present in the security label.
+         if (pMatchCat->requiredCategory != NULL)
+         {
+            requiredCatCheck(*pMatchCat->requiredCategory, spif, &(*pMatchCat));
+         }
+         
+         // IF m_obsAccept != 1 AND pMatchCat->obsolete == 1 THEN
+         if ((this->m_obsAccept != true) &&
+            (pMatchCat->obsolete != NULL) &&
+            (*pMatchCat->obsolete == 1))
+         {
+            char errStr[ACL_STR_BUF_LEN*2];
+            long labelcert = j;
+            CreateErrorStringForLabel(errStr,
+               "Obsolete category error:\n\tTag Set Name",
+               tagType, labelcert, spif,tagSetName,
+               "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
+               &(*pMatchCat));
+            
+            // do error handling
+            throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
+         }
+      }
+   }
+}
+
+void SecurityLabel::checkSecurityAttributes(const AsnSetOf<SNACC::SecurityAttribute>& attributeFlags,
+                          const SNACC::TagSetName& tagSetName,
+                          int tagType,
+                          const SPIF &spif)
+{   
+   FUNC("SecurityLabel::checkSecurityAttributes");
+   AsnOid tagSetNameOid(tagSetName);
+
+   // Set cat_count (local long) to 0.
+   long cat_count = 0;
+   
+   // LOOP thru attributeFlags until end of array:
+   SecurityTagSeq1SetOf::const_iterator iSecAttr = attributeFlags.begin();
+   for(iSecAttr ; iSecAttr != attributeFlags.end(); iSecAttr++)
+   {
+      // LOOP thru SPIF SecurityCategoryTagSets linked list
+      // until pMatchCat != NULL OR end of list:
+      SecurityCategoryTagSets::iterator pSecCatTag;
+      SecurityCategoryTagSetSeqOf::iterator owner;
+      bool foundMatchCat = false;
+      SecurityCategoryTagSeqOf::iterator pMatchCat;
+      
+      for (pSecCatTag = spif.spiftoSign.securityCategoryTagSets->begin();
+           pSecCatTag != spif.spiftoSign.securityCategoryTagSets->end() &&
+           ! foundMatchCat; pSecCatTag++)
+      {
+         // IF current securityLabel tag_set_name == current
+         // SPIF securityCategoryTagSetName THEN (found
+         // correct SPIF SecurityCategoryTagSet)
+         if (tagSetName ==
+            pSecCatTag->securityCategoryTagSetName)
+         {
+            // LOOP thru current SPIF securityCategoryTags
+            // linked list until pMatchCat != NULL OR end of
+            // list:
+            SecurityCategoryTagSetSeqOf::iterator pSecCat;
+            for (pSecCat = pSecCatTag->securityCategoryTags.begin();
+                 pSecCat != pSecCatTag->securityCategoryTags.end() &&
+                 ! foundMatchCat; pSecCat++)
+            {
+               // IF current securityLabel tag_type ==
+               // current SPIF tag_type THEN (found correct
+               // SPIF SecurityCategoryTag)
+               if (CSecurityTag::isTagTypeEqual(tagType, *pSecCat))
+               {
+                  // LOOP thru current SPIF tagCategories
+                  // linked list until pMatchCat != NULL OR
+                  // end of list:
+                  SecurityCategoryTagSeqOf::iterator pTagCats;
+                  for (pTagCats = pSecCat->tagCategories.begin();
+                       pTagCats != pSecCat->tagCategories.end() &&
+                       ! foundMatchCat; pTagCats++)
+                  {
+                     // IF current SPIF labelAndCertValue ==
+                     // current securityLabel SecurityAttribute
+                     // (1rst array value) THEN (found correct
+                     // SPIF TagCategories) set pMatchCat to
+                     // point to current SPIF tagCategories
+                     if (pTagCats->labelAndCertValue ==
+                        *iSecAttr)
+                     {
+                        foundMatchCat = true;
+                        pMatchCat = pTagCats;
+                        owner = pSecCat;
+                     }
+                  } // ENDLOOP
+               }
+            } // ENDLOOP
+         }
+      } // ENDLOOP
+      
+      // IF pMatchCat == NULL THEN (SPIF does not include
+      // securityLabel security category value so return error)
+      if (!foundMatchCat)
+      {
+         char errStr[ACL_STR_BUF_LEN];
+         long labelcert = *iSecAttr;
+         
+         sprintf(errStr, "%s%s=%s%s=%ld %s %s=0x%02X",
+            "Bad labelAndCert value:\n\t",
+            "Tag Set Name", (const char *) tagSetNameOid,
+            "\n\ttagType", tagType,
+            "(0=restrictive, 1=enumerated, 2=permissive,",
+            "or 3=freeform)\n\thex labelAndCertValue",
+            (unsigned int) labelcert);
+         
+         // do error handling
+         throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
+      }
+      
+      // Increment cat_count.
+      cat_count++;
+      
+      // IF owner->singleCategorySelectionPolicy == 1 AND
+      // cat_count > 1 THEN
+      if ((owner->singleCategorySelectionPolicy != NULL) &&
+         (*owner->singleCategorySelectionPolicy == 1) &&
+         (cat_count > 1))
+      {
+         // do error handling
+         char errStr[ACL_STR_BUF_LEN*2];
+         long labelcert = *iSecAttr;
+         CreateErrorStringForLabel(errStr,
+            "Single category error:\n\tTag Set Name",
+            tagType, labelcert, spif, tagSetName,
+            "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
+            &(*pMatchCat));       //  RWC;TESTED
+         
+         throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
+      }
+      
+      // IF pMatchCat->requiredClass != NULL AND pMatchCat->
+      // requiredClass != securityLabel->sec_class THEN
+      if ((pMatchCat->requiredClass != NULL) &&
+         (*pMatchCat->requiredClass !=
+         *security_classification))
+      {
+         char errStr[ACL_STR_BUF_LEN*2];
+         long labelcert = *iSecAttr;
+         CreateErrorStringForLabel(errStr,
+            "requiredClass doesn't match:\n\tTag Set Name",
+            tagType, labelcert, spif, tagSetName,
+            "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
+            &(*pMatchCat));       //  RWC;TESTED
+         
+         throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
+      }
+      
+      if (this->security_classification != NULL)
+      {
+         // IF pMatchCat->excludedClass != NULL THEN
+         if (pMatchCat->excludedClass != NULL)
+         {
+            // LOOP thru pMatchCat->excludedClass linked list
+            // until end of list:
+            TagCategoriesSeqOf2::iterator pOptClassData;
+            for (pOptClassData = pMatchCat->excludedClass->begin();
+            pOptClassData != pMatchCat->excludedClass->end();
+            pOptClassData++)
+            {
+               // IF current pMatchCat->excludedClass->
+               // pOptClassData == securityLabel->sec_class THEN
+               if (*pOptClassData ==
+                  *security_classification)
+               {
+                  AclString errStr;
+                  long sec_class = *security_classification;
+                  long labelcert = *iSecAttr;
+                  
+                  errStr << "Found Excluded Classification: "
+                     << sec_class << "\n"
+                     << "Excluded by:\n"
+                     << "tag_set_name=" << (const char *) tagSetNameOid << "\n";
+                  CSecurityTag::getTagTypeStr(tagType, errStr);
+                  errStr << "\nLACV=" << labelcert;
+                  
+                  // do error handling
+                  throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr.str());
+               }
+            } // ENDLOOP
+         }  // ENDIF pMatchCat->excludedClass != NULL
+      }
+      
+      // IF pMatchCat->excludedCategory != NULL then call
+      // excludedCatCheck to ensure that none of the excluded
+      // categories listed in the SPIF for the security
+      // category value are present in the security label.
+      if (pMatchCat->excludedCategory != NULL)
+      {
+         excludedCatCheck(*pMatchCat->excludedCategory, spif);
+      }
+      
+      // IF pMatchCat->requiredCategory != NULL then call
+      // requiredCatCheck to ensure that the required
+      // categories listed in the SPIF for the security
+      // category value are present in the security label.
+      if (pMatchCat->requiredCategory != NULL)
+      {
+         requiredCatCheck(*pMatchCat->requiredCategory, spif, &(*pMatchCat));
+      }
+      
+      // IF m_obsAccept != 1 AND pMatchCat->obsolete == 1 THEN
+      if ((this->m_obsAccept != true) &&
+         (pMatchCat->obsolete != NULL) &&
+         (*pMatchCat->obsolete == 1))
+      {
+         char errStr[ACL_STR_BUF_LEN*2];
+         long labelcert = *iSecAttr;
+         CreateErrorStringForLabel(errStr,
+            "Obsolete category error:\n\tTag Set Name",
+            tagType, labelcert, spif,tagSetName,
+            "(0=restrictive, 1=enumerated, 2=permissive, or 3=freeform)",
+            &(*pMatchCat));
+         
+         // do error handling
+         throw ACL_EXCEPT(ACL_LABEL_CHECK_ERROR, errStr);
+      }
+   }
+}
+
 // isIncoming:
 //
 bool SecurityLabel::isIncoming(void)
@@ -2189,6 +2049,41 @@ bool IncomingLabel::isIncoming(void)
 //
 bool OutgoingLabel::isOutgoing(void)
 { return true;} // END OF MEMBER FUNCTION isOutgoing
+
+void DecodeAsnAny(AsnAny& any, AsnType* pValue)
+{
+   // Decode the AsnAny
+   SNACC::AsnLen bytesDecoded;
+   any.value = pValue;
+   try
+   {
+      any.value->BDec(*any.anyBuf, bytesDecoded);
+   } 
+   catch (...)
+   {
+      any.anyBuf->ResetMode();
+      throw;
+   }
+   any.anyBuf->ResetMode();
+}
+
+TagType7Data& GetDecodedTagType7(AsnAny& any)
+{
+   FUNC("GetDecodedTagType7");
+   if (any.value == NULL)
+   {
+      // Decode the TagType7 data
+      try 
+      {
+         DecodeAsnAny(any, new TagType7Data);
+      } 
+      catch (...)
+      {
+         throw ACL_EXCEPT(ACL_DECODE_ERROR,"Error decoding Tag Type 7 data");
+      }
+   }
+   return *((TagType7Data*)any.value);
+}
 
 // END OF acllabel.cpp
 

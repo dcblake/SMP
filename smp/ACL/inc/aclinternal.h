@@ -159,7 +159,7 @@ public:
   static bool removeLabelAndCertValue(SNACC::SecurityTags &secTags,
                                       const AsnIntType labelAndCertValue,
                                       const SNACC::TagTypeValue &tagtype);
-   static bool isTagTypeEqual(const SNACC::SecurityTag &secTag,
+   static bool isTagTypeEqual(int tagType,
                               SNACC::SecurityCategoryTag &secCatTag);
    static bool permissiveCheck(SNACC::AsnBits &permissive, 
                                SNACC::AsnBits &labelValue);
@@ -173,7 +173,7 @@ public:
                          const SNACC::AsnOid &spfTagSetOid, 
                          const AsnIntType labelAndCertValue,
                          const SNACC::SecurityCategoryTag &spfCatTag);
-   static void getTagTypeStr(const SNACC::SecurityTag &secTag, AclString &o);
+   static void getTagTypeStr(int tagType, AclString &o);
    void Print (AclString &os) const;
 };
 
@@ -184,10 +184,13 @@ public:
    CAsnBits(void){};
    static void And(SNACC::AsnBits *result, SNACC::AsnBits &userBits,
                    SNACC::AsnBits &caBits);
-   static bool checkBit(SNACC::AsnBits &bits, AsnIntType bit);
+   static bool checkBit(const SNACC::AsnBits &bits, AsnIntType bit);
    static bool isEmpty(SNACC::AsnBits &bits);
 
 };
+
+void DecodeAsnAny(SNACC::AsnAny& any, SNACC::AsnType* pValue);
+SNACC::TagType7Data& GetDecodedTagType7(SNACC::AsnAny& any);
 
 _END_NAMESPACE_ACL
 

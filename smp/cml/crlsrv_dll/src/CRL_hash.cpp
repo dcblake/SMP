@@ -222,6 +222,9 @@ static bool SplitAndInsert (Slot *entry, Revocation *element, ulong hash_value)
     return false;
 
   entry->leaf = false;
+  entry->value = NULL; // Added by TPH because entry moved by Split and Insert is
+                       // now in entry->table->value. This memory should only be
+                       // freed one time.
   return true;
 }
 

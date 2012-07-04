@@ -6,7 +6,7 @@
 // MEMBER FUNCTIONS:
 //   enumAnd(SecTagPrivList *&results, SecTagPrivList &userEnum,
 //                           SecTagPrivList &caEnum)
-//   isTagTypeEqual(SecurityTag &secTag, SecurityCategoryTag &secCatTag)
+//   isTagTypeEqual(const int tagType, SecurityCategoryTag &secCatTag)
 //   findLabelAndCertValue(SecurityTags &o, AsnInt &labelAndCertValue,
 //                                         TagTypeValue &tagtype)
 //   permissiveCheck(AsnBits &permissive, AsnBits &labelValue)
@@ -66,16 +66,19 @@ void CSecurityTag::enumAnd(SecTagPrivList *&results, SecTagPrivList &userEnum,
 //
 // Compare tag_type in secTag and secCatTag and return true if they are equal.
 //
-bool CSecurityTag::isTagTypeEqual(const SecurityTag &secTag, SecurityCategoryTag &secCatTag)
+bool CSecurityTag::isTagTypeEqual(int tagType, SecurityCategoryTag &secCatTag)
 {
-   if (secTag.choiceId == SecurityTag::restrictivebitMapCid &&
+   if (tagType == SecurityTag::restrictivebitMapCid &&
       secCatTag.tagType == (AsnInt)TagTypeValue::restricted)
       return true;
-   else if (secTag.choiceId == SecurityTag::enumeratedAttributesCid &&
+   else if (tagType == SecurityTag::enumeratedAttributesCid &&
       secCatTag.tagType == (AsnInt)TagTypeValue::enumerated)
       return true;
-   else if (secTag.choiceId == SecurityTag::permissivebitMapCid &&
+   else if (tagType == SecurityTag::permissivebitMapCid &&
       secCatTag.tagType == (AsnInt)TagTypeValue::permissive)
+      return true;
+   else if (tagType == SecurityTag::freeFormFieldCid &&
+      secCatTag.tagType == (AsnInt)TagTypeValue::tagType7)
       return true;
    return false;
 } // END OF MEMBER FUNCTION isTagTypeEqual
@@ -129,21 +132,8 @@ SecurityTags::const_iterator CSecurityTag::findLabelAndCertValue(const SecurityT
           else if (pSecTag->choiceId == freeFormFieldCid &&
              tagtype == (AsnInt)TagTypeValue::tagType7)
           {
-
-             // RWC;WRONG, COMES IN AS BUFFER
-             // TagType7Data *tag7data =
-             //    (TagType7Data *)pSecTag->freeFormField->value;
-             TagType7Data tag7data;
-             AsnBuf SNACCBuf;
-             AsnLen bytesDecoded;
-             pSecTag->freeFormField->BEnc(SNACCBuf);;
-             tag7data.BDec(SNACCBuf, bytesDecoded);
-
-             if (pSecTag->freeFormField->value == NULL)
-             {
-                throw ACL_EXCEPT(ACL_ASN_ERROR,
-                   "Unable to decode Tag Type 7 (freeFormField)");
-             }
+             // Decode the Tag Type 7 data if necessary
+             TagType7Data& tag7data = GetDecodedTagType7(*pSecTag->freeFormField);
 
              if (tag7data.choiceId == TagType7Data::bitSetAttributesCid)
              {
@@ -234,27 +224,8 @@ bool CSecurityTag::removeLabelAndCertValue(SecurityTags &o,
           else if (pSecTag->choiceId == freeFormFieldCid &&
              tagtype == (AsnInt)TagTypeValue::tagType7 && pSecTag->freeFormField)
           {
-
-             // NOTE: For efficiency this should be done during the initial
-             // decode.
-             TagType7Data tag7data;
-             AsnLen bytesDecoded;
-             AsnBuf SNACCBuf;
-             pSecTag->freeFormField->BEnc(SNACCBuf);
-
-          if (SNACCBuf.length())//RWC;pSecTag->freeFormField->anyBuf != NULL)
-          {
-             //RWC;pSecTag->freeFormField->anyBuf->ResetMode(std::ios_base::in);
-                 if (! tag7data.BDecPdu(/*RWC;*pSecTag->freeFormField->anyBuf*/SNACCBuf, bytesDecoded))
-             {
-               throw ACL_EXCEPT(ACL_ASN_ERROR,
-                  "Unable to decode Tag Type 7 (freeFormField)");
-             }
-          }
-          else
-            throw ACL_EXCEPT(ACL_ASN_ERROR,
-                  "Unable to decode Tag Type 7 (freeFormField)");
-
+             // Decode the Tag Type 7 data if necessary
+             TagType7Data& tag7data = GetDecodedTagType7(*pSecTag->freeFormField);
 
              if (tag7data.choiceId == TagType7Data::bitSetAttributesCid)
              {
@@ -282,7 +253,6 @@ bool CSecurityTag::removeLabelAndCertValue(SecurityTags &o,
                    }
                 }
              }
-
           }
        }
    }
@@ -594,15 +564,15 @@ void CSecurityTag::Print (AclString &os) const
   } // end of switch
 }
 
-void CSecurityTag::getTagTypeStr(const SecurityTag &secTag, AclString &o)
+void CSecurityTag::getTagTypeStr(int tagType, AclString &o)
 {
-   if (secTag.choiceId == enumeratedAttributesCid)
+   if (tagType == enumeratedAttributesCid)
       o << "tag_type=2 (enumeratedAttributes)";
-   else if (secTag.choiceId == permissivebitMapCid)
+   else if (tagType == permissivebitMapCid)
       o << "tag_type=6 (permissiveBitMap)";
-   else if (secTag.choiceId == restrictivebitMapCid)
+   else if (tagType == restrictivebitMapCid)
       o << "tag_type=1 (restrictiveBitMap)";
-   else if (secTag.choiceId == freeFormFieldCid)
+   else if (tagType == freeFormFieldCid)
       o << "tag_type=7 (freeFormField)";
 }
 

@@ -30,6 +30,7 @@ _BEGIN_NAMESPACE_ACL
 //
 AC::AC(void):Cacheable(Cacheable::ACERT_ID)
 {
+   init();
 } // END OF CONSTRUCTOR
 
 // ALTERNATE CONSTRUCTOR:
@@ -55,6 +56,11 @@ AC::AC(const CML::ASN::Bytes &encodedAC):Cacheable(Cacheable::ACERT_ID)
    m_origObject.Hash(m_hash);
 } // END OF ALTERNATE CONSTRUCTOR
 
+AC::AC(const AC &that):Cacheable(Cacheable::ACERT_ID)
+{
+   init();
+   *this = that;
+} // END OF MEMBER FUNCTION SPIF
 
 void AC::init()
 {
@@ -717,15 +723,6 @@ bool AC::checkValidity(void)
    return false;
 } // END OF MEMBER FUNCTION checkValidity
 
-void AC::clear(void)
-{
-   delete m_pIssuerName;
-   m_pIssuerName = NULL;
-   delete m_pName;
-   m_pName = NULL;
-   m_policyIdList.erase(m_policyIdList.begin(), m_policyIdList.end());
-   
-}
 _END_NAMESPACE_ACL
 
 // EOF aclac.cpp

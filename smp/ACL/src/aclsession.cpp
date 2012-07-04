@@ -482,7 +482,8 @@ void Session::updateCache(const Cacheable &item)
 
             // Remove current element
             m_cache.erase(i);
-            m_cache.push_back(item);
+            AclCache::iterator newNode = m_cache.insert(m_cache.end(), item);
+            newNode->ref().updateTTL(m_ttl);
             break;
          }
          else

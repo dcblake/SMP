@@ -431,8 +431,8 @@ const AsnOid &SPIF::getPolicyId(void) const
 void SPIF::getDescription(AclString &os) const
 {
     os << "\n** SPIF **:" 
-       << "\n\tDN: " << (const char *)getPolicyId()
-       << "\n\tOID: " << (const char *) getIssuerName()
+       << "\n\tOID: " << (const char *)getPolicyId()
+       << "\n\tDN: " << (const char *) getIssuerName()
        << "\n";
 } // END OF MEMBER FUNCTION getDescription
 

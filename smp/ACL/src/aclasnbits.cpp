@@ -47,7 +47,7 @@ void CAsnBits::And(AsnBits *result, AsnBits &userBits, AsnBits &caBits)
 //
 // returns true if "bit" is set in "bits".  Returns false otherwise
 //
-bool CAsnBits::checkBit(AsnBits &bits, AsnIntType bit)
+bool CAsnBits::checkBit(const AsnBits &bits, AsnIntType bit)
 {
    return bits.GetBit(bit);
 } // END OF MEMBER FUNCTION checkBit

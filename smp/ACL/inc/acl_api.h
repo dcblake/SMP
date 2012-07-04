@@ -510,6 +510,7 @@ public:
    // ALTERNATE CONSTRUCTOR decodes buffer into itself
    //
    AC(const CML::ASN::Bytes &encodedAC);
+   AC(const AC &that);
    
    // DESTRUCTOR
    virtual ~AC(void);
@@ -522,7 +523,7 @@ public:
 
    void getDescription(AclString &str) const;
 
-   const CML::ASN::DN &getIssuerName(void) const;
+   virtual const CML::ASN::DN &getIssuerName(void) const;
    const AsnOidLst &getPolicyIdList(void) const;
    const CML::ASN::DN &getSubjectName(void) const;
 
@@ -538,10 +539,9 @@ public:
    Cacheable *clone(void) const {return new AC(*this);}
    bool matches(const MatchInfo &matchInfo) const;
    AC &operator=(const AC &);
-   void getIssuerInfo(MatchInfo &matchInfo);
+   virtual void getIssuerInfo(MatchInfo &matchInfo);
 
 private:
-   void clear(void);
    // PRIVATE MEMBER FUNCTIONS
    void checkExtensions(void);
    // verify the signature on this object.  The
@@ -638,15 +638,23 @@ public:
 
 private:
    // PRIVATE MEMBER FUNCTIONS
-   void requiredCatCheck(SNACC::RequiredCategories &reqCat, SPIF &spif, 
+   void requiredCatCheck(SNACC::RequiredCategories &reqCat, const SPIF &spif, 
                          const SNACC::TagCategories *pSpifTagCat=NULL); //ONLY FOR REPORTING
-   void excludedCatCheck(SNACC::OptionalCategoryDataSeqOf &excCat, SPIF &spif);
+   void excludedCatCheck(SNACC::OptionalCategoryDataSeqOf &excCat, const SPIF &spif);
    bool findCat(SNACC::AsnOid &tagsetname, SNACC::TagTypeValue &tagtype,
                 SNACC::AsnInt &labelandcert);
+   void checkBitString(const SNACC::AsnBits& attributeFlags,
+                       const SNACC::TagSetName& tagSetName,
+                       int tagType,
+                       const SPIF &spif);
+   void checkSecurityAttributes(const AsnSetOf<SNACC::SecurityAttribute>& attributeFlags,
+                          const SNACC::TagSetName& tagSetName,
+                          int tagType,
+                          const SPIF &spif);
    void CreateErrorStringForLabel(
        char *errStrOut,        // MEMORY INPUT, DATA OUT from this method
        const char *pszIncommingErrorDescription,             // IN
-       const long tagType,                                   // IN
+       const int tagType,                                    // IN
        const long labelcert,                                 // IN
        const SPIF &spif,                                     // IN
        const SNACC::AsnOid SNACCOid,                         // IN

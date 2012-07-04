@@ -240,7 +240,7 @@ void Cacheable::updateTTL(unsigned long ttl) const
 {
    time_t currtime;
    time(&currtime);
-   m_expireTime = (ttl * 60 * 60);
+   m_expireTime = (currtime + (ttl * 60 * 60)); 
 } // END OF MEMBER FUNCTION updateTTL
 
 _END_NAMESPACE_ACL
