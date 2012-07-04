@@ -270,11 +270,14 @@ short CRL_Destroy(ulong* crl_session)
 //////////////////////////
 // Supporting functions //
 //////////////////////////
+namespace std {
+template <>
 bool std::greater<CRL>::operator()(const CRL& x,
 	const CRL& y) const
 {
 	return (x.base().thisUpdate > y.base().thisUpdate);
 }
+} // End namespace std
 
 short CRL_CheckRevStatus(const Bytes& theData, RevInfo* pRevInfo, RevocationState& state)
 {
@@ -754,7 +757,7 @@ const AbstractCRLContext* validateCRL(const CRL& crl, short& cmlResult,
 				return NULL;
 			}
 			// Add the CRL to the status cache as valid
-			pCRLCtx = crlHeaderCache.Add(crl.base(), true,
+			pCRLCtx = crlHeaderCache.Add(crl, true,
 				GetCRLRefreshPeriod(state.crlSessionID),
 				state.pCRLToRefresh);
 			if ((pCRLCtx != NULL) || (state.pCRLToRefresh != NULL))
@@ -769,7 +772,7 @@ const AbstractCRLContext* validateCRL(const CRL& crl, short& cmlResult,
 	if (state.stopRefresh)
 		return NULL;		
 	// Add the CRL to the status cache as invalid
-	return crlHeaderCache.Add(crl.base(), false,
+	return crlHeaderCache.Add(crl, false,
 		GetCRLRefreshPeriod(state.crlSessionID),
 		state.pCRLToRefresh);
 } // end of validateCRL()
@@ -945,13 +948,23 @@ const AbstractCRLContext* findValidCRL(short& err, const CertType type,
 			            boundsFlag, NULL, &distPt);
 		}
 
+      // If no CRLs were returned, return an error
+      if (encCRLs.size() == 0)
+      {
+         err = CRL_NOT_AVAIL;
+         return NULL;
+      }
+
 		// Choose and validate the appropriate CRL from the list
-		if (isDelta)
+      // First validate the base CRL
+      const AbstractCRLContext* pBaseCRLCtx = chooseValidCRL(err, type, 
+         certIssuer, distPt, reasons, encCRLs, state, false, isCritical);
+
+      // If the cert has a freshest CRL extension (isDelta == true) or the CRL has the 
+      // freshest CRL extension, locate and process the delta CRL.
+      if (isDelta || ((pBaseCRLCtx != NULL) && 
+                       pBaseCRLCtx->GetRef().m_pFreshestCRL != NULL))
 		{
-			// First validate the base CRL
-			const AbstractCRLContext* pBaseCRLCtx = chooseValidCRL(err, type, certIssuer,
-                                                                distPt, reasons, encCRLs,
-				                                                    state, false, isCritical);
 			if (pBaseCRLCtx != NULL)
 			{
 				// If the CRL is not valid, no need to continue
@@ -960,15 +973,17 @@ const AbstractCRLContext* findValidCRL(short& err, const CertType type,
 					delete pBaseCRLCtx;
 					return NULL;
 				}
-				// If the CRL was cached, then we delete it 
-            // otherwise we have to pass it down so
-				// that the Temporary CRL header can be updated with any deltas.
+				// Free the CRL Header context if it not a TemporaryCRLContext.  
+            // Otherwise we have to pass it validateCRL() so that the Temporary
+            // CRL header can be updated with a delta CRL.
 				if (pBaseCRLCtx->IsCRLCached())
 				{
 					delete pBaseCRLCtx;
 					pBaseCRLCtx = NULL;
 				}
-				// Save the TemporaryCRLContext in the state so we can add delta revocations
+				// Save the CRL Header context in the state so the base CRL is 
+            // updated from the delta CRL. This value pointer will only be 
+            // set if we are processing a TemporaryCRLContext.
 				state.pBaseCRLCtx = pBaseCRLCtx;
 				// The base CRL was found and valid, now validate the delta CRL
 				pCRLCtx = chooseValidCRL(err, type, certIssuer, distPt, reasons,
@@ -980,13 +995,11 @@ const AbstractCRLContext* findValidCRL(short& err, const CertType type,
 				}
 				state.pBaseCRLCtx = NULL;
 			}		
-		} 
-		else
-		{
-			pCRLCtx = chooseValidCRL(err, type, certIssuer, distPt, reasons,
-				encCRLs, state, false, isCritical);
 		}
-		if (pCRLCtx != NULL)
+      else
+         pCRLCtx = pBaseCRLCtx;
+
+      if (pCRLCtx != NULL)
 			return pCRLCtx;
 
 		err = CRL_NOT_AVAIL;
@@ -2152,7 +2165,7 @@ bool CRLHeader::PrivateUpdateHeaderFromDelta(const CRL& crl, bool valid, time_t 
 	}
 
 	// Make sure this Delta CRL is in the same stream as the base CRL
-	if ((m_pCrlNumber != NULL) && (*crl.base().crlExts.pDeltaCRL > *m_pCrlNumber))
+	if ((m_pCrlNumber != NULL) && (*m_pCrlNumber < *crl.base().crlExts.pDeltaCRL))
 	{		
 		return false;
 	}
@@ -2169,13 +2182,13 @@ bool CRLHeader::PrivateUpdateHeaderFromDelta(const CRL& crl, bool valid, time_t 
 	if (m_pDeltaThisUpdate != NULL)
 	{
 		// there was a previous delta, is this one newer
-		if (*m_pDeltaThisUpdate >= crl.base().thisUpdate)
+		if (*m_pDeltaThisUpdate > crl.base().thisUpdate)
 			return false;
 	}
 	else
 	{
 		// no previous delta, see if this delta is newer than the base
-		if (m_ThisUpdate >= crl.base().thisUpdate)
+		if (m_ThisUpdate > crl.base().thisUpdate)
 			return false;
 	}
 
@@ -2186,13 +2199,14 @@ bool CRLHeader::PrivateUpdateHeaderFromDelta(const CRL& crl, bool valid, time_t 
 		if (m_pDeltaCrlNumber != NULL)
 		{
 			// there was a previous delta CRL number, is this one newer
-			if (*m_pDeltaCrlNumber >= *crl.base().crlExts.pCrlNumber)
+			if ((*crl.base().crlExts.pCrlNumber < *m_pDeltaCrlNumber) ||
+             (*crl.base().crlExts.pCrlNumber == *m_pDeltaCrlNumber))
 				return false;
 		} 
 		else if (m_pCrlNumber != NULL)
 		{
 			// no previous delta CRL number, see if this delta is newer than the base
-			if (*m_pCrlNumber >= *crl.base().crlExts.pCrlNumber)
+			if (*crl.base().crlExts.pCrlNumber < *m_pCrlNumber)
 				return false;
 		}
 	}
@@ -2659,8 +2673,11 @@ const CachedCRLContext* CRLHeaderCache::Add(const CRL& crl, bool valid,
 			{
 				// Found this CRL in the Header List, update the information
 				if (crl.base().IsDelta())
+            {
 					// Add the delta CRL to the base
-					j->second->UpdateHeaderFromDelta(crl, valid, maxTTL);
+					if (j->second->UpdateHeaderFromDelta(crl, valid, maxTTL) == false)
+                  return NULL;
+            }
 				else
 					// CRL must have changed in some way, refresh it
 					j->second->UpdateHeader(crl, valid, maxTTL);

@@ -407,7 +407,7 @@ CSM_DN * CSM_CertificateChoice::GetIssuer(CSM_GeneralNameLst *pIssuers)
    {
       if (m_pSNACCAttrCert->toBeSigned.issuer.choiceId == AttCertIssuer::v2FormCid)
       {
-         if (m_pSNACCAttrCert->toBeSigned.issuer.v2Form->issuerName->begin() == 0)
+         if (m_pSNACCAttrCert->toBeSigned.issuer.v2Form->issuerName->begin() == m_pSNACCAttrCert->toBeSigned.issuer.v2Form->issuerName->end())
             SME_THROW(SM_CERT_DEC_ERROR, "Attribute Certificate missing V2 issuer", NULL);
 
          if (pIssuers)
@@ -430,7 +430,7 @@ CSM_DN * CSM_CertificateChoice::GetIssuer(CSM_GeneralNameLst *pIssuers)
       }
       else if (m_pSNACCAttrCert->toBeSigned.issuer.choiceId == AttCertIssuer::v1FormCid)
       { 
-         if (m_pSNACCAttrCert->toBeSigned.issuer.v1Form->begin() == 0)
+         if (m_pSNACCAttrCert->toBeSigned.issuer.v1Form->begin() == m_pSNACCAttrCert->toBeSigned.issuer.v1Form->end())
             SME_THROW(SM_CERT_DEC_ERROR, "V1 Attribute Certificate obsolete missing valid issuer", NULL);
 
          // if no errors go ahead and give data

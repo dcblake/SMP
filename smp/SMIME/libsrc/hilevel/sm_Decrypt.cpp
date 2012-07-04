@@ -234,7 +234,7 @@ void CSM_MsgToDecrypt::ReportMsgData(std::ostream &os)
               if (itRecipInfo->choiceId !=  RecipientInfo::pwriCid)
               {
                  tmpRID = itRecipInfo->GetRid();
-                 tmpRID->ReportMsgData(std::cout);
+                 tmpRID->ReportMsgData(os);
                  if(tmpRID)
                    delete tmpRID;
                  tmpRID = NULL;

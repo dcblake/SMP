@@ -17,9 +17,14 @@ TARGET = SMP_Check
 ## Specify the library name
 ifeq ($(USEDEBUGLIB), no)
 CMAPI_LIBS    = -lcmapi -lsrlapi -lcmlasn -lacl -lsm -lcert -lctil -lc++asn1 
+    ifeq ($(ENABLESTATIC), yes)
+        CMAPI_LIBS += -lsmfree3 -lcryptopp -lcert -lpthread -lpkcs11_cryptopp -lcrlapi -ldl
+    endif
 else
 CMAPI_LIBS    = -lcmapi_d -lsrlapi_d -lcmlasn_d -lacl_d -lsm_d -lcert_d -lctil_d -lc++asn1 
-
+    ifeq ($(ENABLESTATIC), yes)
+        CMAPI_LIBS += -lsmfree3_d -lcryptopp -lcert_d -lpthread -lpkcs11_cryptopp_d -lcrlapi_d -ldl
+    endif
 endif
 
 
@@ -29,7 +34,8 @@ INCLUDE       += -I$(SMPDISTDIR)/include/smp -I$(SMPDISTDIR)/include/pkcs11
 
 ## Specify the sources
 CSRCS	      = $(wildcard *.c)
-CPPSRCS       = $(wildcard *.cpp) 
+# CPPSRCS       = $(wildcard *.cpp) 
+CPPSRCS       = $(filter-out sm_CM_AC_Support.cpp,$(wildcard *.cpp))
 COBJS         = $(CSRCS:.c=.o) 	
 CPPOBJS       = $(CPPSRCS:.cpp=.o) 
 
@@ -48,6 +54,11 @@ OS	= @OS_TYPE@
 # Add in the C Flags and C++ Flags
 CFLAGS = @CFLAGS@
 CXXFLAGS = @CXXFLAGS@ 
+
+# Add flag to ignore multiple defintion warning for SNACC algorithms IDs
+ifeq ($(ENABLESTATIC), yes)
+LINKFLAGS = -z muldefs
+endif
 
 
 # Solaris requires libresolv other systems don't
@@ -80,6 +91,6 @@ $(CPPOBJS): $(DEPENDENCIES)
 $(COBJS): $(DEPENDENCIES)
 
 $(TARGET): $(COBJS) $(CPPOBJS) Makefile
-	$(CXX) *.o -o $(TARGET)  -L$(SMPDISTDIR)/lib  -L$(SNACCLIBDIR) $(LIBS)
+	$(CXX) $(LINKFLAGS) *.o -o $(TARGET)  -L$(SMPDISTDIR)/lib  -L$(SNACCLIBDIR) $(LIBS)
 
 include $(top_builddir)/build/Maketail.in

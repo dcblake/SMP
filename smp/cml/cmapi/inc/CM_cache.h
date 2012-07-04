@@ -360,8 +360,9 @@ public:
 	void ReleaseIssuers(void);
 
 	// Friends
-	friend short CertCache::LoadTrustAnchor(/*CM_TOKEN_TYPE *pTokObj,*/ const TrustAnchor& trustAnchor,
-		ErrorInfoList* pErrList);
+	//friend short CertCache::LoadTrustAnchor(/*CM_TOKEN_TYPE *pTokObj,*/ const TrustAnchor& trustAnchor,
+//		ErrorInfoList* pErrList);
+        friend class CertCache; // Workaround due to compiler bug, see Tom's email
 
 	//Members
 	short maxPathLen;							// Maximum length of paths (only for TrustAnchors)

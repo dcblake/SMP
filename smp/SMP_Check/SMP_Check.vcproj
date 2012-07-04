@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zm200 "
 				Optimization="0"
-				AdditionalIncludeDirectories="../acl/inc;../SMIME/mimelib;&quot;../../SMPDist/include/eSNACC/c++&quot;;../SMIME/inc;../SMIME/libCtilMgr/inc;../cml/cmlasn/inc;../cml/srl/inc;../cml/cmapi/inc;..\pkcs11_cryptopp\inc"
+				AdditionalIncludeDirectories="../acl/inc;../SMIME/mimelib;&quot;../../SMPDist/include/eSNACC/c++&quot;;../SMIME/inc;../SMIME/libCtilMgr/inc;../cml/cmlasn/inc;../cml/srl/inc;../cml/cmapi/inc;..\pkcs11_cryptopp\inc;../cml/crlsrv_dll/inc"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -85,7 +85,7 @@
 				AdditionalOptions="/Zm200 "
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="../acl/inc;../SMIME/mimelib;&quot;../../SMPDist/include/eSNACC/c++&quot;;../SMIME/inc;../SMIME/libCtilMgr/inc;../cml/cmlasn/inc;../cml/srl/inc;../cml/cmapi/inc;..\pkcs11_cryptopp\inc"
+				AdditionalIncludeDirectories="../acl/inc;../SMIME/mimelib;&quot;../../SMPDist/include/eSNACC/c++&quot;;../SMIME/inc;../SMIME/libCtilMgr/inc;../cml/cmlasn/inc;../cml/srl/inc;../cml/cmapi/inc;..\pkcs11_cryptopp\inc;../cml/crlsrv_dll/inc"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -183,27 +183,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="sm_CM_AC_Support.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-						BrowseInformation="1"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="SMP_Check.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -223,25 +202,6 @@
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""/>
 				</FileConfiguration>
-			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl">
-			<File
-				RelativePath="..\ACL\inc\acl_api.h">
-			</File>
-			<File
-				RelativePath="..\SMIME\inc\sm_AC_Interface.h">
-			</File>
-			<File
-				RelativePath="..\SMIME\inc\sm_api.h">
-			</File>
-			<File
-				RelativePath="..\SMIME\inc\sm_apiCert.h">
-			</File>
-			<File
-				RelativePath="sm_CM_AC_Support.h">
 			</File>
 		</Filter>
 		<Filter

@@ -22,22 +22,46 @@
 
 #ifdef CML_USED
 
-#include "cmapi.h"
-#include "cmapi_cpp.h"
-#include "srlapi.h"
+#include "cmapi_cpp.h"  // Needed for CML 
+#include "srlapi.h"     // Needed for SRL
 
-#ifdef WIN32
-#define   LDAP_DLL_NAME        "../../../../SMPDist/util/ldap/windows/lib/nsldapssl32v30.dll"
-//RWC;#elifdef LINUX
-#else
-#define   LDAP_DLL_NAME        "../../../../SMPDist/util/ldap/Linux/openldap/lib/libldap.so"
-#endif
-#define   CM_MAX_PATH       1000
+
+#define SM_TOO_MANY_CERTS_FOUND_IN_DB	190
+
 
 //_BEGIN_SFL_NAMESPACE
 #ifndef NO_NAMESPACE
 namespace SFL {
 #endif // NO_NAMESPACE
+
+
+//########################################################################
+//  THIS SPECIAL CLASS uses the default settings to initialize the CML
+//  session.   WITHOUT PROPER SETUP, VALIDATION MAY RETURN INVALID RESULTS!!!
+//  (see the CML API document for details).
+class CM_Interface
+{
+public:
+	CM_Interface()                 { m_lCmlSessionId = 0; m_lSrlSessionId = 0; }
+	CM_Interface(ulong lCmlSessionId, ulong lSrlSessionId);
+
+	ulong GetSRLSessionID() const                    { return m_lSrlSessionId; }
+	ulong GetCMLSessionID() const                    { return m_lCmlSessionId; }
+	void  SetSessions(ulong lCmlSessionId, ulong lSrlSessionId);
+	bool  UsingCML()                          { return (m_lCmlSessionId != 0); }
+
+	short dbFileAdd(Bytes_struct* pAsnData, AsnTypeFlag fileType);
+	short dbAddCert(const CTIL::CSM_Buffer& bufCert);
+	short dbAddCRL(const CTIL::CSM_Buffer& bufCrl);
+
+	static void ConvertErrorList(std::string& errStr,
+		const CML::ErrorInfoList& cmlErrors);
+
+private:
+	ulong m_lCmlSessionId;
+	ulong m_lSrlSessionId;
+};
+
 
 // THIS special class was created to access the CML protected method that
 //  returns the validated public key and params (esepcially nice for DSA).
@@ -100,78 +124,44 @@ private:
    CM_SFLInternalCertificate/*CML::Certificate*/ *m_pCMLCert;
  //  CML::CRLMatchData       *m_pCMLCrl;
 public:
-   CM_SFLCertificate() { Clear(); }
-   CM_SFLCertificate(const CERT::CSM_IssuerAndSerialNumber &IssuerSN)
-   { Clear(); m_pRID = new CERT::CSM_Identifier(IssuerSN); }
-   CM_SFLCertificate(const CERT::CSM_Identifier &RID)
-   { Clear(); m_pRID = new CERT::CSM_Identifier(RID); }
-   CM_SFLCertificate(const CTIL::CSM_Buffer &BufCert) 
-   { Clear(); SetUserCert(BufCert); }
-   ~CM_SFLCertificate();
+   CM_SFLCertificate() {
+		m_pCMLCert = NULL; m_pRID = NULL; m_boundsFlag = CM_SEARCH_UNTIL_FOUND; }
+	CM_SFLCertificate(const CERT::CSM_IssuerAndSerialNumber& IssuerSN) {
+		m_pCMLCert = NULL; m_boundsFlag = CM_SEARCH_UNTIL_FOUND;
+		m_pRID = new CERT::CSM_Identifier(IssuerSN); }
+	CM_SFLCertificate(const CERT::CSM_Identifier& RID) {
+		m_pCMLCert = NULL; m_boundsFlag = CM_SEARCH_UNTIL_FOUND;
+		m_pRID = new CERT::CSM_Identifier(RID); }
+	CM_SFLCertificate(const CTIL::CSM_Buffer& BufCert) {
+		m_pCMLCert = NULL; m_pRID = NULL; m_boundsFlag = CM_SEARCH_UNTIL_FOUND; 
+		SetUserCert(BufCert); }
+	~CM_SFLCertificate()                                            { Clear(); }
 
-   void Clear() 
-   { m_pRID = NULL; m_boundsFlag = CM_SEARCH_UNTIL_FOUND; 
-     m_lCmlSessionId = 0; m_pCMLCert = NULL; m_lpszError=NULL;}
+   void Clear() {
+		delete m_pCMLCert; m_pCMLCert = NULL; delete m_pRID; m_pRID = NULL;
+		m_boundsFlag = CM_SEARCH_UNTIL_FOUND; /*m_lCmlSessionId = 0;*/
+		m_errorString = m_errorString.erase();}
 
-   short Validate(const CML::ASN::Time* pValidationTime = NULL);
-   long GetUserCertCrl(DBTypeFlag dbType);
-   void SetSKI(const CTIL::CSM_Buffer &BufSKI)
-   { Clear(); m_pRID = new CERT::CSM_Identifier(BufSKI); }
-   void SetUserCert(const CML::Certificate &CMLCert) 
-   {  if (m_pCMLCert) delete m_pCMLCert;
-       m_pCMLCert = new CM_SFLInternalCertificate/*CML::Certificate*/(CMLCert); }
-   void SetUserCert(const CTIL::CSM_Buffer &BufCert);
-   const CML::CertPath *AccessCMLCert() const			{ return m_pCMLCert; }
+	const CML::CertPath* AccessCMLCert() const            { return m_pCMLCert; }
+   long GetUserCert(const CM_Interface& cmlInterface);
+	void SetSKI(const CTIL::CSM_Buffer& BufSKI) {
+		Clear(); m_pRID = new CERT::CSM_Identifier(BufSKI); }
+   void SetUserCert(const CTIL::CSM_Buffer& BufCert);
+	void SetUserCert(const CML::Certificate& CMLCert) {
+		Clear(); m_pCMLCert = new CM_SFLInternalCertificate(CMLCert); }
+	long Validate(const CM_Interface& cmlInterface,
+		const CML::ASN::Time* pValidationTime = NULL);
 
    // 
    // 
-   CERT::CSM_Identifier *m_pRID;             // used to get the Cert
-   CM_DN                *m_pDN;              // used to get the Crl
-   SearchBounds m_boundsFlag;                // USER is welcome to over-ride!
-   unsigned long   m_lCmlSessionId;
-   unsigned long   m_lSrlSessionId;
-   char *m_lpszError;
-
+	CERT::CSM_Identifier* m_pRID;   // used to get the Cert
+//	CM_DN*        m_pDN;            // used to get the Crl
+	SearchBounds  m_boundsFlag;     // USER is welcome to over-ride!
+//	unsigned long m_lCmlSessionId;
+//	unsigned long m_lSrlSessionId;
+	std::string   m_errorString;
 };
 
-
-
-//
-//########################################################################
-//  This class provides some CML/SRL load/unload support.  It does not 
-//  initialize the CML/SRL session, but expects the application to 
-//  provide a properly setup session set.  (See the 
-//  CM_INADEQUATE_InitInterface class for a demonstration setup.)
-class CM_Interface
-{
-private:
-   unsigned long   m_lSrlSessionId;
-   unsigned long   m_lCmlSessionId;
-public:
-   CM_Interface();
-   CM_Interface(unsigned long lCmlSessionId, unsigned long lSrlSessionId)
-   { setCMLSessions(lCmlSessionId, lSrlSessionId); }
-   ~CM_Interface();
-   
-   // member functions
-   void setCMLSessions(unsigned long lCmlSessionId, unsigned long lSrlSessionId) 
-   { m_lCmlSessionId = lCmlSessionId; m_lSrlSessionId = lSrlSessionId;}
-   short fill();
-   static char *getErrInfo(CML::ErrorInfoList *pErrorInfo);
-   static char *getErrInfo(struct errorInfo_List *pErrorInfo=NULL);
-   // short getErrInfo(ostream &os);  // returns 0 if successful
-   //short validateCertificate(unsigned char *pAsn1data);
-   short dbFileAdd(Bytes_struct *pCrlData, int etype);
-   long dbAddCRL(const CTIL::CSM_Buffer &BufCrl);
-   long dbAddCert(const CTIL::CSM_Buffer &BufCert);
-
-   // member variables
-   short           m_sRet;    // status from function calls
-   void            *m_pCtilMgr;
-
- //  ErrorInfo_List  *m_pErrorInfo;
-
-};
 
 //_END_SFL_NAMESPACE
 #ifndef NO_NAMESPACE

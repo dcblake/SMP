@@ -222,7 +222,7 @@ long CSM_SignBuf::SignBuf(CSM_CSInst *pCSInst,   // IN, Instance for hash/sig op
          itTmpAlg != pdigestEncryptionAlgID->end();
          ++itTmpAlg) 
     {
-         pTmpAlg = itTmpAlg->GetId();
+         pTmpAlg = itTmpAlg->AccessSNACCId();
          if (*pTmpAlg == oidDigestEncryption)
          {
              break;
@@ -233,8 +233,6 @@ long CSM_SignBuf::SignBuf(CSM_CSInst *pCSInst,   // IN, Instance for hash/sig op
         CSM_AlgVDA *pAlgVDA = &(*itTmpAlg);
         *signatureAlgorithm = *(CSM_Alg *)pAlgVDA;
     }
-    if (pTmpAlg)
-       delete pTmpAlg;
 
     if (digestAlgorithm == NULL)
         digestAlgorithm = new AlgorithmIdentifier;
@@ -244,14 +242,11 @@ long CSM_SignBuf::SignBuf(CSM_CSInst *pCSInst,   // IN, Instance for hash/sig op
          itTmpAlg != pdigestAlgID->end();
          ++itTmpAlg)
     {
-         pTmpAlg = itTmpAlg->GetId();
-         if (pTmpAlg && *pTmpAlg == oidDigest)
+         pTmpAlg = itTmpAlg->AccessSNACCId();
+         if (*pTmpAlg == oidDigest)
          {
-             delete pTmpAlg;
              break;
          }
-         else
-             delete pTmpAlg;
     }
     if (itTmpAlg != pdigestAlgID->end())        // if the preferred OID is found.
     {

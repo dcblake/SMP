@@ -47,6 +47,11 @@ extern "C" {
 	#endif /* WIN32 */
 #endif /* LDAP_CALL */
 
+/* 
+ * Do not define the following prototypes when Microsoft's LDAP header file
+ * has been included
+ */
+#ifndef LDAP_CLIENT_DEFINED
 
 /* ---------------- */
 /* Type Definitions */
@@ -60,7 +65,6 @@ struct berval {
 	char		*bv_val;
 };
 #endif /* _LBER_H */
-
 
 
 /* ------------------- */
@@ -96,6 +100,7 @@ LDAP_API(int) LDAP_CALL ldap_count_values( char **vals );
 LDAP_API(int) LDAP_CALL ldap_count_values_len( struct berval **vals );
 LDAP_API(void) LDAP_CALL ldap_value_free_len( struct berval **vals );
 
+#endif /* LDAP_CLIENT_DEFINED */
 
 #ifdef __cplusplus
 }

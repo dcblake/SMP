@@ -75,16 +75,20 @@ int netwrite(int handle, char *psend, size_t len, int flags)
 }
 
 /*
- * http_readline - read HTTP response/header lines if cpy_flg set to 1
- * else read in the max # of chars (HTTP content body) 
+ * http_readline - read HTTP response/header lines if http_type is set to 
+ * HTTP_HEADERS else read in the max # of chars (HTTP content body), if
+ * http_type is HTTP_CONTENT_FIRST, then this is the first call to 
+ * http_readline to read the content/body, otherwise, if http_type is set to 
+ * HTTP_CONTENT, this is a continuation call.
  *
  * return -1 on error or bytecount
  */
-int http_readline(char *buf,int max, netbuf *ctl, int cpy_flg)
+int http_readline(char *buf,int max, netbuf *ctl, int http_type)
 {
-    int x,retval = 0;
-    char *end, *bp;
-    int eof = 0;
+   int x = 0;
+   int total_read = 0;
+   char *end, *bp;
+   int eof = 0;
 	int do_flag = 1;
 	int num_left;
 
@@ -98,30 +102,39 @@ int http_readline(char *buf,int max, netbuf *ctl, int cpy_flg)
     {
     	if (ctl->cavail > 0)
     	{
-			if (max > ctl->cavail && !cpy_flg)
+         if (max > ctl->cavail && (http_type != HTTP_HEADERS))
 			{
 				// We're reading in the content of the URL
 				// but there isn't enough left in cget
 				// so copy the remaining and netread the rest
-				memcpy(bp, ctl->cget, ctl->cavail);
-				bp += ctl->cavail;
-				num_left = max - ctl->cavail;
+            if (http_type != HTTP_CONTENT)
+            {
+               memcpy (bp, ctl->cget, ctl->cavail);
+               total_read += ctl->cavail;
+               bp += ctl->cavail;
+               num_left = max - ctl->cavail;
+            }
+            else
+            {
+               num_left = max;
+            }
 				do
 				{
 					x = netread(ctl->handle, bp, num_left, 0);
 					if (x == 0 || x == -1)
 					{
-						return -1;
+						return total_read;
 						break;
 					}
 					else if (num_left > x) // got more
 					{
 						bp += x;
 						num_left = num_left - x;
+                  total_read += x;
 					}
 					else // done
 					{
-						retval = max;
+						total_read += x;
 						num_left = 0;
 					}
 				}
@@ -131,17 +144,18 @@ int http_readline(char *buf,int max, netbuf *ctl, int cpy_flg)
 			else
 			{
 				x = (max >= ctl->cavail) ? ctl->cavail : max-1;
-				if (cpy_flg)
+				if (http_type == HTTP_HEADERS)
 				{
 					end = memccpy(bp,ctl->cget,'\n',x);
 					if (end != NULL)
 						x = end - bp;
+               total_read += x;
 				}
 				else
 				{
 					end = memcpy(bp, ctl->cget, x);
+               total_read += x;
 				}
-				retval += x;
 				bp += x;
 				*bp = '\0';
 				max -= x;
@@ -163,13 +177,13 @@ int http_readline(char *buf,int max, netbuf *ctl, int cpy_flg)
     	}
 		if (eof)
 		{
-			if (retval == 0)
-				retval = -1;
+			if (total_read == 0)
+				total_read = -1;
 			break;
 		}
 		if ((x = netread(ctl->handle, ctl->cput, ctl->cleft, 0)) == -1)
     	{
-			retval = -1;
+			total_read = -1;
 			break;
     	}
 		if (x == 0)
@@ -179,7 +193,7 @@ int http_readline(char *buf,int max, netbuf *ctl, int cpy_flg)
     	ctl->cput += x;
 	}
     while (do_flag);
-    return retval;
+    return total_read;
 }
 
 /*

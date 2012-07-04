@@ -2089,36 +2089,29 @@ CSM_Buffer *CSM_Free3::ComputePkcs12MAC(CSM_Buffer &bufSalt,    // IN/OUT
         pszPasswordMAC[iii*2+1] = pszPassword[iii]; // MAKE Unicode...
 
    // **** GENERATE PKCS12 MAC Key
-   /*CSM_Buffer *pK = = GeneratePKCS12PBEKey(&bufSalt, 1, / *PKCS12MACID* / 0x03, 
-        pszPasswordMAC, Pfx.macData->safeMac.digestAlgorithm, 
-        / *MACKEYLENGTH* /20, lPassword2, 0x40, / *MACKEYLENGTH* /20));
-   b)	If the PFX PDU is to be authenticated with HMAC, then an SHA-1 
+   /* If the PFX PDU is to be authenticated with HMAC, then an SHA-1
    HMAC is computed on the contents of the Data in T (i.e. excluding the 
    OCTET STRING tag and length bytes).  This is exactly what would be initially
    digested in step 5a) if public-key authentication were being used 
    (FROM pkcs12-v1.doc)*/
-        // GENERATE PKCS12 MAC using SHA-1 digest algorithm.
-   /* FROM Crypto++ 5.0
-     struct PBKDF_TestTuple
-     {
-	    byte purpose;                   IN OUR CASE, 0x03.
-	    unsigned int iterations;        IN OUR CASE, 1
-	    const char *hexPassword, *hexSalt, *hexDerivedKey;
-     };
-        {3, 1, "0073006D006500670000", "3D83C0E4546AC140", "8D967D88F6CAA9D714800AB3D48051D63F73A312"},*/
-   //RWC;WRONG;PKCS5_PBKDF2_HMAC<SHA1> pbkdf;
-   PKCS12_PBKDF<SHA1> pbkdf;
-   //string password, salt; RWC;EXPECTED RESULT IS derivedKey;
-		SecByteBlock derived(20);
-		pbkdf.GeneralDeriveKey(derived, 20/*?SHOULD BE SAME LENGTH AS SHA-1 LENGTH?*/,
-            0x03, (const unsigned char *)pszPasswordMAC ,lPassword2, 
-            (const unsigned char *)bufSalt.Access(), bufSalt.Length(), /*iterations*/iter);
-        CSM_Buffer BufDerivedKey((const char *)(unsigned char *)derived, derived.size());
+	PKCS12_PBKDF<SHA1> pbkdf;
+	SecByteBlock derived(SHA1::DIGESTSIZE);
+	pbkdf.DeriveKey(derived, derived.size(), 0x03,
+		(const byte*)pszPasswordMAC, lPassword2,
+		(const byte*)bufSalt.Access(), bufSalt.Length(), iter, 0);
+	CSM_Buffer BufDerivedKey((const char *)derived.data(), derived.size());
         /*In this version of this standard, SHA-1 is used for performing all 
           MACing, and so all MAC keys are 160 bits, 20 bytes. */
 		//bool fail = memcmp(derived, derivedKey.data(), derived.size()) != 0;
 
     pBufMacResult = ComputePkcs12MACHash(OidMac, BufDerivedKey, PKCS12Buf);
+
+    // Overwrite, then free the password
+    if (pszPasswordMAC != NULL)
+    {
+       memset(pszPasswordMAC, 0, lPassword2);
+       free(pszPasswordMAC);
+    }
 
     return(pBufMacResult);
 }       // END CSM_Free3::ComputePkcs12MAC(...)

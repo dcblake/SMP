@@ -138,21 +138,21 @@ Cert& Cert::operator=(const SNACC::Certificate& snacc)
 			version = *snacc.toBeSigned.version;
 			m_versionPresent = true;
 		}
-		
+
 		// Set the serial number and signature algorithm ID
 		serialNumber = snacc.toBeSigned.serialNumber;
 		signature = snacc.toBeSigned.signature;
-		
+
 		// Set the issuer and subject distinguished names
 		issuer = snacc.toBeSigned.issuer;
 		subject = snacc.toBeSigned.subject;
-		
+
 		// Set the validity dates
 		validity = snacc.toBeSigned.validity;
-		
+
 		// Set the public key info
 		pubKeyInfo = snacc.toBeSigned.subjectPublicKeyInfo;
-		
+
 		// Set the issuer and subject unique IDs (if present)
 		if (snacc.toBeSigned.issuerUniqueIdentifier != NULL)
 		{
@@ -163,20 +163,20 @@ Cert& Cert::operator=(const SNACC::Certificate& snacc)
 		}
 		if (snacc.toBeSigned.subjectUniqueIdentifier != NULL)
 		{
-			pSubjectUniqueID = new 
+			pSubjectUniqueID = new
 				SNACC::UniqueIdentifier(*snacc.toBeSigned.subjectUniqueIdentifier);
 			if (pSubjectUniqueID == NULL)
 				throw MEMORY_EXCEPTION;
 		}
-		
+
 		// Set the extensions (if present)
 		if (snacc.toBeSigned.extensions != NULL)
 			exts = *snacc.toBeSigned.extensions;
-		
+
 		// Set the outer signature algorithm ID and signature value
 		algorithm = snacc.algorithm;
 		sigValue = snacc.signature;
-		
+
 		return *this;
 	}
 	catch (SNACC::SnaccException& e) {
@@ -208,7 +208,7 @@ Cert& Cert::operator=(const Cert& other)
 		validity = other.validity;
 		subject = other.subject;
 		pubKeyInfo = other.pubKeyInfo;
-			
+
 		if (other.pIssuerUniqueID != NULL)
 		{
 			pIssuerUniqueID = new
@@ -223,7 +223,7 @@ Cert& Cert::operator=(const Cert& other)
 			if (pSubjectUniqueID == NULL)
 				throw MEMORY_EXCEPTION;
 		}
-			
+
 		exts = other.exts;
 		algorithm = other.algorithm;
 		sigValue = other.sigValue;
@@ -321,7 +321,7 @@ ulong Cert::Encode(Bytes& asn) const
 
 		// Delete the temporary variable
 		delete pCert;
-		
+
 		return numEncoded;
 	}
 	catch (...) {
@@ -367,7 +367,7 @@ void Cert::FillSnacc(SNACC::Certificate& snacc) const
 {
 	// Clear the SNACC certificate
 	snacc.Clear();
-	
+
 	// Get the SNACC form of the version (if necessary)
 	if (m_versionPresent || (version != 0))
 	{
@@ -375,26 +375,26 @@ void Cert::FillSnacc(SNACC::Certificate& snacc) const
 		if (snacc.toBeSigned.version == NULL)
 			throw MEMORY_EXCEPTION;
 	}
-	
+
 	// Set the SNACC serial number
 	snacc.toBeSigned.serialNumber = serialNumber;
 	// Fill in the SNACC form of the signature AlgID
 	signature.FillSnacc(snacc.toBeSigned.signature);
-	
+
 	// Fill in the SNACC form of the issuer and subject DNs
 	issuer.FillSnacc(snacc.toBeSigned.issuer);
 	subject.FillSnacc(snacc.toBeSigned.subject);
-	
+
 	// Fill in the SNACC form of the validity period
 	validity.FillSnacc(snacc.toBeSigned.validity);
-	
+
 	// Fill in the SNACC form of the SubjectPublicKeyInfo
 	pubKeyInfo.FillSnacc(snacc.toBeSigned.subjectPublicKeyInfo);
-	
+
 	// Copy the issuer and subject unique identifiers if present
 	if (pIssuerUniqueID != NULL)
 	{
-		snacc.toBeSigned.issuerUniqueIdentifier = 
+		snacc.toBeSigned.issuerUniqueIdentifier =
 			new SNACC::UniqueIdentifier(*pIssuerUniqueID);
 		if (snacc.toBeSigned.issuerUniqueIdentifier == NULL)
 			throw MEMORY_EXCEPTION;
@@ -406,10 +406,10 @@ void Cert::FillSnacc(SNACC::Certificate& snacc) const
 		if (snacc.toBeSigned.subjectUniqueIdentifier == NULL)
 			throw MEMORY_EXCEPTION;
 	}
-	
+
 	// Get the SNACC form of the extensions
 	snacc.toBeSigned.extensions = exts.GetSnacc();
-	
+
 	// Fill in the SNACC form of the outer signature AlgID and value
 	algorithm.FillSnacc(snacc.algorithm);
 	snacc.signature.Set(sigValue.GetData(), sigValue.BitLen());
@@ -529,7 +529,7 @@ void PublicKeyInfo::FillPubKeyStruct(Pub_key_struct& pubKey) const
 
 	try {
 		pubKey.oid = algorithm.algorithm.GetChar();
-		
+
 		if ((algorithm == gDSA_OID) || (algorithm == gOIW_DSA))
 		{
 			// Decode the DSA public key
@@ -803,7 +803,7 @@ void AlgID::FillSnacc(SNACC::AlgorithmIdentifier& snacc) const
 		snacc.parameters = new SNACC::AsnAnyDefinedBy();
 		if (snacc.parameters == NULL)
 			throw MEMORY_EXCEPTION;
-			
+
 		snacc.parameters->anyBuf = new SNACC::AsnBuf((const char*)
 			parameters->GetData(), parameters->Len());
 		if (snacc.parameters->anyBuf == NULL)
@@ -900,7 +900,7 @@ Time& Time::operator=(time_t timeVal)
 	short err = time2CMTime(timeVal, m_time);
 	if (err != CMLASN_SUCCESS)
 		throw Exception(err, __FILE__, __LINE__);
-		
+
 	m_snaccTime.choiceId = SNACC::Time::utcTimeCid;
 	m_snaccTime.utcTime = new SNACC::UTCTime(&m_time[2]);
 	if (m_snaccTime.utcTime == NULL)
@@ -1022,20 +1022,20 @@ it is the same length and form.  */
 	// Check that the length of s2 is correct
 	if ((i + 4) != s2.length())
 		throw ASN_EXCEPTION("Invalid SNACC::GeneralizedTime value");
-	
+
 	// Check that the numeric characters are in the proper range and convert
 	if ((s2[i] < '0') || (s2[i] > '2') ||			// 1st hour digit
 		(s2[i + 1] < '0') || (s2[i + 1] > '9') ||	// 2nd hour digit
 		(s2[i + 2] < '0') || (s2[i + 2] > '5') ||	// 1st min digit
 		(s2[i + 3] < '0') || (s2[i + 3] > '9')) 	// 2nd min digit
 		throw ASN_EXCEPTION("Invalid SNACC::GeneralizedTime value");
-	
+
 	// Calculate the UTC minutes
 	int v1 = ((s1[2] - '0') * 10) + (s1[3] - '0');
 	int v2 = sign * ((s2[2] - '0') * 10) + (s2[3] - '0');
-	
+
 	v1 += v2;
-	
+
 	int carry;
 	if (v1 < 0)
 	{
@@ -1049,21 +1049,21 @@ it is the same length and form.  */
 	}
 	else
 		carry = 0;
-	
+
 	s1[2] = (char)((v1 / 10) + '0');
 	s1[3] = (char)((v1 % 10) + '0');
-	
+
 	// Calculate the UTC hours
 	v1 = ((s1[0] - '0') * 10) + (s1[1] - '0');
 	v2 = sign * ((s2[0] - '0') * 10) + (s2[1] - '0');
-	
+
 	v1 += v2 + carry;
-	
+
 	if (v1 < 0)
 		v1 += 24;
 	else if (v1 > 23)
 		v1 -= 24;
-	
+
 	s1[2] = (char)((v1 / 10) + '0');
 	s1[3] = (char)((v1 % 10) + '0');
 }
@@ -1072,15 +1072,15 @@ it is the same length and form.  */
 void Time::cvtGenTime2CM_Time(const std::string& gen)
 /* This function copies the time from the Generalized time string and converts
 it into a standard CM Library time string (format: "yyyymmddhhmmssZ").
-Note: 
-   Generalized time is formatted according to ISO 8601 and ITU-T X.680: 
-      "yyyymmddhh" + 
-         "mm" or "mmss" (optional) + 
+Note:
+   Generalized time is formatted according to ISO 8601 and ITU-T X.680:
+      "yyyymmddhh" +
+         "mm" or "mmss" (optional) +
          "." or "," + "s" (any number of decimal places) (optional) +
          "Z" or "-hh" or "+hh" or "-hhmm" or "+hhmm" (optional)
    When minutes or seconds are omitted, the CM Library time string fills
    in the fields with zeros.  It is rare that the trailing "Z" or local
-   time differential will not be present in GeneralizedTime, since then 
+   time differential will not be present in GeneralizedTime, since then
    the time value cannot be converted to Coordinated Universal Time (UTC).
    The usual GeneralizedTime is expected to be "yyyymmddhhmmssZ".
 */
@@ -1094,7 +1094,7 @@ Note:
 		else
 			m_time[i] = gen[i];
 	}
-	
+
 	// Check that there is more to convert
 	if (i < gen.length())
 	{
@@ -1111,13 +1111,13 @@ Note:
 			{
 				if ((gen[i] < '0') || (gen[i] > '9'))
 					throw ASN_EXCEPTION("Invalid SNACC::GeneralizedTime value");
-				else 
+				else
 					m_time[11] = gen[i++];
 			}
 			else
 				throw ASN_EXCEPTION("Invalid SNACC::GeneralizedTime value");
 		}
-		
+
 		// If the "ss" values aren't present, add 00's, else copy them
 		if ((i >= gen.length()) || (gen[i] < '0') || (gen[i] > '9'))
 		{
@@ -1131,7 +1131,7 @@ Note:
 			{
 				if ((gen[i] < '0') || (gen[i] > '9'))
 					throw ASN_EXCEPTION("Invalid SNACC::GeneralizedTime value");
-				else 
+				else
 					m_time[13] = gen[i++];
 			}
 			else
@@ -1148,7 +1148,7 @@ Note:
 	}
 	else	// String length ( < 10) is invalid for generalized time
 		throw ASN_EXCEPTION("Invalid SNACC::GeneralizedTime value");
-	
+
 	// If the fractional seconds are present, skip over them
 	if ((i < gen.length()) && ((gen[i] == '.') || (gen[i] == ',')))
 	{
@@ -1156,7 +1156,7 @@ Note:
 		while ((i < gen.length()) && (gen[i] >= '0') && (gen[i] <= '9'))
 			i++;
 	}
-	
+
 	// Check that there is still more to convert
 	if (i < gen.length())
 	{
@@ -1175,7 +1175,7 @@ Note:
 	/* else: This is only a local time!  The CM library will append the 'Z'
 	anyway, but local time may not be UTC!	Hopefully, no one will use local
 	generalized time. */
-	
+
 	// end of source time, just append our 'Z'
 	m_time[14] = 'Z';
 	m_time[15] = '\0';
@@ -1185,12 +1185,12 @@ Note:
 void Time::cvtUTC2CM_Time(const std::string& utc)
 /* This function copies the time from the UTC time string and converts
 it into a standard CM Library time string (format: "yyyymmddhhmmssZ").
-Note: 
+Note:
    Coordinated Universal Time (UTC) is formatted according to ITU-T X.680:
       "yymmddhhmm" +
-      "ss" (optional) + 
-      "Z" or "-hhmm" or "+hhmm" 
-   When seconds are omitted, the CM Library fills in the time string with 
+      "ss" (optional) +
+      "Z" or "-hhmm" or "+hhmm"
+   When seconds are omitted, the CM Library fills in the time string with
    zeros.
 */
 {
@@ -1209,7 +1209,7 @@ Note:
 		m_time[0] = '1';
 		m_time[1] = '9';
 	}
-	
+
 	// Copy "yymmddhhmm" values
 	std::string::size_type i;
 	for (i = 0; i < 10; ++i)
@@ -1219,7 +1219,7 @@ Note:
 		else
 			m_time[i + 2] = utc[i];
 	}
-	
+
 	// If the "ss" values aren't present, add 00's, else copy them
 	if ((utc[i] < '0') || (utc[i] > '9'))
 	{
@@ -1233,7 +1233,7 @@ Note:
 			throw ASN_EXCEPTION("Invalid SNACC::UTCTime value");
 		m_time[13] = utc[i++];
 	}
-	
+
 	// Check that there is still more to convert
 	if (i < utc.length())
 	{
@@ -1251,7 +1251,7 @@ Note:
 	}
 	else
 		throw ASN_EXCEPTION("Invalid SNACC::UTCTime value");
-	
+
 	// end of source time, just append our 'Z' and terminate
 	m_time[14] = 'Z';
 	m_time[15] = 0;
@@ -1347,7 +1347,7 @@ void IntBytes::SetFromInt(const SNACC::AsnInt& asnInt, ulong mult)
 
 	const uchar* pData = asnInt.c_str();
 	len = asnInt.length();
-	
+
 	// Check the leading byte to see if it is zero
 	if ((len > 0) && (pData[0] == 0))
 	{
@@ -1355,7 +1355,7 @@ void IntBytes::SetFromInt(const SNACC::AsnInt& asnInt, ulong mult)
 		pData++;
 		len--;
 	}
-	
+
 	// Check if integer needs to be padded
 	unsigned long pad = 0;
 	if (mult > 0)
@@ -1365,7 +1365,7 @@ void IntBytes::SetFromInt(const SNACC::AsnInt& asnInt, ulong mult)
 			pad = 0;
 	}
 	len += pad;
-	
+
 	// Allocate and clear memory for the data
 	Set(len);
 
@@ -1459,20 +1459,20 @@ void Bytes::SetFromAny(const SNACC::AsnAny& asnAny, const char* nameOfAny)
 {
 	if (nameOfAny == NULL)
 		nameOfAny = "<Unnamed ANY>";
-	
+
 	// If the AsnAny is decoded, re-encode the object
 	if (asnAny.ai != NULL)
 	{
 		// Check that the decoded value is present
 		if (asnAny.value == NULL)
 			throw ASN_EXCEPTION2(nameOfAny, " value field is NULL");
-		
+
 		// Re-encode the object
 		SNACC::AsnBuf asnBuf;
 		SNACC::AsnLen numEncoded;
 		if (!asnAny.BEncPdu(asnBuf, numEncoded))
 			throw ASN_EXCEPTION2("Error encoding ", nameOfAny);
-		
+
 		// Set this value from the AsnBuf
 		SetFromBuf(asnBuf, numEncoded);
 	}
@@ -1481,7 +1481,7 @@ void Bytes::SetFromAny(const SNACC::AsnAny& asnAny, const char* nameOfAny)
 		// Check that the encoded AsnBuf is present
 		if (asnAny.anyBuf == NULL)
 			throw ASN_EXCEPTION2(nameOfAny, " anyBuf field is NULL");
-		
+
 		// Set this value from the AsnBuf
 		SetFromBuf(*asnAny.anyBuf, asnAny.anyBuf->length());
 	}
@@ -1672,9 +1672,8 @@ MutexLock Mutex::AcquireLock() const
 		if (WaitForSingleObject(m_winHandle, INFINITE) == WAIT_FAILED)
 #else
 		if (pthread_mutex_lock((pthread_mutex_t*)&m_mutex) != 0)
-#endif	
+#endif
 		{
-			std::cerr << "Could not unlock Mutex\n";
 			throw EXCEPTION(CMLASN_UNKNOWN_ERROR);
 		}
 #endif // NOTHREADS
@@ -1692,10 +1691,9 @@ void Mutex::ReleaseMutex() const
 	if (pthread_mutex_unlock((pthread_mutex_t*)&m_mutex) != 0)
 #endif
 	{
-		std::cerr << "Could not release mutex\n";
 		throw EXCEPTION(CMLASN_UNKNOWN_ERROR);
 	}
-#endif // NOTHREADS		
+#endif // NOTHREADS
 }
 
 Mutex& Mutex::operator=(const Mutex&)
@@ -1734,7 +1732,8 @@ void MutexLock::Release()
 /////////////////////////////////////////
 // ReadWriteMutex class implementation //
 /////////////////////////////////////////
-ReadWriteMutex::ReadWriteMutex(const char* mutexName, unsigned int maxReadThreads) :
+ReadWriteMutex::ReadWriteMutex(const char* mutexName,
+										 unsigned int maxReadThreads) :
 Mutex(mutexName)
 {
 	MutexLock lock = Mutex::AcquireLock();
@@ -1753,32 +1752,22 @@ MutexLock ReadWriteMutex::AcquireLock() const
 #ifndef NOTHREADS
 #ifdef WIN32
 	CONST HANDLE winHandles[] = { m_winWriteEvent, m_winHandle };
-	if (WaitForMultipleObjects(2, (CONST HANDLE*)&winHandles, TRUE, INFINITE) == WAIT_FAILED)
-	{
-		std::cerr << "Could not acquire write lock on ReadWriteMutex\n";
+	if (WaitForMultipleObjects(2, winHandles, TRUE, INFINITE) == WAIT_FAILED)
 		throw EXCEPTION(CMLASN_UNKNOWN_ERROR);
-	}
 #else
 	if (pthread_mutex_lock((pthread_mutex_t*)&m_mutex) != 0)
-	{
-		std::cerr << "Could not acquire write lock on ReadWriteMutex\n";
 		throw EXCEPTION(CMLASN_UNKNOWN_ERROR);
-	}
+
 	while (m_nReads != 0)
 	{
-		if (pthread_cond_wait((pthread_cond_t*)&m_WriteCondition, (pthread_mutex_t*)&m_mutex) != 0)
-		{
-			std::cerr << "Could not acquire write lock on ReadWriteMutex\n";
+		if (pthread_cond_wait((pthread_cond_t *)&m_WriteCondition, (pthread_mutex_t *)&m_mutex) != 0)
 			throw EXCEPTION(CMLASN_UNKNOWN_ERROR);
-		}
 	}
-#endif	
+#endif
 #endif // NOTHREADS
 	if (m_nReads != 0)
-	{
-		std::cerr << "Cannot proceed, acquired write lock when there are reads\n";
 		throw EXCEPTION(CMLASN_UNKNOWN_ERROR);
-	}
+
 	return MutexLock(*this);
 }
 
@@ -1789,10 +1778,7 @@ ReadLock ReadWriteMutex::AcquireReadLock() const
 #ifdef WIN32
 	// Acquire or lock the mutex
 	if (WaitForSingleObject(m_winHandle, INFINITE) == WAIT_FAILED)
-	{
-		std::cerr << "Could not acquire write lock on ReadWriteMutex\n";
 		throw EXCEPTION(CMLASN_UNKNOWN_ERROR);
-	}
 
 	// If max read threads running, wait for a read thread to finish
 	while (m_nReads >= m_maxReads)
@@ -1800,11 +1786,8 @@ ReadLock ReadWriteMutex::AcquireReadLock() const
 		// Release the mutex and wait for another read thread to finish
 		::ReleaseMutex(m_winHandle);
 		CONST HANDLE winHandles[] = { m_winReadEvent, m_winHandle };
-		if (WaitForMultipleObjects(2, (CONST HANDLE*)&winHandles, TRUE, INFINITE) == WAIT_FAILED)
-		{
-			std::cerr << "Could not acquire write lock on ReadWriteMutex\n";
+		if (WaitForMultipleObjects(2, winHandles, TRUE, INFINITE) == WAIT_FAILED)
 			throw EXCEPTION(CMLASN_UNKNOWN_ERROR);
-		}
 	}
 	// Unsignal the read event on windows so we can signal other read threads
 	// when we finish
@@ -1812,18 +1795,13 @@ ReadLock ReadWriteMutex::AcquireReadLock() const
 #else
 	// Acquire or lock the mutex
 	if (pthread_mutex_lock((pthread_mutex_t*)&m_mutex) != 0)
-	{
-		std::cerr << "Could not acquire write lock on ReadWriteMutex\n";
 		throw EXCEPTION(CMLASN_UNKNOWN_ERROR);
-	}
+
 	// If max read threads running, wait for a read thread to finish
 	while (m_nReads >= m_maxReads)
 	{
-		if (pthread_cond_wait((pthread_cond_t*)&m_ReadCondition, (pthread_mutex_t*)&m_mutex) != 0)
-		{
-			std::cerr << "Could not acquire write lock on ReadWriteMutex\n";
+		if (pthread_cond_wait((pthread_cond_t *)&m_ReadCondition, (pthread_mutex_t *)&m_mutex) != 0)
 			throw EXCEPTION(CMLASN_UNKNOWN_ERROR);
-		}
 	}
 #endif //WIN32
 #endif //NOTHREADS
@@ -1842,7 +1820,7 @@ ReadLock ReadWriteMutex::AcquireReadLock() const
 	::ReleaseMutex(m_winHandle);
 #else
 	//Release the lock on the mutex
-	pthread_mutex_unlock((pthread_mutex_t*)&m_mutex);
+	pthread_mutex_unlock((pthread_mutex_t *)&m_mutex);
 #endif
 #endif //NOTHREADS
 	return ReadLock(*this);
@@ -1860,7 +1838,7 @@ void ReadWriteMutex::ReleaseLock() const
 	{
 		m_nReads = 0;
 
-		// Signal other waiting write threads  
+		// Signal other waiting write threads
 #ifndef NOTHREADS
 #ifdef WIN32
 		SetEvent(m_winWriteEvent);
@@ -1972,7 +1950,7 @@ void Internal::CvtAsnIntToExistingBytes(Bytes_struct& bytes,
 {
 	const uchar* data = hugeInt.c_str();
 	bytes.num = hugeInt.length();
-	
+
 	// Check the leading byte to see if it is zero
 	if ((bytes.num > 0) && (data[0] == 0))
 	{
@@ -1980,7 +1958,7 @@ void Internal::CvtAsnIntToExistingBytes(Bytes_struct& bytes,
 		data++;
 		bytes.num--;
 	}
-	
+
 	// Check if huge integer needs to be padded
 	int pad = 0;
 	if (mult > 0)
@@ -1990,7 +1968,7 @@ void Internal::CvtAsnIntToExistingBytes(Bytes_struct& bytes,
 			pad = 0;
 	}
 	bytes.num += pad;
-	
+
 	// Allocate and clear memory for the data
 	if (bytes.num > 0)
 	{
@@ -2073,7 +2051,7 @@ void Internal::CvtBytesToSigStruct(Sig_struct& sig, const Bytes& encBuf)
 		// Decode the DSA signature value
 		SNACC::Dss_Sig_Value dsaSigValue;
 		encBuf.Decode(dsaSigValue, "SNACC::Dss_Sig_Value");
-		
+
 		// Allocate memory for the Dsa_sig_struct
 		sig.value.dsa = (Dsa_sig_struct*)calloc(1, sizeof(Dsa_sig_struct));
 		if (sig.value.dsa == NULL)
@@ -2106,13 +2084,13 @@ void Internal::CvtBytesToSigStruct(Sig_struct& sig, const Bytes& encBuf)
 		// Set the lengths of the R & S values
 		sig.value.dsa->r.num = gSHA1_HASH_LEN;
 		sig.value.dsa->s.num = gSHA1_HASH_LEN;
-		
+
 		try {
 			// Allocate memory for and copy the R value
 			sig.value.dsa->r.data = (uchar*)malloc(sig.value.dsa->r.num);
 			if (sig.value.dsa->r.data == NULL)
 				throw MEMORY_EXCEPTION;
-	
+
 			memcpy(sig.value.dsa->r.data, encBuf.GetData(),
 				sig.value.dsa->r.num);
 
@@ -2176,19 +2154,19 @@ void Internal::FillParameters(Pub_key_struct& cmPubKey, const AlgID& algID)
 				throw ASN_EXCEPTION("SNACC::Kea_Dss_Parms::differentParms is NULL");
 
 			// Convert the Fortezza parameters into the correct Pqg_params_struct
-			if (eitherParams.oldParams->choiceId == 
+			if (eitherParams.oldParams->choiceId ==
 				SNACC::Kea_Dss_Parms::commonParmsCid)
 			{
 				cmPubKey.params.dsa_kea =
 					cvtFortezzaParams(*eitherParams.oldParams->commonParms);
 			}
-			else if (eitherParams.oldParams->choiceId == 
+			else if (eitherParams.oldParams->choiceId ==
 				SNACC::Kea_Dss_Parms::differentParmsCid)
 			{
 				if (cmPubKey.key.combo == NULL)
 					throw EXCEPTION(CMLASN_NULL_POINTER);
 				cmPubKey.key.combo->diff_kea = NULL;
-				
+
 				cmPubKey.params.dsa_kea = cvtFortezzaParams(
 					eitherParams.oldParams->differentParms->dss_Parms);
 				cmPubKey.key.combo->diff_kea = cvtFortezzaParams(
@@ -2282,54 +2260,54 @@ void cvtFortezzaPubKey(Pub_key_struct& cmPubKey, const Bytes& keyBuf)
 		calloc(1, sizeof(Mosaic_key_struct));
 	if (cmPubKey.key.combo == NULL)
 		throw MEMORY_EXCEPTION;
-	
+
 	Mosaic_key_struct& fortKey = *cmPubKey.key.combo;
-	
+
 	unsigned long keyLen = keyBuf.Len();
 	if (keyLen < 275)
 		throw ASN_EXCEPTION("Invalid length of Fortezza public key");
 	const uchar* keyData = keyBuf.GetData();
 	const uchar* bufEnd = keyData + keyLen;
-	
+
 	fortKey.kea_ver = *keyData++;
 	if (fortKey.kea_ver != 0)
 		throw ASN_EXCEPTION("Invalid Fortezza KEA version");
-	
+
 	fortKey.kea_type = *keyData++;
 	if (fortKey.kea_type != 0x01)
 		throw ASN_EXCEPTION("Invalid Fortezza KEA type");
-	
+
 	memcpy(fortKey.kmid, keyData, CM_KMID_LEN);
 	keyData += CM_KMID_LEN;
-	
+
 	keyData += cvtFortezzaMultiByte(fortKey.kea_clearance, keyData, bufEnd);
 	keyData += cvtFortezzaMultiByte(fortKey.kea_privs, keyData, bufEnd);
-	
+
 	if (((bufEnd - keyData) < 263) || (*keyData++ != 0) ||
 		(*keyData++ != 0x80))
 		throw ASN_EXCEPTION("Invalid length of Fortezza public key");
-	
+
 	fortKey.kea_y.num = 128;
 	fortKey.kea_y.data = (uchar*)malloc(128);
 	if (fortKey.kea_y.data == NULL)
 		throw MEMORY_EXCEPTION;
 	memcpy(fortKey.kea_y.data, keyData, 128);
 	keyData += 128;
-	
+
 	fortKey.dsa_ver = *keyData++;
 	if (fortKey.dsa_ver != 0)
 		throw ASN_EXCEPTION("Invalid Fortezza DSA version");
-	
+
 	fortKey.dsa_type = *keyData++;
 	if (fortKey.dsa_type != 0x02)
 		throw ASN_EXCEPTION("Invalid Fortezza DSA type");
-	
+
 	keyData += cvtFortezzaMultiByte(fortKey.dsa_privs, keyData, bufEnd);
-	
+
 	if (((bufEnd - keyData) != 130) || (*keyData++ != 0) ||
 		(*keyData++ != 0x80))
 		throw ASN_EXCEPTION("Invalid length of Fortezza public key");
-	
+
 	fortKey.dsa_y.num = 128;
 	fortKey.dsa_y.data = (uchar*)malloc(128);
 	if (fortKey.dsa_y.data == NULL)
@@ -2379,7 +2357,7 @@ void Internal::cvtInt2BytesStruct(Bytes_struct **bytes, const SNACC::AsnInt& the
 		throw MEMORY_EXCEPTION;
 	memcpy((*bytes)->data, theInt.c_str(), (*bytes)->num);
 }
-	
+
 
 RSAPublicKey_struct* cvtRSAPublicKey(const SNACC::RSAPublicKey& rsaKey)
 {

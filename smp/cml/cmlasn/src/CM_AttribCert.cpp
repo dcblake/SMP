@@ -1070,8 +1070,6 @@ ClearanceList::const_iterator ClearanceList::Find(const SNACC::AsnOid& secPolicy
 ClearanceList::const_iterator ClearanceList::FindNext(const_iterator iPrev,
 													  const SNACC::AsnOid& secPolicy) const
 {
-	if (iPrev == NULL)
-		return end();
 
 	if (iPrev != end())
 	{

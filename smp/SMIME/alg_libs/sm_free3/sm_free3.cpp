@@ -1322,7 +1322,7 @@ SM_RET_VAL CSM_Free3::SMTI_Encrypt(
             (*pPreferredOID == id_aes256_CBC || *pPreferredOID == id_aes256_wrap) )
    { 
       pEncryptionAES = new AESEncryption((const unsigned char *)pMEK->Access(), 
-                                      pMEK->Length(), CBC_KeyLength*8);
+                                      pMEK->Length());
 
       CBC_Mode_ExternalCipher::Encryption *pTmpEncryption= 
                new CBC_Mode_ExternalCipher::Encryption(*pEncryptionAES, 
@@ -2778,14 +2778,9 @@ SM_RET_VAL CSM_Free3::SMTI_GeneratePWRIKeyWrap(
 
       // string password, salt; EXPECTED RESULT IS derivedKey;
        SecByteBlock derived(CBC_KeyLength);
-       pbkdf.GeneralDeriveKey(derived, 
-         CBC_KeyLength,
-         0x03,
-         (const unsigned char *)pPassword->Access(),
-         pPassword->Length(),                  // password length
-         (const unsigned char *)pSalt->Access(), 
-         pSalt->Length(),                         // salt length
-         nIterCount);
+       pbkdf.DeriveKey(derived, CBC_KeyLength, 0x03,
+         (const byte*)pPassword->Access(), pPassword->Length(),
+         (const byte*)pSalt->Access(), pSalt->Length(), nIterCount);
         
       pBufKey = new CSM_Buffer((const char *)(unsigned char *)derived, derived.size());
    }
@@ -3204,14 +3199,9 @@ SM_RET_VAL CSM_Free3::SMTI_ExtractPWRIKeyWrap(
       // Derive the KEK from pPassword  
       // string password, salt; EXPECTED RESULT IS derivedKey;
        SecByteBlock derived(CBC_KeyLength);
-       pbkdf.GeneralDeriveKey(derived, 
-         CBC_KeyLength,
-         0x03,  // id # for key derivation
-         (const unsigned char *)Password.Access(),
-         Password.Length(),                  // password length
-         (const unsigned char *)pSalt->Access(), 
-         pSalt->Length(),                         // salt length
-         nIterCount);   
+       pbkdf.DeriveKey(derived, CBC_KeyLength, 0x03,  // id # for key derivation
+         (const byte*)Password.Access(), Password.Length(),
+			(const byte*)pSalt->Access(),  pSalt->Length(), nIterCount);   
       pBufKey = new CSM_Buffer((const char *)(unsigned char *)derived, derived.size());
    }
    else
@@ -3784,7 +3774,7 @@ SM_RET_VAL CSM_Free3::SMTI_Decrypt(
 
       // create a AESDecryption object using the MEK and length
       pAesDecryption = new AESDecryption((const unsigned char*)pMEK->Access(),
-         pMEK->Length(), CBC_KeyLength * 8);
+         pMEK->Length());
 
       // create the externlCipher object in CBC mode
       CBC_Mode_ExternalCipher::Decryption *pTmpDecryption = new   

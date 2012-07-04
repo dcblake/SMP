@@ -393,7 +393,7 @@ bool Session::findTrust(const CML::ASN::DN &DN, const AsnOid &Id)
 // Add the new DN and OID to the trustlist if the DN and the OID
 // do not already exist in the list as a pair
 //
-int Session::addTrust(CML::ASN::DN &dn, AsnOid &oid)
+int Session::addTrust(const CML::ASN::DN& dn, const AsnOid& oid)
 {
    int retval = 0;
 

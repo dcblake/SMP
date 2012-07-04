@@ -495,11 +495,10 @@ SM_RET_VAL CSM_MsgSignerInfo::VerifyTimeStampToken(SignerInfo &msgSI,
          ACMLCert.m_pRID = pSigningCert->GetRid(true);
       if (ACMLCert.m_pRID != NULL)
       {
-         ACMLCert.m_lCmlSessionId = ulCmlSessionId;
-         ACMLCert.m_lSrlSessionId = ulSrlSessionId;
+			CM_Interface cmlInterface(ulCmlSessionId, ulSrlSessionId);
 
 	   	CML::ASN::Time timeStampTime(snaccTSTInfo.genTime);
-		   timeStampNotOk = ACMLCert.Validate(&timeStampTime);
+		   timeStampNotOk = ACMLCert.Validate(cmlInterface, &timeStampTime);
 
          if (timeStampNotOk != false)
          {

@@ -188,6 +188,11 @@ typedef struct SRLMgrInfo_struct
 #define HTTP_PORT		80
 #define LDAP_PORT       389
 
+/* HTTP retrieval types */
+#define HTTP_HEADERS                    0
+#define HTTP_CONTENT_FIRST              1
+#define HTTP_CONTENT                    2
+
 struct NetBuf {
     char *cput;
 	char *cget;

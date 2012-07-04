@@ -37,7 +37,6 @@ Version:  2.4
 	#define strnicmp strncasecmp
 #endif
 
-
 //
 // Http_Init - Might be needed for Windows NT
 void Http_Init(void)
@@ -94,7 +93,8 @@ short Http_Get(const char *host, const char *path, Bytes_struct *inBuf, int sock
 	// GET /path HTTP1.1CRLF
 	// HOST: hostCRLFCRLF
 
-    sprintf(cmd, "GET /%s %s\r\n%s%s\r\n\r\n", path, HTTP_VERSION, HTTP_HOST, host);
+    sprintf(cmd, "GET /%s %s\r\n%s%s\r\n\r\n", path, HTTP_VERSION, HTTP_HOST,
+            host);
 
 	if ((send_stat = Http_Send(cmd, socket_d)) == 1)
 		status = processHttpResponse(inBuf, socket_d);
@@ -135,7 +135,8 @@ static short processHttpResponse(Bytes_struct *inBuf, int socket_d)
 
 	// Read in a line at a time to process response headers
 	// the content body is read in processContent
-	while((len = http_readline(header_buf, HTTP_BUF_MAX, ctrl, 1)) > 0)
+	while((len = 
+          http_readline(header_buf, HTTP_BUF_MAX, ctrl, HTTP_HEADERS)) > 0)
 	{
 		// HTTP spec requires that we ignore leading empty lines
 		// before the response line
@@ -157,7 +158,8 @@ static short processHttpResponse(Bytes_struct *inBuf, int socket_d)
 					first = 0;
 					continue;
 				}
-				else {
+				else 
+            {
 					status = SRL_HTTP_ERROR;
 					break;
 				}
@@ -174,7 +176,9 @@ static short processHttpResponse(Bytes_struct *inBuf, int socket_d)
 			}
 			else 
 			{
-				status = SRL_HTTP_ERROR;
+            // We don't know the content length read until 
+            // we get a network error
+            status = processContent (-1, inBuf, ctrl);
 				break;
 			}
 		}
@@ -212,30 +216,72 @@ static short processContent(long content_length, Bytes_struct *inbuf, netbuf *ct
 {
 	short status;
 	int chars_read = 0;
+   long buffer_len = 102400;
+   char *readbuf;
+   uchar *bp;
 
-	inbuf->data = malloc(content_length+1);
-	inbuf->num = content_length;
-	if (inbuf->data != NULL)
-	{
-		chars_read = http_readline((char*)inbuf->data, content_length, ctl, 0);
-		if (chars_read == content_length)
-			status = SRL_SUCCESS;
-		else
-		{
-			status = SRL_HTTP_ERROR;
-			free (inbuf->data);
-			inbuf->data = NULL;
-			inbuf->num = 0;
-		}
-	}
-	else
-	{
-		status = SRL_MEMORY_ERROR;
-		free (inbuf->data);
-		inbuf->data = NULL;
-		inbuf->num = 0;
-	}
-	return status;
+   if (content_length == -1)
+   {
+      // We have a Response without Content-Length
+      // We want to read in 100K at a time
+      readbuf = malloc ((buffer_len + 1) * sizeof (char));
+      if (readbuf == NULL)
+      {
+         status = SRL_MEMORY_ERROR;
+         return status;
+      }
+      inbuf->data = NULL;
+      inbuf->num = 0;
+      // Read in the netbuf again:
+      ctl->cput = ctl->cput - ctl->cavail;
+      if ((chars_read =
+           http_readline (readbuf, buffer_len, ctl, HTTP_CONTENT_FIRST)) > 0)
+      {
+         inbuf->data = malloc (chars_read * sizeof (char));
+         memcpy (inbuf->data, readbuf, chars_read);
+         inbuf->num += chars_read;
+      }
+      while ((chars_read =
+              http_readline (readbuf, buffer_len, ctl, HTTP_CONTENT)) > 0)
+      {
+         inbuf->data = realloc (inbuf->data, (inbuf->num + chars_read) *
+                                sizeof (char));
+         bp = inbuf->data + inbuf->num;
+         memcpy (bp, readbuf, chars_read);
+         inbuf->num += chars_read;
+         if (chars_read < buffer_len)
+            break;
+      }
+      status = SRL_SUCCESS;
+
+   }
+   else
+   {
+      inbuf->data = malloc(content_length+1);
+      inbuf->num = content_length;
+      if (inbuf->data != NULL)
+      {
+         chars_read = http_readline((char*)inbuf->data, content_length,
+                                           ctl, HTTP_CONTENT_FIRST);
+         if (chars_read == content_length)
+            status = SRL_SUCCESS;
+         else
+         {
+            status = SRL_HTTP_ERROR;
+            free (inbuf->data);
+            inbuf->data = NULL;
+            inbuf->num = 0;
+         }
+      }
+      else
+      {
+         status = SRL_MEMORY_ERROR;
+         free (inbuf->data);
+         inbuf->data = NULL;
+         inbuf->num = 0;
+      }
+   }
+   return status;
 }
 
 
@@ -309,7 +355,7 @@ static long processHeaderLine(char *header_buf)
 		// Copy until whitespace or CR
 		for (buf, i = 0; *buf != ' ' && *buf != '\r'; buf++, i++)
 			header_value[i] = *buf;
-		header_value[++i] = '\0';
+		header_value[i] = '\0';
 
 		content_len = atol(header_value);
 	}

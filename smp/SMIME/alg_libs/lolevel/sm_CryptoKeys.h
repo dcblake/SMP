@@ -52,7 +52,7 @@ public:
 
    virtual SNACC::SubjectPublicKeyInfo* LoadSNACCPublicKeyInfo(CTIL::CSM_Buffer *AnyParams,
       CTIL::CSM_Buffer *PubKey) = 0;
-   static CTIL::CSM_Buffer *CSM_CryptoKeysBase::WrapPkcs12(
+   static CTIL::CSM_Buffer *WrapPkcs12(
        char *pBufX, char *pCertFile,             // File Names
        char *pszPassword, 
        char *pencPrvKeyFilename=NULL);  //OPTIONAL input.

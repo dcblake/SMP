@@ -3572,8 +3572,6 @@ CertPolicyList::const_iterator CertPolicyList::Find(const SNACC::AsnOid& policyO
 CertPolicyList::const_iterator CertPolicyList::FindNext(const_iterator iPrev,
 														const SNACC::AsnOid& policyOid) const
 {
-	if (iPrev == NULL)
-		return end();
 	if (iPrev != end())
 	{
 		++iPrev;
@@ -6936,8 +6934,6 @@ AttributeList::const_iterator AttributeList::Find(Attribute::AttrType type) cons
 AttributeList::const_iterator AttributeList::FindNext(const_iterator iPrev,
 													  const SNACC::AsnOid& type) const
 {
-	if (iPrev == NULL)
-		return end();
 	if (iPrev == end())
 		return iPrev;
 	
@@ -6950,8 +6946,6 @@ AttributeList::const_iterator AttributeList::FindNext(const_iterator iPrev,
 AttributeList::const_iterator AttributeList::FindNext(const_iterator iPrev,
 													  Attribute::AttrType type) const
 {
-	if (iPrev == NULL)
-		return end();
 	if (iPrev == end())
 		return iPrev;
 	
@@ -7265,20 +7259,24 @@ bool CertIssuerExtension::operator==(const CertIssuerExtension& rhs) const
 	return (GenNames(*this) == rhs);
 }
 
-
+namespace CML {
+namespace ASN {
 ///////////////////////////////////////////////////
 // StdExtension_T template class specializations //
 ///////////////////////////////////////////////////
+template <>
 void* StdExtension_T<SNACC::CRLScopeSyntax>::GetExtensionValue() const
 {
 	return cvtPerAuthScopeList(*this);
 }
 
+template <>
 void* StdExtension_T<SNACC::AsnOcts>::GetExtensionValue() const
 {
 	return Internal::cvtOctsToBytes(*this);
 }
 
+template <>
 void* StdExtension_T<SNACC::StatusReferrals>::GetExtensionValue() const
 {
 	StatusReferral_LL* result = NULL;
@@ -7355,6 +7353,7 @@ void* StdExtension_T<SNACC::StatusReferrals>::GetExtensionValue() const
 	}
 }
 
+template <>
 void* StdExtension_T<SNACC::OrderedListSyntax>::GetExtensionValue() const
 {
 	short* pValue = (short*)malloc(sizeof(short));
@@ -7375,6 +7374,7 @@ void* StdExtension_T<SNACC::OrderedListSyntax>::GetExtensionValue() const
 	return pValue;
 }
 
+template <>
 void* StdExtension_T<SNACC::DeltaInformation>::GetExtensionValue() const
 {
 	DeltaInfo* pResult = (DeltaInfo*)calloc(1, sizeof(DeltaInfo));
@@ -7408,6 +7408,7 @@ void* StdExtension_T<SNACC::DeltaInformation>::GetExtensionValue() const
 	}
 }
 
+template <>
 void* StdExtension_T<SNACC::GeneralizedTime>::GetExtensionValue() const
 {
 	CM_Time* pTime = (CM_Time*)malloc(sizeof(CM_Time));
@@ -7417,6 +7418,7 @@ void* StdExtension_T<SNACC::GeneralizedTime>::GetExtensionValue() const
 	return pTime;
 }
 
+template <>
 void* StdExtension_T<SNACC::CRLReason>::GetExtensionValue() const
 {
 	short* pValue = (short*)malloc(sizeof(short));
@@ -7461,6 +7463,7 @@ void* StdExtension_T<SNACC::CRLReason>::GetExtensionValue() const
 	return pValue;
 }
 
+template <>
 void* StdExtension_T<SNACC::AsnOid>::GetExtensionValue() const
 {
 	CM_OID* pOid = (CM_OID*)malloc(sizeof(CM_OID));
@@ -7475,7 +7478,8 @@ void* StdExtension_T<SNACC::AsnOid>::GetExtensionValue() const
 		throw;
 	}
 }
-
+} // End of namespace ASN
+} // End of namespace CML
 
 //////////////////////////////////
 // CML::ASN::Internal functions //

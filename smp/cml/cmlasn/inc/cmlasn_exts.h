@@ -1161,14 +1161,14 @@ public:
 // StdExtension_T template class implementation //
 //////////////////////////////////////////////////
 template <class T>
-StdExtension_T<T>::StdExtension_T<T>(const Extension& extension, const T& snacc) :
+StdExtension_T<T>::StdExtension_T(const Extension& extension, const T& snacc) :
 Extension(extension), T(snacc)
 {
 };
 
 
 template <class T>
-StdExtension_T<T>::StdExtension_T<T>(const T& snacc, const SNACC::AsnOid& oid,
+StdExtension_T<T>::StdExtension_T(const T& snacc, const SNACC::AsnOid& oid,
 									 const SNACC::AsnBool* pCriticalFlag) :
 Extension(oid, pCriticalFlag), T(snacc)
 {

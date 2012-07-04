@@ -41,7 +41,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../acl/inc" /I "../SMIME/mimelib" /I "../../SMPDist/include/eSNACC/c++" /I "../SMIME/inc" /I "../SMIME/libCtilMgr/inc" /I "../cml/cmlasn/inc" /I "../cml/srl/inc" /I "../cml/cmapi/inc" /I "../pkcs11_cryptopp/inc" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /Zm300 /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../acl/inc" /I "../SMIME/mimelib" /I "../../SMPDist/include/eSNACC/c++" /I "../SMIME/inc" /I "../SMIME/libCtilMgr/inc" /I "../cml/cmlasn/inc" /I "../cml/srl/inc" /I "../cml/cmapi/inc" /I "../cml/crlsrv_dll/inc" /I "../pkcs11_cryptopp/inc" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /Zm300 /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -65,7 +65,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "../acl/inc" /I "../SMIME/mimelib" /I "../../SMPDist/include/eSNACC/c++" /I "../SMIME/inc" /I "../SMIME/libCtilMgr/inc" /I "../cml/cmlasn/inc" /I "../cml/srl/inc" /I "../cml/cmapi/inc" /I "../pkcs11_cryptopp/inc" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR /YX /FD /GZ /Zm300 /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "../acl/inc" /I "../SMIME/mimelib" /I "../../SMPDist/include/eSNACC/c++" /I "../SMIME/inc" /I "../SMIME/libCtilMgr/inc" /I "../cml/cmlasn/inc" /I "../cml/srl/inc" /I "../cml/cmapi/inc" /I "../cml/crlsrv_dll/inc" /I "../pkcs11_cryptopp/inc" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR /YX /FD /GZ /Zm300 /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -112,23 +112,7 @@ SOURCE=.\sm_checkRead.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\sm_CM_AC_Support.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\SMP_Check.cpp
-# End Source File
-# End Group
-# Begin Group "Header Files"
-
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=..\SMIME\inc\sm_AC_Interface.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\sm_CM_AC_Support.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

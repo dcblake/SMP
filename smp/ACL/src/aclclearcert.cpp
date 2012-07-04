@@ -891,8 +891,7 @@ void ClearanceCert::intersect(Session *pSession, const CML::ASN::CertificationPa
    FUNC("ClearanceCert::intersect()");
 
    AsnOidLst::const_iterator pTmpPolicyId;
-   //ClearanceList::iterator pUserClearance;
-   Clearance *pUserClearance=new Clearance;
+   Clearance userClearance;
    SNACC::AsnBits *pUserClassList = NULL;
 
       for(pTmpPolicyId = getPolicyIdList().begin(); pTmpPolicyId != getPolicyIdList().end(); pTmpPolicyId++)
@@ -904,15 +903,15 @@ void ClearanceCert::intersect(Session *pSession, const CML::ASN::CertificationPa
           // Retrieve Clearance attribute from EE and copy it into
           // the new ClearanceList node.
           //
-          *pUserClearance = *getClearance(*pTmpPolicyId);
+          userClearance = *getClearance(*pTmpPolicyId);
 
           pUserClassList = this->getClassList();
-          if (pUserClearance->securityCategories != NULL)
+          if (userClearance.securityCategories != NULL)
           {
              // IF securityCategories list contains more than one element
              //    throw an error.
              //
-             if (pUserClearance->securityCategories->size() > 1)
+             if (userClearance.securityCategories->size() > 1)
              {
                  throw ACL_EXCEPT(ACL_CC_ERROR,
                      "SecurityCategories count > 1");
@@ -920,7 +919,7 @@ void ClearanceCert::intersect(Session *pSession, const CML::ASN::CertificationPa
 
              // There will be only one securityCategories
              //
-			    SecurityCategorySet::iterator ptmpSecCatUser = pUserClearance->securityCategories->begin();
+			    SecurityCategorySet::iterator ptmpSecCatUser = userClearance.securityCategories->begin();
 
              // ASN.1 DECODE THE SECURITY CATEGORY VALUE
              //
@@ -966,9 +965,9 @@ void ClearanceCert::intersect(Session *pSession, const CML::ASN::CertificationPa
                    }
 
                    // Compare the two classList bitstrings from pCaClearance
-                   // and pUserClearance and make sure that all the bits that
+                   // and userClearance and make sure that all the bits that
                    // are turned on in pCaClearance are also turned on it
-                   // pUserClearance.
+                   // userClearance.
 
                    AsnBits *pCaClassList = tmpCert.getClassList();
 
@@ -977,7 +976,7 @@ void ClearanceCert::intersect(Session *pSession, const CML::ASN::CertificationPa
                    delete pCaClassList;
 
                    // Traverse CA Clearance tag set's until you find one that
-                   // matches the current tag set of this pUserClearance.
+                   // matches the current tag set of this userClearance.
                    if (pCaClearance->securityCategories->size() > 1)
                    {
                       throw ACL_EXCEPT(ACL_CC_ERROR,

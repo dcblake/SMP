@@ -242,7 +242,7 @@ typedef std::list<const CachedCRLContext*> CachedCRLCtxList;
 class CRLHeaderCache : protected std::list<CRLHeader>
 {
 public:
-	CRLHeaderCache::CRLHeaderCache(ulong crlSessionID) : 
+	CRLHeaderCache(ulong crlSessionID) : 
 		m_crlSessionID(crlSessionID)					{ m_stopRefresh = false; }
 	const CachedCRLContext* Add(const CML::CRL& crl, bool valid, 
 								time_t maxTTL, CRLHeader* pCrlToUpdate = NULL);
@@ -338,7 +338,8 @@ time_t GetCRLRefreshPeriod(ulong sessionID);
 time_t GetCRLGracePeriod(ulong sessionID);
 const SRLCallbackFunctions &GetSRLFunc(ulong sessionID);
 ulong GetLocalSRLSessionID(ulong sessionID);
-
+const AbstractCRLContext* generateTemporaryCRLCtx(const CML::CRL& crl,
+                short& cmlResult, RevocationState& state);
 
 // Function Prototypes for hash routines
 ulong CRLMakeHash(char *k, ulong length);

@@ -1820,7 +1820,7 @@ short checkCaConst(bool isCA, const ASN::AttributeList* pSubjAttribs,
 	{
 		ASN::AttributeList::const_iterator iCAConst =
 			pIssuerAttribs->Find(ASN::Attribute::CAClearanceConst);
-		if ((iCAConst != NULL) && (iCAConst != pIssuerAttribs->end()))
+		if ((iCAConst != pIssuerAttribs->end()))
 			pCAConsts = iCAConst->GetValues().pCACons;
 	}
 
@@ -1906,14 +1906,13 @@ short checkCaConst(bool isCA, const ASN::AttributeList* pSubjAttribs,
  FUNCTION:  checkExtKeyUsage()
  
  Description: This function checks that the anyExtendedKeyUsage OID is
- present in the extended key usage extension.  If not, either a single
- CM_INVALID_EXT_KEY_USE error or one or more CM_UNRECOGNIZED_EXT_KEY_USAGE
- errors are added to the list of errors.
+ present in the extended key usage extension.  If not one or more 
+ CM_UNRECOGNIZED_EXT_KEY_USAGE errors are added to the list of errors.
 *************************************************************************/
 void checkExtKeyUsage(const ASN::ExtKeyUsageExtension& extKeyUse,
 					  ErrorInfoList& errors, const ASN::Cert& cert)
 {
-	bool unknownKeyUse = false;
+   ErrorInfoList localErrors;
 
 	std::list<SNACC::KeyPurposeId>::const_iterator i;
 	for (i = extKeyUse.begin(); i != extKeyUse.end(); i++)
@@ -1929,29 +1928,32 @@ void checkExtKeyUsage(const ASN::ExtKeyUsageExtension& extKeyUse,
 		if ((*i == gEXT_KEY_USE_EntrustCA) ||
 			(*i == gEXT_KEY_USE_msCTLSigning))
 			return;
-	}
 
-	for (i = extKeyUse.begin(); i != extKeyUse.end(); i++)
-	{
-		// If the key usage isn't recognized, record an error with the OID.
-		// This allows the application to recognize one of the OIDs and
-		// possibly continue processing
-		if ((*i != gEXT_KEY_USE_serverAuth) &&
-			(*i != gEXT_KEY_USE_clientAuth) &&
-			(*i != gEXT_KEY_USE_codeSigning) &&
-			(*i != gEXT_KEY_USE_emailProtection) &&
-			(*i != gEXT_KEY_USE_timeStamping) &&
-			(*i != gEXT_KEY_USE_OCSPSigning))
-		{
-			unknownKeyUse = true;
-			errors.AddError(CM_UNRECOGNIZED_EXT_KEY_USAGE, cert, *i);
-		}
-	}
+      // If the key usage is one defined in PKIX, then just return
+		// without reporting an error
+		if ((*i == gEXT_KEY_USE_serverAuth) ||
+			(*i == gEXT_KEY_USE_clientAuth) ||
+			(*i == gEXT_KEY_USE_codeSigning) ||
+			(*i == gEXT_KEY_USE_emailProtection) ||
+			(*i == gEXT_KEY_USE_timeStamping) ||
+			(*i == gEXT_KEY_USE_OCSPSigning))
+         return;
+      
+      // If the key usage is one of the known Server Gated Crypto (SGC) OIDs
+      // then just return without reporting an error
+      if ((*i == gEXT_KEY_USE_VeriSignSGC) ||
+         (*i == gEXT_KEY_USE_NetscapeSGC) ||
+         (*i == gEXT_KEY_USE_MicrosoftSGC))
+         return;
 
-	// If all of the key purposes are recognized, the record an error since
-	// none of the recognized OIDs indicate a CA.
-	if (!unknownKeyUse)
-		errors.AddError(CM_INVALID_EXT_KEY_USE, cert);
+      // At this point the Key Use is unknown, report an error which contains
+      // this OID.
+		localErrors.AddError(CM_UNRECOGNIZED_EXT_KEY_USAGE, cert, *i);
+   }
+
+   // If we did not find an acceptable Key Usage then copy the errors into
+   // the error list passed in.
+   errors.Splice(errors.end(), localErrors);
 
 } // end of checkExtKeyUsage()
 

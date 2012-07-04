@@ -437,7 +437,7 @@ public:
    MAB_AB_def *m_pAB;
    CSM_MsgCertCrls *m_pCertPath;
    static CSM_Buffer *ComputeBigIntegerBuf(SNACC::AsnInt &snaccInteger, unsigned int len);
-   static CSM_Buffer *CSM_Free3::ComputePkcs12MAC(
+   static CSM_Buffer *ComputePkcs12MAC(
                                  CSM_Buffer &bufSalt,            // IN/OUT
                                  const SNACC::AsnOid &sha_1,     // IN
                                  const char *pszPassword,        // IN

@@ -65,6 +65,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ocsp_dll
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cryptlib_smp
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -180,7 +183,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "cryptlib_mod"=.\cryptlib_mod.dsp - Package Owner=<4>
+Project: "cryptlib_smp"=.\cryptlib_smp\cryptlib_smp.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -345,10 +348,10 @@ Package=<4>
     Project_Dep_Name libCtilMgr
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name cryptlib_mod
+    Project_Dep_Name cmapi_dll
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name cmapi_dll
+    Project_Dep_Name cryptlib_smp
     End Project Dependency
 }}}
 

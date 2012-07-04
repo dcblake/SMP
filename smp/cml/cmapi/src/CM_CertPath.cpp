@@ -1393,7 +1393,8 @@ BaseNodePtrList* NodePool::Find(const CallbackFunctions& funcs, char* url, const
 
 	// Request all CA certificates from the URL retrieval callback function
 	EncObject_LL* pObjList = NULL;
-	funcs.pUrlGetObj(funcs.extHandle, url, CA_CERT_TYPE, searchLoc, &pObjList);
+	funcs.pUrlGetObj(funcs.extHandle, url, CA_CERT_TYPE|CROSS_CERT_TYPE,
+      searchLoc, &pObjList);
 	if (pObjList == NULL)
 		return NULL;
 

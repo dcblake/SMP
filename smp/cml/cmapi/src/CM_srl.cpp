@@ -81,6 +81,9 @@ SrlSession::SrlSession(CallbackFunctions& cmlFuncs,
 		if ((srlErr != SRL_SUCCESS) && (srlErr != SRL_NOT_FOUND))
 		{
 			unlinkSRL((HINSTANCE)srlLibHandle, &sessionID);
+#ifndef ENABLE_STATIC
+			FreeLibrary((HINSTANCE)srlLibHandle);
+#endif
 			throw CML_ERR(srlErr);
 		}
 	}
@@ -88,6 +91,16 @@ SrlSession::SrlSession(CallbackFunctions& cmlFuncs,
 
 
 SrlSession::~SrlSession()
+{
+#ifndef ENABLE_STATIC
+	// Release the SRL library
+	if (srlLibHandle != NULL)
+		FreeLibrary((HINSTANCE)srlLibHandle);
+#endif //ENABLE_STATIC
+}
+
+
+void SrlSession::Release()
 {
 	if (srlLibHandle != NULL)
 		unlinkSRL((HINSTANCE)srlLibHandle, &sessionID);
@@ -101,12 +114,14 @@ HINSTANCE link2SRL(const char* libName, ulong& sessionID,
 				   CallbackFunctions& funcs, PExtGetTrustedCerts* ppGetCertsFn,
 				   PExtFreeEncCertList* ppFreeCertsFn)
 {
+	HINSTANCE hDLL = NULL;
+#ifndef ENABLE_STATIC
 	// Check parameters
 	if ((libName == NULL) || (ppGetCertsFn == NULL) || (ppFreeCertsFn == NULL))
 		throw CML_ERR(CM_NULL_POINTER);
 
 	// Load the SRL library
-	HINSTANCE hDLL = LoadLibrary(libName);
+	hDLL = LoadLibrary(libName);
 	if (hDLL == NULL)
 		throw CML_ERR(CM_SRL_INITIALIZATION_FAILED);
 
@@ -151,6 +166,16 @@ HINSTANCE link2SRL(const char* libName, ulong& sessionID,
 		throw CML_ERR(CM_SRL_INITIALIZATION_FAILED);
 	}
 
+#else //ENABLE_STATIC
+	funcs.pGetObj = (ExtGetObjFuncPtr)SRL_RequestObjs;
+	funcs.pFreeObj = (ExtFreeObjFuncPtr)SRL_FreeObjs;
+	funcs.pUrlGetObj = (ExtUrlGetObjFuncPtr)SRL_URLRequestObjs;
+
+	PExtCreateSessFn fpSRLCreateSession = (PExtCreateSessFn)SRL_CreateSession;
+	*ppFreeCertsFn = (PExtFreeEncCertList)SRL_FreeEncCertList;
+	*ppGetCertsFn = (PExtGetTrustedCerts)SRL_GetTrustedCerts;
+#endif //ENABLE_STATIC
+
 	// Initialize SRL session handle
 	sessionID = 0;
 
@@ -158,8 +183,10 @@ HINSTANCE link2SRL(const char* libName, ulong& sessionID,
 	short srlErr = fpSRLCreateSession(&sessionID, NULL);
 	if (srlErr != SRL_SUCCESS)
 	{
-      *ppFreeCertsFn = NULL;
+		*ppFreeCertsFn = NULL;
+#ifndef ENABLE_STATIC
 		FreeLibrary(hDLL);
+#endif
 		throw CML_ERR(srlErr);
 	}
 
@@ -175,18 +202,19 @@ void unlinkSRL(HINSTANCE hDLL, ulong* pSessionID)
 	// Destroy the SRL session
 	if (pSessionID != NULL)
 	{
-		PExtDestroySessFn fpSRL_DestroySession;
-#ifdef HPUX32
+		PExtDestroySessFn fpSRL_DestroySession = NULL;
+
+#ifdef ENABLE_STATIC
+		fpSRL_DestroySession = (PExtDestroySessFn)SRL_DestroySession;
+#elif defined(HPUX32)
 		shl_findsym(&hDLL, "SRL_DestorySession", TYPE_PROCEDURE,
 			(void*) &fpSRL_DestroySession);
 #else
 		fpSRL_DestroySession = (PExtDestroySessFn)
 			GetProcAddress(hDLL, "SRL_DestroySession");
-#endif
+#endif // ENABLE_STATIC
+
 		if (fpSRL_DestroySession != NULL)
 			fpSRL_DestroySession(pSessionID);
 	}
-
-	// Release the SRL library
-	FreeLibrary(hDLL);
 }

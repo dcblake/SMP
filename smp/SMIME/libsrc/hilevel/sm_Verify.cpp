@@ -390,8 +390,7 @@ SM_RET_VAL CSM_MsgToVerify::PreProc(const CSM_Buffer *pCSMBlob)
               CSM_CertificateChoiceLst::iterator itCert;
 
               CSM_RevocationInfoChoices::iterator itRevInfoChoices;
-              CM_Interface CMLInterface;
-              CMLInterface.setCMLSessions(m_lCmlSessionId, m_lSrlSessionId);
+              CM_Interface CMLInterface(m_lCmlSessionId, m_lSrlSessionId);
               if (m_pMsgCertCrls->AccessCertificates())
               {
                 for (itCert =  m_pMsgCertCrls->AccessCertificates()->begin();
@@ -1336,7 +1335,8 @@ SM_RET_VAL CSM_DataToVerify::Verify(
        ACMLCert.m_pRID = tmpSI.GetSignerIdentifier();
        lStatus = CMLValidateCert(ACMLCert,  pCert);
        // THIRD, check to see if we must fail fatal on failed validation
-       if (lStatus != 0 && m_bCMLFatalFail)
+       if ((lStatus != 0 && m_bCMLFatalFail) || 
+		   (lStatus == SM_TOO_MANY_CERTS_FOUND_IN_DB))
        {
           if (m_bCMLFatalFail)
           {

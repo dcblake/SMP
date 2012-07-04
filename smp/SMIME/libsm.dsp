@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W4 /GX /O2 /I "../cml/cmapi/inc" /I "../cml/srl/inc" /I "../../SMPDist/include/esnacc/c++" /I "./libsrc/zlib/src" /I "./libCtilMgr/inc" /I "./inc" /I "../cml/cmlasn/inc" /I "../acl/inc" /I "../pkcs11_cryptopp/inc" /D "NDEBUG" /D "_WINDOWS" /D "NO_SCCS_ID" /D "WIN32" /YX /FD /Zm300 /c
+# ADD CPP /nologo /MD /W4 /GX /O2 /I "../cml/cmapi/inc" /I "../cml/srl/inc" /I "../../SMPDist/include/esnacc/c++" /I "./libsrc/zlib/src" /I "./libCtilMgr/inc" /I "./inc" /I "../cml/cmlasn/inc" /I "../acl/inc" /I "../pkcs11_cryptopp/inc" /I "../cml/crlsrv_dll/inc/" /D "NDEBUG" /D "_WINDOWS" /D "NO_SCCS_ID" /D "WIN32" /YX /FD /Zm300 /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -66,7 +66,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "./obj/debug"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W4 /GX /Z7 /I "../cml/cmapi/inc" /I "../cml/srl/inc" /I "../../SMPDist/include/esnacc/c++" /I "./libsrc/zlib/src" /I "./libCtilMgr/inc" /I "./inc" /I "../cml/cmlasn/inc" /I "../acl/inc" /I "../pkcs11_cryptopp/inc" /D "_DEBUG" /D "_WINDOWS" /D "NO_SCCS_ID" /D "WIN32" /FR /YX /FD /Zm300 /c
+# ADD CPP /nologo /MDd /W4 /GX /Z7 /I "../cml/cmapi/inc" /I "../cml/srl/inc" /I "../../SMPDist/include/esnacc/c++" /I "./libsrc/zlib/src" /I "./libCtilMgr/inc" /I "./inc" /I "../cml/cmlasn/inc" /I "../acl/inc" /I "../pkcs11_cryptopp/inc" /I "../cml/crlsrv_dll/inc/" /D "_DEBUG" /D "_WINDOWS" /D "NO_SCCS_ID" /D "WIN32" /FR /YX /FD /Zm300 /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe

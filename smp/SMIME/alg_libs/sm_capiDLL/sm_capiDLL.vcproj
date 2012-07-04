@@ -38,9 +38,9 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying $(TargetPath) to system32"
-				CommandLine="copy &quot;$(TargetPath)&quot; %WINDIR%\system32
+				CommandLine="copy &quot;$(TargetPath)&quot; $(WINDIR)\system32
 "
-				Outputs="$(windir)\system32\$(InputName).dll"/>
+				Outputs="$(WINDIR)\system32\$(InputName).dll"/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="Crypt32.Lib Advapi32.lib wsock32.lib"
@@ -48,7 +48,7 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				ProgramDatabaseFile=".\Release/sm_capiDLL.pdb"
-				ImportLibrary=".\Release/sm_capiDLL.lib"
+				ImportLibrary="&quot;$(TargetDir)&quot;/sm_capiDLL.lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -108,7 +108,7 @@
 				Description="Copying $(TargetPath) to system32"
 				CommandLine="copy &quot;$(TargetPath)&quot; $(WINDIR)\system32
 "
-				Outputs="$(WINDIR)\system32\$(TargetName).dll"/>
+				Outputs="$(WINDIR)\system32\$(InputName).dll"/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="Crypt32.Lib Advapi32.lib wsock32.lib"
@@ -117,7 +117,7 @@
 				SuppressStartupBanner="TRUE"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug/sm_capiDLLd.pdb"
-				ImportLibrary=".\Debug/sm_capiDLLd.lib"
+				ImportLibrary="&quot;$(TargetDir)&quot;/sm_capiDLL.lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -342,6 +342,24 @@ cd &quot;$(InputDir)&quot;
 			Name="Resource Files"
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 		</Filter>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cmapi.lib">
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\..\..\SMPDist\lib\cmapi_d.lib">
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="TRUE">
+				<Tool
+					Name="VCCustomBuildTool"/>
+			</FileConfiguration>
+		</File>
 		<File
 			RelativePath="..\..\..\..\SMPDist\lib\cmlasn.lib">
 			<FileConfiguration

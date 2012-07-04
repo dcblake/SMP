@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W4 /GX /O2 /I "inc" /I "..\cmlasn\inc" /I "..\crlsrv_dll\inc" /I "..\..\..\SMPDist\include\esnacc\c++" /I "..\..\pkcs11_cryptopp\inc" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /Zm200 /c
+# ADD CPP /nologo /MD /W4 /GX /O2 /I "inc" /I "..\cmlasn\inc" /I "..\crlsrv_dll\inc" /I "..\..\..\SMPDist\include\esnacc\c++" /I "..\..\pkcs11_cryptopp\inc" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_USING_MS_LDAP" /FD /Zm200 /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -78,7 +78,7 @@ SOURCE="$(InputPath)"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W4 /GX /Z7 /Od /I "inc" /I "..\cmlasn\inc" /I "..\crlsrv_dll\inc" /I "..\..\..\SMPDist\include\esnacc\c++" /I "..\..\pkcs11_cryptopp\inc" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FR /FD /Zm200 /c
+# ADD CPP /nologo /MDd /W4 /GX /Z7 /Od /I "inc" /I "..\cmlasn\inc" /I "..\crlsrv_dll\inc" /I "..\..\..\SMPDist\include\esnacc\c++" /I "..\..\pkcs11_cryptopp\inc" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_USING_MS_LDAP" /FR /FD /Zm200 /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "_DEBUG" /Oicf /o /win32 "NUL"
 # SUBTRACT MTL /mktyplib203

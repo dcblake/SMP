@@ -235,8 +235,8 @@ public:
 
    // These 3 Get??? ops return memory the application MUST delete.
    CSM_Buffer *GetEncodedIss();
-   CSM_DN *GetIssuer();
-   CSM_Buffer *GetSerialNo();
+   CSM_DN *GetIssuer() const;
+   CSM_Buffer *GetSerialNo() const;
 
    void Set(const SNACC::Certificate &SNACCCert);    // Set both issuer and serialNo
    void Set(const SNACC::IssuerAndSerialNumber &SNACCIssAndSer);

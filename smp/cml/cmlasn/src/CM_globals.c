@@ -91,7 +91,10 @@ const char gEXT_KEY_USE_serverAuth[]	= "1.3.6.1.5.5.7.3.1",
 	gEXT_KEY_USE_codeSigning[]			= "1.3.6.1.5.5.7.3.3",
 	gEXT_KEY_USE_emailProtection[]		= "1.3.6.1.5.5.7.3.4",
 	gEXT_KEY_USE_timeStamping[]			= "1.3.6.1.5.5.7.3.8",
-	gEXT_KEY_USE_OCSPSigning[]			= "1.3.6.1.5.5.7.3.9";
+	gEXT_KEY_USE_OCSPSigning[]			= "1.3.6.1.5.5.7.3.9",
+   gEXT_KEY_USE_VeriSignSGC[]       = "2.16.840.1.113733.1.8.1",
+   gEXT_KEY_USE_NetscapeSGC[]       = "2.16.840.1.113730.4.1",
+   gEXT_KEY_USE_MicrosoftSGC[]      = "1.3.6.1.4.1.311.10.3.3";
 
 const char gHOLD_CALL_ISSUER_OID[]		= "1.2.840.10040.2.2",
 	gHOLD_REJECT_OID[]					= "1.2.840.10040.2.3";

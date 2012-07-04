@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zm200 "
 				Optimization="0"
-				AdditionalIncludeDirectories="inc,..\..\..\SMPDist\include\esnacc\c++,..\..\SMIME\libCtilMgr\inc"
+				AdditionalIncludeDirectories="inc;..\..\..\SMPDist\include\esnacc\c++"
 				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;EXPORT_GENSNACC_EXPORTS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="../../../SMPDist/lib/cmlasn_d.dll"
-				LinkIncremental="2"
+				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				GenerateDebugInformation="TRUE"
 				ImportLibrary=".\..\..\..\SMPDist\lib/cmlasn_d.lib"
@@ -58,7 +58,10 @@
 				TypeLibraryName=".\..\..\..\SMPDist\lib/cmlasn.tlb"
 				HeaderFileName=""/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				Description="Copying ASN.1 modules to SMPDist directory..."
+				CommandLine="if not exist &quot;..\..\..\SMPDist\include\modules&quot; ( mkdir &quot;..\..\..\SMPDist\include\modules&quot; )
+copy Modules\*.asn1 &quot;..\..\..\SMPDist\include\modules&quot;"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -91,7 +94,7 @@
 				AdditionalOptions="/Zm200 "
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="inc;&quot;..\..\..\SMPDist\include\esnacc\c++&quot;"
+				AdditionalIncludeDirectories="inc;..\..\..\SMPDist\include\esnacc\c++"
 				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;EXPORT_GENSNACC_EXPORTS"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -106,7 +109,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying $(TargetPath) to system32 directory..."
-				CommandLine="copy &quot;$(TargetPath)&quot; %WINDIR%\system32
+				CommandLine="copy &quot;$(TargetPath)&quot; $(WINDIR)\system32
 "
 				Outputs="$(WINDIR)\system32\$(TargetName).dll"/>
 			<Tool
@@ -127,7 +130,11 @@
 				TypeLibraryName=".\..\..\..\SMPDist\lib/cmlasn.tlb"
 				HeaderFileName=""/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				Description="Copying ASN.1 modules to SMPDist directory..."
+				CommandLine="if not exist &quot;..\..\..\SMPDist\include\modules&quot; ( mkdir &quot;..\..\..\SMPDist\include\modules&quot; )
+copy Modules\*.asn1 &quot;..\..\..\SMPDist\include\modules&quot;
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -583,8 +590,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -593,8 +600,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -606,8 +613,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -616,8 +623,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -629,8 +636,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -639,8 +646,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -652,8 +659,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -662,8 +669,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -675,8 +682,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -685,8 +692,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -698,8 +705,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -708,8 +715,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -721,8 +728,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -731,8 +738,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -744,8 +751,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -754,8 +761,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -767,8 +774,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -777,8 +784,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -790,8 +797,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -800,8 +807,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -813,8 +820,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputName).h to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
 				</FileConfiguration>
@@ -822,8 +829,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputName).h to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
 				</FileConfiguration>
@@ -834,8 +841,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -844,8 +851,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -857,8 +864,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -867,8 +874,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -880,8 +887,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -890,8 +897,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -903,8 +910,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -913,8 +920,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -926,8 +933,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -936,8 +943,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -949,8 +956,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -959,8 +966,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -972,8 +979,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -982,8 +989,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -995,8 +1002,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -1005,8 +1012,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -1018,8 +1025,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -1028,8 +1035,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -1041,8 +1048,8 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -1051,8 +1058,8 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to ..\..\..\SMPDist\include\smp"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\..\SMPDist\include\smp
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\..\SMPDist\include\smp&quot;
 "
 						AdditionalDependencies=""
 						Outputs="..\..\..\SMPDist\include\smp\$(InputName).h"/>
@@ -1069,28 +1076,26 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnaccd.exe -a 900  -C -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
-move &quot;$(InputName)&quot;.cpp ..\src
-move &quot;$(InputName)&quot;.h ..\inc
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnaccd -a 900  -C -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
+move $(InputName).cpp ..\src
+move $(InputName).h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnacc.exe -C -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
-move &quot;$(InputName)&quot;.cpp ..\src
-move &quot;$(InputName)&quot;.h ..\inc
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnacc -C -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
+move $(InputName).cpp ..\src
+move $(InputName).h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1100,28 +1105,26 @@ move &quot;$(InputName)&quot;.h ..\inc
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnaccd.exe -C -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnaccd -C -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnacc.exe -C -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnacc -C -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1131,28 +1134,26 @@ move &quot;$(InputName)&quot;.h ..\inc
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnaccd.exe -C -a 100 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnaccd -C -a 100 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnacc.exe -C -a 100 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnacc -C -a 100 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1162,28 +1163,26 @@ move &quot;$(InputName)&quot;.h ..\inc
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnaccd.exe -C -a 200 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnaccd -C -a 200 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnacc.exe -C -a 200 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnacc -C -a 200 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1193,28 +1192,26 @@ move &quot;$(InputName)&quot;.h ..\inc
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnaccd.exe -C -a 300 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnaccd -C -a 300 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnacc.exe -C -a 300 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnacc -C -a 300 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1224,28 +1221,26 @@ move &quot;$(InputName)&quot;.h ..\inc
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnaccd.exe -C -a 400 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnaccd -C -a 400 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnacc.exe -C -a 400 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnacc -C -a 400 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1255,28 +1250,26 @@ move &quot;$(InputName)&quot;.h ..\inc
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnaccd.exe -C -a 500 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnaccd -C -a 500 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnacc.exe -C -a 500 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnacc -C -a 500 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1286,28 +1279,26 @@ move &quot;$(InputName)&quot;.h ..\inc
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnaccd.exe -C -a 600 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnaccd -C -a 600 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnacc.exe -C -a 600 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnacc -C -a 600 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1317,28 +1308,26 @@ move &quot;$(InputName)&quot;.h ..\inc
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnaccd.exe -C -a 700 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnaccd -C -a 700 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnacc.exe -C -a 700 -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnacc -C -a 700 -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1348,28 +1337,26 @@ move &quot;$(InputName)&quot;.h ..\inc
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnaccd.exe -C -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnaccd -C -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnacc.exe -C -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnacc -C -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1379,28 +1366,26 @@ move &quot;$(InputName)&quot;.h ..\inc
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnaccd.exe -C -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnaccd -C -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnacc.exe -C -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnacc -C -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1410,28 +1395,26 @@ move &quot;$(InputName)&quot;.h ..\inc
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnaccd.exe -C -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnaccd -C -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnaccd.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Compiling ASN.1 module:  $(InputName).asn1"
-						CommandLine="type &quot;$(InputPath)&quot; &gt; ..\..\..\SMPDist\include\Modules\&quot;$(InputName)&quot;.asn1
-cd Modules
-..\..\..\..\SMPDist\bin\esnacc.exe -C -I . -VDAexport=EXPORT_GENSNACC -I ..\..\..\SMIME\LibCtilMgr\src -l -1000 &quot;$(InputName)&quot;.asn1
+						CommandLine="cd Modules
+..\..\..\..\SMPDist\bin\esnacc -C -I . -VDAexport=EXPORT_GENSNACC -l -1000 $(InputName).asn1
 move &quot;$(InputName)&quot;.cpp ..\src
 move &quot;$(InputName)&quot;.h ..\inc
 "
-						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe;"
-						Outputs="src\$(InputName).cpp;inc\$(InputName).h;..\..\..\SMPDist\include\Modules\$(InputName).asn1"/>
+						AdditionalDependencies="..\..\..\SMPDist\bin\esnacc.exe"
+						Outputs="src\$(InputName).cpp;inc\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
 		</Filter>

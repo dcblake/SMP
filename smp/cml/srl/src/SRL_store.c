@@ -504,7 +504,7 @@ short SRLi_AddCRLToDB(ulong rt_session, Bytes_struct *asn1data, CRL_struct *dec_
 
 					compare_data = NULL;
 					ex_data = NULL;
-					return(SRL_SUCCESS);
+					return(err);
 				}
 				
 			}
@@ -1632,49 +1632,52 @@ static short SRLi_UpdateCRLTemplate(SRLSession_struct *session, DB_Item *base_te
 			/* same size, do a straight comparison */
 			if(memcmp(tempPtr, Template->item_ptr, len) == 0)	/* if they are equal */
 			{
+				// MATCH Found, update the Refresh time
 				RefreshTime = time(NULL);
 				memcpy(tempPtr+(len-sizeof(time_t)), &(RefreshTime), sizeof(time_t));
 				if (SRLisLittleEndian())
 					SRLi_FlipLongs((tempPtr+(len-sizeof(time_t))), 1);
-				break;
-			}
-		}
-		else
-		{
-			/* Not so lucky!
-			 * Strip out the Refresh Time
-			 * and try again
-			 */
-			err = SRLi_StripCRLRefreshTime(&template1, tempPtr, len);
-			if (err != SRL_SUCCESS)
-				return -1;
+            break;
+         }
+         else
+         {
+            /* Not so lucky!
+            * Strip out the Refresh Time
+            * and try again
+            */
+            err = SRLi_StripCRLRefreshTime(&template1, tempPtr, len);
+            if (err != SRL_SUCCESS)
+               return -1;
 
-			err = SRLi_StripCRLRefreshTime(&template2, Template->item_ptr,
-											Template->item_len);
-			if (err != SRL_SUCCESS)
-				return -1;
+            err = SRLi_StripCRLRefreshTime(&template2, Template->item_ptr,
+               Template->item_len);
+            if (err != SRL_SUCCESS)
+               return -1;
 
-			// Compare the striped templates
-			if ((memcmp(template1, template2, len-(sizeof(time_t)))) == 0)
-			{
-				// MATCH Found, update the Refresh time
-				RefreshTime = time(NULL);
-				memcpy(tempPtr, &(RefreshTime), sizeof(time_t));
-				if (SRLisLittleEndian())
-					SRLi_FlipLongs((tempPtr+(len-sizeof(time_t))), 1);
-				break;
-			}
-			if(template1)
-			{
-				free(template1);
-				template1 = NULL;
-			}
-			if(template2)
-			{
-				free(template2);
-				template2 = NULL;
-			}
-		} // End if
+            // Compare the striped templates
+            if ((memcmp(template1, template2, len-(sizeof(time_t)))) == 0)
+            {
+               // MATCH Found, update the Refresh time
+               RefreshTime = time(NULL);
+               memcpy(tempPtr+(len-sizeof(time_t)), &(RefreshTime), sizeof(time_t));
+               if (SRLisLittleEndian())
+                  SRLi_FlipLongs((tempPtr+(len-sizeof(time_t))), 1);
+               free(template1);
+               free(template2);
+               break;
+            }
+            if(template1)
+            {
+               free(template1);
+               template1 = NULL;
+            }
+            if(template2)
+            {
+               free(template2);
+               template2 = NULL;
+            }
+         } // End if
+      }
 
 		/* move onto the next one, if there is one */
 		tempPtr += len;
@@ -1682,6 +1685,11 @@ static short SRLi_UpdateCRLTemplate(SRLSession_struct *session, DB_Item *base_te
 		biglen -= len;
 	} // End while
 
+   if (biglen == 0)
+   {
+         free(oldTemplate.item_ptr);
+         return(SRL_NOT_FOUND);
+   }
 
 	// Update the Time in the template to store
 	if (templateToStore.item_ptr != NULL)
@@ -1695,26 +1703,40 @@ static short SRLi_UpdateCRLTemplate(SRLSession_struct *session, DB_Item *base_te
 	}
 	TempHashValue = 0;
 
-	   db_RetrieveHash(session->db_CRLRefSession, entry_kid,  
-						  &TempHashValue);
+   err = db_RetrieveHash(session->db_CRLRefSession, entry_kid,  
+      &TempHashValue);
+
+   if (err != SRL_SUCCESS)
+   {
+      free(oldTemplate.item_ptr);
+      return(DB2SRLerr(err));
+   }
+
+   // Have to delete the object
+   err = db_DeleteEntry(session->db_CRLRefSession, Template);
+
+   if (err != SRL_SUCCESS)
+   {
+      free(oldTemplate.item_ptr);
+      return(DB2SRLerr(err));
+   }
+
+   /* replace the old entry for this DN */
+   err = db_StoreItem(session->db_CRLRefSession, entry_kid, base_template, 
+      &TempHashValue, DB_REPLACE);
+
+   DNHashValue = TempHashValue;
 
 
-		/* replace the old entry for this DN */
-		err = db_StoreItem(session->db_CRLRefSession, entry_kid, base_template, 
-			&TempHashValue, DB_REPLACE);
+   if (err != SRL_SUCCESS)
+   {
+      free(oldTemplate.item_ptr);
+      return(DB2SRLerr(err));
+   }
 
-		DNHashValue = TempHashValue;
-
-
-		if (err != SRL_SUCCESS)
-			return(DB2SRLerr(err));
-
-		// Have to delete the object
-		err = db_DeleteEntry(session->db_CRLRefSession, Template);
-
-		// Store the object back in
-	   err = db_StoreItem(session->db_CRLRefSession, &templateToStore, 
-				(DB_Item*)object, &DNHashValue, DB_INSERT);
+   // Store the object back in
+   err = db_StoreItem(session->db_CRLRefSession, &templateToStore, 
+      (DB_Item*)object, &DNHashValue, DB_INSERT);
 
 
 
@@ -1779,7 +1801,7 @@ static short SRLi_GetMatchingCRLTemplate(DB_Data *ex_data, Bytes_struct *ciTempl
 				matchingTemp->item_ptr = (char *)calloc(1, len);
 				if (matchingTemp->item_ptr == NULL)
 					return -1;
-				memcpy(matchingTemp->item_ptr, ex_data->item_ptr, len);
+				memcpy(matchingTemp->item_ptr, tempPtr, len);
 				matchingTemp->item_len = len;
 				free (template2);
 				return(0);

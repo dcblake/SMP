@@ -35,7 +35,7 @@ typedef unsigned char uchar;
 //  member variable of the CSM_Common class WITHOUT A DUMMY class def!
 //  It is declared static to allow CTIL access to method from static
 //  methods.
-struct CTIL::CSM_Common::Hash_struct  CTIL::CSM_Common::hash;
+CTIL::CSM_Common::Hash_struct  CTIL::CSM_Common::hash;
 
 _BEGIN_CTIL_NAMESPACE 
 using namespace SNACC; 

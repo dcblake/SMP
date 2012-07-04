@@ -16,6 +16,7 @@ INCLUDE       = -I. \
                 -I../../../ACL/inc \
                 -I../../../cml/cmapi/inc \
                 -I../../../cml/srl/inc \
+		-I../../../cml/crlsrv_dll/inc \
                 -I../../libCtilMgr/inc  \
                 -I../../../pkcs11_cryptopp/inc
 CXX = @CXX@

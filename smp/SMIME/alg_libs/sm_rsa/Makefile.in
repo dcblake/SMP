@@ -96,7 +96,7 @@ $(TARGET): tstdlib.o $(CPPOBJS) $(ASNMODOBJS)
 
 $(TARGET2): tstdlib.o $(CPPOBJS) $(ASNMODOBJS)
 	cp -f *.h $(SMPDISTDIR)/include/smp
-	$(AR) ruv $(SMPDISTDIR)/lib/$(TARGET2) *.o
+	$(AR) ruv $(TARGET2) *.o
 	$(RANLIB) $(TARGET2)
 
 $(COBJS): $(DEPENDENCIES)

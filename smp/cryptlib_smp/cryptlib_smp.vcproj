@@ -1,0 +1,4632 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="cryptlib_smp"
+	ProjectGUID="{A8C1D396-9299-474B-9F21-1499CF2B2C7B}"
+	RootNamespace="cryptlib_smp"
+	SccProjectName=""
+	SccLocalPath="">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory=".\Release"
+			IntermediateDirectory=".\Release"
+			ConfigurationType="4"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zm400 "
+				Optimization="1"
+				InlineFunctionExpansion="2"
+				PreprocessorDefinitions="NDEBUG;_WINDOWS;USE_PRECOMPILED_HEADERS;WIN32"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="TRUE"
+				UsePrecompiledHeader="3"
+				PrecompiledHeaderThrough="pch.h"
+				PrecompiledHeaderFile=".\Release/cryptlib.pch"
+				AssemblerListingLocation=".\Release/"
+				ObjectFile=".\Release/"
+				ProgramDataBaseFileName=".\Release/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="3"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLibrarianTool"
+				OutputFile="..\..\SMPDist\lib\cryptlib.lib"
+				SuppressStartupBanner="TRUE"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory=".\Debug"
+			IntermediateDirectory=".\Debug"
+			ConfigurationType="4"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zm400 "
+				Optimization="0"
+				PreprocessorDefinitions="_DEBUG;_WINDOWS;USE_PRECOMPILED_HEADERS;WIN32"
+				RuntimeLibrary="3"
+				UsePrecompiledHeader="3"
+				PrecompiledHeaderThrough="pch.h"
+				PrecompiledHeaderFile=".\Debug/cryptlib.pch"
+				AssemblerListingLocation=".\Debug/"
+				ObjectFile=".\Debug/"
+				ProgramDataBaseFileName=".\Debug/"
+				WarningLevel="3"
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="3"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLibrarianTool"
+				OutputFile="..\..\SMPDist\lib\cryptlib_d.lib"
+				SuppressStartupBanner="TRUE"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter=".cpp">
+			<File
+				RelativePath="..\..\cryptopp\3way.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\adhoc.cpp.proto">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying &quot;$(InputPath)&quot; $(InputName)"
+						CommandLine="copy &quot;$(InputPath)&quot; $(InputName)
+"
+						Outputs="adhoc.cpp"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying &quot;$(InputPath)&quot; $(InputName)"
+						CommandLine="copy &quot;$(InputPath)&quot; $(InputName)
+"
+						Outputs="adhoc.cpp"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\adler32.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\algebra.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\algparam.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\arc4.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\asn.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\base32.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\base64.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\basecode.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\bfinit.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\blowfish.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\blumshub.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\camellia.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\cast.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\casts.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\cbcmac.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\channels.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\crc.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\cryptlib.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\default.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\des.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\dessp.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\dh.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\dh2.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\dll.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\dsa.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\ec2n.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\eccrypto.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\ecp.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\elgamal.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\eprecomp.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\esign.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\files.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\filters.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\fips140.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\fipstest.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\gf256.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\gf2_32.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\gf2n.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\gfpcrypt.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\gost.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\gzip.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\haval.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\hex.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\hmac.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\hrtimer.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\ida.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\idea.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\integer.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\iterhash.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\luc.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\mars.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\marss.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\md2.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\md4.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\md5.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\md5mac.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\misc.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\modes.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\modexppc.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\mqueue.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\mqv.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\nbtheory.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\network.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\oaep.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\osrng.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\panama.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\pch.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\pkcspad.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\polynomi.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\pssr.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\pubkey.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\queue.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rabin.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\randpool.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rc2.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rc5.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rc6.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rdtables.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rijndael.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\ripemd.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rng.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rsa.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rw.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\safer.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\seal.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\serpent.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\sha.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\shacal2.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\shark.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\sharkbox.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\simple.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\skipjack.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\socketft.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\square.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\squaretb.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\strciphr.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\tea.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\tftables.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\tiger.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\tigertab.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\trdlocal.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\ttmac.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\twofish.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\wait.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\wake.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\whrlpool.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\winpipes.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\xtr.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\xtrcrypt.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\zdeflate.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\zinflate.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\zlib.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter=".;.h">
+			<File
+				RelativePath="..\..\cryptopp\3way.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\adler32.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\aes.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\algebra.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\algparam.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\arc4.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\argnames.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\asn.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\base32.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\base64.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\basecode.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\blowfish.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\blumshub.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\camellia.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\cast.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\cbcmac.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\channels.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\config.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\crc.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\cryptlib.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\default.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\des.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\dh.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\dh2.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\dmac.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\dsa.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\ec2n.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\eccrypto.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\ecp.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\elgamal.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\eprecomp.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\esign.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\factory.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\files.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\filters.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\fips140.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\fltrimpl.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\gf256.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\gf2_32.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\gf2n.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\gfpcrypt.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\gost.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\gzip.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\haval.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\hex.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\hmac.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\hrtimer.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\ida.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\idea.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\integer.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\iterhash.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\lubyrack.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\luc.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\mars.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\md2.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\md4.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\md5.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\md5mac.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\mdc.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\misc.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\modarith.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\modes.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\modexppc.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\mqueue.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\mqv.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\nbtheory.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\network.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\nr.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\oaep.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\oids.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\osrng.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\panama.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\pch.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\pkcspad.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\polynomi.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\pssr.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\pubkey.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\pwdbased.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\queue.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rabin.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\randpool.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rc2.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rc5.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rc6.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rijndael.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\ripemd.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rng.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rsa.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\rw.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\safer.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\seal.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\secblock.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\seckey.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\serpent.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\sha.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\shacal2.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\shark.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\simple.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\skipjack.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\smartptr.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\socketft.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\square.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\stdcpp.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\strciphr.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\tea.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\tiger.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\trdlocal.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\trunhash.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\ttmac.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\twofish.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\wait.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\wake.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\whrlpool.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\winpipes.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\words.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\xormac.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\xtr.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\xtrcrypt.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\zdeflate.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\zinflate.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\zlib.h">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Copying $(InputFileName) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\algs\crypto++&quot;
+"
+						Outputs="..\..\SMPDist\algs\crypto++\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Miscellaneous"
+			Filter="">
+			<File
+				RelativePath="..\..\cryptopp\Doxyfile">
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\GNUmakefile">
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\license.txt">
+			</File>
+			<File
+				RelativePath="..\..\cryptopp\readme.txt">
+			</File>
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

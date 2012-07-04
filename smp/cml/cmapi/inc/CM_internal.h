@@ -349,7 +349,7 @@ public:
 	// Get the CRL refresh grace period
 	time_t GetCRLGracePeriod() const { return crlGracePeriod; }
 	// Get a pointer to the CRL session
-	const CrlSession* GetCRLSession() const;
+	const CrlSession* GetCRLSession() const                     { return pCRL; }
 	// Set the Log Settings
 	short SetLogSettings(const CML_LogSettings_struct& logInfo);
 	char* GetNextLogFile(CMLogLevel level) const;
@@ -365,6 +365,8 @@ public:
 		const ASN::Bytes* pubKeyParams = NULL) const;
 	// Get the want back setting. TRUE if CRLs/OCSP responses are requested.
    bool GetWantBackStatus() const { return m_returnRevData; }
+	// Terminate this session and release the SRL and CRL sessions if present
+	void Terminate();
 
 
 private:
@@ -403,6 +405,7 @@ public:
 		PExtFreeEncCertList* FreeEncCertListFP);
 	~SrlSession();
 	const ulong GetSessionID() const { return sessionID; }
+	void Release();
 
 private:
 	// Member variables
@@ -420,6 +423,7 @@ public:
 	~CrlSession();
 	void EmptyCache() const;
 	const ulong GetSessionID() const { return sessionID; }
+	void Release();
 
 private:
 	// Member variables

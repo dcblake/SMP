@@ -6,176 +6,117 @@
 
 
 #include "sm_api.h"
-
 #include "sm_CM_Interface.h"
 
-#ifdef CML_USED
 
-  using namespace SNACC;  using namespace CTIL;
-  using namespace CERT;
-#include <malloc.h>
-#include <string.h>
+// Using declarations
+using namespace SNACC;
+using namespace CTIL;
+using namespace CERT;
+
 
 _BEGIN_SFL_NAMESPACE
 
+
 ///////////////////////////////////////////////////////////////////////////////
-CM_Interface::CM_Interface()
+CM_Interface::CM_Interface(ulong lCmlSessionId, ulong lSrlSessionId)
 {
-   m_sRet = 0;
-   m_pCtilMgr = NULL;
+	m_lCmlSessionId = lCmlSessionId;
+	m_lSrlSessionId = lSrlSessionId;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-CM_Interface::~CM_Interface() 
+
+void CM_Interface::SetSessions(ulong lCmlSessionId, ulong lSrlSessionId)
 {
-   this->m_sRet = 0;
-}           // END ~CM_Interface()
-
-
-//
-//
-char *CM_Interface::getErrInfo(CML::ErrorInfoList *pErrorInfo)
-{
-   char *pszResult=NULL;
-   ErrorInfo_List *pCErrorInfo_List;
-#ifdef CML_USED
-   pCErrorInfo_List = *pErrorInfo;
-   if (pCErrorInfo_List)
-   {
-      pszResult = getErrInfo(pCErrorInfo_List);
-      CM_FreeErrInfo(&pCErrorInfo_List);
-   }
-#endif //CML_USED
-   return(pszResult);
-}        // END CM_Interface::getErrInfo(...)
-
-
-//
-//
-char *CM_Interface::getErrInfo(struct errorInfo_List *pErrorInfo)
-{
-   char *pszResult=NULL;
-#ifdef CML_USED
-         if (pErrorInfo)
-         {
-            char *ptr;
-            const char *ptr2;
-            int i=1;
-            ErrorInfo_List *pTmpError;
-            char buf[4096];
-            buf[0] = '\0';
-            for (pTmpError=pErrorInfo; pTmpError; pTmpError=pTmpError->next)
-            {
-               ptr = pTmpError->xinfo;
-               ptr2 = CMU_GetErrorString(pTmpError->error);
-               sprintf(buf, "pErrorInfo: %d, DN= %s", i++, pTmpError->dn);
-               if (ptr)
-               {
-                  strcat(buf, " xinfo=");
-                  strcat(buf, ptr);
-               }     // END if ptr
-               if (ptr2)
-               {
-                  strcat(buf, " errorString=");
-                  strcat(buf, ptr2);
-                  strcat(buf, "\n");
-               }     // END if ptr2
-               if (strlen(buf))
-               {
-                  if (pszResult == NULL)
-                     pszResult = strdup(buf);
-                  else
-                  {
-                     char *ptr3 = (char *)calloc(1, 
-                                          strlen(pszResult) + strlen(buf) + 1);
-                     strcpy(ptr3, pszResult);
-                     strcat(ptr3, buf);
-                     free(pszResult);
-                     pszResult = ptr3;
-                  }
-               }
-            }     // END for each err info struct
-         }        // END if any error info structs.
-#endif //CML_USED
-
-
-   return pszResult;
-}        // END CM_Interface::getErrInfo(...)
+	m_lCmlSessionId = lCmlSessionId;
+	m_lSrlSessionId = lSrlSessionId;
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // dbFileAdd 
 //
-//    Calls SRL_DatabaseAdd to add the cert input in pCrlData to the database.  
-//    etype sets the asn1 type, either cert or crl.
+//    Calls SRL_DatabaseAdd to add the file input in pAsnData to the database.  
+//    fileType indicates the asn1 type, either cert or crl.
 //
-// returns status from SRL_DatabaseAdd call
+// returns result from SRL_DatabaseAdd call
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////
-short CM_Interface::dbFileAdd(Bytes_struct *pCrlData,  int etype)           
+short CM_Interface::dbFileAdd(Bytes_struct* pAsnData, AsnTypeFlag fileType)           
 {
-   short status=0;
+	return SRL_DatabaseAdd(m_lSrlSessionId, pAsnData, fileType);
+}
 
-	if (pCrlData != NULL)
+
+//
+//
+short CM_Interface::dbAddCert(const CTIL::CSM_Buffer& bufCert)
+{
+	Bytes_struct certBytes;
+	certBytes.num = bufCert.Length();
+	certBytes.data = (unsigned char*)bufCert.Access();
+
+   return dbFileAdd(&certBytes, SRL_CERT_TYPE);
+}     // END CM_Interface::dbAddCRL(...)
+
+
+//
+//
+short CM_Interface::dbAddCRL(const CTIL::CSM_Buffer& bufCrl)
+{ 
+	Bytes_struct crlBytes;
+	crlBytes.num = bufCrl.Length();
+	crlBytes.data = (unsigned char*)bufCrl.Access();
+
+   return dbFileAdd(&crlBytes, SRL_CRL_TYPE);
+}     // END CM_Interface::dbAddCRL(...)
+
+
+//
+//
+void CM_Interface::ConvertErrorList(std::string& errStr,
+												const CML::ErrorInfoList& cmlErrors)
+{
+	std::ostringstream os;
+	int i = 0;
+
+	CML::ErrorInfoList::const_iterator iError;
+	for (iError = cmlErrors.begin(); iError != cmlErrors.end(); ++iError)
 	{
-		status = SRL_DatabaseAdd(this->m_lSrlSessionId, pCrlData, (AsnTypeFlag) etype);
-		//cout << getErrorString(status) << endl;
+		// Output the start of the info for this error
+		os << "pErrorInfo: " << ++i << ", DN= ";
+
+		// Output the best string name form to use for this error
+		CML::ASN::GenNames::const_iterator iGN =
+			iError->name.Find(CML::ASN::GenName::X500);
+		if (iGN != iError->name.end())
+			os << *iGN->GetName().dn;
+		else
+		{
+			iGN = iError->name.Find(CML::ASN::GenName::RFC822);
+			if (iGN == iError->name.end())
+				iGN = iError->name.Find(CML::ASN::GenName::DNS);
+			if (iGN == iError->name.end())
+				iGN = iError->name.Find(CML::ASN::GenName::URL);
+			if (iGN != iError->name.end())
+				os << iGN->GetName().name;
+			else
+				os << "<Unsupported Name Form>";
+		}
+
+		// Output the extra error info if present
+		if (!iError->extraInfo.empty())
+			os << " xinfo=" << iError->extraInfo;
+
+		// Output the error string
+		os << " errorString=" << CMU_GetErrorString(iError->error) << std::endl;
 	}
 
-   return status;
-}
+	// Append the string of CML errors to the input parameter string
+	errStr += os.str();
+}        // END CM_Interface::getErrInfo(...)
 
-//
-//
-long CM_Interface::dbAddCRL(const CSM_Buffer &BufCrl)
-{ 
-   long lstatus;
-   Bytes_struct ACrlByteStruct;
-
-   ACrlByteStruct.data = (unsigned char *)BufCrl.Access();
-   ACrlByteStruct.num  = BufCrl.Length();
-   lstatus = dbFileAdd(&ACrlByteStruct, SRL_CRL_TYPE);
-
-   return(lstatus);
-}     // END CM_Interface::dbAddCRL(...)
-
-//
-//
-long CM_Interface::dbAddCert(const CSM_Buffer &BufCert)
-{
-   long lstatus;
-   Bytes_struct ACertByteStruct;
-
-   ACertByteStruct.data = (unsigned char *)BufCert.Access();
-   ACertByteStruct.num  = BufCert.Length();
-   lstatus = dbFileAdd(&ACertByteStruct, SRL_CERT_TYPE);
-
-   return(lstatus);
-}     // END CM_Interface::dbAddCRL(...)
-
-
-//
-//
-CM_SFLCertificate::~CM_SFLCertificate() 
-{    
-   if (m_pRID) delete m_pRID; 
-   if (m_pCMLCert) delete m_pCMLCert;
-   if (m_lpszError) delete m_lpszError;
-  // if (m_pCMLCrl) delete m_pCMLCrl; 
-}
-
-
-//
-//
-void CM_SFLCertificate::SetUserCert(const CSM_Buffer &BufCert)
-{
-    Bytes_struct ACertByteStruct;
-    ACertByteStruct.data = (unsigned char *)BufCert.Access();
-    ACertByteStruct.num  = BufCert.Length();
-    //CML::Certificate ACMLUserCert(ACertByteStruct);
-    this->SetUserCert(ACertByteStruct);
-}       // END CM_SFLCertificate::SetUserCert(...)
 
 //
 //  This method will attempt to retrieve the user cert based on the information
@@ -183,181 +124,97 @@ void CM_SFLCertificate::SetUserCert(const CSM_Buffer &BufCert)
 //  input parameter is set to SRL_DB_CERT; or this method will attempt to retrieve the
 //  crl based on the information contained in this class instance if the dbType input parameter
 //  is set to SRL_DB_CRL
-long CM_SFLCertificate::GetUserCertCrl(DBTypeFlag dbType)
+long CM_SFLCertificate::GetUserCert(const CM_Interface& cmlInterface)//, DBTypeFlag dbType)
 {
-   long lstatus=-1;
-   //EncCert_LL *pcertificateList=NULL;
-   //dbEntryInfo *pentryInfo=NULL;   
-   Bytes_struct *pentryData=NULL;
-   SRL_CertMatch_struct	*certMatchStruct=NULL;
-   SRL_CRLMatch_struct	*crlMatchStruct=NULL;
+	SME_SETUP("CM_SFLCertificate::GetUserCert");
 
-   SME_SETUP("CM_SFLCertificate::GetUserCert");
+	if (m_pRID == NULL)
+		SME_THROW(28, "m_pRID identifier not set.", NULL);
 
-   if (m_pRID == NULL && dbType == SRL_DB_CERT)
-   {
-      SME_THROW(28, "m_pRID identifier not set.", NULL);
-   }     // END if m_pRID
+	// Delete any existing cert
+	if (m_pCMLCert != NULL)
+	{
+		delete m_pCMLCert;
+		m_pCMLCert = NULL;
+	}
 
+	// Get the issuer/serial number pair and the subject key ID from the RID
+   const CERT::CSM_IssuerAndSerialNumber* pIssuerSN =
+		m_pRID->AccessIssuerAndSerial();
+   const CSM_Buffer* pTmpSKIBuf = m_pRID->AccessSubjectKeyIdentifier();
+	if ((pIssuerSN == NULL) && (pTmpSKIBuf == NULL))
+	{
+		SME_THROW(28, "m_pRID identifier not supported (not IssSN OR SKI).",
+			NULL);
+	}
 
-   //pentryInfo = (dbEntryInfo *)calloc(1, sizeof(dbEntryInfo));
-   //pentryInfo->certs = (dbCertEntryInfo_LL *) calloc(1, sizeof(dbCertEntryInfo_LL));
-   const CERT::CSM_IssuerAndSerialNumber *pIssuerSN=m_pRID->AccessIssuerAndSerial();
-   const CSM_Buffer *pTmpSKIBuf = m_pRID->AccessSubjectKeyIdentifier();
-   CSM_Buffer *pTmpSNBuf=NULL;
-   CML::ASN::DN *pTmpIssDN=NULL;
-   dbSearch_struct searchInfo;
-   memset(&searchInfo, '\0', sizeof(searchInfo));
+	// Initialize the dbSearchStruct and SRL_CertMatch_struct
+	dbSearch_struct dbSearchInfo;
+	SRL_CertMatch_struct certMatchInfo;
+	memset(&certMatchInfo, 0, sizeof(SRL_CertMatch_struct));
+	dbSearchInfo.dbType = SRL_DB_CERT;
+	dbSearchInfo.matchInfo.cert = &certMatchInfo;
 
-   if (m_pCMLCert == NULL && dbType == SRL_DB_CERT)
-   {           // THEN setup for call to CML CM_RequestCerts(...).
-      certMatchStruct=(SRL_CertMatch_struct *)
-                            calloc(1, sizeof(SRL_CertMatch_struct));
-      searchInfo.dbType = SRL_DB_CERT;
-      if (pIssuerSN != NULL)
-      {
-         pTmpIssDN = ((CSM_IssuerAndSerialNumber *)pIssuerSN)->GetIssuer();
-         certMatchStruct->issuerDN = (char *)((const char *)*pTmpIssDN);   //char *; do not delete
-         pTmpSNBuf = ((CSM_IssuerAndSerialNumber *)pIssuerSN)->GetSerialNo();
-         certMatchStruct->serialNum = (Bytes_struct *) calloc(1, sizeof(Bytes_struct));
-         certMatchStruct->serialNum->data = (unsigned char *)pTmpSNBuf->Access();
-         certMatchStruct->serialNum->num  = pTmpSNBuf->Length();
-      }
-      else if (pTmpSKIBuf != NULL)
-      {
-         certMatchStruct->subjKMID = (Bytes_struct *) calloc(1, sizeof(Bytes_struct));
-         certMatchStruct->subjKMID->data = (unsigned char *)pTmpSKIBuf->Access();
-         certMatchStruct->subjKMID->num  = pTmpSKIBuf->Length();
-      }
-      else
-      {
-         SME_THROW(28, "m_pRID identifier not supported (not IssSN OR SKI).", 
-            NULL);
-      }     // END if RID type check
-      searchInfo.matchInfo.cert = certMatchStruct;
+	// Local variables to hold CertMatchData info
+	std::auto_ptr<CML::ASN::DN> issuerDN;
+	std::auto_ptr<CSM_Buffer> serialNumBuf;
+	Bytes_struct serialNum;
+	Bytes_struct subjKeyID;
 
-   }        // END if m_pCMLCert
-#ifdef NODEF // sib TBD
-   else if (m_pCMLCrl == NULL && dbType == SRL_DB_CRL)
-   {
-      crlMatchStruct=(SRL_CRLMatch_struct *)
-                            calloc(1, sizeof(SRL_CRLMatch_struct));
+	if (pIssuerSN != NULL)
+	{
+		// Set the issuer/serial number in the CertMatchData
+      std::auto_ptr<CML::ASN::DN> issuerDN2(pIssuerSN->GetIssuer());
+      std::auto_ptr<CSM_Buffer> serialNumBuf2(pIssuerSN->GetSerialNo());
+		issuerDN = issuerDN2;
+		serialNumBuf = serialNumBuf2;
+		serialNum.data = (uchar*)serialNumBuf->Access();
+		serialNum.num = serialNumBuf->Length();
+		certMatchInfo.issuerDN = (CM_DN)issuerDN.get()->operator const char*();
+		certMatchInfo.serialNum = &serialNum;
+	}
 
-      searchInfo.dbType = SRL_DB_CRL;
+	if (pTmpSKIBuf != NULL)
+	{
+		// Set the subject key ID in the CertMatchData
+		subjKeyID.data = (uchar*)pTmpSKIBuf->Access();
+		subjKeyID.num = pTmpSKIBuf->Length();
+		certMatchInfo.subjKMID = &subjKeyID;
+	}
 
-      // sib TBD need something to say which crl to get
+	// Search the database
+	EncObject_LL* pObjList;
+	short srlResult = SRL_DatabaseSearch(cmlInterface.GetSRLSessionID(), NULL,
+		SRL_DB_CERT, &dbSearchInfo, &pObjList);
 
+	// Throw if an
+	if (srlResult != CM_NO_ERROR)
+		return srlResult;
+	else if (pObjList->next != NULL)
+	{
+	   SRL_FreeObjs(NULL, &pObjList);
+	   return SM_TOO_MANY_CERTS_FOUND_IN_DB;
+	}
 
-
-      if (pIssuerSN != NULL)
-      {
-         pTmpIssDN = ((CSM_IssuerAndSerialNumber *)pIssuerSN)->GetIssuer();
-         // looks like we don't need the rid here just the signature algorithm
-      }
-
-      searchInfo.matchInfo.crl = crlMatchStruct;
-
-   }
-#endif
-   else
-      lstatus = 0;
-
-   //lstatus = SRL_DatabaseRetrieve(m_lSrlSessionId, SRL_DB_CERT/*SRL_CERT_TYPE*/,
-   //                pentryInfo, &pentryData);  RWC;WANY Search, not Retrieve!
-   EncObject_LL *pobjlist=NULL;
-
-   if (dbType == SRL_DB_CERT)
-   {
-      lstatus = SRL_DatabaseSearch(m_lSrlSessionId, NULL/*CM_DN dn*/, 
-                SRL_DB_CERT/*DBTypeFlag dbType*/, &searchInfo, &pobjlist);
-   }
-#ifdef NODEF // sib TBD
-   else if (dbType == SRL_DB_CRL)
-   {
-      lstatus = SRL_DatabaseSearch(m_lSrlSessionId, NULL/*CM_DN dn*/, 
-                SRL_DB_CRL/*DBTypeFlag dbType*/, &searchInfo, &pobjlist);
-   }
-#endif
-
-   char bufError[1024];
-   if (pobjlist == NULL && dbType == SRL_DB_CERT)
-   {
-      // WE have a problem, more than 1 cert returned.
-      sprintf(bufError, "Cert NOT returned from SRL, %s!", certMatchStruct->issuerDN);
-      SME_THROW(22, bufError, NULL);
-   }     // END if more than 1
-   else if (pobjlist->next != NULL && dbType == SRL_DB_CERT)
-   {
-      // WE have a problem, more than 1 cert returned.
-      sprintf(bufError, "MORE than 1 End Entity cert returned from SRL, %s!", 
-              certMatchStruct->issuerDN);
-	   SRL_FreeObjs(&m_lSrlSessionId, &pobjlist);
-      SME_THROW(22, bufError, NULL);
-   }     // END if more than 1
-   else if (dbType == SRL_DB_CERT)        // FOUND IT, now load it for processing...
-   {
-      m_pCMLCert = new CM_SFLInternalCertificate/*CML::Certificate*/(pobjlist->encObj, false);
-	   SRL_FreeObjs(&m_lSrlSessionId, &pobjlist);
-   }     // END if pobjlist
-
-#ifdef NODEF // sib TBD
-   else if (pobjlist != NULL && dbType == SRL_DB_CRL)
-   {
-		EncObject_LL *tmpObj = pobjlist;
-		while (tmpObj != NULL)
-		{
-			
-			CML::ASN::Bytes encCRL(tmpObj->encObj);
-			CML::CRL thisCRL(encCRL);  // CML's copy of the CRL
-         
-			tmpObj = tmpObj->next;
-		}  // end while
-
-    //  m_pCMLCrl= pobjlist->encObj.data;
-	   SRL_FreeObjs(&m_lSrlSessionId, &pobjlist);
-
-   }
-#endif
-
-   if (pTmpSNBuf)
-      delete pTmpSNBuf;
-   if (pTmpIssDN)
-      delete pTmpIssDN;
-   if (certMatchStruct)
-   {
-      if (certMatchStruct->serialNum)
-         free(certMatchStruct->serialNum);
-      free(certMatchStruct);
-   }
-
-   if (crlMatchStruct)
-   {
-      free(crlMatchStruct);
-   }
-
-   if (lstatus == 0 && pentryData && dbType == SRL_DB_CERT)
-   {
-       //ASN::Bytes ACmlBytes();
-       m_pCMLCert = new CM_SFLInternalCertificate/*CML::Certificate*/(*pentryData, false);
-       //issuerCert.Set(certificateList->encCert.num,certificateList->encCert.data);
-       //CM_FreeEncCertList(m_lCmlSessionId, &certificateList);
-       CM_FreeBytes(&pentryData);
-   }     // END if pentryData
-
-#ifdef NODEF // sib TBD
-   else if (lstatus == 0 && pentryData && dbType == SRL_DB_CRL)
-   {
-
-      // sib TBD 
-      ;
-   }
-#endif
+	// Create the private member cert from the one found in the DB
+	m_pCMLCert = new CM_SFLInternalCertificate(pObjList->encObj, false);
+   SRL_FreeObjs(NULL, &pObjList);
 
    SME_FINISH_CATCH
+	return 0;
 
-   return(lstatus);
-}           // END CM_SFLCertificate::GetUserCert()
+} // end of CM_SFLCertificate::GetUserCert()
 
+
+//
+//
+void CM_SFLCertificate::SetUserCert(const CSM_Buffer& BufCert)
+{
+    Bytes_struct ACertByteStruct;
+    ACertByteStruct.data = (unsigned char*)BufCert.Access();
+    ACertByteStruct.num  = BufCert.Length();
+    SetUserCert(ACertByteStruct);
+}       // END CM_SFLCertificate::SetUserCert(...)
 
 
 /************************************************************************
@@ -374,49 +231,33 @@ long CM_SFLCertificate::GetUserCertCrl(DBTypeFlag dbType)
 	short result - result of Certificate Validation
 
 *************************************************************************/
-short CM_SFLCertificate::Validate(const CML::ASN::Time* pValidationTime)
+long CM_SFLCertificate::Validate(const CM_Interface& cmlInterface,
+											const CML::ASN::Time* pValidationTime)
 {
-   short sReturn=-1;
-   char *pszError=NULL;
+	// Find the user cert first if necessary
+	if (m_pCMLCert == NULL)
+	{
+		long result = GetUserCert(cmlInterface);
+		if (m_pCMLCert == NULL)
+			return result;
+	}
 
-   if (m_pCMLCert == NULL)
-   {
-      sReturn = (short)GetUserCertCrl(SRL_DB_CERT);
-   }     // END if    if m_pCMLCert==NULL
-   else
-      sReturn = 0;
+	CML::ErrorInfoList Errors;
+	short sReturn = m_pCMLCert->BuildAndValidate(cmlInterface.GetCMLSessionID(),
+		m_boundsFlag, &Errors, 0, NULL, pValidationTime);
+	if (sReturn != 0)
+	{
+		// If an existing error is present, append a CRLF
+		if (!m_errorString.empty())
+			m_errorString.append("\n");
 
-   if (m_pCMLCert != NULL)
-   {
-       CML::ErrorInfoList Errors;
-       sReturn = m_pCMLCert->BuildAndValidate(m_lCmlSessionId, 
-		                  m_boundsFlag, &Errors, 0, 
-						      NULL, pValidationTime, true );
-       if (sReturn != 0)
-       {
-          pszError = CM_Interface::getErrInfo(&Errors);
-          if (m_lpszError != NULL)
-          {
-			  // Append the CML error string, pszError, to the existing error
-             char *ptr=(char*)malloc(strlen(m_lpszError) + 2 + strlen(pszError) + 1);
-			 strcpy(ptr, m_lpszError);
-			 strcat(ptr, "\n");
-			 strcat(ptr, pszError);
-             free(m_lpszError);
-             free(pszError);
-             m_lpszError = ptr;
-          }
-		  else
-			m_lpszError = pszError;
-       }
-   }        // END if m_pCMLCert
+		// Convert the errors to string form and append them to the string
+		cmlInterface.ConvertErrorList(m_errorString, Errors);
+	}
 
-   return(sReturn);
+	return sReturn;
 }
 
 
-
 _END_SFL_NAMESPACE
-#endif  // CML_USED
-
 // END CM_Interface.cpp

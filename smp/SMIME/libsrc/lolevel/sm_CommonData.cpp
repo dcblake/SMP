@@ -816,79 +816,75 @@ long CSM_CommonData::CMLValidateCert(
                                     //  (will place inside ACMLCert OR
                                     //   RETURN if retrieved from CML)
 {
-   long lstatus=0;
-
    SME_SETUP("CSM_CommonData::CMLValidateCert");
 
-   // The application may have pre-loaded the CML storage previous to calling
-   //  with other information (e.g. issuer, CRLs, etc.).
-      // check for recipient cert
-         ACMLCert.m_lCmlSessionId = this->m_lCmlSessionId;
-         ACMLCert.m_lSrlSessionId = this->m_lSrlSessionId;
-         if (pCert && pCert->AccessEncodedCert())
-         {              // if cert present, use it directly
-            Bytes_struct ACertByteStruct;
-            ACertByteStruct.data = (unsigned char *)pCert->AccessEncodedCert()->Access();
-            ACertByteStruct.num  = pCert->AccessEncodedCert()->Length();
-            CML::Certificate ACMLUserCert(ACertByteStruct);
-            ACMLCert.SetUserCert(ACMLUserCert);
-         }     // END if recip cert is present
-         // ELSE if cert is missing, try to use CLM to retrieve.
-         lstatus = ACMLCert.Validate();
-         if (lstatus != 0)
-         {
-            CML::ASN::DN *pDN=NULL;
-            const char *ptr;
-            if (pCert)
-            {
-               pDN=pCert->GetSubject();
-               if (pDN == NULL)
-               {
-                  SME_THROW(22, "BAD DN BUILD from Signer Cert.", NULL);
-               }
-               ptr = *pDN;
-            }
-            else if (ACMLCert.AccessCMLCert())
-            {
-               ptr = ACMLCert.AccessCMLCert()->base().userCert.subject;
-            }
-            else 
-               ptr = "UNKNOWN";
-            char lpsBuf[1000];
-            sprintf(lpsBuf, "CSM_CommonData::CMLValidateCert::Validate() DN=|%s|, error=%d.\n", 
-               ptr, lstatus);
-            if (pDN)
-               delete pDN;
-            if (m_pszCMLError == NULL)
-                m_pszCMLError = strdup(lpsBuf);
-            else        // APPEND error string.
-            {
-               char *ptr=(char *)calloc(1, strlen(m_pszCMLError) + 
-                                           strlen(lpsBuf) + 1);
-               strcpy(ptr, m_pszCMLError);
-               m_pszCMLError = ptr;
-               strcat(m_pszCMLError, lpsBuf);
-            }     // END if m_pszCMLError
-         }        // IF lstatus on CML Validate()
-         else     // ON success.
-         {
-            if (pCert != NULL && pCert->AccessEncodedCert() == NULL)
-            {        // USE CML loaded cert for our proecsssing
-                     //  (NICE feature, user is allowed to simply specify 
-                     //   RID; we might be able to get public information 
-                     //   from the CML!)
-                     // It must be here, since we succeeded on Validate()!
-               pCert->UpdateSNACCCertificate(ACMLCert.AccessCMLCert()->base().userCert.GetSnacc());
-            }     // END if cert is NULL
-         }        // END if lstatus on CML Validate()
+	// The application may have pre-loaded the CML storage previous to calling
+	//  with other information (e.g. issuer, CRLs, etc.).
+	// check for recipient cert
+	if (pCert && pCert->AccessEncodedCert())
+	{ // if cert present, use it directly
+		ACMLCert.SetUserCert(*pCert->AccessEncodedCert());
+	}     // END if recip cert is present
+	
+	// ELSE if cert is missing, try to use CML to retrieve.
+	CM_Interface cmlInterface(m_lCmlSessionId, m_lSrlSessionId);
+	long lstatus = ACMLCert.Validate(cmlInterface);
+	if (lstatus == 0)
+	{
+		if ((pCert != NULL) && (pCert->AccessEncodedCert() == NULL))
+		{
+			// USE CML loaded cert for our proecsssing
+			//  (NICE feature, user is allowed to simply specify 
+			//   RID; we might be able to get public information 
+			//   from the CML!)
+			// It must be here, since we succeeded on Validate()!
+			pCert->UpdateSNACCCertificate(ACMLCert.AccessCMLCert()->base().
+				userCert.GetSnacc());
+		}     // END if cert is NULL
+	}
+	else // Error validating!!
+	{
+		std::ostringstream errStr;
+		if (m_pszCMLError != NULL)
+			errStr << m_pszCMLError;
 
+		// Get the subject DN from the CertChoice if present
+		std::auto_ptr<CML::ASN::DN> pDN;
+		if (pCert != NULL)
+		{
+         std::auto_ptr<CML::ASN::DN> pDN2(pCert->GetSubject());
+			pDN = pDN2;
+			if (pDN.get() == NULL)
+				SME_THROW(22, "BAD DN BUILD from Signer Cert.", NULL);
+		}
 
-   SME_FINISH
-   SME_CATCH_SETUP
-   SME_CATCH_FINISH
+		// Output the first part of the error string
+		errStr << "CSM_CommonData::CMLValidateCert::Validate() DN=";
+		
+		// Output the DN and reset of the error string
+		if (pDN.get() != NULL)
+			errStr << '\"' << *pDN << '\"';
+		else if (ACMLCert.AccessCMLCert())
+		{
+			errStr << '\"' << ACMLCert.AccessCMLCert()->base().userCert.subject;
+			errStr << '\"';
+		}
+		else
+			errStr << "<UNKNOWN>";
+		errStr << ", error=" << lstatus << std::endl;
 
-   return(lstatus);
-}     // END CSM_CommonData::CMLCheckoutCert(...)
+		// If an existing error string is present, free it
+		if (m_pszCMLError != NULL)
+			free(m_pszCMLError);
+
+		// Copy error string
+		m_pszCMLError = strdup(errStr.str().c_str());
+	}        // IF lstatus on CML Validate()
+
+   return lstatus;
+
+   SME_FINISH_CATCH
+} // END CSM_CommonData::CMLCheckoutCert(...)
 #endif //CML_USED
 
 

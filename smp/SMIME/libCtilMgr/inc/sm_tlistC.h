@@ -20,7 +20,7 @@ public:
    { List<T>::SetCurrElmt(index); return Curr(); };
    T *SetCurrToFirst() { List<T>::SetCurrToFirst(); return Curr(); };
    // reading member fcns
-   int CountL() const { return Count(); }
+   int CountL() const { return this->Count(); }
 
    T *FirstL() /*RWC;const*/ { return List<T>::First(); }
    T *LastL() /*RWC;const*/ { return List<T>::Last(); }
@@ -33,7 +33,7 @@ public:
    //T *GoPrev() { if (curr) curr = curr->prev; return Curr(); }
 
    // write & alloc fcns - returns new elmt
-   T* AppendL() {return Append(); } // add elmt to end of list
+   T* AppendL() {return this->Append(); } // add elmt to end of list
    void AppendL(T *t); // add elmt to end of list
    void AppendL(CSM_ListC<T> *list);
    //T* InsertBefore(); //insert elmt before current elmt
@@ -54,19 +54,19 @@ CSM_ListC<T>::AppendL(T* t)
    newElmt  = new (typename CSM_ListC<T>::ListElmt);
    newElmt->elmt  = t;
    newElmt->next = NULL;
-   if (last == NULL)
+   if (this->last == NULL)
    {
       newElmt->prev = NULL;
-      first = last  = newElmt;
+      this->first = this->last  = newElmt;
    }
    else
    {
-      newElmt->prev = last;
-      last->next    = newElmt;
-      last          = newElmt;
+      newElmt->prev = this->last;
+      this->last->next    = newElmt;
+      this->last          = newElmt;
    }
-   count++;
-   curr = newElmt;
+   this->count++;
+   this->curr = newElmt;
 } // CSM_ListC::Append
 
 // append a list to this list
@@ -172,27 +172,27 @@ CSM_ListC<T>::RemoveCurrNodeOnlyFromList()
 {
    typename CSM_ListC<T>::ListElmt *del_elmt;
 
-   if (curr != NULL)
+   if (this->curr != NULL)
    {
-      del_elmt = curr;
-      count--;
+      del_elmt = this->curr;
+      this->count--;
 
-      if (count == 0)
-         first = last = curr = NULL;
-      else if (curr == first)
+      if (this->count == 0)
+         this->first = this->last = this->curr = NULL;
+      else if (this->curr == this->first)
       {
-         curr = first= first->next;
-         first->prev = NULL;
+         this->curr = this->first= this->first->next;
+         this->first->prev = NULL;
       }
-      else if (curr == last)
+      else if (this->curr == this->last)
       {
-         curr = last = last->prev;
-         last->next = NULL;
+         this->curr = this->last = this->last->prev;
+         this->last->next = NULL;
       }
       else
       {
-         curr->prev->next = curr->next;
-         curr->next->prev = curr->prev;
+         this->curr->prev->next = this->curr->next;
+         this->curr->next->prev = this->curr->prev;
       }
 
       delete del_elmt;

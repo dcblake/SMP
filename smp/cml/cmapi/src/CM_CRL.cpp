@@ -530,12 +530,24 @@ CrlSession::CrlSession(const ulong cmlSessionID, time_t crlCacheTTL, time_t crlG
 
 CrlSession::~CrlSession()
 {
+#ifndef ENABLE_STATIC
+	// Release the SRL library
+	if (crlLibHandle != NULL)
+		FreeLibrary((HINSTANCE)crlLibHandle);
+#endif //ENABLE_STATIC
+}
+
+
+void CrlSession::Release()
+{
 	if (crlLibHandle != NULL)
 		unlinkCRL((HINSTANCE)crlLibHandle, &sessionID);
 }
 
+
 void CrlSession::EmptyCache() const
 {
+#ifndef ENABLE_STATIC
 	if (crlLibHandle != NULL)
 	{
 #ifdef HPUX32
@@ -548,6 +560,10 @@ void CrlSession::EmptyCache() const
 		if (fpCRLEmptyCache != NULL)
 			fpCRLEmptyCache(sessionID);
 	}
+#else //ENABLE_STATIC
+	CRL_EmptyCRLCache(sessionID);
+#endif //ENABLE_STATIC
+
 }
 
 
@@ -633,7 +649,7 @@ short findCRLIssuer(const CertificateList& crl, ulong sessionID,
 		catch (...) {
 			// Skip over this cert
 		}
-	}
+   }
 
 	// If the CRL contains an authority key identifier extension with a
 	// key identifier, move to the head of the list any certs which include a
@@ -658,7 +674,12 @@ short findCRLIssuer(const CertificateList& crl, ulong sessionID,
 							iInsertLoc++;
 						else
 						{
-							certList.splice(iInsertLoc, certList, iCert++);
+                     // Splice self signed certs at beginning of list, all others
+                     // get spliced at insertLoc.
+                     if (iCert->base().subject == iCert->base().issuer)
+                        certList.splice(certList.begin(), certList, iCert++);
+                     else
+                        certList.splice(iInsertLoc, certList, iCert++);
 							break;
 						}
 					}
@@ -670,14 +691,15 @@ short findCRLIssuer(const CertificateList& crl, ulong sessionID,
 					if ((iInsertLoc != certList.end()) &&
 						(iInsertLoc->base().exts.pSubjKeyID) && 
 						(iInsertLoc->base().subject == iInsertLoc->base().issuer))
-							iInsertLoc++;				}
+							iInsertLoc++;				
+            }
 			}
 			else
 				++iCert;
 		}
 	}
 
-	if (certList.empty())
+   if (certList.empty())
 		return CM_NOT_FOUND;
 
 	return CM_NO_ERROR;
@@ -762,12 +784,14 @@ HINSTANCE link2CRL(const char* libName, ulong& sessionID, const ulong cmlSession
 				   const time_t crlCacheTTL, const time_t crlGracePeriod,
 				   RevCallbackFunctions& revFuncs, const CallbackFunctions& srlFuncs)
 {
+	HINSTANCE hDLL = NULL;
+#ifndef ENABLE_STATIC
 	// Check parameters
 	if (libName == NULL)
 		throw CML_ERR(CM_NULL_POINTER);
 
 	// Load the CRL library
-	HINSTANCE hDLL = LoadLibrary(libName);
+	hDLL = LoadLibrary(libName);
 	if (hDLL == NULL)
 		throw CML_ERR(CM_CRL_INITIALIZATION_FAILED);
 
@@ -798,6 +822,12 @@ HINSTANCE link2CRL(const char* libName, ulong& sessionID, const ulong cmlSession
 		throw CML_ERR(CM_CRL_INITIALIZATION_FAILED);
 	}
 
+#else //ENABLE_STATIC
+	revFuncs.pCheckStatus = CRL_RequestRevokeStatus;
+	revFuncs.pFreeStatus = CRL_FreeRevokeStatus;
+	PExtCRLInitFn fpCRLInit = CRL_Init;
+#endif //ENABLE_STATIC
+
 	CRLDLLInitSettings_struct crlSettings;
 	crlSettings.boundsFlag = CM_SEARCH_UNTIL_FOUND;
 	crlSettings.cmlSessionID = cmlSessionID;
@@ -816,7 +846,9 @@ HINSTANCE link2CRL(const char* libName, ulong& sessionID, const ulong cmlSession
 	short crlErr = fpCRLInit(&sessionID, &crlSettings);
 	if (crlErr != CRL_SUCCESS)
 	{
+#ifndef ENABLE_STATIC
 		FreeLibrary(hDLL);
+#endif
 		throw CML_ERR(CM_CRL_INITIALIZATION_FAILED);
 	}
 
@@ -832,19 +864,19 @@ void unlinkCRL(HINSTANCE hDLL, ulong* pSessionID)
 	// Destroy the CRL session
 	if (pSessionID != NULL)
 	{
-		PExtCRLDestroyFn fpCRLDestroy;
-#ifdef HPUX32
+		PExtCRLDestroyFn fpCRLDestroy = NULL;
+
+#ifdef ENABLE_STATIC
+		fpCRLDestroy = (PExtCRLDestroyFn)CRL_Destroy;
+#elif defined(HPUX32)
 		shl_findsym(&hDLL, "CRL_Destroy", TYPE_PROCEDURE, &fpCRLDestroy);
 #else
-		fpCRLDestroy = (PExtCRLDestroyFn)GetProcAddress(hDLL,
-			"CRL_Destroy");
+		fpCRLDestroy = (PExtCRLDestroyFn)GetProcAddress(hDLL, "CRL_Destroy");
 #endif
-		if (fpCRLDestroy)
+
+		if (fpCRLDestroy != NULL)
 			fpCRLDestroy(pSessionID);
 	}
-
-	// Release the CRL library
-	FreeLibrary(hDLL);
 }
 
 

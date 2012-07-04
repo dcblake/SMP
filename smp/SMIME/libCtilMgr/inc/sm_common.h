@@ -93,7 +93,7 @@ public:
    SM_RET_VAL SMTI_DigestData(CSM_Buffer *pData, CSM_Buffer *pHashValue, 
        const SNACC::AsnOid &digestAlg);
    // new definitions from taking out CSM_CtilCommon
-   SM_RET_VAL CSM_Common::SMTI_Sign(
+   SM_RET_VAL SMTI_Sign(
             CSM_Buffer *pData, // input, data to be signed
             CSM_Buffer *pEncryptedDigest, // signature output
             CSM_Buffer *pDigest) // digest

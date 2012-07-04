@@ -21,7 +21,9 @@ using namespace SNACC;
 void checkCreate(CSMIME *pAppLogin, char *pszCertificateFileNamesForEncrypters[], 
                             const char *msgData, long msgLength, AsnOid *pmsgOidIn,
                             CSM_Buffer *pACLMsgLabel=NULL,   // OPTIONAL
+#ifdef ACL_USED
                             acl::Session *pACLsession=NULL,
+#endif
                             long lCMLSessionIdIN=0, long lSRLSessionIdIN=0)
 {
     char *lpszError=NULL;
@@ -63,6 +65,7 @@ void checkCreate(CSMIME *pAppLogin, char *pszCertificateFileNamesForEncrypters[]
 #endif  // DISABLE_CML_ACL
         MsgToSign.m_lCmlSessionId = lCMLSessionIdIN;
         MsgToSign.m_lSrlSessionId = lSRLSessionIdIN;
+#ifdef ACL_USED
         if (pACLsession)     // SETUP decrypter to ACL validate 
         {                    //   originator AND us.
 #ifdef DISABLE_CML_ACL
@@ -83,7 +86,7 @@ void checkCreate(CSMIME *pAppLogin, char *pszCertificateFileNamesForEncrypters[]
            //RWC11;CML::ASN::CertificationPath CMLCertPath(CMLcpBuf);
            //RWC11;MsgToSign.m_ACLInterface.setPathBufs(CMLCertPath);  // OPTIONAL cert path buffers (normally looked up).
         }      // END if pACLsession
-
+#endif
             /////////////////////
             // Demonstrate setting attribute.
             if (MsgToSign.m_pSignedAttrs == NULL)
@@ -149,6 +152,7 @@ void checkCreate(CSMIME *pAppLogin, char *pszCertificateFileNamesForEncrypters[]
 #endif      // DISABLE_CML_ACL
             MsgToEncrypt.m_lCmlSessionId = lCMLSessionIdIN;
             MsgToEncrypt.m_lSrlSessionId = lSRLSessionIdIN;
+#ifdef ACL_USED
             if (pACLsession && pACLMsgLabel)
             {
 #ifdef DISABLE_CML_ACL
@@ -170,7 +174,7 @@ void checkCreate(CSMIME *pAppLogin, char *pszCertificateFileNamesForEncrypters[]
                //RWC11;CML::ASN::CertificationPath CMLCertPath(CMLcpBuf);
                //RWC11;MsgToEncrypt.m_ACLInterface.setPathBufs(CMLCertPath);  // OPTIONAL cert path buffers.
             }       // END if pACLsession
-
+#endif
             // NOW, load RecipientInfo list from certificate files.
             CSM_Buffer *pbufCert;
             CSM_RecipientInfo *pRecipInfo;

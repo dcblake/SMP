@@ -47,6 +47,7 @@ TARGET2	= $(STAGINGDIR)/libacl_d.a
 else
 TARGET2	= $(STAGINGDIR)/libacl.a
 endif
+TARGET =
 endif
 ## Needed includes
 INCLUDE       += -I$(PKCS11INC) -I$(CMAPI) -I$(CMLASNINC) -I$(CTILMGRINC) -I$(SRLINC) \

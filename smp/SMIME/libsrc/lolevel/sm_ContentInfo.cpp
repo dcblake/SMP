@@ -250,7 +250,7 @@ CSM_Buffer *CSM_ContentInfoMsg::AccessEncodedCI()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void CSM_ContentInfoMsg::SetEncodedCI(CSM_Buffer &Buffer)
+void CSM_ContentInfoMsg::SetEncodedCI(const CSM_Buffer& buffer)
 {
    CSM_Buffer TmpBuf;
 
@@ -258,7 +258,7 @@ void CSM_ContentInfoMsg::SetEncodedCI(CSM_Buffer &Buffer)
 
    // FIRST, clear commonData object and assign buffer of ASN.1 encoded ContentInfo
    ClearAll();
-   if ((m_pEncodedBlob = new CSM_Buffer(Buffer)) == NULL)
+   if ((m_pEncodedBlob = new CSM_Buffer(buffer)) == NULL)
       SME_THROW(SM_MEMORY_ERROR, NULL, NULL);
 
    // NEXT, decode ContentInfo

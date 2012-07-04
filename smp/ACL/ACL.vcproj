@@ -3,7 +3,8 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="ACL"
-	ProjectGUID="{B4A0640F-A03F-42E3-8ED5-FC82578380ED}">
+	ProjectGUID="{B4A0640F-A03F-42E3-8ED5-FC82578380ED}"
+	RootNamespace="ACL">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -21,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/I /Zm200 "
 				Optimization="0"
-				AdditionalIncludeDirectories="./inc;&quot;../../SNACC/c++-lib/inc&quot;;../../SNACC;../../smpdist/include/smp;../cml/cmapi/inc;../cml/cmlasn/inc;../cml/srl/inc;../../smpdist/include/pkcs11"
+				AdditionalIncludeDirectories="./inc;&quot;../../SNACC/c++-lib/inc&quot;;../cml/cmapi/inc;../cml/cmlasn/inc;../cml/srl/inc;../pkcs11_cryptopp/inc/"
 				PreprocessorDefinitions="_WINDOWS;_USRDLL;ACL_EXPORTS;ACLSNACC_API_EXPORTS;NOSTUB;WIN32;_DEBUG"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="3"
@@ -35,7 +36,7 @@
 				CompileAs="0"/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying $(InputPath) to system32"
+				Description="Copying $(TargetPath) to system32 directory..."
 				CommandLine="copy &quot;$(TargetPath)&quot; %WINDIR%\system32
 "
 				Outputs="$(WINDIR)\system32\$(TargetName).dll"/>
@@ -90,10 +91,10 @@
 				AdditionalOptions="/I /Zm400 "
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="./inc;&quot;../../SNACC/c++-lib/inc&quot;;../../SNACC;../../smpdist/include/smp;../cml/cmapi/inc;../cml/cmlasn/inc;../cml/srl/inc;../../smpdist/include/pkcs11"
+				AdditionalIncludeDirectories="./inc;&quot;../../SNACC/c++-lib/inc&quot;;../cml/cmapi/inc;../cml/cmlasn/inc;../cml/srl/inc;../pkcs11_cryptopp/inc/"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ACL_EXPORTS;ACLSNACC_API_EXPORTS;NOSTUB"
 				StringPooling="TRUE"
-				BasicRuntimeChecks="3"
+				BasicRuntimeChecks="0"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="2"
@@ -106,7 +107,7 @@
 				CompileAs="0"/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying $(InputPath) to system32"
+				Description="Copying $(TargetPath) to system32 directory..."
 				CommandLine="copy &quot;$(TargetPath)&quot; %WINDIR%\system32
 "
 				Outputs="$(WINDIR)\system32\$(TargetName).dll"/>
@@ -605,18 +606,16 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to system32"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\SMPDist\include\smp
-"
+						Description="Copying $(InputPath) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\include\smp&quot;"
 						Outputs="..\..\SMPDist\include\smp\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Updating system32 and smpdist"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\SMPDist\include\smp
-"
+						Description="Copying $(InputPath) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\include\smp&quot;"
 						Outputs="..\..\SMPDist\include\smp\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
@@ -626,18 +625,16 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to system32"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\SMPDist\include\smp
-"
+						Description="Copying $(InputPath) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\include\smp&quot;"
 						Outputs="..\..\SMPDist\include\smp\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Updating system32 and smpdist"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\SMPDist\include\smp
-"
+						Description="Copying $(InputPath) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\include\smp&quot;"
 						Outputs="..\..\SMPDist\include\smp\$(InputName).h"/>
 				</FileConfiguration>
 			</File>
@@ -647,18 +644,16 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Copying $(InputPath) to system32"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\SMPDist\include\smp
-"
+						Description="Copying $(InputPath) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\include\smp&quot;"
 						Outputs="..\..\SMPDist\include\smp\$(InputName).h"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Updating system32 and smpdist"
-						CommandLine="copy &quot;$(InputPath)&quot; ..\..\SMPDist\include\smp
-"
+						Description="Copying $(InputPath) to SMPDist directory..."
+						CommandLine="copy &quot;$(InputPath)&quot; &quot;..\..\SMPDist\include\smp&quot;"
 						Outputs="..\..\SMPDist\include\smp\$(InputName).h"/>
 				</FileConfiguration>
 			</File>

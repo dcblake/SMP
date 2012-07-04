@@ -56,13 +56,13 @@ LINK32=link.exe
 # ADD LINK32 ../../../../SMPDist/lib/cryptlib.lib ../sm_free3/Release/sm_free3DLL.lib ../sm_pkcs11/Release/sm_pkcs11DLL.lib wsock32.lib /nologo /dll /machine:I386 /out:"../../../SMPDist/sfl/alg_libs/sm_pkcs11/sm_pkcs11Free3DLL.dll"
 # Begin Custom Build
 TargetName=sm_pkcs11Free3DLL
-InputPath=\devel.d\vda_snacc.d\devel.cur\smp\SMPDist\sfl\alg_libs\sm_pkcs11\sm_pkcs11Free3DLL.dll
+InputPath=\src\smp\SMPDist\sfl\alg_libs\sm_pkcs11\sm_pkcs11Free3DLL.dll
 InputName=sm_pkcs11Free3DLL
 SOURCE="$(InputPath)"
 
 "$(windir)\system32\$(InputName).dll" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\$(InputName).dll $(windir)\system32 
-	copy RELEASE\$(TargetName).lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11 
+	copy ..\..\..\..\SMPDist\lib\$(InputName).dll $(windir)\system32 
+	copy DEBUG\$(TargetName).lib ..\..\..\..\SMPDist\lib 
 	
 # End Custom Build
 
@@ -94,13 +94,13 @@ LINK32=link.exe
 # SUBTRACT LINK32 /pdb:none
 # Begin Custom Build
 TargetName=sm_pkcs11Free3DLLd
-InputPath=\devel.d\vda_snacc.d\devel.cur\smp\SMPDist\sfl\alg_libs\sm_pkcs11\sm_pkcs11Free3DLLd.dll
+InputPath=\src\smp\SMPDist\sfl\alg_libs\sm_pkcs11\sm_pkcs11Free3DLLd.dll
 InputName=sm_pkcs11Free3DLLd
 SOURCE="$(InputPath)"
 
 "$(windir)\system32\$(InputName).dll" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	copy ..\..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\$(InputName).dll $(windir)\system32 
-	copy DEBUG\$(TargetName).lib ..\..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11 
+	copy ..\..\..\..\SMPDist\lib\$(InputName).dll $(windir)\system32 
+	copy DEBUG\$(TargetName).lib ..\..\..\..\SMPDist\lib 
 	
 # End Custom Build
 

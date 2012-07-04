@@ -258,8 +258,6 @@ GenNames::const_iterator GenNames::Find(GenName::Type type) const
 GenNames::const_iterator GenNames::FindNext(const_iterator iPrev,
 											GenName::Type type) const
 {
-	if (iPrev == NULL)
-		return end();
 	if (iPrev == end())
 		return iPrev;
 

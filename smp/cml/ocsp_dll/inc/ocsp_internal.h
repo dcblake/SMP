@@ -64,7 +64,7 @@ public:
 class TrustedCert
 {
 public:
-   TrustedCert::TrustedCert(const CML::ASN::Bytes& cert, 
+   TrustedCert(const CML::ASN::Bytes& cert, 
       bool trustExplicit = false) :
       m_trustExplicit(trustExplicit), m_encCert(cert) {} 
    const bool              m_trustExplicit;  // Only set for paths containing a

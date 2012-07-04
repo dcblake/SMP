@@ -1330,173 +1330,118 @@ short db_CheckItem(DB_Kid *kid, long norm_type, long relatedHash, long **HashVal
 short db_CheckItem(ulong db_session, DB_Kid *kid, DB_Data *data, 
 				   long *HashValue, long relatedHash, long storeFlag)
 {
-	DB_Session_Struct	 *session;
-	char *full_kid = NULL;
-	long	new_hash_val = 0;	   /* The new hash value. */
-	long	elem_loc = 0;		 /* The location in storage table. */
-	long	saveHash = 0;
-	long	max_loc = 0;
-	long	kid_size = 0;
-	char	*temp = NULL;		  /* Used in dbu_findkey call. */
-	short   err = SRL_SUCCESS;
+   DB_Session_Struct	 *session;
+   long	new_hash_val = 0;	   /* The new hash value. */
+   long	elem_loc = 0;		 /* The location in storage table. */
+   long	saveHash = 0;
+   char	*temp = NULL;		  /* Used in dbu_findkey call. */
+   short   err = SRL_SUCCESS;
 
 
-	DB_Kid temp_kid;
-	/* check caller's parameters */
-	if( (db_session == 0) ||
-		(kid == NULL) )
-		return(DB_BAD_PARAM);
-	data = data;
+   DB_Kid temp_kid;
+   /* check caller's parameters */
+   if( (db_session == 0) ||
+      (kid == NULL) )
+      return(DB_BAD_PARAM);
+   data = data;
 
-	/* get the session ref value */
-	session = (DB_Session_Struct *) db_session;
-    // If DB_REPLACE, then get the hash from storage, don't create it
-	if (storeFlag == DB_REPLACE)
-	{
-		max_loc = session->dbheader->max_store_elems;
-			elem_loc = 0;
-			err = DB_NOT_FOUND;  // Default return value
-			while (elem_loc <= max_loc-1)
-			{
-				full_kid = NULL;
-				if (session->storage_map != NULL)
-				{
-					if (session->storage_map->se_table[elem_loc].hash_value != -1)
-					{
-						kid_size = session->storage_map->se_table[elem_loc].kid_size;
-						/* skip through the hash entries until we find one that 
-						 * matches
-						 */
-						if ((kid_size == kid->item_len)
-							&& ((SRLi_memicmp(session->storage_map->se_table[elem_loc].kid_start, kid->item_ptr,
-							(SMALL_KID < kid_size ? SMALL_KID : kid_size))) == 0))
-						{
-								/* Otherwise we may have a possible match. For exact match
-								 * we have to do a full comparison of the kids.  The block
-								 * is cached, but the entry pair may not be, so make sure
-								 * it's read in.
-								 */
+   /* get the session ref value */
+   session = (DB_Session_Struct *) db_session;
+   // If DB_REPLACE, then get the hash from storage, don't create it
+   if (storeFlag == DB_REPLACE)
+   {
+      err = db_RetrieveHash(db_session, kid, &new_hash_val);
+      if (err == DB_NO_ERR)
+         *HashValue = new_hash_val;
+   }
+   else
+   {
 
-								/* make sure this entry is loaded, and get the kid */
-								err = dbu_read_entry (session, elem_loc, &full_kid);
-								if(err != DB_NO_ERR)
-								{
-									return(err);
-								}
+      if((kid->item_ptr == NULL) || (kid->item_len <= 0))
+      {
+         return(DB_BAD_KID);
+      }
 
-								/* see if we have exact match on kid's */
-								if (memcmp (full_kid, kid->item_ptr, kid_size) == 0)
-								{
-									/* We have found the exact item,
-									* give caller ptr to associated data
-									* and it's index location.
-									*/
-														*HashValue = session->storage_map->se_table[elem_loc].hash_value;
-									err = SRL_SUCCESS;
-									break;
-									
-								}
+      if (*HashValue != 0)
+         new_hash_val = *HashValue;
+      /* see if a kid exists in the file that matches the given one.
+      * This will load the corresponding chunk and calculate the
+      * hash at the same time.
+      */
 
-						}/* end of possible match, do in depth comparison */
-					}
-				}
-				else
-				{
-					return DB_NOT_FOUND;
-				}
-				/* Inc index, wrap around if necessary. */
-				elem_loc ++;// = (elem_loc + 1) % session->dbheader->max_store_elems;
-
-			}
-		}
-		else
-		{
-
-			if((kid->item_ptr == NULL) || (kid->item_len <= 0))
-			{
-				return(DB_BAD_KID);
-			}
-
-			if (*HashValue != 0)
-				new_hash_val = *HashValue;
-			/* see if a kid exists in the file that matches the given one.
-			 * This will load the corresponding chunk and calculate the
-			 * hash at the same time.
-			 */
-
-			temp_kid.item_len = kid->item_len;
-			temp_kid.item_ptr = kid->item_ptr;
-			elem_loc = dbu_findkey (session, &temp_kid, &temp, &new_hash_val, NORMALIZED); /* ret storage table index val */
-			*HashValue = new_hash_val;
-			/* either accept a not found, or found, other errors we will
-			 * report back to the caller right away.
-			 */
+      temp_kid.item_len = kid->item_len;
+      temp_kid.item_ptr = kid->item_ptr;
+      elem_loc = dbu_findkey (session, &temp_kid, &temp, &new_hash_val, NORMALIZED); /* ret storage table index val */
+      *HashValue = new_hash_val;
+      /* either accept a not found, or found, other errors we will
+      * report back to the caller right away.
+      */
 
 
 
-			/* Try to allocate storage for this entry in the data base
-			 * file. If the item will fit into the free space of the current
-			 * cached block, then no new allocation of hard storage must
-			 * be made, other wise the file will be appended to...
-			 */
+      /* Try to allocate storage for this entry in the data base
+      * file. If the item will fit into the free space of the current
+      * cached block, then no new allocation of hard storage must
+      * be made, other wise the file will be appended to...
+      */
 
 
-			/* Check again to see if our previous search for the given kid found
-			 * a match. If not then we need to create a new storage element.
-			 */
-			if (elem_loc == DB_NOT_FOUND)   /* does this item not exist yet */
-			{
-				/* this is a new item */
+      /* Check again to see if our previous search for the given kid found
+      * a match. If not then we need to create a new storage element.
+      */
+      if (elem_loc == DB_NOT_FOUND)   /* does this item not exist yet */
+      {
+         /* this is a new item */
 
-				/* see if we are maxed out on number of entries for the
-				 * current storage block.
-				 */
-				if (session->storage_map->count == session->dbheader->max_store_elems)
-				{
-					/* Split the current block. */
-					err = dbu_split_storageTable (session, new_hash_val);
+         /* see if we are maxed out on number of entries for the
+         * current storage block.
+         */
+         if (session->storage_map->count == session->dbheader->max_store_elems)
+         {
+            /* Split the current block. */
+            err = dbu_split_storageTable (session, new_hash_val);
 
-					if(err != DB_NO_ERR)
-					{
-						return(err);	/* tell caller we failed */
-					}
-				}
-				if (storeFlag == DB_INSERT)
-				{
-					/* Find space to insert into storage table and set elem_loc to that place. */
-					elem_loc = new_hash_val % session->dbheader->max_store_elems;
-					
-					/* skip through the hash entries till we find one that is not
-					 * used.
-					 */
-					saveHash = *HashValue;
-					if (saveHash == relatedHash)
-					{
-						// Bump up
-						saveHash ++;
-						elem_loc = (elem_loc + 1) % session->dbheader->max_store_elems;
-					}
-					while (session->storage_map->se_table[elem_loc].hash_value != -1)	 /* -1 == empty hash value */
-					{
-						new_hash_val++;
-						elem_loc = (elem_loc + 1) % session->dbheader->max_store_elems; /* make sure we wrap around */
-						saveHash ++; // update hash so that we store the correct value
-						if (saveHash == relatedHash)
-						{
-							// Bump the hash value and element location up 1
-							saveHash ++;
-							elem_loc = (elem_loc + 1) % session->dbheader->max_store_elems;
-						}
-					}
+            if(err != DB_NO_ERR)
+            {
+               return(err);	/* tell caller we failed */
+            }
+         }
+         if (storeFlag == DB_INSERT)
+         {
+            /* Find space to insert into storage table and set elem_loc to that place. */
+            elem_loc = new_hash_val % session->dbheader->max_store_elems;
 
-					/* We now have a location to put our new entry into the
-					 * storage table, insert it's information.
-					 */
-					*HashValue = saveHash;
-				}
-			}
-		}
-		return(err);	/* tell caller how we worked out */
+            /* skip through the hash entries till we find one that is not
+            * used.
+            */
+            saveHash = *HashValue;
+            if (saveHash == relatedHash)
+            {
+               // Bump up
+               saveHash ++;
+               elem_loc = (elem_loc + 1) % session->dbheader->max_store_elems;
+            }
+            while (session->storage_map->se_table[elem_loc].hash_value != -1)	 /* -1 == empty hash value */
+            {
+               new_hash_val++;
+               elem_loc = (elem_loc + 1) % session->dbheader->max_store_elems; /* make sure we wrap around */
+               saveHash ++; // update hash so that we store the correct value
+               if (saveHash == relatedHash)
+               {
+                  // Bump the hash value and element location up 1
+                  saveHash ++;
+                  elem_loc = (elem_loc + 1) % session->dbheader->max_store_elems;
+               }
+            }
+
+            /* We now have a location to put our new entry into the
+            * storage table, insert it's information.
+            */
+            *HashValue = saveHash;
+         }
+      }
+   }
+   return(err);	/* tell caller how we worked out */
 
 }
 
@@ -1894,9 +1839,12 @@ short db_DeleteEntry(ulong db_session, DB_Kid *kid)
 	if(session->access == DB_READ)  /* is it read only */
 		return(DB_CANT_DELETE);
 
-
-	db_CalcHash(db_session, kid, NULL,  NORMALIZED, 
+	err = db_CalcHash(db_session, kid, NULL,  NORMALIZED, 
 				  &hash_val, 0, DB_REPLACE);
+
+   if (err != DB_NO_ERR)
+      return err;
+
 	/* search the db to see if there is an item with this key */
 	elem_loc = dbu_findkey (session, kid, &find_data, &hash_val, NORMALIZED);
 
@@ -2519,11 +2467,11 @@ short db_Compact(ulong db_session)
 	if(old_session->access == DB_READ)
 		return(DB_NO_WRITE);	/* can't compact (write) if read only */
 
-	/* our temp file will be "tmp_" + the original file name*/
-	new_name = (char *) calloc (1, strlen("tmp_") + strlen(old_session->name) + 1);
+	/* our new database file will be the original file name + "_tmp" */
+   new_name = calloc(1, strlen(old_session->name) + strlen("_tmp") + 1);
 	if (new_name == NULL)
 		return(DB_NO_MEM);
-	sprintf(new_name, "tmp_%s", old_session->name);
+	sprintf(new_name, "%s_tmp", old_session->name);
 
 	remove(new_name); /* delete the temp file in case one was left out there */
 
@@ -2653,13 +2601,7 @@ IE:
 				// Increment the lenght and pointer
 				tempPtr += len;
 				biglen -= len;
-			    if(asnentry_data != NULL)
-				{
-					free(asnentry_data->item_ptr);
-					free(asnentry_data);
-					asnentry_data = NULL;
-				}
-
+			   SRLi_FreeDB_Item(&asnentry_data);
 			}
 	   }
 
@@ -2682,32 +2624,12 @@ IE:
 
 		  err = AddObjectToDB ((ulong)new_session, entry_kid, entry_data, 
 			         asnentry_data);
-		  if(asnentry_data != NULL)
-		  {
-			 free(asnentry_data->item_ptr);
-			 free(asnentry_data);
-			 asnentry_data = NULL;
-		  }
-		  if(entry_data != NULL)
-		  {
-			 free(entry_data->item_ptr);
-			 free(entry_data);
-			 entry_data = NULL;
-		  } 
+		  SRLi_FreeDB_Item(&asnentry_data);
+        SRLi_FreeDB_Item(&entry_data); 
 		}
 	  }
-	  if(prevEntry != NULL)
-	  {
-		 free(prevEntry->item_ptr);
-		 free(prevEntry);
-		 prevEntry = NULL;
-	  }
-	  if(entry_data != NULL)
-	  {
-		  free(entry_data->item_ptr);
-		  free(entry_data);
-		  entry_data = NULL;
-	  }
+     SRLi_FreeDB_Item(&prevEntry);
+     SRLi_FreeDB_Item(&entry_data);
 	  prevEntry = entry_kid;   /* record for next loop iteration */
 
 	}
@@ -2725,7 +2647,6 @@ IE:
 		free(new_name);
 		return(DB_COMPACT_FAILED);
 	}
-/*	fsync (new_session->file);  unistd.h  */
 
 
 	/* Rename the new file so that it uses
@@ -2738,17 +2659,19 @@ IE:
 
 	/* we want to rename the new file so that it uses the sessions
 	 * file name.  Since this may fail - try to rename the old file
-	 * to "old_original_db_name"   while we attempt to rename. IF that
+	 * to "original_db_name_old"   while we attempt to rename. IF that
 	 * works we will then delete the old file.....
 	 */
-	tempname2 = (char *) calloc (1, strlen("old_") + strlen(old_session->name) + 1);
+   tempname2 = calloc (1, strlen(old_session->name) +
+                          strlen("_old") + 1);
+
 	if (tempname2 == NULL)
 	{
 		remove (new_name);	/* delete our new file */
 		free(new_name);
 		return(DB_NO_MEM);
 	}
-	sprintf(tempname2, "old_%s", old_session->name);
+	sprintf(tempname2, "%s_old", old_session->name);
 
 	remove(tempname2); /* in case there is an old copy lying around, remove it so rename works */
 	rename (old_session->name, tempname2); /* temp rename the older before replacing */
@@ -2766,8 +2689,9 @@ IE:
 	}
 	/* reopen it */
 	new_session->file = thread_open(old_session->name, O_RDWR | O_BINARY, -1);
-	remove(tempname2); /* delete old file since rename worked. */
+   new_session->fileStream = fdopen(new_session->file, "wb+");
 
+	remove(tempname2); /* delete old file since rename worked. */
 	free(tempname2);
 
 	/* Done with the old file, now start updating with the new information */
@@ -2791,23 +2715,21 @@ IE:
 	/* copy the new info back into old session for callers
 	 * future use.
 	 */
-	old_session->file				= new_session->file;
-	old_session->dbheader			= new_session->dbheader;
-	old_session->dir_table			= new_session->dir_table;
-	old_session->storage_map		= new_session->storage_map;
-	old_session->storage_map_dir	= new_session->storage_map_dir;
-	old_session->idx_of_last_read   = new_session->idx_of_last_read;
-	old_session->cached_blocks		= new_session->cached_blocks;
-	old_session->cache_size			= new_session->cache_size;
-	old_session->dbheader_changed	= new_session->dbheader_changed;
-	old_session->directory_changed  = new_session->directory_changed;
-	old_session->cur_cache_changed  = new_session->cur_cache_changed;
-	old_session->second_changed		= new_session->second_changed;
+	old_session->file                = new_session->file;
+   old_session->fileStream          = new_session->fileStream;
+	old_session->dbheader            = new_session->dbheader;
+	old_session->dir_table           = new_session->dir_table;
+	old_session->storage_map         = new_session->storage_map;
+	old_session->storage_map_dir     = new_session->storage_map_dir;
+	old_session->idx_of_last_read    = new_session->idx_of_last_read;
+	old_session->cached_blocks       = new_session->cached_blocks;
+	old_session->cache_size          = new_session->cache_size;
+	old_session->dbheader_changed    = new_session->dbheader_changed;
+	old_session->directory_changed   = new_session->directory_changed;
+	old_session->cur_cache_changed   = new_session->cur_cache_changed;
+	old_session->second_changed      = new_session->second_changed;
 	free (new_session->name);
 	free (new_session);	 /* don't need the temp session anymore */
-
-	/* Make sure the new database is all on disk. */
-/*	fsync (old_session->file); unistd.h  */
 
 	/* Start the caching back at the begining. */
 	old_session->current_cache_entry	= &old_session->cached_blocks[0];
@@ -2815,25 +2737,9 @@ IE:
 	/* make sure the initial directory is loaded */
 	err = dbu_get_block (old_session, 0);   /* load dir_table[0] */
 
-
-	if(entry_data != NULL)
-	{
-		free(entry_data->item_ptr);
-		free(entry_data);
-		entry_data = NULL;
-	}
-	if(asnentry_data != NULL)
-	{
-		free(asnentry_data->item_ptr);
-		free(asnentry_data);
-		asnentry_data = NULL;
-	} 
-	if(prevEntry != NULL)
-	{
-		free(prevEntry->item_ptr);
-		free(prevEntry);
-		prevEntry = NULL;
-	}
+	SRLi_FreeDB_Item(&entry_data);
+   SRLi_FreeDB_Item(&asnentry_data);
+	SRLi_FreeDB_Item(&prevEntry);
 	return (err);
 	
 	
@@ -2863,22 +2769,9 @@ short AddObjectToDB(ulong db_session, DB_Kid *DNKid,
 	ciTemplate.num =  TemplateKid->item_len;
 
 	// Get the Hash of the Template, for storage
-	// db_GetHash (TemplateKid, NORMALIZED, &TempHashValue);
-	// Get the Hash of the Template, for storage
 
 		db_CalcHash (db_session, TemplateKid, NULL, NORMALIZED,
 				&TempHashValue, 0, DB_INSERT);
-
-	/* make sure the storage block for the given kid is currently loaded,
-	 * also insuring that this block will be the current cached block.
-	 * Hash value shifted down to figure out the index into the directory
-	 * offsets array.
-	 */
-//	session = (DB_Session_Struct *)db_session;
-//	err = dbu_get_block (session, TempHashValue>> (31-session->dbheader->dir_bits));
-//	if(err != DB_NO_ERR)
-//		return(err);
-
 
 	/*
 	* Insert into the db file associated with this session
@@ -4827,11 +4720,13 @@ static short dbu_read_entry (DB_Session_Struct *session,long elem_loc, char **eD
 	 * in our storage cache, if so just pull the ptr from
 	 * the cache info.
 	 */
-	if (session->current_cache_entry->ca_data.elem_loc == elem_loc) /* index same as current */
-	{
-		*eData = session->current_cache_entry->ca_data.dptr; /* in current addressed cache */
-		return (DB_NO_ERR);
-	}
+	if ((session->current_cache_entry->ca_data.elem_loc == elem_loc) &&
+       (session->current_cache_entry->ca_data.dptr != NULL))
+   /* index same as current */
+   {
+      *eData = session->current_cache_entry->ca_data.dptr; /* in current addressed cache */
+      return (DB_NO_ERR);
+   }
 
 	/* otherwise it's not in the currently addressed cache block, so
 	 * we need to read in it's data */

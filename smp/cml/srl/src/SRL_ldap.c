@@ -85,11 +85,16 @@ statically linking or dynamically linking at load-time. */
 
 /* Standard options */
 #define LDAP_OPT_REFERRALS              0x08	/*  8 */
+#define LDAP_OPT_PROTOCOL_VERSION	    0x11	/* 17 */
 
 /* search scopes */
 #define LDAP_SCOPE_BASE         0x00
 #define LDAP_SCOPE_ONELEVEL     0x01
 #define LDAP_SCOPE_SUBTREE      0x02
+
+/* LDAP version */
+#define LDAP_VERSION2   	2
+#define LDAP_VERSION3   	3
 
 
 /* ------------------- */
@@ -1420,8 +1425,14 @@ LDAP *SRLi_LdapInit(LDAPInfo_struct *f)
 	{
 		// The ldap set_option is optional
 		if (f->LDAPFunctions->set_option != NULL)
+      {
+         /* Set the version */
+         int version = LDAP_VERSION3;
+         f->LDAPFunctions->set_option(f->ldapIDinfo->ldapID, LDAP_OPT_PROTOCOL_VERSION, &version);
+
 			/* Set the referral option */
 			f->LDAPFunctions->set_option(f->ldapIDinfo->ldapID, LDAP_OPT_REFERRALS, LDAP_OPT_ON);
+      }
 
 		/* Enable caching of LDAP results 
 		{FUTURE} -- need support of Netscape LDAP library

@@ -364,7 +364,7 @@ protected:
       m_bACLUseToValidate=false; m_bACLFatalFail = false; m_bCompressDataFlag = false;
       }
 
-    void CSM_CommonData::ClearAll();
+    void ClearAll();
 
 
 public:
@@ -914,7 +914,7 @@ public:
     bool IsCompressedData();
     bool IsTimeStampTokenData();
     CSM_Buffer *AccessEncodedCI();
-    void SetEncodedCI(CSM_Buffer &Buffer);
+    void SetEncodedCI(const CSM_Buffer& buffer);
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -1090,6 +1090,9 @@ public:
     bool m_bIssOrSki;
 
     // PUBLIC MEMBER FUNCTIONS
+    const SNACC::SignedData& AccessSignedData() const {
+		 return m_SnaccSignedData; }
+
     SM_RET_VAL Sign(CSMIME *pCSMIME);
 
     void SetIncludeContentFlag(bool bFlag=true) { m_IncludeContent = bFlag; }

@@ -102,7 +102,7 @@ static CM_MgrInfo gCM_MgrInfo;
 
 /************************************************************************
  FUNCTION:  CML::SetPolicy()
- 
+
  Description: This function set the initial path processing settings for
  the specified session.
 *************************************************************************/
@@ -118,14 +118,14 @@ void CML::SetPolicy(ulong sessionID, const ASN::OIDList& policies,
 	Session& session = gCM_MgrInfo.GetSession(sessionID);
 
 	// Copy the settings
-	session.SetPolicySettings(policies, requireExplicitPolicy, 
+	session.SetPolicySettings(policies, requireExplicitPolicy,
 		inhibitPolicyMapping, inhibitAnyPolicy);
 }
 
 
 /************************************************************************
  FUNCTION:  CM_SetLogSettings()
- 
+
  Description: This function sets the log file name and level used when
  building and validating certificate paths.
 *************************************************************************/
@@ -160,8 +160,10 @@ CM_MgrInfo::~CM_MgrInfo()
 		if ((rv == CKR_OK) && (pFuncs->C_Finalize != NULL))
 			pFuncs->C_Finalize(NULL_PTR);
 
+#ifndef ENABLE_STATIC
 		// Free the PKCS #11 library
 		FreeLibrary(m_defaultPkcsLib);
+#endif
 	}
 }
 
@@ -172,7 +174,7 @@ ulong CM_MgrInfo::AddSession(const InitSettings_struct& settings)
 	try {
 		// Acquire or lock the mutex
 		ASN::MutexLock lock = mMutex.AcquireLock();
-		
+
 		// Create a unique ref id for this session
 		ref = GenRandomSessionID(&settings);
 		if (ref == 0)
@@ -197,10 +199,16 @@ void CM_MgrInfo::DeleteSession(ulong sessionID)
 	// Acquire or lock the mutex
 	ASN::MutexLock lock = mMutex.AcquireLock();
 
-	ulong numErased = m_sessions.erase(sessionID);
-
-	if (numErased == 0)
+	// Find the session
+	SessionMap::iterator i = m_sessions.find(sessionID);
+	if (i == m_sessions.end())
 		throw CML_ERR(CM_SESSION_NOT_VALID);
+
+	// Terminate the session
+	i->second.Terminate();
+
+	// Erase the entry
+	m_sessions.erase(i);
 }
 
 
@@ -220,6 +228,7 @@ Session& CM_MgrInfo::GetSession(ulong sessionID)
 
 CM_GetFuncListFP CM_MgrInfo::InitDefaultPKCS11Lib(HMODULE& hDefaultToken)// CK_FUNCTION_LIST_PTR pPkcsFuncs)
 {
+#ifndef ENABLE_STATIC
 	// Lock the mutex
 	ASN::MutexLock lock = mMutex.AcquireLock();
 
@@ -230,7 +239,7 @@ CM_GetFuncListFP CM_MgrInfo::InitDefaultPKCS11Lib(HMODULE& hDefaultToken)// CK_F
 		m_defaultPkcsLib = LoadLibrary(DEFAULT_PKCS11_LIBRARY);
 		if (m_defaultPkcsLib == NULL)
 			throw CML_ERR(CM_DEFAULT_CRYPTO_TOKEN_ERR);
-		
+
 		try {
 			// Get the address of the C_GetFunctionList() function
 #ifdef HPUX32
@@ -242,13 +251,13 @@ CM_GetFuncListFP CM_MgrInfo::InitDefaultPKCS11Lib(HMODULE& hDefaultToken)// CK_F
 #endif
 			if (m_pGetFuncs == NULL)
 				throw CML_ERR(CM_DEFAULT_CRYPTO_TOKEN_ERR);
-			
+
 			// Call C_GetFunctionList() to get the function pointers
 			CK_FUNCTION_LIST_PTR pFuncs;
 			CK_RV rv = m_pGetFuncs(&pFuncs);
 			if (rv != CKR_OK)
 				throw PKCS_ERR(rv);
-			
+
 			// Call C_Initialize() if present
 			if (pFuncs->C_Initialize != NULL)
 			{
@@ -268,6 +277,7 @@ CM_GetFuncListFP CM_MgrInfo::InitDefaultPKCS11Lib(HMODULE& hDefaultToken)// CK_F
 	}
 
 	hDefaultToken = m_defaultPkcsLib;
+#endif //ENABLE_STATIC
 	return m_pGetFuncs;
 }
 
@@ -518,12 +528,8 @@ Session::~Session()
 	ASN::MutexLock lock = mMutex.AcquireLock();
 
 	delete pCertCache;
-
-	if (pCRL)
-		delete pCRL;
-
-	if (pSRL != NULL)
-		delete pSRL;
+	delete pCRL;
+	delete pSRL;
 }
 
 void Session::Initialize(ulong sessionID, const InitSettings_struct& settings,  ASN::MutexLock& mgrLock)
@@ -532,7 +538,7 @@ void Session::Initialize(ulong sessionID, const InitSettings_struct& settings,  
 	ASN::MutexLock lock = mMutex.AcquireLock();
 	// Release the CM_MgrInfo mutex
 	mgrLock.Release();
-	
+
 	// Initialize member variables
 	func.extHandle = settings.extHandle;
 	func.pGetObj = settings.pGetObj;
@@ -546,7 +552,7 @@ void Session::Initialize(ulong sessionID, const InitSettings_struct& settings,  
       m_returnRevData = false;
    else
       m_returnRevData = true;
-	
+
 	// Check that the retrieval callback function pointers are properly specified
 	if ((func.pUrlGetObj != NULL) && (func.pGetObj == NULL))
 		throw CML_ERR(CM_NO_GET_OBJ);
@@ -563,7 +569,7 @@ void Session::Initialize(ulong sessionID, const InitSettings_struct& settings,  
 			settings.certCacheTTL);
 		if (pCertCache == NULL)
 			throw CML_MEMORY_ERR;
-		
+
 		// Create a Storage and Retrieval library session if pGetObj
 		// callback function not provided
 		if (func.pGetObj == NULL)
@@ -605,13 +611,13 @@ void Session::Initialize(ulong sessionID, const InitSettings_struct& settings,  
 			if (pCRL == NULL)
 				throw CML_MEMORY_ERR;
 		}
-		
+
 		// Set the max paths setting
 		if (settings.nMaxPaths == 0)
 			nMaxPaths = DEFAULT_MAX_PATHS;
 		else
 			nMaxPaths = settings.nMaxPaths;
-		
+
 		// Load the trusted certs, if provided or retrieved from SRL
 		if (pTrustedCerts != NULL)
 		{
@@ -724,9 +730,18 @@ short Session::VerifySignature(const ASN::Bytes& signedData,
 	return tokenList.Verify(signedData, signature, pubKey, pubKeyParams);
 }
 
-const CrlSession* Session::GetCRLSession() const
+void Session::Terminate()
 {
-	return pCRL;
+	// Acquire a handle to the mutex
+	ASN::MutexLock lock = mMutex.AcquireLock();
+
+	// Release the CRL server session if present
+	if (pCRL != NULL)
+		pCRL->Release();
+
+	// Release the SRL session if present
+	if (pSRL != NULL)
+		pSRL->Release();
 }
 
 
@@ -782,7 +797,7 @@ CryptoHandles& CryptoHandles::operator=(const CM_CryptoTokenList& tokenHandles)
 			default:
 				throw CML_ERR(CM_INVALID_PARAMETER);
 			}
-			
+
 			// Append the token to the list
 			if (pNew != NULL)
 				insert(end(), pNew);
@@ -838,17 +853,33 @@ void CryptoHandles::LoadDefaultToken()
 
 	// Initialize the default PKCS #11 library
 	CM_PKCS11Token pkcsToken;
+#ifndef ENABLE_STATIC
 	pkcsToken.pGetFuncList = gCM_MgrInfo.InitDefaultPKCS11Lib(pkcsToken.hLibrary);
+#else
+	pkcsToken.pGetFuncList = C_GetFunctionList;
+	pkcsToken.hLibrary = NULL;
+#endif // ENABLE_STATIC
 
 	// Call C_GetFunctionList() to get the function pointers
 	CK_FUNCTION_LIST_PTR pFuncs;
-	CK_RV rv = pkcsToken.pGetFuncList(&pFuncs);
+	CK_RV retval = pkcsToken.pGetFuncList(&pFuncs);
+	if (retval != CKR_OK)
+		throw PKCS_ERR(retval);
+
+#ifdef ENABLE_STATIC
+	// Initialize the session if we linked statically.
+	// Call C_Initialize() if present
+	CK_C_INITIALIZE_ARGS initArgs;
+	memset(&initArgs, 0, sizeof(CK_C_INITIALIZE_ARGS));
+	initArgs.flags = CKF_OS_LOCKING_OK;
+	CK_RV rv = pFuncs->C_Initialize(&initArgs);
 	if (rv != CKR_OK)
 		throw PKCS_ERR(rv);
+#endif //ENABLE_STATIC
 
 	// Call C_OpenSession()
 	CK_FLAGS sessionFlags = CKF_SERIAL_SESSION;
-	rv = pFuncs->C_OpenSession(0, sessionFlags, NULL, NULL_PTR,
+	CK_RV rv = pFuncs->C_OpenSession(0, sessionFlags, NULL, NULL_PTR,
 		&pkcsToken.session);
 	if (rv != CKR_OK)
 		throw PKCS_ERR(rv);
@@ -893,6 +924,7 @@ short CryptoHandles::Verify(const ASN::Bytes& signedData,
 ////////////////////////////////////////
 PKCS11_Handle::PKCS11_Handle(CM_PKCS11Token token, bool cmlCreated)
 {
+#ifndef ENABLE_STATIC
 	// If the C_GetFunctionList() function pointer wasn't provided,
 	// get its address from the library handle
 	if (token.pGetFuncList == NULL)
@@ -907,6 +939,7 @@ PKCS11_Handle::PKCS11_Handle(CM_PKCS11Token token, bool cmlCreated)
 		if (token.pGetFuncList == NULL)
 			throw CML_ERR(CM_CRYPTO_TOKEN_ERROR);
 	}
+#endif //ENABLE_STATIC
 
 	m_handle = token.session;
 	m_createdInternally = cmlCreated;
@@ -1248,7 +1281,7 @@ static ErrorEntry gErrorTable[] = {
 //	{ CM_CRL_PATH_NOT_FOUND, "unable to build the path for this CRL"},
 //	{ CM_CRL_PATH_NOT_VALID, "error validating the path for this CRL"},
 //	{ CM_UNRECOGNIZED_NAME_CONSTRAINTS, "unsupported critical name constraints form"},
-	{ CM_INVALID_EXT_KEY_USE, "invalid critical extended key usage" },
+//	{ CM_INVALID_EXT_KEY_USE, "invalid critical extended key usage" },
 	{ CM_INVALID_TRUSTED_CERT_DN, "subject DN missing from trusted cert" },
 //	{ CM_TRUSTED_CERT_NOT_SELF_SIGNED, "trusted certificate not self-signed" },
 	{ CM_TRUSTED_CERT_NOT_SIG_KEY, "trusted cert does not contain a signature key" },

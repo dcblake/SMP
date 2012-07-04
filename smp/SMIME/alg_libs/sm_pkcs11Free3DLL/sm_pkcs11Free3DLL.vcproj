@@ -13,7 +13,7 @@
 	<Configurations>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\Release"
+			OutputDirectory=".\..\..\..\SMPDist\lib"
 			IntermediateDirectory=".\Release"
 			ConfigurationType="2"
 			UseOfMFC="0"
@@ -39,18 +39,16 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying $(TargetPath) to system32"
-				CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+				CommandLine="copy &quot;$(TargetPath)&quot; $(WINDIR)\system32
 "
-				Outputs="$(windir)\system32\$(InputName).dll"/>
+				Outputs="$(WINDIR)\system32\$(InputName).dll"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../../../SMPDist/lib/cryptlib.lib ../sm_free3/Release/sm_free3DLL.lib ../sm_pkcs11/Release/sm_pkcs11DLL.lib wsock32.lib"
 				OutputFile="../../../SMPDist/sfl/alg_libs/sm_pkcs11/sm_pkcs11Free3DLL.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				ProgramDatabaseFile=".\Release/sm_pkcs11Free3DLL.pdb"
-				ImportLibrary=".\Release/sm_pkcs11Free3DLL.lib"
+				ImportLibrary="&quot;$(TargetDir)&quot;/sm_pkcs11Free3DLL.lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -83,7 +81,7 @@ copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\Debug"
+			OutputDirectory=".\..\..\..\SMPDist\lib"
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="2"
 			UseOfMFC="0"
@@ -110,18 +108,16 @@ copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 				Name="VCCustomBuildTool"
 				Description="Copying $(TargetPath) to system32"
 				CommandLine="copy &quot;$(TargetPath)&quot; $(WINDIR)\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 "
-				Outputs="$(WINDIR)\system32\$(TargetName).dll"/>
+				Outputs="$(WINDIR)\system32\$(InputName).dll"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../../../SMPDist/lib/cryptlib_d.lib ../sm_free3/Debug/sm_free3DLLd.lib ../sm_pkcs11/Debug/sm_pkcs11DLLd.lib wsock32.lib"
 				OutputFile="../../../../SMPDist/lib/sm_pkcs11Free3DLLd.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug/sm_pkcs11Free3DLLd.pdb"
-				ImportLibrary=".\Debug/sm_pkcs11Free3DLLd.lib"
+				ImportLibrary="&quot;$(TargetDir)&quot;/sm_pkcs11Free3DLLd.lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -306,18 +302,14 @@ copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -327,17 +319,13 @@ copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -346,18 +334,14 @@ copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -367,17 +351,31 @@ copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\smpdist\lib\cryptlib.lib">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\smpdist\lib\cryptlib_d.lib">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -386,18 +384,14 @@ copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -407,17 +401,13 @@ copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -426,18 +416,14 @@ copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -447,17 +433,49 @@ copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="copy ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\SMPDist\sfl\alg_libs\sm_pkcs11
-"/>
+						CommandLine=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\smpdist\lib\sm_free3DLL.lib">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\smpdist\lib\sm_free3DLLd.lib">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\smpdist\lib\sm_pkcs11DLL.lib">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\smpdist\lib\sm_pkcs11DLLd.lib">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
 				</FileConfiguration>
 			</File>
 		</Filter>

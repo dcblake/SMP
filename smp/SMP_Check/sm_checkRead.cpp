@@ -4,7 +4,8 @@
 #include "sm_api.h"
 #include "sm_AppLogin.h"
 
-//#define DISABLE_CML_ACL
+// Define _MSG_DATA_FILE with name of file to dump additional data
+#define _MSG_DATA_FILE  "msgDataOutput.txt"
 
 using namespace SFL;
 using namespace CERT;
@@ -16,7 +17,9 @@ using namespace SNACC;
 
 void    checkRead(CSMIME *pAppLogin, 
                   const char *msgData, long msgLength,
+#ifdef ACL_USED
                   acl::Session *pACLsession,
+#endif
                   long lCMLSessionIdIN, long lSRLSessionIdIN)
 {
     char *lpszError=NULL;
@@ -32,6 +35,10 @@ void    checkRead(CSMIME *pAppLogin,
 
     pAppLogin->UseAll();
     pAppLogin->UseAllEncryptors();
+
+#ifdef _MSG_DATA_FILE
+    std::ofstream outputFile(_MSG_DATA_FILE);
+#endif // _MSG_DATA_FILE
 
          // construct message to encrypt.
         char *lpszExpected_msgStr = "Content-Type: Text/Plain\nContent-Transfer-Encoding:7bit\n\rTestMessage\n\r";
@@ -74,9 +81,10 @@ void    checkRead(CSMIME *pAppLogin,
             // FINISHED decrypting; the PreProc will align only the 1st valid 
             //  RecipientInfo.  This logic checks which RecipientInfo was 
             //  decrypted.
-            MsgToDecrypt.ReportMsgData(std::cout);
-            std::cout << "checkRead:  Decrypting operation worked fine.\n";
-            std::cout.flush();
+#ifdef _MSG_DATA_FILE
+            MsgToDecrypt.ReportMsgData(outputFile);
+#endif // _MSG_DATA_FILE
+				std::cout << "checkRead:  Decrypting operation worked fine." << std::endl;
 
             // THE ACL VALIDATION MUST WAIT FOR THE Inner-Content SignedData 
             //  processing in order to extract the Mesage Securtiy Label (and
@@ -119,6 +127,7 @@ void    checkRead(CSMIME *pAppLogin,
 #endif      // DISABLE_CML_ACL
              MsgToVerify2.m_lCmlSessionId = lCMLSessionIdIN;
              MsgToVerify2.m_lSrlSessionId = lSRLSessionIdIN;
+#ifdef ACL_USED
              if (pACLsession)     // SETUP decrypter to ACL validate 
              {                    //   originator AND us.
 #ifdef DISABLE_CML_ACL
@@ -139,11 +148,15 @@ void    checkRead(CSMIME *pAppLogin,
                //RWC11;CML::ASN::CertificationPath CMLCertPath(CMLcpBuf);
                //RWC11;MsgToVerify2.m_ACLInterface.setPathBufs(CMLCertPath);  // OPTIONAL cert path buffers (normally looked up).
              }      // END if pACLsession
+#endif //ACL_USED
              if (MsgToVerify2.PreProc(pAppLogin, pSecondSignedDataBuffer, NULL) == 
                  SM_NO_ERROR)
              {
               //  Perform the signature verification.
-               if (pACLsession &&      // SETUP decrypter to ACL validate 
+               if (
+#ifdef ACL_USED
+                   pACLsession &&      // SETUP decrypter to ACL validate
+#endif
                    MsgToVerify2.m_pSignerInfos &&
                    MsgToVerify2.m_pSignerInfos->begin()->AccessCerts() && 
                    MsgToVerify2.m_pSignerInfos->begin()->AccessCerts()->size())
@@ -152,32 +165,55 @@ void    checkRead(CSMIME *pAppLogin,
                         begin()->AccessEncodedCert());     // SETUP AFTER PreProc(...)
               if (MsgToVerify2.Verify(pAppLogin) == SM_NO_ERROR)
               {
-                  std::cout << "########### OUTER SIGNED DATA RESULTS. ########\n";
-                  MsgToVerify2.ReportMsgData(std::cout);  // SIMPLY report success/failure.
-                  CSM_Buffer *pOrigContent = new CSM_Buffer(
-                     MsgToVerify2.AccessEncapContentClear()->m_content.Access(), 
-                     MsgToVerify2.AccessEncapContentClear()->m_content.Length());
-                  if (strcmp(pOrigContent->Access(), lpszExpected_msgStr) == 0)
-                     std::cout << "####### OUTER SIGNED DATA CONTENT matched original.\n";
-                  else
-                     std::cout << "####### OUTER SIGNED DATA CONTENT DID NOT matched original.\n";
-                  delete pOrigContent;
-                  std::cout.flush();
-              }
+					  bool contentMatches = (strcmp(lpszExpected_msgStr,
+						  MsgToVerify2.AccessEncapContentClear()->m_content.Access()) == 0);
+					  std::cout << "checkRead:  Verifying operation ";
+					  if (contentMatches)
+						  std::cout << "worked fine." << std::endl;
+					  else
+					  {
+						  std::cout << "FAILED! -- Outer SignedData content did " <<
+							  "not match original" << std::endl;
+					  }
+#ifdef _MSG_DATA_FILE
+					  outputFile << "\n\n########### OUTER SIGNED DATA RESULTS. ########\n";
+					  MsgToVerify2.ReportMsgData(outputFile);
+					  if (contentMatches)
+						  outputFile << "\n####### OUTER SIGNED DATA CONTENT matched original.\n";
+					  else
+						  outputFile << "\n####### OUTER SIGNED DATA CONTENT DID NOT match original.\n";
+#endif // _MSG_DATA_FILE
+				  }
               else
               {
-                 SME_THROW(22, "checkRead:  Verify(...) failed.", NULL);
+					  std::cout << "checkRead:  Verifying operation FAILED!";
+					  std::cout << std::endl;
+                 SME_THROW(22, "checkRead:  Verify() failed.", NULL);
               }
               delete pSecondSignedDataBuffer;
              }      // END if pFirstSignedDataBuffer.
            }         // END if no user content specified.
            else
            {      // OPTIONALLY compare original passed in by user.
-               CSM_Buffer ABUF(msgData, msgLength);
-               if (MsgToVerify2.AccessEncapContentClear()->m_content == ABUF)  // BINARY compare.
-                  std::cout << "####### OUTER SIGNED DATA CONTENT matched user specified buffer.\n";
-               else
-                  std::cout << "####### OUTER SIGNED DATA CONTENT DID NOT matched user specified buffer.\n";
+				  CSM_Buffer ABUF(msgData, msgLength);
+				  bool contentMatches = (ABUF ==
+					  MsgToVerify2.AccessEncapContentClear()->m_content);
+				  std::cout << "checkRead:  Verifying operation ";
+				  if (contentMatches)
+					  std::cout << "worked fine." << std::endl;
+				  else
+				  {
+					  std::cout << "FAILED! -- Outer SignedData content did " <<
+						  "not match user specified buffer" << std::endl;
+				  }
+#ifdef _MSG_DATA_FILE
+				  outputFile << "\n\n########### OUTER SIGNED DATA RESULTS. ########\n";
+				  MsgToVerify2.ReportMsgData(outputFile);
+				  if (contentMatches)
+					  outputFile << "\n####### OUTER SIGNED DATA CONTENT matched user specified buffer.\n";
+				  else
+					  outputFile << "\n####### OUTER SIGNED DATA CONTENT DID NOT match user specified buffer.\n";
+#endif // _MSG_DATA_FILE
            }
         }      // END if (pSecondSignedDataBuffer)
 
@@ -218,6 +254,7 @@ void    checkRead(CSMIME *pAppLogin,
                  }      // END if pSignerCerts
               }     // END IF SignedAttrs present.
             // NOW, perform ACL setup/check.
+#ifdef ACL_USED
             if (pACLsession && pACLMsgLabel)        // SETUP decrypter to ACL validate 
                                     //   originator AND us.
             {
@@ -251,6 +288,7 @@ void    checkRead(CSMIME *pAppLogin,
                //RWC11;MsgToDecrypt.m_ACLInterface.setPathBufs(CMLCertPath);  // OPTIONAL cert path buffers (normally looked up).
                lstatus = MsgToDecrypt.ACLCheckoutCerts();
             }       // END if pACLsession
+#endif
             if (pACLMsgLabel)
                delete pACLMsgLabel;
 

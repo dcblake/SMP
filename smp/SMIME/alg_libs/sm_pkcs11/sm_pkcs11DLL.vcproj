@@ -14,7 +14,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\Debug"
+			OutputDirectory=".\..\..\..\SMPDist\lib"
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="2"
 			UseOfMFC="0"
@@ -41,9 +41,8 @@
 				Name="VCCustomBuildTool"
 				Description="Copying $(TargetPath) to system32"
 				CommandLine="copy &quot;$(TargetPath)&quot; $(WINDIR)\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 "
-				Outputs="$(WINDIR)\system32\$(TargetName).dll"/>
+				Outputs="$(WINDIR)\system32\$(InputName).dll"/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="wsock32.lib ../../../../SMPDist/lib/cmapi_d.lib"
@@ -52,7 +51,7 @@ copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 				SuppressStartupBanner="TRUE"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug/sm_pkcs11DLLd.pdb"
-				ImportLibrary=".\Debug/sm_pkcs11DLLd.lib"
+				ImportLibrary="&quot;$(TargetDir)&quot;/sm_pkcs11DLLd.lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -85,7 +84,7 @@ copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\Release"
+			OutputDirectory=".\..\..\..\SMPDist\lib"
 			IntermediateDirectory=".\Release"
 			ConfigurationType="2"
 			UseOfMFC="0"
@@ -111,10 +110,9 @@ copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying $(TargetPath) to system32"
-				CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
+				CommandLine="copy &quot;$(TargetPath)&quot; $(WINDIR)\system32
 "
-				Outputs="$(WINDIR)\system32\$(TargetName).dll"/>
+				Outputs="$(WINDIR)\system32\$(InputName).dll"/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="wsock32.lib ../../../../SMPDist/lib/cmapi.lib"
@@ -122,7 +120,7 @@ copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				ProgramDatabaseFile=".\Release/sm_pkcs11DLL.pdb"
-				ImportLibrary=".\Release/sm_pkcs11DLL.lib"
+				ImportLibrary="&quot;$(TargetDir)&quot;/sm_pkcs11DLL.lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -529,17 +527,13 @@ cd &quot;$(InputDir)&quot;
 				ExcludedFromBuild="TRUE">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 		</File>
 		<File
@@ -548,18 +542,14 @@ copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 				Name="Debug|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|Win32"
 				ExcludedFromBuild="TRUE">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 		</File>
 		<File
@@ -569,17 +559,13 @@ copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 				ExcludedFromBuild="TRUE">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 		</File>
 		<File
@@ -588,18 +574,14 @@ copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 				Name="Debug|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|Win32"
 				ExcludedFromBuild="TRUE">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 		</File>
 		<File
@@ -609,17 +591,13 @@ copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 				ExcludedFromBuild="TRUE">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 		</File>
 		<File
@@ -628,18 +606,14 @@ copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 				Name="Debug|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|Win32"
 				ExcludedFromBuild="TRUE">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 		</File>
 		<File
@@ -649,17 +623,13 @@ copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 				ExcludedFromBuild="TRUE">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 		</File>
 		<File
@@ -668,18 +638,14 @@ copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
 				Name="Debug|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy DEBUG\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 			<FileConfiguration
 				Name="Release|Win32"
 				ExcludedFromBuild="TRUE">
 				<Tool
 					Name="VCCustomBuildTool"
-					CommandLine="copy ..\..\..\..\SMPDist\lib\&quot;$(InputName)&quot;.dll &quot;$(windir)&quot;\system32
-copy RELEASE\&quot;$(TargetName)&quot;.lib ..\..\..\..\SMPDist\lib
-"/>
+					CommandLine=""/>
 			</FileConfiguration>
 		</File>
 		<File

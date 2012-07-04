@@ -178,16 +178,16 @@ echo &quot;NAME=&quot; &quot;$(InputName)&quot;
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying $(TargetPath) to system32"
-				CommandLine="copy $(TargetPath) %WINDIR%\system32
+				CommandLine="copy &quot;$(TargetPath)&quot; $(WINDIR)\system32
 "
-				Outputs="$(windir)\system32\$(TargetName).dll"/>
+				Outputs="$(WINDIR)\system32\$(InputName).dll"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wsock32.lib ../../../../SMPDist/lib/cryptlib.lib Advapi32.lib"
+				AdditionalDependencies="wsock32.lib"
 				OutputFile="../../../../SMPDist/lib/sm_free3DLL.dll "
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				ImportLibrary=".\Release/sm_free3DLL.lib"
+				ImportLibrary="&quot;$(TargetDir)&quot;/sm_free3DLL.lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -241,23 +241,23 @@ echo &quot;NAME=&quot; &quot;$(InputName)&quot;
 				BrowseInformation="1"
 				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
-				DebugInformationFormat="3"
+				DebugInformationFormat="1"
 				CompileAs="0"/>
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying $(TargetPath) to system32"
 				CommandLine="copy &quot;$(TargetPath)&quot; $(WINDIR)\system32
 "
-				Outputs="$(WINDIR)\system32\$(TargetName).dll"/>
+				Outputs="$(WINDIR)\system32\$(InputName).dll"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wsock32.lib ../../../../SMPDist/lib/cryptlib_d.lib Advapi32.lib"
+				AdditionalDependencies="wsock32.lib"
 				OutputFile="..\..\..\..\SMPDist\lib\sm_free3DLLd.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug/sm_free3DLLd.pdb"
-				ImportLibrary=".\Debug/sm_free3DLLd.lib"
+				ImportLibrary="&quot;$(TargetDir)&quot;/sm_free3DLLd.lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -763,6 +763,36 @@ echo &quot;NAME=&quot; &quot;$(InputName)&quot;
 			Name="libs"
 			Filter="*.lib">
 			<File
+				RelativePath="..\..\..\..\SMPDist\lib\cmapi.lib">
+				<FileConfiguration
+					Name="Debug OpenSSL|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\SMPDist\lib\cmapi_d.lib">
+				<FileConfiguration
+					Name="Release OpenSSL|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="..\..\..\..\SMPDist\lib\cmlasn.lib">
 				<FileConfiguration
 					Name="Debug OpenSSL|Win32"
@@ -900,6 +930,24 @@ echo &quot;NAME=&quot; &quot;$(InputName)&quot;
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine=""/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\smpdist\lib\cryptlib.lib">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\smpdist\lib\cryptlib_d.lib">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCustomBuildTool"/>
 				</FileConfiguration>
 			</File>
 			<File

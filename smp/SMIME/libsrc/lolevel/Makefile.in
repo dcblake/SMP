@@ -19,6 +19,7 @@ INCLUDE       = -I. \
                 -I../../../cml/cmapi/inc \
                 -I../../../cml/cmlasn/inc \
                 -I../../../cml/srl/inc \
+		-I../../../cml/crlsrv_dll/inc \
                 -I../../libCtilMgr/inc  \
                 -I../../../pkcs11_cryptopp/inc
 

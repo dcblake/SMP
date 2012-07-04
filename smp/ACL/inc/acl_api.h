@@ -268,7 +268,7 @@ public:
 
    // Add the new DN and OID to the trust list if the DN and OID
    // do not already exist in the list
-   int addTrust(CML::ASN::DN &dn, SNACC::AsnOid &oid);
+   int addTrust(const CML::ASN::DN& dn, const SNACC::AsnOid& oid);
 
    // Returns true if DN and OID are found in trust list
    bool findTrust(const CML::ASN::DN &DN, const SNACC::AsnOid &Id);
@@ -726,7 +726,7 @@ public:
    static char *DetermineSPIF_secCatTagSetString(const SPIF &SPIF_in, 
            const SNACC::AsnOid &OIDCatTagSet,
            SNACC::SecurityCategoryTagSet *&pSPIFsecCatTags); //RETURNED
-   static char *PrintableLabel::DetermineSPIF_secCategoryName(
+   static char *DetermineSPIF_secCategoryName(
                              const SNACC::TagCategories &SPIFtagCat);
 
    // PUBLIC DATA MEMBERS

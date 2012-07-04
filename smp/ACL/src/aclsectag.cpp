@@ -43,7 +43,7 @@ CSecurityTag::CSecurityTag()
 void CSecurityTag::enumAnd(SecTagPrivList *&results, SecTagPrivList &userEnum,
                            SecTagPrivList &caEnum)
 {
-   results = new SecTagPrivList;
+   SecTagPrivList tmpResults;
    SecTagPrivList::iterator pTmpUserSecAttr;
    SecTagPrivList::iterator pTmpCaSecAttr;
 
@@ -56,10 +56,11 @@ void CSecurityTag::enumAnd(SecTagPrivList *&results, SecTagPrivList &userEnum,
          // Where the two match create the same attribute in the results
          if (*pTmpUserSecAttr == *pTmpCaSecAttr)
          {
-            results->push_back(*pTmpUserSecAttr);
+            tmpResults.push_back(*pTmpUserSecAttr);
          }
       }
    }
+   *results = tmpResults;
 } // END OF MEMBER FUNCTION enumAnd
 
 // isTagTypeEqual:
@@ -412,7 +413,7 @@ void CSecurityTag::addTagSet(StandardSecurityLabel *&pLblTagSets, const AsnOid &
                              const SecurityCategoryTag &spfCatTag)
 {
    StandardSecurityLabel::iterator pNewLblTagSet;
-   SecurityTags::iterator pNewSecTag = NULL;
+   SecurityTags::iterator pNewSecTag; // = NULL;
    SecurityTagSeq1SetOf *pEnumAtts = NULL;
    bool found = false;
 

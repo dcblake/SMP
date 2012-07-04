@@ -97,7 +97,7 @@ class List : public std::list<T>
 {
 public:
 	// Appends newly inserted element to list and returns its iterator
-	typename std::list<T>::iterator append(const T& x = T())			{ return insert(end(), x); }
+	typename std::list<T>::iterator append(const T& x = T())			{ return insert(this->end(), x); }
 };      // END List
 
 

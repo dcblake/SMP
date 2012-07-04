@@ -652,6 +652,15 @@ short SRLi_GetAllCertificates (ulong sessionID, CM_DN subject_dn,
 					db_lock("SRLi_GetAllCertificates", __LINE__);
 					SRLi_DatabaseAdd(sessionID, &atList->encObj, atList->typeMask,
 						req_kid.item_ptr);
+               /*
+                * If this is a URL based request, add the cert to the database 
+                * by the DN so it can be found by the CML during revocation
+                * checking. May want to change this in future so only one
+                * item is added, but can be searched by both URL and DN.
+                */
+               if (url != NULL)
+                  SRLi_DatabaseAdd(sessionID, &atList->encObj, 
+                     atList->typeMask, NULL);
 					db_unlock("SRLi_GetAllCertificates", __LINE__);
 				}
 			}

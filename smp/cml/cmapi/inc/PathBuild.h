@@ -251,7 +251,7 @@ public:
 
 	// Operations
 	// Function to add another BaseNode as an issuer of this one
-	PathLinkList::iterator BaseNode::AddIssuer(BaseNode* pIssuer);
+	PathLinkList::iterator AddIssuer(BaseNode* pIssuer);
 	// Function to add an issuer cert from a cached path
 	void AddCachedIssuer(BaseNode* pIssuer, const PathStack& curPath,
 		float curProb);

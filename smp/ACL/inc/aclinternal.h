@@ -144,7 +144,7 @@ public:
    //
    //    static bool findLabelAndCertValue (SNACC::SecurityTag &secTag,
    //                                       SNACC::AsnInt &labelAndCertValue );
-   static void CSecurityTag::enumAnd(SecTagPrivList *&results,
+   static void enumAnd(SecTagPrivList *&results,
                               SecTagPrivList &userEnum,
                               SecTagPrivList &caEnum);
    

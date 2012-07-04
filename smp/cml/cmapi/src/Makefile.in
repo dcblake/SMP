@@ -37,7 +37,7 @@ INCLUDE       += -I$(CMAPI) -I$(CMLASNINC) -I$(CRLSRVINC) -I$(PKCS11CRYTOPPINC) 
 
 ## Specify the sources
 CSRCS	      = $(wildcard *.c)
-CPPSRCS       = $(wildcard *.cpp) 
+CPPSRCS       = $(filter-out CM_CtilSignature.cpp,$(wildcard *.cpp))
 COBJS         = $(CSRCS:.c=.o) 	
 CPPOBJS       = $(CPPSRCS:.cpp=.o) 
 OBJS	      = $(CPPOBJS) $(COBJS)

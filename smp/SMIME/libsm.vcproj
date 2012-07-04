@@ -120,7 +120,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zm300 "
 				Optimization="4"
-				AdditionalIncludeDirectories="../cml/cmapi/inc,../cml/srl/inc,../../SMPDist/include/esnacc/c++,./libsrc/zlib/src,./libCtilMgr/inc,./inc,../cml/cmlasn/inc,../acl/inc,../pkcs11_cryptopp/inc"
+				AdditionalIncludeDirectories="./inc;&quot;../../SMPDist/include/esnacc/c++&quot;;./libsrc/zlib/src;./libCtilMgr/inc;../cml/cmlasn/inc;../cml/cmapi/inc;../cml/srl/inc;../cml/crlsrv_dll/inc;../acl/inc;../pkcs11_cryptopp/inc"
 				PreprocessorDefinitions="_DEBUG;_WINDOWS;NO_SCCS_ID;WIN32"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
@@ -171,7 +171,7 @@
 				AdditionalOptions="/Zm300 "
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="../cml/cmapi/inc,../cml/srl/inc,../../SMPDist/include/esnacc/c++,./libsrc/zlib/src,./libCtilMgr/inc,./inc,../cml/cmlasn/inc,../acl/inc,../pkcs11_cryptopp/inc"
+				AdditionalIncludeDirectories="./inc;&quot;../../SMPDist/include/esnacc/c++&quot;;./libsrc/zlib/src;./libCtilMgr/inc;../cml/cmlasn/inc;../cml/cmapi/inc;../cml/srl/inc;../cml/crlsrv_dll/inc;../acl/inc;../pkcs11_cryptopp/inc"
 				PreprocessorDefinitions="NDEBUG;_WINDOWS;NO_SCCS_ID;WIN32"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -1571,10 +1571,10 @@ move &quot;$(InputName)&quot;.h ..\..\inc
 			Name="Include Files"
 			Filter=".h">
 			<File
-				RelativePath="..\cml\cmlasn\include\AttributeCertificateDefinitions.h">
+				RelativePath="..\cml\cmlasn\inc\AttributeCertificateDefinitions.h">
 			</File>
 			<File
-				RelativePath="..\cml\cmlasn\inc\AttributeCertificateDefinitions.h">
+				RelativePath="..\cml\cmlasn\include\AttributeCertificateDefinitions.h">
 			</File>
 			<File
 				RelativePath="..\cml\cmlasn\inc\AuthenticationFramework.h">

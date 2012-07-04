@@ -21,7 +21,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\cmapi\inc,..\cmlasn\inc,inc,..\..\..\SMPDist\include\esnacc\c++,..\..\SMIME\libCtilMgr\inc,..\..\pkcs11_cryptopp\inc"
-				PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_USRDLL"
+				PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_USRDLL;_USING_MS_LDAP"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="3"
 				PrecompiledHeaderFile=".\Debug/srl.pch"
@@ -89,7 +89,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\cmapi\inc,..\cmlasn\inc,inc,..\..\..\SMPDist\include\esnacc\c++,..\..\SMIME\libCtilMgr\inc,..\..\pkcs11_cryptopp\inc"
-				PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_USRDLL"
+				PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_USRDLL;_USING_MS_LDAP"
 				RuntimeLibrary="2"
 				PrecompiledHeaderFile=".\Release/srl.pch"
 				AssemblerListingLocation=".\Release/"
@@ -159,7 +159,6 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 						BasicRuntimeChecks="3"
 						BrowseInformation="1"/>
 				</FileConfiguration>
@@ -168,8 +167,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;I386;$(NoInherit)"/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -180,7 +178,6 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 						BasicRuntimeChecks="3"
 						BrowseInformation="1"/>
 				</FileConfiguration>
@@ -189,8 +186,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;I386;$(NoInherit)"/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -201,7 +197,6 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 						BasicRuntimeChecks="3"
 						BrowseInformation="1"/>
 				</FileConfiguration>
@@ -210,8 +205,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;I386;$(NoInherit)"/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -222,7 +216,6 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 						BasicRuntimeChecks="3"
 						BrowseInformation="1"/>
 				</FileConfiguration>
@@ -231,8 +224,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;I386;$(NoInherit)"/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -243,7 +235,6 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 						BasicRuntimeChecks="3"
 						BrowseInformation="1"/>
 				</FileConfiguration>
@@ -252,8 +243,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;I386;$(NoInherit)"/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -264,7 +254,6 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 						BasicRuntimeChecks="3"
 						BrowseInformation="1"/>
 				</FileConfiguration>
@@ -273,8 +262,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;I386;$(NoInherit)"/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -285,7 +273,6 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 						BasicRuntimeChecks="3"
 						BrowseInformation="1"/>
 				</FileConfiguration>
@@ -294,8 +281,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;I386;$(NoInherit)"/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -306,7 +292,6 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 						BasicRuntimeChecks="3"
 						BrowseInformation="1"/>
 				</FileConfiguration>
@@ -315,8 +300,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;I386;$(NoInherit)"/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -327,7 +311,6 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 						BasicRuntimeChecks="3"
 						BrowseInformation="1"/>
 				</FileConfiguration>
@@ -336,8 +319,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;I386;$(NoInherit)"/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -348,7 +330,6 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 						BasicRuntimeChecks="3"
 						BrowseInformation="1"/>
 				</FileConfiguration>
@@ -357,8 +338,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;I386;$(NoInherit)"/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -369,7 +349,6 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 						BasicRuntimeChecks="3"
 						BrowseInformation="1"/>
 				</FileConfiguration>
@@ -378,8 +357,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;I386;$(NoInherit)"/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -390,7 +368,6 @@
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="_DEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;$(NoInherit)"
 						BasicRuntimeChecks="3"
 						BrowseInformation="1"/>
 				</FileConfiguration>
@@ -399,8 +376,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="NDEBUG;SRL_EXPORTS;WIN32;_WINDOWS;_MBCS;_USRDLL;I386;$(NoInherit)"/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 			<File

@@ -102,7 +102,7 @@ void CSM_IssuerAndSerialNumber::Set(const IssuerAndSerialNumber &SNACCIssAndSer)
 
 //////////////////////////////////////////////////////////////////////////
 // returns a new pointer to the CSM_DN class  
-CSM_DN *CSM_IssuerAndSerialNumber::GetIssuer() 
+CSM_DN *CSM_IssuerAndSerialNumber::GetIssuer() const
 {
     CSM_DN *pIssuer=NULL;
     
@@ -116,7 +116,7 @@ CSM_DN *CSM_IssuerAndSerialNumber::GetIssuer()
 
 //////////////////////////////////////////////////////////////////////////
 // returns a pointer to the CSM_Buffer class  
-CSM_Buffer* CSM_IssuerAndSerialNumber::GetSerialNo() 
+CSM_Buffer* CSM_IssuerAndSerialNumber::GetSerialNo() const
 {
     CSM_Buffer *pSN=NULL;
 

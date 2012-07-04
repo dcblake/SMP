@@ -53,11 +53,11 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ../../../../SMPDist/lib/TSSP32.lib wsock32.lib /nologo /dll /machine:I386 /out:"../../../../SMPDist/lib/sm_fortDLL.dll"
+# ADD LINK32 ../../../../SMPDist/algs/fortezza/TSSP32.lib wsock32.lib /nologo /dll /machine:I386 /out:"../../../../SMPDist/lib/sm_fortDLL.dll"
 # SUBTRACT LINK32 /pdb:none
 # Begin Custom Build
 TargetName=sm_fortDLL
-InputPath=\devel.d\vda_snacc.d\deliverR2.5.d\devel.60\SMPDist\lib\sm_fortDLL.dll
+InputPath=\src\SMPDist\lib\sm_fortDLL.dll
 InputName=sm_fortDLL
 SOURCE="$(InputPath)"
 
@@ -91,11 +91,11 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 ../../../../SMPDist/lib/TSSP32.lib wsock32.lib /nologo /dll /debug /machine:I386 /out:"../../../../SMPDist/lib/sm_fortDLLd.dll" /pdbtype:sept
+# ADD LINK32 ../../../../SMPDist/algs/fortezza/TSSP32.lib wsock32.lib /nologo /dll /debug /machine:I386 /out:"../../../../SMPDist/lib/sm_fortDLLd.dll" /pdbtype:sept
 # SUBTRACT LINK32 /pdb:none
 # Begin Custom Build
 TargetName=sm_fortDLLd
-InputPath=\devel.d\vda_snacc.d\deliverR2.5.d\devel.60\SMPDist\lib\sm_fortDLLd.dll
+InputPath=\src\SMPDist\lib\sm_fortDLLd.dll
 InputName=sm_fortDLLd
 SOURCE="$(InputPath)"
 
@@ -385,6 +385,15 @@ SOURCE=..\..\..\..\SMPDist\lib\cmapi_d.lib
 # Begin Source File
 
 SOURCE=..\..\..\..\SMPDist\lib\cmapi.lib
+
+!IF  "$(CFG)" == "sm_fortezzaDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "sm_fortezzaDLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
