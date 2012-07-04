@@ -1,0 +1,449 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "ACL"=.\ACL\ACL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cmlasn
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cmapi_dll
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name srl
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "BuildAll"=.\BuildAll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cmapi_dll
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libsm
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name sm_capiDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name srl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name sm_free3DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name sm_pkcs11DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name SMP_Check
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name crlsrv_dll
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name pkcs11_cryptopp_dll
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ocsp_dll
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CertMgrMsgs"=.\SMIME\CertMgrMsgs\CertMgrMsgs.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "SMP_Check"=.\SMP_Check\SMP_Check.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cmapi_dll
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libsm
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name srl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libCertSTATIC
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name crlsrv_dll
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "cmapi_dll"=.\cml\cmapi\cmapi_dll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cmlasn
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "cmlasn"=.\cml\cmlasn\cmlasn.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "cppasn1"="..\SNACC\c++-lib\cppasn1\cppasn1.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "crlsrv_dll"=.\cml\crlsrv_dll\crlsrv_dll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cmlasn
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cmapi_dll
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name srl
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "cryptlib_mod"=.\cryptlib_mod.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libCertSTATIC"=.\SMIME\libcert\libCertSTATIC\libCertSTATIC.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name libCtilMgr
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "libCtilMgr"=.\SMIME\libCtilMgr\libCtilMgr.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "libsm"=.\SMIME\libsm.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name libCertSTATIC
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ocsp_dll"=.\cml\ocsp_dll\ocsp_dll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ocsplib_mod
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cmlasn
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ocsplib_mod"=.\cml\ocsplib_mod\ocsplib_mod.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "pkcs11_cryptopp_dll"=.\pkcs11_cryptopp\pkcs11_cryptopp_dll\pkcs11_cryptopp_dll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "sm_capiDLL"=.\SMIME\alg_libs\sm_capiDLL\sm_capiDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cmlasn
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libCtilMgr
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libCertSTATIC
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cmapi_dll
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sm_fortezzaDLL"=.\SMIME\alg_libs\sm_fort\sm_fortezzaDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "sm_free3DLL"=.\SMIME\alg_libs\sm_free3\sm_free3DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cmlasn
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libCertSTATIC
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libCtilMgr
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cryptlib_mod
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cmapi_dll
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sm_pkcs11DLL"=.\SMIME\alg_libs\sm_pkcs11\sm_pkcs11DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name libCertSTATIC
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cmapi_dll
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sm_pkcs11Free3DLL"=.\SMIME\alg_libs\sm_pkcs11Free3DLL\sm_pkcs11Free3DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "sm_rsaDLL"=.\SMIME\alg_libs\sm_rsa\sm_rsaDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cmlasn
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cppasn1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libCertSTATIC
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libCtilMgr
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sm_spexDLL"=.\SMIME\alg_libs\sm_spex\sm_spexDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "srl"=.\cml\srl\srl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name cmlasn
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

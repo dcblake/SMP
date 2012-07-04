@@ -1,0 +1,446 @@
+CertificateExtensions -- {joint-iso-itu-t ds(5) module(1) certificateExtensions(26) 4}
+
+DEFINITIONS IMPLICIT TAGS ::=
+
+BEGIN
+
+-- EXPORTS ALL --
+
+IMPORTS
+	id-at, id-ce, id-mr, informationFramework, authenticationFramework,
+		selectedAttributeTypes, upperBounds
+		FROM UsefulDefinitions -- {joint-iso-itu-t ds(5) module(1) usefulDefinitions(0) 4}
+
+	Name, RelativeDistinguishedName, -- ATTRIBUTE, -- Attribute, -- MATCHING-RULE
+		BaseDistance -- REN - 12/29/03 - temporarily imported
+		FROM InformationFramework
+
+	CertificateSerialNumber, CertificateList, AlgorithmIdentifier, -- EXTENSION, 
+		Time, PolicyID
+		FROM AuthenticationFramework
+
+	DirectoryString
+		FROM SelectedAttributeTypes
+
+	ub-name
+		FROM UpperBounds
+
+	ORAddress
+		FROM ORAddressModule -- MTSAbstractService
+	
+	KeyUsage, GeneralNames, GeneralName, CertPolicyId1, CertificatePoliciesSyntax
+		FROM X509Common  ;
+
+-- Unless explicitly noted otherwise, there is no significance to the ordering
+-- of components of a SEQUENCE OF construct in this specification.
+
+
+--public-key certificate and CRL extensions -
+
+authorityKeyIdentifier OBJECT-TYPE	-- EXTENSION
+	SYNTAX	AuthorityKeyIdentifier
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-authorityKeyIdentifier}
+
+AuthorityKeyIdentifier ::= SEQUENCE {
+	keyIdentifier				[0] KeyIdentifier OPTIONAL,
+	authorityCertIssuer			[1] GeneralNames OPTIONAL,
+	authorityCertSerialNumber	[2] CertificateSerialNumber OPTIONAL }
+		( WITH COMPONENTS 	{..., authorityCertIssuer PRESENT,
+			authorityCertSerialNumber PRESENT} |
+		WITH COMPONENTS	{..., authorityCertIssuer ABSENT,
+			authorityCertSerialNumber ABSENT} )
+
+KeyIdentifier ::= OCTET STRING
+
+subjectKeyIdentifier OBJECT-TYPE	-- EXTENSION
+	SYNTAX	SubjectKeyIdentifier
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-subjectKeyIdentifier}
+
+SubjectKeyIdentifier ::= KeyIdentifier
+
+keyUsage OBJECT-TYPE	-- EXTENSION
+	SYNTAX	KeyUsage
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-keyUsage}
+
+extKeyUsage OBJECT-TYPE	-- EXTENSION
+	SYNTAX	SEQUENCE SIZE (1..MAX) OF KeyPurposeId
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-extKeyUsage}
+
+KeyPurposeId ::= OBJECT IDENTIFIER
+
+anyExtendedKeyUsage		OBJECT IDENTIFIER	::=	{ 2 5 29 37 0 }
+
+privateKeyUsagePeriod OBJECT-TYPE	-- EXTENSION
+	SYNTAX	PrivateKeyUsagePeriod
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-privateKeyUsagePeriod}
+
+PrivateKeyUsagePeriod ::= SEQUENCE {
+	notBefore	[0]	GeneralizedTime OPTIONAL,
+	notAfter	[1]	GeneralizedTime OPTIONAL }
+	( WITH COMPONENTS	{..., notBefore PRESENT} |
+	WITH COMPONENTS		{..., notAfter PRESENT} )
+
+certificatePolicies OBJECT-TYPE	-- EXTENSION
+	SYNTAX	CertificatePoliciesSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-certificatePolicies}
+
+policyMappings OBJECT-TYPE	-- EXTENSION
+	SYNTAX	PolicyMappingsSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-policyMappings}
+
+PolicyMappingsSyntax ::= SEQUENCE SIZE (1..MAX) OF SEQUENCE {
+	issuerDomainPolicy	CertPolicyId1,
+	subjectDomainPolicy	CertPolicyId1 }
+
+subjectAltName OBJECT-TYPE	-- EXTENSION
+	SYNTAX	GeneralNames
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-subjectAltName}
+
+issuerAltName OBJECT-TYPE	-- EXTENSION
+	SYNTAX	GeneralNames
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-issuerAltName}
+
+subjectDirectoryAttributes OBJECT-TYPE	-- EXTENSION
+	SYNTAX	AttributesSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-subjectDirectoryAttributes}
+
+AttributesSyntax ::= SEQUENCE SIZE (1..MAX) OF Attribute
+
+basicConstraints OBJECT-TYPE	-- EXTENSION
+	SYNTAX	BasicConstraintsSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-basicConstraints}
+
+BasicConstraintsSyntax ::= SEQUENCE {
+	cA					BOOLEAN DEFAULT FALSE,
+	pathLenConstraint 	INTEGER (0..MAX) OPTIONAL }
+
+nameConstraints OBJECT-TYPE	-- EXTENSION
+	SYNTAX	NameConstraintsSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-nameConstraints}
+
+nameConstraint OBJECT-TYPE	-- EXTENSION	new version
+	SYNTAX	NameConstraintsSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-nameConstraint}
+
+NameConstraintsSyntax ::= SEQUENCE {
+	permittedSubtrees	[0]	GeneralSubtrees OPTIONAL,
+	excludedSubtrees	[1]	GeneralSubtrees OPTIONAL,
+	requiredNameForms	[2] NameForms OPTIONAL  }
+
+GeneralSubtrees ::= SEQUENCE SIZE (1..MAX) OF GeneralSubtree
+
+GeneralSubtree ::= SEQUENCE {
+	base			GeneralName,
+	minimum		[0]	BaseDistance DEFAULT 0,
+	maximum		[1]	BaseDistance OPTIONAL }
+
+-- REN - 12/29/03 - temporarily removed and imported to eliminate duplicate definition
+-- BaseDistance ::= INTEGER (0..MAX)
+
+NameForms ::= SEQUENCE {
+	basicNameForms	[0] BasicNameForms OPTIONAL,
+	otherNameForms	[1] SEQUENCE SIZE (1..MAX) OF OBJECT IDENTIFIER OPTIONAL  }
+--	(ALL EXCEPT ({- none; i.e., at least one component shall be present-}))
+
+BasicNameForms ::= BIT STRING {
+	rfc822Name					(0),
+	dNSName						(1),
+	x400Address					(2),
+	directoryName				(3),
+	ediPartyName				(4),
+	uniformResourceIdentifier	(5),
+	iPAddress					(6),
+	registeredID				(7) } (SIZE (1..MAX))
+
+policyConstraints OBJECT-TYPE	-- EXTENSION
+	SYNTAX	PolicyConstraintsSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-policyConstraints}
+
+PolicyConstraintsSyntax ::= SEQUENCE {
+	requireExplicitPolicy 	[0] SkipCerts OPTIONAL,
+	inhibitPolicyMapping	[1] SkipCerts OPTIONAL }
+
+SkipCerts ::= INTEGER (0..MAX)
+
+cRLNumber OBJECT-TYPE	-- EXTENSION
+	SYNTAX	CRLNumber
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-cRLNumber}
+
+CRLNumber ::= INTEGER (0..MAX)
+
+reasonCode OBJECT-TYPE	-- EXTENSION
+	SYNTAX	CRLReason
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-reasonCode}
+
+CRLReason ::= ENUMERATED {
+	unspecified 			(0),
+	keyCompromise 			(1), 
+	cACompromise 			(2), 
+	affiliationChanged 		(3), 
+	superseded 				(4),
+	cessationOfOperation 	(5),
+	certificateHold 		(6),
+	removeFromCRL			(8),
+	privilegeWithdrawn		(9),
+	aaCompromise 			(10) }
+
+holdInstructionCode OBJECT-TYPE	-- EXTENSION
+	SYNTAX	HoldInstruction
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-instructionCode}
+
+HoldInstruction ::= OBJECT IDENTIFIER
+
+invalidityDate OBJECT-TYPE	-- EXTENSION
+	SYNTAX	GeneralizedTime
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-invalidityDate}
+
+crlScope OBJECT-TYPE	-- EXTENSION
+	SYNTAX	CRLScopeSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-cRLScope}
+
+CRLScopeSyntax  ::=	SEQUENCE SIZE (1..MAX) OF PerAuthorityScope
+
+PerAuthorityScope ::= SEQUENCE {
+	authorityName	 	[0]	GeneralName OPTIONAL,
+	distributionPoint	[1]	DistributionPointName OPTIONAL,
+	onlyContains		[2]	OnlyCertificateTypes OPTIONAL,
+	onlySomeReasons		[4]	ReasonFlags OPTIONAL,
+	serialNumberRange	[5]	NumberRange OPTIONAL,
+	subjectKeyIdRange	[6]	NumberRange OPTIONAL,
+	nameSubtrees		[7]	GeneralNames OPTIONAL,
+	baseRevocationInfo	[9]	BaseRevocationInfo OPTIONAL  }
+
+OnlyCertificateTypes	::= BIT STRING {
+	user		(0),
+	authority	(1),
+	attribute	(2) }
+
+NumberRange ::= SEQUENCE {
+	startingNumber	[0]	INTEGER OPTIONAL,
+	endingNumber	[1]	INTEGER OPTIONAL,
+	modulus			INTEGER OPTIONAL }
+
+BaseRevocationInfo ::= SEQUENCE {
+	cRLStreamIdentifier	[0]	CRLStreamIdentifier	OPTIONAL,
+	cRLNumber			[1]	CRLNumber,
+	baseThisUpdate		[2]	GeneralizedTime }
+
+statusReferrals OBJECT-TYPE	-- EXTENSION
+	SYNTAX	StatusReferrals
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-statusReferrals}
+
+StatusReferrals ::= SEQUENCE SIZE (1..MAX) OF StatusReferral
+
+StatusReferral  ::=  CHOICE {
+	cRLReferral		[0]	CRLReferral,
+	otherReferral	[1]	Other-Referral }
+
+CRLReferral ::= SEQUENCE  {
+	issuer			[0]	GeneralName OPTIONAL,
+	location		[1]	GeneralName OPTIONAL,
+	deltaRefInfo	[2]	DeltaRefInfo OPTIONAL,
+	cRLScope			CRLScopeSyntax,
+	lastUpdate		[3]	GeneralizedTime OPTIONAL, 
+	lastChangedCRL	[4]	GeneralizedTime OPTIONAL }
+
+DeltaRefInfo  ::=  SEQUENCE {
+	deltaLocation	GeneralName,
+	lastDelta		GeneralizedTime OPTIONAL }
+
+Other-Referral ::= SEQUENCE {
+	id		OBJECT IDENTIFIER,
+	type	ANY DEFINED BY id }
+
+cRLStreamIdentifier OBJECT-TYPE	-- EXTENSION
+	SYNTAX	CRLStreamIdentifier
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-cRLStreamIdentifier}
+
+CRLStreamIdentifier  ::= INTEGER (0..MAX)
+
+orderedList OBJECT-TYPE	-- EXTENSION
+	SYNTAX	OrderedListSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-orderedList}
+
+OrderedListSyntax  ::= ENUMERATED {
+	ascSerialNum	(0),
+	ascRevDate		(1) }
+
+deltaInfo OBJECT-TYPE	-- EXTENSION
+	SYNTAX	DeltaInformation
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-deltaInfo}
+
+DeltaInformation	::=	SEQUENCE {
+	deltaLocation	GeneralName,
+	nextDelta		GeneralizedTime OPTIONAL }
+
+cRLDistributionPoints OBJECT-TYPE	-- EXTENSION
+	SYNTAX	CRLDistPointsSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-cRLDistributionPoints}
+
+CRLDistPointsSyntax ::= SEQUENCE SIZE (1..MAX) OF DistributionPoint 
+
+DistributionPoint ::= SEQUENCE {
+	distributionPoint	[0]	DistributionPointName OPTIONAL,
+	reasons				[1]	ReasonFlags OPTIONAL,
+	cRLIssuer			[2]	GeneralNames OPTIONAL }
+
+DistributionPointName ::= CHOICE {
+	fullName				[0]	GeneralNames,
+	nameRelativeToCRLIssuer	[1]	RelativeDistinguishedName }
+
+ReasonFlags ::= BIT STRING {
+	unused 					(0),
+	keyCompromise 			(1), 
+	cACompromise			(2), 
+	affiliationChanged		(3), 
+	superseded				(4),
+	cessationOfOperation	(5),
+	certificateHold 		(6),
+	privilegeWithdrawn		(7),
+	aACompromise			(8) }
+
+issuingDistributionPoint OBJECT-TYPE	-- EXTENSION
+	SYNTAX	IssuingDistPointSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-issuingDistributionPoint}
+
+IssuingDistPointSyntax ::= SEQUENCE {
+	distributionPoint			[0] DistributionPointName OPTIONAL,
+	onlyContainsUserCerts		[1] BOOLEAN DEFAULT FALSE,
+	onlyContainsAuthorityCerts	[2] BOOLEAN DEFAULT FALSE,
+	onlySomeReasons				[3] ReasonFlags OPTIONAL,
+	indirectCRL					[4] BOOLEAN DEFAULT FALSE,
+	onlyContainsAttributeCerts	[5] BOOLEAN DEFAULT FALSE }
+
+certificateIssuer OBJECT-TYPE	-- EXTENSION
+	SYNTAX	GeneralNames  
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-certificateIssuer}
+
+deltaCRLIndicator OBJECT-TYPE	-- EXTENSION ::= {
+	SYNTAX	BaseCRLNumber
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-deltaCRLIndicator}
+
+BaseCRLNumber ::= CRLNumber
+
+baseUpdateTime OBJECT-TYPE	-- EXTENSION ::= {
+	SYNTAX	GeneralizedTime
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-baseUpdateTime}
+
+freshestCRL OBJECT-TYPE	-- EXTENSION ::= {
+	SYNTAX	CRLDistPointsSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-freshestCRL}
+
+inhibitAnyPolicy OBJECT-TYPE	-- EXTENSION ::= {
+	SYNTAX	SkipCerts
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-ce-inhibitAnyPolicy}
+
+
+-- PKI matching rules -- 
+-- DELETED!
+
+
+-- Object identifier assignments -
+
+id-ce-subjectDirectoryAttributes	OBJECT IDENTIFIER	::=	{id-ce 9}
+id-ce-subjectKeyIdentifier			OBJECT IDENTIFIER	::=	{id-ce 14}
+id-ce-keyUsage						OBJECT IDENTIFIER	::=	{id-ce 15}
+id-ce-privateKeyUsagePeriod			OBJECT IDENTIFIER	::=	{id-ce 16}
+id-ce-subjectAltName				OBJECT IDENTIFIER	::=	{id-ce 17}
+id-ce-issuerAltName					OBJECT IDENTIFIER	::=	{id-ce 18}
+id-ce-basicConstraints				OBJECT IDENTIFIER	::=	{id-ce 19}
+id-ce-cRLNumber						OBJECT IDENTIFIER	::=	{id-ce 20}
+id-ce-reasonCode					OBJECT IDENTIFIER	::=	{id-ce 21}
+id-ce-instructionCode				OBJECT IDENTIFIER	::=	{id-ce 23}
+id-ce-invalidityDate				OBJECT IDENTIFIER	::=	{id-ce 24}
+id-ce-deltaCRLIndicator				OBJECT IDENTIFIER	::=	{id-ce 27}
+id-ce-issuingDistributionPoint		OBJECT IDENTIFIER	::=	{id-ce 28}
+id-ce-certificateIssuer				OBJECT IDENTIFIER	::=	{id-ce 29}
+id-ce-nameConstraints				OBJECT IDENTIFIER	::=	{id-ce 30}
+id-ce-nameConstraint				OBJECT IDENTIFIER	::=	{id-ce 30 1}
+id-ce-cRLDistributionPoints			OBJECT IDENTIFIER	::=	{id-ce 31}
+id-ce-certificatePolicies			OBJECT IDENTIFIER	::=	{id-ce 32}
+id-ce-policyMappings				OBJECT IDENTIFIER	::=	{id-ce 33}
+-- deprecated						OBJECT IDENTIFIER	::=	{id-ce 34}
+id-ce-authorityKeyIdentifier		OBJECT IDENTIFIER	::=	{id-ce 35}
+id-ce-policyConstraints				OBJECT IDENTIFIER	::=	{id-ce 36}
+id-ce-extKeyUsage					OBJECT IDENTIFIER	::=	{id-ce 37}
+id-ce-cRLStreamIdentifier			OBJECT IDENTIFIER ::=	{id-ce 40}
+id-ce-cRLScope						OBJECT IDENTIFIER ::=	{id-ce 44}
+id-ce-statusReferrals				OBJECT IDENTIFIER ::=	{id-ce 45}
+id-ce-freshestCRL					OBJECT IDENTIFIER ::=	{id-ce 46}
+id-ce-orderedList					OBJECT IDENTIFIER ::=	{id-ce 47}
+id-ce-baseUpdateTime				OBJECT IDENTIFIER ::=	{id-ce 51}
+id-ce-deltaInfo						OBJECT IDENTIFIER ::=	{id-ce 53}
+id-ce-inhibitAnyPolicy				OBJECT IDENTIFIER ::=	{id-ce 54}
+
+
+-- matching rule OIDs --
+-- DELETED!
+
+
+-- The following OBJECT IDENTIFIERS are not used by this specification:
+-- {id-ce 2}, {id-ce 3}, {id-ce 4}, {id-ce 5}, {id-ce 6}, {id-ce 7},
+-- {id-ce 8}, {id-ce 10}, {id-ce 11}, {id-ce 12}, {id-ce 13}, 
+-- {id-ce 22}, {id-ce 25}, {id-ce 26}, {id-ce 30}
+
+
+END

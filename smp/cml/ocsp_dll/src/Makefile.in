@@ -1,0 +1,84 @@
+include @SMP_BUILDDIR@/build/Makehead
+
+# Directory where OpenSSL headers are located
+#
+LFLAG1		= @SMP_LDFLAG@
+OCSPOPENSSLINC  = ../inc
+CMAPIINC        = ../../cmapi/inc
+CMLASNINC       = ../../cmlasn/inc
+STAGINGDIR	= $(SMPDISTDIR)/lib
+
+ifeq ($(RANLIB),)
+RANLIB = echo
+endif
+
+LIBPATH = -L$(OPENSSLDIR)/lib -L$(SMPDISTDIR)/lib
+LFLAG1 = @SMP_LDFLAG@
+
+## Specify the library name
+ifeq ($(HASOPENSSL), yes)
+ifeq ($(USEDEBUGLIB), no)
+OPENSSL_LIBS    = -lcrypto
+ifeq ($(ENABLESTATIC), no)
+TARGET = $(STAGINGDIR)/libocsp.@SHEXT@
+else
+TARGET2= $(STAGINGDIR)/libocsp.a
+endif
+else
+OPENSSL_LIBS    = -lcrypto
+ifeq ($(ENABLESTATIC), no)
+TARGET = $(STAGINGDIR)/libocsp_d.@SHEXT@
+else
+TARGET2= $(STAGINGDIR)/libocsp_d.a
+endif
+endif
+endif
+
+
+## Needed includes
+INCLUDE       += -I$(CMAPIINC) -I$(CMLASNINC) -I$(OCSPOPENSSLINC) -I$(OPENSSLDIR)/include
+
+## Specify the sources
+ifeq ($(HASOPENSSL), yes)
+CSRCS	      = $(wildcard *.c)
+CPPSRCS       = $(wildcard *.cpp) 
+COBJS         = $(CSRCS:.c=.o) 	
+CPPOBJS       = $(CPPSRCS:.cpp=.o) 
+OBJS	      = $(CPPOBJS) $(COBJS)
+endif
+
+# Compiler information 
+CC            = @CC@
+CXX           = @CXX@
+CPP	     =  @CPP@
+
+LIBPATH += -L$(STAGINGDIR)
+LIBS += $(OPENSSL_LIBS) @LIBS@
+
+ifeq ($(HASOPENSSL), yes)
+DEPENDENCIES = ../inc/ocspapi.h\
+	       ../inc/ocsp_internal.h
+endif
+
+#determine what platform we are on
+OS	= @OS@
+
+# Add in the C Flags and C++ Flags
+CFLAGS = @CFLAGS@ -D_UNIX
+CXXFLAGS = @CXXFLAGS@ -D_UNIX
+
+#
+# End of Low Level specific make information
+#
+
+.SUFFIXES : .cpp .cpp.o 
+
+all: $(COBJS) $(CPPOBJS) $(TARGET) $(TARGET2)
+
+clean:
+	rm -f *.o
+
+$(CPPOBJS): $(DEPENDENCIES)
+$(COBJS): $(DEPENDENCIES)
+
+include $(top_builddir)/build/Maketail.in

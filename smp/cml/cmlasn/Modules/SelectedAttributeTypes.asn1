@@ -1,0 +1,842 @@
+SelectedAttributeTypes -- {joint-iso-itu-t ds(5) module(1) selectedAttributeTypes(5) 4}
+
+DEFINITIONS ::=
+
+BEGIN
+
+-- EXPORTS All --
+-- The types and values defined in this module are exported for use in the other ASN.1 modules contained 
+-- within the Directory Specifications, and for the use of other applications which will use them to access 
+-- Directory services.  Other applications may use them for their own purposes, but this will not constrain
+-- extensions and modifications needed to maintain or improve the Directory service.
+
+IMPORTS
+	directoryAbstractService, id-at, id-avc, id-cat, id-mr, id-not, id-pr,
+	informationFramework, serviceAdministration, upperBounds
+		FROM UsefulDefinitions
+
+	Attribute, -- ATTRIBUTE, -- AttributeType, AttributeValueAssertion,
+	-- CONTEXT, -- ContextAssertion, DistinguishedName --, distinguishedNameMatch,
+	-- MAPPING-BASED-MATCHING{}, MATCHING-RULE, OBJECT-CLASS, objectIdentifierMatch
+		FROM InformationFramework
+
+--	FilterItem, HierarchySelections, SearchControlOptions, ServiceControlOptions
+--		FROM DirectoryAbstractService
+
+	ub-answerback, ub-business-category, ub-common-name, ub-country-code, ub-description,
+	ub-destination-indicator, ub-directory-string-first-component-match,
+	ub-international-isdn-number, ub-knowledge-information, ub-localeContextSyntax,
+	ub-locality-name, ub-match, ub-name, ub-organization-name, ub-organizational-unit-name,
+	ub-physical-office-name, ub-postal-code, ub-postal-line, ub-postal-string,
+	ub-post-office-box, ub-pseudonym, ub-serial-number, ub-state-name, ub-street-address,
+	ub-surname, ub-telephone-number, ub-telex-number, ub-teletex-terminal-id,
+	ub-title, ub-user-password, ub-x121-address
+		FROM UpperBounds ;
+
+--	G3FacsimileNonBasicParameters
+--		FROM MTSAbstractService
+
+	
+-- Directory string type --
+
+DirectoryString	-- { INTEGER : maxSize } -- ::= CHOICE {
+	teletexString		TeletexString (SIZE (1..MAX)),
+	printableString		PrintableString (SIZE (1..MAX)),
+	universalString		UniversalString (SIZE (1..MAX)),
+	bmpString			BMPString (SIZE (1..MAX)),
+	uTF8String			UTF8String (SIZE (1..MAX)) }
+
+-- Attribute types --
+
+knowledgeInformation OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX 	DirectoryString (SIZE (1..ub-knowledge-information)) -- {ub-knowledge-information}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-knowledgeInformation}
+
+name OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-name)) -- {ub-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-name}
+
+commonName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-common-name)) -- {ub-common-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-commonName}
+
+surname OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-surname)) -- {ub-surname}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-surname}
+
+givenName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-name)) -- {ub-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-givenName}
+
+initials OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-name)) -- {ub-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-initials}
+
+generationQualifier OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-name)) -- {ub-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-generationQualifier}
+
+uniqueIdentifier OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	UniqueIdentifier
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-uniqueIdentifier}
+
+UniqueIdentifier	::=	BIT STRING
+
+dnQualifier OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	PrintableString
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-dnQualifier}
+
+serialNumber OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	PrintableString (SIZE (1..ub-serial-number))
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-serialNumber}
+
+pseudonym OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-pseudonym))
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-pseudonym}
+
+countryName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	CountryName1
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-countryName}
+
+CountryName1	::= PrintableString (SIZE (2)) -- IS 3166 codes only
+
+localityName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-locality-name)) -- {ub-locality-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-localityName}
+
+collectiveLocalityName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-locality-name)) -- {ub-locality-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-collectiveLocalityName}
+
+stateOrProvinceName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-state-name)) -- {ub-state-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-stateOrProvinceName}
+
+collectiveStateOrProvinceName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-state-name)) -- {ub-state-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-collectiveStateOrProvinceName}
+
+streetAddress OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-street-address)) -- {ub-street-address}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-streetAddress}
+
+collectiveStreetAddress OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-street-address)) -- {ub-street-address}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-collectiveStreetAddress}
+
+houseIdentifier OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-name)) -- {ub-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-houseIdentifier}
+
+organizationName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-organization-name)) -- {ub-organization-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-organizationName}
+
+collectiveOrganizationName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-organization-name)) -- {ub-organization-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-collectiveOrganizationName}
+
+organizationalUnitName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-organizational-unit-name)) -- {ub-organizational-unit-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-organizationalUnitName}
+
+collectiveOrganizationalUnitName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-organizational-unit-name)) -- {ub-organizational-unit-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-collectiveOrganizationalUnitName}
+
+title OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-title)) -- {ub-title}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-title}
+
+description OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-description)) -- {ub-description}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-description}
+
+searchGuide OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	Guide
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-searchGuide}
+
+Guide	::=	SET  {
+	objectClass	[0]	OBJECT IDENTIFIER OPTIONAL,
+	criteria	[1]	Criteria }
+
+Criteria	::=	CHOICE {
+	type	[0]	CriteriaItem,
+	anD		[1]	SET OF Criteria,
+	oR		[2]	SET OF Criteria,
+	noT		[3]	Criteria }
+
+CriteriaItem ::= CHOICE {
+	equality			[0]	AttributeType,
+	substrings			[1]	AttributeType,
+	greaterOrEqual		[2]	AttributeType,
+	lessOrEqual			[3]	AttributeType,
+	approximateMatch 	[4]	AttributeType }
+
+enhancedSearchGuide OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	EnhancedGuide
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-enhancedSearchGuide}
+
+EnhancedGuide	::=	SEQUENCE {
+	objectClass	[0]	OBJECT IDENTIFIER,
+	criteria	[1]	Criteria,
+	subset		[2]	INTEGER 
+		{ baseObject (0), oneLevel (1), wholeSubtree (2) }  DEFAULT oneLevel }
+
+businessCategory OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-business-category)) -- {ub-business-category}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-businessCategory}
+
+postalAddress OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	PostalAddress
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-postalAddress}
+
+PostalAddress	::=	SEQUENCE SIZE(1..ub-postal-line) OF
+						DirectoryString (SIZE (1..ub-postal-string)) -- {ub-postal-string}
+
+collectivePostalAddress OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	PostalAddress
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-collectivePostalAddress}
+
+postalCode OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-postal-code)) -- {ub-postal-code}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-postalCode}
+
+collectivePostalCode OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-postal-code)) -- {ub-postal-code}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-collectivePostalCode}
+
+postOfficeBox OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-post-office-box)) -- {ub-post-office-box}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-postOfficeBox}
+
+collectivePostOfficeBox OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-post-office-box)) -- {ub-post-office-box}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-collectivePostOfficeBox}
+
+physicalDeliveryOfficeName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-physical-office-name)) -- {ub-physical-office-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-physicalDeliveryOfficeName}
+
+collectivePhysicalDeliveryOfficeName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-physical-office-name)) -- {ub-physical-office-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-collectivePhysicalDeliveryOfficeName}
+
+telephoneNumber OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	TelephoneNumber
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-telephoneNumber}
+
+TelephoneNumber	::= PrintableString (SIZE (1..ub-telephone-number))
+	-- Stirng complying with CCITT Rec. E.123 only
+
+collectiveTelephoneNumber OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	TelephoneNumber
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-collectiveTelephoneNumber}
+
+telexNumber OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	TelexNumber
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-telexNumber}
+
+TelexNumber ::= SEQUENCE {
+	telexNumber	PrintableString (SIZE(1..ub-telex-number)),
+	countryCode	PrintableString (SIZE(1..ub-country-code)),
+	answerback	PrintableString (SIZE(1..ub-answerback))}
+
+collectiveTelexNumber OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	TelexNumber
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-collectiveTelexNumber}
+
+--facsimileTelephoneNumber ATTRIBUTE  ::=  {
+--	WITH SYNTAX	FacsimileTelephoneNumber
+--	ID			id-at-facsimileTelephoneNumber }
+
+--FacsimileTelephoneNumber ::=  SEQUENCE {
+--	telephoneNumber	TelephoneNumber,
+--	parameters  		G3FacsimileNonBasicParameters  OPTIONAL }
+
+--collectiveFacsimileTelephoneNumber  ATTRIBUTE  ::=  {
+--	SUBTYPE OF	facsimileTelephoneNumber
+--	COLLECTIVE	TRUE
+--	ID			id-at-collectiveFacsimileTelephoneNumber }
+
+x121Address OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	X121Address
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-x121Address}
+
+X121Address	::= NumericString (SIZE (1..ub-x121-address))
+		-- String as defined by ITU-T Rec. X.121
+
+internationalISDNNumber OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	InternationalISDNNumber
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-internationalISDNNumber}
+
+InternationalISDNNumber	::= NumericString (SIZE (1..ub-international-isdn-number))
+		-- String complying with ITU-T Rec. E.164 only
+
+collectiveInternationalISDNNumber OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	InternationalISDNNumber
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-collectiveInternationalISDNNumber}
+
+registeredAddress OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	PostalAddress
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-registeredAddress}
+
+destinationIndicator OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DestinationIndicator
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-destinationIndicator}
+
+DestinationIndicator	::= PrintableString (SIZE (1..ub-destination-indicator))
+		-- alphabetical characters only
+
+communicationsService OBJECT-TYPE	-- ATTRIBUTE  ::=  {
+	SYNTAX	OBJECT IDENTIFIER
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-at-communicationsService }
+
+communicationsNetwork OBJECT-TYPE	-- ATTRIBUTE ::=  {
+	SYNTAX	OBJECT IDENTIFIER
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-at-communicationsNetwork }
+
+preferredDeliveryMethod OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	PreferredDeliveryMethod
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-preferredDeliveryMethod}
+
+PreferredDeliveryMethod	::= SEQUENCE OF INTEGER {
+	any-delivery-method		(0),
+	mhs-delivery			(1),
+	physical-delivery		(2),
+	telex-delivery			(3),
+	teletex-delivery		(4),
+	g3-facsimile-delivery	(5),
+	g4-facsimile-delivery	(6),
+	ia5-terminal-delivery	(7),
+	videotex-delivery		(8),
+	telephone-delivery		(9) }
+
+presentationAddress OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	PresentationAddress
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-presentationAddress}
+
+PresentationAddress ::=	SEQUENCE {
+	pSelector	[0]	OCTET STRING OPTIONAL,
+	sSelector	[1]	OCTET STRING OPTIONAL,
+	tSelector	[2]	OCTET STRING OPTIONAL,
+	nAddresses	[3]	SET SIZE (1..MAX) OF OCTET STRING}
+
+supportedApplicationContext OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	OBJECT IDENTIFIER
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-supportedApplicationContext}
+
+protocolInformation OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	ProtocolInformation
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-protocolInformation}
+
+ProtocolInformation	::=	SEQUENCE {
+	nAddress	OCTET STRING,
+	profiles	SET OF OBJECT IDENTIFIER }
+
+--
+-- Added distinguishedNameVDA to get past SNACC compiler
+-- DistinguishedNameVDA1 ::= DistinguishedName
+distinguishedName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-distinguishedName}
+
+-- DistinguishedNameVDA2 ::= DistinguishedName
+
+member OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-member}
+
+uniqueMember OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	NameAndOptionalUID
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-uniqueMember}
+
+NameAndOptionalUID	::=	SEQUENCE {
+	dn		DistinguishedName,
+	uid		UniqueIdentifier OPTIONAL }
+
+-- Added the folling Dummy reference to get past the snacc compiler
+-- DistinguishedNameDummy1 ::= DistinguishedName
+owner OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-owner}
+
+-- Added the folling Dummy reference to get past the snacc compiler
+-- DistinguishedNameDummy2 ::= DistinguishedName
+
+roleOccupant OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-roleOccupant}
+
+-- Added the folling Dummy reference to get past the snacc compiler
+-- DistinguishedNameDummy3 ::= DistinguishedName
+
+seeAlso OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-seeAlso}
+
+dmdName OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-name)) -- {ub-name}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= {id-at-dmdName}
+
+
+-- PKCS #9 e-mail address attribute
+-- 
+
+emailAddressAttribute OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	IA5String
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { pkcs-9 1 }
+
+
+-- COSINE and Internet X.500 Pilot attributes
+-- from RFC 1274
+-- used in DistinguishedNames
+
+useridAttribute OBJECT-TYPE		-- ATTRIBUTE
+	SYNTAX	DirectoryString (SIZE (1..ub-user-identifier)) -- {ub-user-identifier}
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { pilotAttributeType 1 }
+
+domainComponentAttribute OBJECT-TYPE	-- ATTRIBUTE
+	SYNTAX	IA5String
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { pilotAttributeType 25 }
+
+ub-user-identifier							INTEGER ::= 256
+
+
+-- Notification attributes --
+-- DELETED!
+
+
+-- Matching rules --
+-- DELETED!
+
+
+-- Contexts --
+languageContext OBJECT-TYPE		-- CONTEXT  ::=  {
+	SYNTAX	LanguageContextSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-avc-language }
+
+LanguageContextSyntax  ::=  PrintableString (SIZE(2..3))  -- ISO 639-2 codes only
+
+temporalContext OBJECT-TYPE		-- CONTEXT  ::=  {
+	SYNTAX	TimeSpecification
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-avc-temporal }
+
+TimeSpecification ::= SEQUENCE {
+	time			CHOICE {
+						absolute		SEQUENCE {
+							startTime		[0]	GeneralizedTime OPTIONAL,
+							endTime			[1]	GeneralizedTime OPTIONAL },
+						periodic		SET OF Period },
+	notThisTime		BOOLEAN DEFAULT FALSE,
+	timeZone		TimeZone OPTIONAL }
+
+Period ::= SEQUENCE {
+	timesOfDay  [0]	SET OF DayTimeBand OPTIONAL,
+	days   		[1]	CHOICE  {
+					   intDay	SET OF INTEGER,
+					   bitDay	BIT STRING  { sunday (0), monday (1) , tuesday (2),
+									wednesday (3), thursday (4), friday (5), saturday (6) },
+					   dayOf	XDayOf } OPTIONAL,
+	weeks		[2]	CHOICE  {
+					   allWeeks		NULL,
+					   intWeek		SET OF INTEGER,
+					   bitWeek		BIT STRING  { week1 (0), week2 (1), week3 (2), week4 (3),
+										week5 (4) } } OPTIONAL,
+	months		[3]	CHOICE  {
+					   allMonths 	NULL,
+					   intMonth   	SET OF INTEGER,
+					   bitMonth		BIT STRING  { january (0), february (1), march (2),
+										april (3), may (4), june (5), july (6),
+										august (7), september (8), october (9),
+										november (10), december (11) }  } OPTIONAL,
+	years  		[4]	SET OF INTEGER (1000 .. MAX) OPTIONAL }
+
+XDayOf  ::=  CHOICE  {
+	first	[1]	NamedDay,
+	second	[2]	NamedDay,
+	third	[3]	NamedDay,
+	fourth	[4]	NamedDay,
+	fifth	[5]	NamedDay }
+
+NamedDay ::= CHOICE {
+		intNamedDays	ENUMERATED {
+				sunday		(1),
+				monday		(2),
+				tuesday		(3),
+				wednesday  	(4),
+				thursday	(5),
+				friday  	(6),
+				saturday	(7) },
+		bitNamedDays	BIT STRING  { sunday (0), monday (1) , tuesday (2), 
+							wednesday (3), thursday (4), friday (5), saturday (6) } }
+
+DayTimeBand  ::=  SEQUENCE  {
+	startDayTime	[0]	DayTime, -- DEFAULT { hour 0 },
+	endDayTime		[1]	DayTime -- DEFAULT { hour 23, minute 59, second 59 } -- }
+
+DayTime  ::=  SEQUENCE  {
+	hour    [0]	INTEGER (0..23),
+	minute	[1]	INTEGER (0..59) DEFAULT 0,
+	second	[2]	INTEGER (0..59) DEFAULT 0 }
+
+TimeZone  ::=  INTEGER (-12..12)
+
+TimeAssertion  ::=  CHOICE  {
+	now			NULL,
+	at			GeneralizedTime,
+	between		SEQUENCE {
+		startTime	[0]	GeneralizedTime,
+		endTime		[1]	GeneralizedTime OPTIONAL, 
+		entirely		BOOLEAN DEFAULT FALSE } }
+
+localeContext OBJECT-TYPE	-- CONTEXT  ::=  {
+	SYNTAX	LocaleContextSyntax
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-avc-locale }
+
+LocaleContextSyntax  ::=  CHOICE  {
+	localeID1	OBJECT IDENTIFIER,
+	localeID2	DirectoryString (SIZE (1..ub-localeContextSyntax)) -- {ub-localeContextSyntax}
+}
+
+
+-- Object identifier assignments -
+
+-- object identifiers assigned in other modules are shown in comments
+
+-- Attributes --
+
+-- id-at-objectClass						OBJECT IDENTIFIER	::=	{id-at 0}
+-- id-at-aliasedEntryName					OBJECT IDENTIFIER	::=	{id-at 1}
+id-at-encryptedAliasedEntryName				OBJECT IDENTIFIER	::=	{id-at 1 2}
+id-at-knowledgeInformation					OBJECT IDENTIFIER	::=	{id-at 2}
+id-at-commonName 							OBJECT IDENTIFIER	::=	{id-at 3}
+id-at-encryptedCommonName 					OBJECT IDENTIFIER	::=	{id-at 3 2}
+id-at-surname								OBJECT IDENTIFIER	::=	{id-at 4}
+id-at-encryptedSurname 						OBJECT IDENTIFIER	::=	{id-at 4 2}
+id-at-serialNumber							OBJECT IDENTIFIER	::=	{id-at 5}
+id-at-encryptedSerialNumber   				OBJECT IDENTIFIER	::=	{id-at 5 2}
+id-at-countryName							OBJECT IDENTIFIER	::=	{id-at 6}
+id-at-encryptedCountryName   				OBJECT IDENTIFIER	::=	{id-at 6 2}
+id-at-localityName							OBJECT IDENTIFIER	::=	{id-at 7}
+id-at-encryptedLocalityName   				OBJECT IDENTIFIER	::=	{id-at 7 2}
+id-at-collectiveLocalityName    			OBJECT IDENTIFIER	::=	{id-at 7 1}
+id-at-encryptedCollectiveLocalityName		OBJECT IDENTIFIER	::=	{id-at 7 1 2}
+
+id-at-stateOrProvinceName					OBJECT IDENTIFIER	::=	{id-at 8}
+id-at-encryptedStateOrProvinceName			OBJECT IDENTIFIER	::=	{id-at 8 2}
+id-at-collectiveStateOrProvinceName			OBJECT IDENTIFIER	::=	{id-at 8 1}
+id-at-encryptedCollectiveStateOrProvinceName
+								OBJECT IDENTIFIER	::=	{id-at 8 1 2}
+id-at-streetAddress							OBJECT IDENTIFIER	::=	{id-at 9}
+id-at-encryptedStreetAddress  				OBJECT IDENTIFIER	::=	{id-at 9 2}
+id-at-collectiveStreetAddress  				OBJECT IDENTIFIER	::=	{id-at 9 1}
+id-at-encryptedCollectiveStreetAddress		OBJECT IDENTIFIER	::=	{id-at 9 1 2}
+id-at-organizationName  					OBJECT IDENTIFIER	::=	{id-at 10}
+id-at-encryptedOrganizationName				OBJECT IDENTIFIER	::=	{id-at 10 2}
+id-at-collectiveOrganizationName			OBJECT IDENTIFIER	::=	{id-at 10 1}
+id-at-encryptedCollectiveOrganizationName	OBJECT IDENTIFIER	::=	{id-at 10 1 2}
+id-at-organizationalUnitName  				OBJECT IDENTIFIER	::=	{id-at 11}
+id-at-encryptedOrganizationalUnitName		OBJECT IDENTIFIER	::=	{id-at 11 2}
+id-at-collectiveOrganizationalUnitName		OBJECT IDENTIFIER	::=	{id-at 11 1}
+id-at-encryptedCollectiveOrganizationalUnitName
+								OBJECT IDENTIFIER	::=	{id-at 11 1 2}
+id-at-title									OBJECT IDENTIFIER	::=	{id-at 12}
+id-at-encryptedTitle						OBJECT IDENTIFIER	::=	{id-at 12 2}
+id-at-description							OBJECT IDENTIFIER	::=	{id-at 13}
+id-at-encryptedDescription					OBJECT IDENTIFIER	::=	{id-at 13 2}
+id-at-searchGuide							OBJECT IDENTIFIER	::=	{id-at 14}
+id-at-encryptedSearchGuide					OBJECT IDENTIFIER	::=	{id-at 14 2}
+id-at-businessCategory  					OBJECT IDENTIFIER	::=	{id-at 15}
+id-at-encryptedBusinessCategory				OBJECT IDENTIFIER	::=	{id-at 15 2}
+id-at-postalAddress							OBJECT IDENTIFIER	::=	{id-at 16}
+id-at-encryptedPostalAddress				OBJECT IDENTIFIER	::=	{id-at 16 2}
+id-at-collectivePostalAddress  				OBJECT IDENTIFIER	::=	{id-at 16 1}
+id-at-encryptedCollectivePostalAddress		OBJECT IDENTIFIER	::=	{id-at 16 1 2}
+id-at-postalCode    						OBJECT IDENTIFIER	::=	{id-at 17}
+id-at-encryptedPostalCode					OBJECT IDENTIFIER	::=	{id-at 17 2}
+id-at-collectivePostalCode					OBJECT IDENTIFIER	::=	{id-at 17 1}
+id-at-encryptedCollectivePostalCode			OBJECT IDENTIFIER	::=	{id-at 17 1 2}
+id-at-postOfficeBox							OBJECT IDENTIFIER	::=	{id-at 18}
+id-at-encryptedPostOfficeBox				OBJECT IDENTIFIER	::=	{id-at 18 2}
+id-at-collectivePostOfficeBox  				OBJECT IDENTIFIER	::=	{id-at 18 1}
+id-at-encryptedCollectivePostOfficeBox		OBJECT IDENTIFIER	::=	{id-at 18 1 2}
+id-at-physicalDeliveryOfficeName			OBJECT IDENTIFIER	::=	{id-at 19}
+id-at-encryptedPhysicalDeliveryOfficeName	OBJECT IDENTIFIER	::=	{id-at 19 2}
+id-at-collectivePhysicalDeliveryOfficeName	OBJECT IDENTIFIER	::=	{id-at 19 1}
+id-at-encryptedCollectivePhysicalDeliveryOfficeName
+								OBJECT IDENTIFIER	::=	{id-at 19 1 2}
+id-at-telephoneNumber   					OBJECT IDENTIFIER	::=	{id-at 20}
+id-at-encryptedTelephoneNumber				OBJECT IDENTIFIER	::=	{id-at 20 2}
+id-at-collectiveTelephoneNumber				OBJECT IDENTIFIER	::=	{id-at 20 1}
+id-at-encryptedCollectiveTelephoneNumber	OBJECT IDENTIFIER	::=	{id-at 20 1 2}
+id-at-telexNumber							OBJECT IDENTIFIER	::=	{id-at 21}
+id-at-encryptedTelexNumber   				OBJECT IDENTIFIER	::=	{id-at 21 2}
+id-at-collectiveTelexNumber   				OBJECT IDENTIFIER	::=	{id-at 21 1}
+id-at-encryptedCollectiveTelexNumber		OBJECT IDENTIFIER	::=	{id-at 21 1 2}
+-- id-at-teletexTerminalIdentifier  		OBJECT IDENTIFIER	::=	{id-at 22}
+-- id-at-encryptedTeletexTerminalIdentifier	OBJECT IDENTIFIER	::=	{id-at 22 2}
+-- id-at-collectiveTeletexTerminalIdentifier	OBJECT IDENTIFIER	::=	{id-at 22 1}
+-- id-at-encryptedCollectiveTeletexTerminalIdentifier
+--								OBJECT IDENTIFIER	::=	{id-at 22 1 2}
+id-at-facsimileTelephoneNumber				OBJECT IDENTIFIER	::=	{id-at 23}
+id-at-encryptedFacsimileTelephoneNumber		OBJECT IDENTIFIER	::=	{id-at 23 2}
+id-at-collectiveFacsimileTelephoneNumber	OBJECT IDENTIFIER	::=	{id-at 23 1}
+id-at-encryptedCollectiveFacsimileTelephoneNumber
+								OBJECT IDENTIFIER	::=	{id-at 23 1 2}
+id-at-x121Address							OBJECT IDENTIFIER	::=	{id-at 24}
+id-at-encryptedX121Address   				OBJECT IDENTIFIER	::=	{id-at 24 2}
+id-at-internationalISDNNumber 				OBJECT IDENTIFIER	::=	{id-at 25}
+id-at-encryptedInternationalISDNNumber   	OBJECT IDENTIFIER	::=	{id-at 25 2}
+id-at-collectiveInternationalISDNNumber    	OBJECT IDENTIFIER	::=	{id-at 25 1}
+id-at-encryptedCollectiveInternationalISDNNumber
+								OBJECT IDENTIFIER	::=	{id-at 25 1 2}
+id-at-registeredAddress						OBJECT IDENTIFIER	::=	{id-at 26}
+id-at-encryptedRegisteredAddress   			OBJECT IDENTIFIER	::=	{id-at 26 2}
+id-at-destinationIndicator					OBJECT IDENTIFIER	::=	{id-at 27}
+id-at-encryptedDestinationIndicator   		OBJECT IDENTIFIER	::=	{id-at 27 2}
+id-at-preferredDeliveryMethod 				OBJECT IDENTIFIER	::=	{id-at 28}
+id-at-encryptedPreferredDeliveryMethod		OBJECT IDENTIFIER	::=	{id-at 28 2}
+id-at-presentationAddress					OBJECT IDENTIFIER	::=	{id-at 29}
+id-at-encryptedPresentationAddress			OBJECT IDENTIFIER	::=	{id-at 29 2}
+id-at-supportedApplicationContext   		OBJECT IDENTIFIER	::=	{id-at 30}
+id-at-encryptedSupportedApplicationContext	OBJECT IDENTIFIER	::=	{id-at 30 2}
+id-at-member								OBJECT IDENTIFIER	::=	{id-at 31}
+id-at-encryptedMember  						OBJECT IDENTIFIER	::=	{id-at 31 2}
+id-at-owner   								OBJECT IDENTIFIER	::=	{id-at 32}
+id-at-encryptedOwner						OBJECT IDENTIFIER	::=	{id-at 32 2}
+id-at-roleOccupant							OBJECT IDENTIFIER	::=	{id-at 33}
+id-at-encryptedRoleOccupant   				OBJECT IDENTIFIER	::=	{id-at 33 2}
+id-at-seeAlso								OBJECT IDENTIFIER	::=	{id-at 34}
+id-at-encryptedSeeAlso   					OBJECT IDENTIFIER	::=	{id-at 34 2}
+-- id-at-userPassword						OBJECT IDENTIFIER	::=	{id-at 35}
+id-at-encryptedUserPassword					OBJECT IDENTIFIER	::=	{id-at 35 2}
+-- id-at-userCertificate					OBJECT IDENTIFIER	::=	{id-at 36}
+id-at-encryptedUserCertificate				OBJECT IDENTIFIER	::=	{id-at 36 2}
+-- id-at-cACertificate						OBJECT IDENTIFIER	::=	{id-at 37}
+id-at-encryptedCACertificate   				OBJECT IDENTIFIER	::=	{id-at 37 2}
+-- id-at-authorityRevocationList			OBJECT IDENTIFIER	::=	{id-at 38}
+id-at-encryptedAuthorityRevocationList		OBJECT IDENTIFIER	::=	{id-at 38 2}
+-- id-at-certificateRevocationList			OBJECT IDENTIFIER	::=	{id-at 39}
+id-at-encryptedCertificateRevocationList   	OBJECT IDENTIFIER	::=	{id-at 39 2}
+-- id-at-crossCertificatePair				OBJECT IDENTIFIER	::=	{id-at 40}
+id-at-encryptedCrossCertificatePair  		OBJECT IDENTIFIER	::=	{id-at 40 2}
+id-at-name   								OBJECT IDENTIFIER	::=	{id-at 41}
+id-at-givenName    							OBJECT IDENTIFIER	::=	{id-at 42}
+id-at-encryptedGivenName					OBJECT IDENTIFIER	::=	{id-at 42 2}
+id-at-initials   							OBJECT IDENTIFIER	::=	{id-at 43}
+id-at-encryptedInitials						OBJECT IDENTIFIER	::=	{id-at 43 2}
+id-at-generationQualifier					OBJECT IDENTIFIER	::=	{id-at 44}
+id-at-encryptedGenerationQualifier   		OBJECT IDENTIFIER	::=	{id-at 44 2}
+id-at-uniqueIdentifier						OBJECT IDENTIFIER	::=	{id-at 45}
+id-at-encryptedUniqueIdentifier				OBJECT IDENTIFIER	::=	{id-at 45 2}
+id-at-dnQualifier							OBJECT IDENTIFIER	::=	{id-at 46}
+id-at-encryptedDnQualifier					OBJECT IDENTIFIER	::=	{id-at 46 2}
+id-at-enhancedSearchGuide					OBJECT IDENTIFIER	::=	{id-at 47}
+id-at-encryptedEnhancedSearchGuide			OBJECT IDENTIFIER	::=	{id-at 47 2}
+id-at-protocolInformation					OBJECT IDENTIFIER	::=	{id-at 48}
+id-at-encryptedProtocolInformation  		OBJECT IDENTIFIER	::=	{id-at 48 2}
+id-at-distinguishedName 					OBJECT IDENTIFIER	::=	{id-at 49}
+id-at-encryptedDistinguishedName   			OBJECT IDENTIFIER	::=	{id-at 49 2}
+id-at-uniqueMember							OBJECT IDENTIFIER	::=	{id-at 50}
+id-at-encryptedUniqueMember					OBJECT IDENTIFIER	::=	{id-at 50 2}
+id-at-houseIdentifier						OBJECT IDENTIFIER	::=	{id-at 51}
+id-at-encryptedHouseIdentifier				OBJECT IDENTIFIER	::=	{id-at 51 2}
+--id-at-supportedAlgorithms					OBJECT IDENTIFIER	::=	{id-at 52}
+id-at-encryptedSupportedAlgorithms			OBJECT IDENTIFIER	::=	{id-at 52 2}
+--id-at-deltaRevocationList					OBJECT IDENTIFIER	::=	{id-at 53}
+id-at-encryptedDeltaRevocationList  		OBJECT IDENTIFIER	::=	{id-at 53 2}
+id-at-dmdName  								OBJECT IDENTIFIER	::=	{id-at 54}
+id-at-encryptedDmdName						OBJECT IDENTIFIER	::=	{id-at 54 2}
+-- id-at-clearance   						OBJECT IDENTIFIER	::=	{id-at 55}
+id-at-encryptedClearance					OBJECT IDENTIFIER	::=	{id-at 55 2}
+-- id-at-defaultDirQop						OBJECT IDENTIFIER	::=	{id-at 56}
+id-at-encryptedDefaultDirQop  				OBJECT IDENTIFIER	::=	{id-at 56 2}
+-- id-at-attributeIntegrityInfo				OBJECT IDENTIFIER	::=	{id-at 57}
+id-at-encryptedAttributeIntegrityInfo		OBJECT IDENTIFIER	::=	{id-at 57 2}
+--id-at-attributeCertificate				OBJECT IDENTIFIER	::=	{id-at 58} 
+id-at-encryptedAttributeCertificate    		OBJECT IDENTIFIER	::=	{id-at 58 2}
+-- id-at-attributeCertificateRevocationList	OBJECT IDENTIFIER	::=	{id-at 59}
+id-at-encryptedAttributeCertificateRevocationList
+								OBJECT IDENTIFIER	::=	{id-at 59 2}
+-- id-at-confKeyInfo						OBJECT IDENTIFIER	::=	{id-at 60}
+id-at-encryptedConfKeyInfo					OBJECT IDENTIFIER	::=	{id-at 60 2}
+-- id-at-aACertificate						OBJECT IDENTIFIER	::=	{id-at 61}
+-- id-at-attributeDescriptorCertificate		OBJECT IDENTIFIER	::=	{id-at 62}
+-- id-at-attributeAuthorityRevocationList	OBJECT IDENTIFIER	::=	{id-at 63}
+-- id-at-family-information					OBJECT IDENTIFIER		{id-at 64}
+id-at-pseudonym   							OBJECT IDENTIFIER	::=	{id-at 65}
+id-at-communicationsService  				OBJECT IDENTIFIER	::=	{id-at 66}
+id-at-communicationsNetwork					OBJECT IDENTIFIER	::=	{id-at 67}
+-- id-at-certificationPracticeStmt			OBJECT IDENTIFIER	::=	{id-at 68}
+-- id-at-certificatePolicy					OBJECT IDENTIFIER 	::=	{id-at 69}
+-- id-at-pkiPath							OBJECT IDENTIFIER	::=	{id-at 70}
+-- id-at-privPolicy							OBJECT IDENTIFIER	::=	{id-at 71}
+-- id-at-role								OBJECT IDENTIFIER	::=	{id-at 72}
+--id-at-delegationPath						OBJECT IDENTIFIER	::=	{id-at 73}
+
+-- Control  attributes --
+-- DELETED!
+
+-- Notification attributes --
+-- DELETED!
+
+-- Problem definitions --
+-- DELETED!
+
+-- Matching rules --
+-- DELETED!
+
+-- contexts --
+
+id-avc-language									OBJECT IDENTIFIER	::=	{id-avc 0}
+id-avc-temporal									OBJECT IDENTIFIER	::=	{id-avc 1}
+id-avc-locale									OBJECT IDENTIFIER	::=	{id-avc 2}
+--id-avc-attributeValueSecurityLabelContext  	OBJECT IDENTIFIER	::=	{id-avc 3}
+--id-avc-attributeValueIntegrityInfoContext		OBJECT IDENTIFIER	::=	{id-avc 4}
+
+
+-- Object identifiers from RFC 1274
+
+datax						OBJECT IDENTIFIER	::= {itu-t 9}
+pss							OBJECT IDENTIFIER	::= {datax 2342}
+ucl							OBJECT IDENTIFIER	::= {pss 19200300}
+pilot						OBJECT IDENTIFIER	::= {ucl 100}
+pilotAttributeType			OBJECT IDENTIFIER	::= {pilot 1}
+
+
+-- Object identifiers from PKCS #9
+
+pkcs		OBJECT IDENTIFIER	::= { iso member-body us (840) rsadsi (113549) 1 }
+pkcs-9		OBJECT IDENTIFIER	::= { pkcs 9 }
+
+
+END  -- SelectedAttributeTypes

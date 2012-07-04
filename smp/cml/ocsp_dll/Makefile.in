@@ -1,0 +1,29 @@
+#
+# Modify these variables as necessary for your specific
+# environment.
+#
+#
+
+# Define our staging directory
+#
+top_srcdir = @top_smpdir@
+STAGINGDIR=@SMPDISTDIR@
+all: libocsp_openssl
+
+libocsp_openssl:
+ifeq ($(HASOPENSSL), yes)
+		(/bin/sh $(top_srcdir)/build/mkinstalldirs $(STAGINGDIR)/include/smp)
+		(cd inc; cp -f *.h $(STAGINGDIR)/include/smp)
+		(cd src; make)
+endif
+
+install:
+ifeq ($(HASOPENSSL), yes)
+	(cd src; make install)
+endif
+
+clean:
+ifeq ($(HASOPENSSL), yes)
+	(cd src; make clean)
+endif
+

@@ -1,0 +1,83 @@
+include @SMP_BUILDDIR@/build/Makehead
+
+# Directory where CMAPI headers are located
+#
+LFLAG1		= @SMP_LDFLAG@
+CMAPI         = ../../cmapi/inc
+CRLSRVINC     = ../../crlsrv_dll/inc
+CMLASNINC	= ../../cmlasn/inc
+SRLINC		= ../../srl/inc
+PKCS11CRYTOPPINC = ../../../pkcs11_cryptopp/inc
+STAGINGDIR	= $(SMPDISTDIR)/lib
+
+ifeq ($(RANLIB),)
+RANLIB = echo
+endif
+
+## Specify the library name
+ifeq ($(USEDEBUGLIB), no)
+CMAPI_LIBS    = -lcmlasn -lc++asn1 @SOLIB@
+ifeq ($(ENABLESTATIC), no)
+TARGET = $(STAGINGDIR)/libcmapi.@SHEXT@
+else
+TARGET2= $(STAGINGDIR)/libcmapi.a
+endif
+else
+CMAPI_LIBS    = -lcmlasn_d -lc++asn1 @SOLIB@
+ifeq ($(ENABLESTATIC), no)
+TARGET = $(STAGINGDIR)/libcmapi_d.@SHEXT@
+else
+TARGET2= $(STAGINGDIR)/libcmapi_d.a
+endif
+endif
+
+
+## Needed includes
+INCLUDE       += -I$(CMAPI) -I$(CMLASNINC) -I$(CRLSRVINC) -I$(PKCS11CRYTOPPINC) -I$(SRLINC)
+
+## Specify the sources
+CSRCS	      = $(wildcard *.c)
+CPPSRCS       = $(wildcard *.cpp) 
+COBJS         = $(CSRCS:.c=.o) 	
+CPPOBJS       = $(CPPSRCS:.cpp=.o) 
+OBJS	      = $(CPPOBJS) $(COBJS)
+
+# Compiler information 
+CC            = @CC@
+CXX           = @CXX@
+CPP	     =  @CPP@
+
+LIBPATH = -L$(SNACCLIBDIR) -L$(STAGINGDIR)
+LIBS += $(CMAPI_LIBS) @LIBS@
+
+DEPENDENCIES = ../inc/CM_cache.h \
+	../inc/CM_internal.h \
+	../inc/cmapi.h \
+	../inc/cmapi_cpp.h \
+	../inc/cmapiCallbacks.h \
+	../../crlsrv_dll/inc/crlapi.h \
+	../inc/PathBuild.h
+
+#determine what platform we are on
+OS	= @OS@
+
+# Add in the C Flags and C++ Flags
+CFLAGS = @CFLAGS@ -D_UNIX
+CXXFLAGS = @CXXFLAGS@ -D_UNIX
+
+#
+# End of Low Level specific make information
+#
+
+.SUFFIXES : .cpp .cpp.o 
+
+
+all: $(COBJS) $(CPPOBJS) $(TARGET) $(TARGET2)
+
+clean:
+	rm -f *.o
+
+$(CPPOBJS): $(DEPENDENCIES)
+$(COBJS): $(DEPENDENCIES)
+
+include $(top_builddir)/build/Maketail.in

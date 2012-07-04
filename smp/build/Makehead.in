@@ -1,0 +1,89 @@
+# Makehead.in:
+# Global variables used by all makes under the SMP root directory
+# These values are set durning the configure process
+#
+# Changes:
+#
+# $Log: Makehead.in,v $
+# Revision 1.7  2005/02/17 15:35:20  HorvathT
+# Needed to set HASOPENSSL from environment
+#
+# Revision 1.6  2005/02/15 19:16:38  HorvathT
+# changes for OpenSSL/OCSP Makefiles
+#
+# Revision 1.5  2003/10/01 10:43:30  leonberp
+# Solaris build updates
+#
+# Revision 1.4  2003/06/03 16:26:58  mcphersc
+# enhanced crypto and snacc directories
+#
+# Revision 1.3  2003/03/28 18:48:27  mcphersc
+# added changes
+#
+#
+# Prefix value from configure
+prefix 		= @prefix@
+PREFIX 		= @prefix@
+LD				= @LD@
+
+#
+# The top of the SMP Source tree
+top_builddir 	= @SMP_BUILDDIR@
+
+#
+# The SMP Staging directory passed in from Configure
+SMPDISTDIR 	= @SMPDISTDIR@
+
+#
+# The Debug flag passed in from Configure (yes/no)
+USEDEBUGLIB 	= @USEDEBUGLIB@
+
+#
+#
+HAVELBER	= @HAVE_LBER@
+
+#
+# The --enable-static flag (yes/no)
+ENABLESTATIC 	= @enablestatic@
+
+#
+# The threads flag (yes/no)
+USETHREADS	= @USETHREADS@
+
+#
+# The ranlib executable, if it exist
+RANLIB 		= @RANLIB@
+
+#
+# Directory for the esnacc
+SNACCDIREXEC 	= @SNACCDIREXEC@
+SNACC	 	= @SNACCDIREXEC@/esnacc
+SNACCINCDIR	= @SNACCINCDIR@
+SNACCLIBDIR	= @SNACCLIBDIR@
+
+#
+# The SMP Load flags, as determined from configure
+LFLAG1          = @SMP_LDFLAG@
+LD					 = @LD@
+
+#
+# SFL Include Location
+SFLINC          = $(SMPDISTDIR)/include/smp
+
+#
+# CML Include Location
+CMLINC          = $(SMPDISTDIR)/include/smp
+
+
+#
+# Default CRYPTO++ Directory Location
+#
+CRYPTOPPDIR     = @CRYPTOPPDIR@
+CRYPTOPPINCDIR  = @CRYPTOPPINCDIR@
+CRYPTOPPLIBDIR  = @CRYPTOPPLIBDIR@
+
+#
+# Defuault OpenSSL Directory Location
+#
+HASOPENSSL	= @HasOPENSSL@
+OPENSSLDIR	= @OPENSSLDIR@

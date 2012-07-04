@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="pkcs11_cryptopp_dll"
+	ProjectGUID="{BF73EE6B-0095-480B-B4D2-62072AF2A6F5}"
+	RootNamespace="pkcs11_cryptopp_dll"
+	Keyword="Win32Proj">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="Debug"
+			IntermediateDirectory="Debug"
+			ConfigurationType="2"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="../inc;../../../cryptopp"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CRYPTOKI_EXPORTS;USE_PRECOMPILED_HEADERS"
+				MinimalRebuild="FALSE"
+				BasicRuntimeChecks="0"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="TRUE"
+				UsePrecompiledHeader="0"
+				WarningLevel="2"
+				Detect64BitPortabilityProblems="FALSE"
+				DebugInformationFormat="1"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying $(TargetPath) to system32 directory..."
+				CommandLine="copy &quot;$(TargetPath)&quot; %WINDIR%\system32
+"
+				Outputs="$(WINDIR)\system32\$(TargetFileName)"/>
+			<Tool
+				Name="VCLinkerTool"
+				OutputFile="..\..\..\SMPDist\lib/pkcs11_cryptopp_d.dll"
+				LinkIncremental="1"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile="$(OutDir)/pkcs11_cryptopp.pdb"
+				SubSystem="2"
+				ImportLibrary="$(OutDir)/pkcs11_cryptopp_d.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="Release"
+			IntermediateDirectory="Release"
+			ConfigurationType="2"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="../inc;../../../cryptopp"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;PKCS11_CRYPTOPP_DLL_EXPORTS;CRYPTOKI_EXPORTS"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="TRUE"
+				UsePrecompiledHeader="0"
+				WarningLevel="2"
+				Detect64BitPortabilityProblems="FALSE"
+				DebugInformationFormat="0"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying $(TargetPath) to system32 directory..."
+				CommandLine="copy &quot;$(TargetPath)&quot; %WINDIR%\system32
+"
+				Outputs="$(WINDIR)\system32\$(TargetFileName)"/>
+			<Tool
+				Name="VCLinkerTool"
+				OutputFile="..\..\..\SMPDist\lib/pkcs11_cryptopp.dll"
+				LinkIncremental="1"
+				GenerateDebugInformation="TRUE"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				ImportLibrary="$(OutDir)/pkcs11_cryptopp.lib"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			<File
+				RelativePath="..\src\c_digest_funcs.cpp">
+			</File>
+			<File
+				RelativePath="..\src\c_dual_use_funcs.cpp">
+			</File>
+			<File
+				RelativePath="..\src\c_encrypt_funcs.cpp">
+			</File>
+			<File
+				RelativePath="..\src\c_general_funcs.cpp">
+			</File>
+			<File
+				RelativePath="..\src\c_key_mgmt_funcs.cpp">
+			</File>
+			<File
+				RelativePath="..\src\c_object_funcs.cpp">
+			</File>
+			<File
+				RelativePath="..\src\c_rand_funcs.cpp">
+			</File>
+			<File
+				RelativePath="..\src\c_session_funcs.cpp">
+			</File>
+			<File
+				RelativePath="..\src\c_sign_funcs.cpp">
+			</File>
+			<File
+				RelativePath="..\src\c_token_funcs.cpp">
+			</File>
+			<File
+				RelativePath="..\src\c_verify_funcs.cpp">
+			</File>
+			<File
+				RelativePath="..\src\CKSession.cpp">
+			</File>
+			<File
+				RelativePath="..\src\create_dsa_signer.cpp">
+			</File>
+			<File
+				RelativePath="..\src\create_rsa_objects.cpp">
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath="..\inc\cryptoki.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="copying $(InputPath) to ..\..\..\SMPDist\include\pkcs11"
+						CommandLine="copy $(InputPath) ..\..\..\SMPDist\include\pkcs11
+"
+						Outputs="..\..\..\SMPDist\include\pkcs11\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="copying $(InputPath) to ..\..\..\SMPDist\include\pkcs11"
+						CommandLine="copy $(InputPath) ..\..\..\SMPDist\include\pkcs11
+"
+						Outputs="..\..\..\SMPDist\include\pkcs11\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\inc\p11cryptopp_internal.h">
+			</File>
+			<File
+				RelativePath="..\inc\pkcs11.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="copying $(InputPath) to ..\..\..\SMPDist\include\pkcs11"
+						CommandLine="copy $(InputPath) ..\..\..\SMPDist\include\pkcs11
+"
+						Outputs="..\..\..\SMPDist\include\pkcs11\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="copying $(InputPath) to ..\..\..\SMPDist\include\pkcs11"
+						CommandLine="copy $(InputPath) ..\..\..\SMPDist\include\pkcs11
+"
+						Outputs="..\..\..\SMPDist\include\pkcs11\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\inc\pkcs11f.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="copying $(InputPath) to ..\..\..\SMPDist\include\pkcs11"
+						CommandLine="copy $(InputPath) ..\..\..\SMPDist\include\pkcs11
+"
+						Outputs="..\..\..\SMPDist\include\pkcs11\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="copying $(InputPath) to ..\..\..\SMPDist\include\pkcs11"
+						CommandLine="copy $(InputPath) ..\..\..\SMPDist\include\pkcs11
+"
+						Outputs="..\..\..\SMPDist\include\pkcs11\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\inc\pkcs11t.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="copying $(InputPath) to ..\..\..\SMPDist\include\pkcs11"
+						CommandLine="copy $(InputPath) ..\..\..\SMPDist\include\pkcs11
+"
+						Outputs="..\..\..\SMPDist\include\pkcs11\$(InputName).h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="copying $(InputPath) to ..\..\..\SMPDist\include\pkcs11"
+						CommandLine="copy $(InputPath) ..\..\..\SMPDist\include\pkcs11
+"
+						Outputs="..\..\..\SMPDist\include\pkcs11\$(InputName).h"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

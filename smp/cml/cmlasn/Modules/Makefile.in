@@ -1,0 +1,109 @@
+#
+# ASN.1 Compile Makefile
+# NOTE: The Makefile in the source directory during install will install
+# into $(prefix)/Modules
+#
+# Configure variables needed
+include @SMP_BUILDDIR@/build/Makehead
+.SUFFIXES : .asn1 .cpp .h
+
+# Build our dependency list
+objects = AttributeCertificateDefinitions.cpp \
+	  AuthenticationFramework.cpp \
+	  CertificateExtensions.cpp \
+	  EnhancedSecurity.cpp \
+	  InformationFramework.cpp \
+	  ORAddress.cpp \
+	  PKIX.cpp \
+	  sdn702.cpp \
+	  SelectedAttributeTypes.cpp \
+	  UpperBounds.cpp \
+	  UsefulDefinitions.cpp \
+	  X509Common.cpp \
+	  AttributeCertificateDefinitions.h \
+	  AuthenticationFramework.h \
+	  CertificateExtensions.h \
+	  EnhancedSecurity.h \
+	  InformationFramework.h \
+	  ORAddress.h \
+	  PKIX.h \
+	  sdn702.h \
+	  SelectedAttributeTypes.h \
+	  UpperBounds.h \
+	  UsefulDefinitions.h \
+	  X509Common.h
+
+SNACCDIREXEC = @SNACCDIREXEC@/esnacc
+HAVE_SNACC = @HAVE_SNACC@
+SNACCFLAGS =  -VDAexport=EXPORT_GENSNACC -C -l -1000 -I .  -I ../../../SMIME/libCtilMgr/src
+
+
+define installit
+	cp $*.cpp ../src
+	cp $*.h ../inc
+	/bin/sh $(top_builddir)/build/mkinstalldirs $(SMPDISTDIR)/include/smp
+	cp $*.h $(SMPDISTDIR)/include/smp 
+	/bin/sh $(top_builddir)/build/mkinstalldirs $(SMPDISTDIR)/include/smp/Modules
+	cp $*.asn1 $(SMPDISTDIR)/include/smp/Modules
+endef
+
+snacc : $(objects)
+
+ifeq ($(HAVE_SNACC), yes)
+CertificateExtensions.cpp : CertificateExtensions.asn1 
+	$(SNACCDIREXEC) $(SNACCFLAGS) -a 100 $(*).asn1
+	$(installit)
+
+EnhancedSecurity.cpp : EnhancedSecurity.asn1
+	$(SNACCDIREXEC) $(SNACCFLAGS) -a 200 $*.asn1
+	$(installit)
+
+InformationFramework.cpp : InformationFramework.asn1
+	$(SNACCDIREXEC) $(SNACCFLAGS) -a 300 $*.asn1
+	$(installit)
+
+ORAddress.cpp : ORAddress.asn1
+	$(SNACCDIREXEC) $(SNACCFLAGS) -a 400 $*.asn1
+	$(installit)
+
+PKIX.cpp : PKIX.asn1
+	$(SNACCDIREXEC) $(SNACCFLAGS) -a 500 $*.asn1
+	$(installit)
+
+sdn702.cpp : sdn702.asn1
+	$(SNACCDIREXEC) $(SNACCFLAGS) -a 600  $*.asn1
+	$(installit)
+
+SelectedAttributeTypes.cpp : SelectedAttributeTypes.asn1
+	$(SNACCDIREXEC) $(SNACCFLAGS) -a 700 $*.asn1
+	$(installit)
+
+UsefulDefinitions.cpp : UsefulDefinitions.asn1
+	$(SNACCDIREXEC) $(SNACCFLAGS) $*.asn1
+	$(installit)
+
+X509Common.cpp : X509Common.asn1
+	$(SNACCDIREXEC) $(SNACCFLAGS) $*.asn1
+	$(installit)
+
+AuthenticationFramework.cpp : AuthenticationFramework.asn1
+	$(SNACCDIREXEC) $(SNACCFLAGS) $*.asn1
+	$(installit)
+
+UpperBounds.cpp : UpperBounds.asn1
+	$(SNACCDIREXEC) $(SNACCFLAGS) $*.asn1
+	$(installit)
+
+AttributeCertificateDefinitions.cpp :  AttributeCertificateDefinitions.asn1
+	$(SNACCDIREXEC) $(SNACCFLAGS) $*.asn1
+	$(installit)
+endif
+
+clean:
+clean:
+	(for f in $(objects); do \
+	  rm -f $$f; \
+	  rm -f ../src/$$f; \
+	  rm -f ../inc/$$f; \
+	done; )
+

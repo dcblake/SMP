@@ -1,0 +1,361 @@
+InformationFramework -- {joint-iso-itu-t ds(5) module(1) informationFramework(1) 4}
+
+DEFINITIONS ::=
+
+BEGIN
+
+-- EXPORTS All --
+
+-- The types and values defined in this module are exported for use in the other ASN.1 modules contained 
+-- within the Directory Specifications, and for the use of other applications which will use them to access 
+-- Directory services. Other applications may use them for their own purposes, but this will not constrain
+-- extensions and modifications needed to maintain or improve the Directory service.
+
+IMPORTS
+
+	directoryAbstractService, id-ar, id-at, id-mr, id-nf, id-oa, id-oc, id-sc,
+	selectedAttributeTypes, serviceAdministration, upperBounds
+		FROM UsefulDefinitions -- {joint-iso-itu-t ds(5) module(1) usefulDefinitions(0) 4}
+
+--	SearchRule
+--		FROM ServiceAdministration serviceAdministration
+
+--	TypeAndContextAssertion
+--		FROM DirectoryAbstractService directoryAbstractService
+
+--	booleanMatch, commonName, DirectoryString, generalizedTimeMatch,
+--	generalizedTimeOrderingMatch, integerFirstComponentMatch, integerMatch,
+--	integerOrderingMatch, objectIdentifierFirstComponentMatch
+--		FROM SelectedAttributeTypes selectedAttributeTypes
+
+	ub-search
+		FROM UpperBounds -- upperBounds	-- ;
+
+
+-- attribute data types --
+
+Attribute  ::=  SEQUENCE {
+	type				OBJECT IDENTIFIER,
+	values				SET SIZE (0 .. MAX) OF ANY, -- DEFINED BY type
+	valuesWithContext	SET SIZE (1 .. MAX) OF SEQUENCE {
+		value  				ANY, -- DEFINED BY type,
+		contextList   		SET SIZE (1..MAX) OF Context } OPTIONAL }
+
+AttributeType  ::=  OBJECT IDENTIFIER
+
+AttributeValue  ::=  ANY
+
+Context  ::=  SEQUENCE {
+	contextType		OBJECT IDENTIFIER,
+	contextValues	SET SIZE (1..MAX) OF ANY, -- DEFINED BY contextType,
+	fallback		BOOLEAN DEFAULT FALSE }
+
+AttributeValueAssertion  ::=  SEQUENCE {
+	type				OBJECT IDENTIFIER,
+	assertion			ANY DEFINED BY type,
+	assertedContexts  	CHOICE {
+		allContexts  		[0]  NULL,
+		selectedContexts  	[1]  SET SIZE (1..MAX) OF ContextAssertion } OPTIONAL }
+
+ContextAssertion  ::=  SEQUENCE {
+	contextType			OBJECT IDENTIFIER,
+	contextValues		SET SIZE (1..MAX) OF ANY -- DEFINED BY contextType -- }
+
+AttributeTypeAssertion  ::=  SEQUENCE {
+	type				OBJECT IDENTIFIER,
+	assertedContexts	SEQUENCE SIZE (1..MAX) OF ContextAssertion  OPTIONAL }
+
+
+-- Definition of the following information object set is deferred, perhaps to standardized
+-- profiles or to protocol implementation conformance statements. The set is required to
+-- specify a table constraint on the values component of Attribute, the value component 
+-- of AttributeTypeAndValue, and the assertion component of AttributeValueAssertion.
+-- SupportedAttributes  ATTRIBUTE  ::=  { objectClass | aliasedEntryName, ... }
+
+-- Definition of the following information object set is deferred, perhaps to standardized
+-- profiles or to protocol implementation conformance statements. The set is required to
+-- specify a table constraint on the context specifications
+-- SupportedContexts  CONTEXT  ::=  { ... }
+
+
+-- naming data types --
+
+Name  ::=  CHOICE { -- only one possibility for now --   rdnSequence  RDNSequence }
+
+RDNSequence  ::=  SEQUENCE OF RelativeDistinguishedName
+
+DistinguishedName  ::=  RDNSequence
+
+RelativeDistinguishedName  ::=  SET SIZE (1..MAX) OF AttributeTypeAndDistinguishedValue
+
+AttributeTypeAndDistinguishedValue  ::=  SEQUENCE  {
+	type					OBJECT IDENTIFIER,
+	value  					ANY DEFINED BY type,
+	primaryDistinguished	BOOLEAN DEFAULT TRUE,
+	valuesWithContext		SET SIZE (1..MAX) OF SEQUENCE {
+		distingAttrValue		[0]	ANY -- DEFINED BY type -- OPTIONAL,
+		contextList  			SET SIZE (1..MAX) OF Context } OPTIONAL }
+
+
+-- subtree data types --
+
+SubtreeSpecification  ::=  SEQUENCE {
+	base   				[0]	LocalName, -- DEFAULT { }, - empty RDNSequence
+							COMPONENTS OF ChopSpecification,
+	specificationFilter	[4]	Refinement OPTIONAL }
+	-- empty sequence specifies whole administrative area
+
+LocalName  ::=  RDNSequence
+
+ChopSpecification  ::=  SEQUENCE  {
+	specificExclusions	[1]	SET SIZE (1..MAX) OF CHOICE {
+		chopBefore  		[0]	LocalName,
+		chopAfter			[1]	LocalName } OPTIONAL,
+	minimum				[2]	BaseDistance DEFAULT 0,
+	maximum				[3]	BaseDistance OPTIONAL }
+
+BaseDistance  ::=  INTEGER (0..MAX)
+
+Refinement  ::=  CHOICE {
+	item		[0]	OBJECT IDENTIFIER,
+	andItems	[1]	SET OF Refinement,
+	orItems		[2]	SET OF Refinement,
+	notItem		[3]	Refinement }
+
+
+-- OBJECT-CLASS information object class specification --
+-- DELETED!
+
+-- object classes --
+-- DELETED!
+
+
+-- ATTRIBUTE information object class specification --
+-- DELETED!
+
+-- attributes --
+
+objectClassAttribute  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX	OBJECT IDENTIFIER
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-at-objectClass }
+
+aliasedEntryName  OBJECT-TYPE -- ATTRIBUTE ::= {
+	SYNTAX	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-at-aliasedEntryName }
+
+
+-- MATCHING-RULE information object class specification --
+-- DELETED!
+
+-- matching rules --
+-- DELETED!
+
+
+-- NAME-FORM information object class specification --
+-- DELETED!
+
+
+-- STRUCTURE-RULE class and DIT structure rule data types --
+-- DELETED!
+
+
+-- CONTENT-RULE class and DIT content rule data types --
+-- DELETED!
+
+
+-- system schema information objects --
+
+-- object classes --
+-- DELETED!
+
+
+-- attributes --
+
+subtreeSpecification  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX	SubtreeSpecification
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-subtreeSpecification }
+
+administrativeRole  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX	OBJECT IDENTIFIER
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-administrativeRole }
+
+createTimestamp  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX	GeneralizedTime
+			-- as per 41.3 b) or c) of ITU-T Rec. X.680 | ISO/IEC 8824-1
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-createTimestamp }
+
+modifyTimestamp  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX	GeneralizedTime
+			-- as per 41.3 b) or c) of ITU-T Rec. X.680 | ISO/IEC 8824-1
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-modifyTimestamp }
+
+subschemaTimestamp  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX	GeneralizedTime
+			-- as per 41.3 b) or c) of ITU-T Rec.X. 680 | ISO/IEC 8824-1
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-subschemaTimestamp }
+
+creatorsName  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-creatorsName }
+
+modifiersName  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-modifiersName }
+
+subschemaSubentryList  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX 	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-subschemaSubentryList }
+
+accessControlSubentryList  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX 	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-accessControlSubentryList }
+
+collectiveAttributeSubentryList  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX 	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-collectiveAttributeSubentryList }
+
+contextDefaultSubentryList  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX 	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-contextDefaultSubentryList }
+
+serviceAdminSubentryList  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX 	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-serviceAdminSubentryList }
+
+hasSubordinates OBJECT-TYPE -- ATTRIBUTE ::= {
+	SYNTAX	BOOLEAN
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-hasSubordinates }
+
+collectiveExclusions  OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX	OBJECT IDENTIFIER
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-collectiveExclusions }
+
+--contextAssertionDefaults  ATTRIBUTE  ::=  {
+--	WITH SYNTAX				TypeAndContextAssertion
+--	EQUALITY MATCHING RULE	objectIdentifierFirstComponentMatch
+--	USAGE					directoryOperation
+--	ID						id-oa-contextAssertionDefault }
+
+--searchRules  ATTRIBUTE ::= {
+--	WITH SYNTAX				SearchRuleDescription
+--	EQUALITY MATCHING RULE	integerFirstComponentMatch
+--	USAGE					directoryOperation
+--	ID						id-oa-searchRules }
+
+--SearchRuleDescription  ::=  SEQUENCE {
+--	COMPONENTS OF		 SearchRule,
+--	name			[28] SET SIZE (1 .. MAX) OF DirectoryString { ub-search } OPTIONAL,
+--	description		[29] DirectoryString { ub-search } OPTIONAL }
+
+hierarchyLevel OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX	INTEGER
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-hierarchyLevel }
+
+hierarchyBelow OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX	BOOLEAN
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-hierarchyBelow }
+
+hierarchyParent OBJECT-TYPE -- ATTRIBUTE  ::=  {
+	SYNTAX	DistinguishedName
+	ACCESS	read-write
+	STATUS	mandatory
+	::= { id-oa-hierarchyParent }
+
+
+-- object identifier assignments --
+
+-- object classes --
+id-oc-top						OBJECT IDENTIFIER	::=	{id-oc 0}
+id-oc-alias						OBJECT IDENTIFIER	::=	{id-oc 1}
+id-oc-parent					OBJECT IDENTIFIER	::=	{id-oc 28}
+id-oc-child						OBJECT IDENTIFIER	::=	{id-oc 29}
+
+-- attributes --
+id-at-objectClass   				OBJECT IDENTIFIER	::=	{id-at 0}
+id-at-aliasedEntryName  			OBJECT IDENTIFIER	::=	{id-at 1}
+
+-- matching rules --
+id-mr-objectIdentifierMatch			OBJECT IDENTIFIER	::=	{id-mr 0}
+id-mr-distinguishedNameMatch		OBJECT IDENTIFIER	::=	{id-mr 1}
+
+-- operational attributes --
+id-oa-excludeAllCollectiveAttributes	OBJECT IDENTIFIER	::=	{id-oa 0}
+id-oa-createTimestamp  					OBJECT IDENTIFIER	::=	{id-oa 1}
+id-oa-modifyTimestamp   				OBJECT IDENTIFIER	::=	{id-oa 2}
+id-oa-creatorsName						OBJECT IDENTIFIER	::=	{id-oa 3}
+id-oa-modifiersName						OBJECT IDENTIFIER	::=	{id-oa 4}
+id-oa-administrativeRole				OBJECT IDENTIFIER	::=	{id-oa 5}
+id-oa-subtreeSpecification				OBJECT IDENTIFIER	::=	{id-oa 6}
+id-oa-collectiveExclusions				OBJECT IDENTIFIER	::=	{id-oa 7}
+id-oa-subschemaTimestamp    			OBJECT IDENTIFIER	::=	{id-oa 8}
+id-oa-hasSubordinates   				OBJECT IDENTIFIER	::=	{id-oa 9}
+id-oa-subschemaSubentryList				OBJECT IDENTIFIER	::=	{id-oa 10}
+id-oa-accessControlSubentryList			OBJECT IDENTIFIER	::=	{id-oa 11}
+id-oa-collectiveAttributeSubentryList	OBJECT IDENTIFIER	::=	{id-oa 12}
+id-oa-contextDefaultSubentryList		OBJECT IDENTIFIER	::=	{id-oa 13}
+id-oa-contextAssertionDefault			OBJECT IDENTIFIER	::=	{id-oa 14}
+id-oa-serviceAdminSubentryList			OBJECT IDENTIFIER	::=	{id-oa 15}
+id-oa-searchRules						OBJECT IDENTIFIER	::=	{id-oa 16}
+id-oa-hierarchyLevel					OBJECT IDENTIFIER	::=	{id-oa 17}
+id-oa-hierarchyBelow 					OBJECT IDENTIFIER	::=	{id-oa 18}
+id-oa-hierarchyParent					OBJECT IDENTIFIER	::=	{id-oa 19}
+id-oa-hierarchyChildren					OBJECT IDENTIFIER	::=	{id-oa 20}
+
+-- subentry classes --
+id-sc-subentry						OBJECT IDENTIFIER	::=	{id-sc 0}
+id-sc-accessControlSubentry  		OBJECT IDENTIFIER	::=	{id-sc 1}
+id-sc-collectiveAttributeSubentry	OBJECT IDENTIFIER	::=	{id-sc 2}
+id-sc-contextAssertionSubentry		OBJECT IDENTIFIER	::=	{id-sc 3}
+id-sc-serviceAdminSubentry			OBJECT IDENTIFIER	::=	{id-sc 4}
+
+--  Name forms --
+id-nf-subentryNameForm				OBJECT IDENTIFIER 	::=	{id-nf 16}
+
+-- administrative roles --
+id-ar-autonomousArea   					OBJECT IDENTIFIER	::=	{id-ar 1}
+id-ar-accessControlSpecificArea			OBJECT IDENTIFIER	::=	{id-ar 2}
+id-ar-accessControlInnerArea  			OBJECT IDENTIFIER	::=	{id-ar 3}
+id-ar-subschemaAdminSpecificArea		OBJECT IDENTIFIER	::=	{id-ar 4}
+id-ar-collectiveAttributeSpecificArea	OBJECT IDENTIFIER	::=	{id-ar 5}
+id-ar-collectiveAttributeInnerArea		OBJECT IDENTIFIER	::=	{id-ar 6}
+id-ar-contextDefaultSpecificArea		OBJECT IDENTIFIER	::=	{id-ar 7}
+id-ar-serviceSpecificArea				OBJECT IDENTIFIER	::=	{id-ar 8}
+
+
+END  -- InformationFramework

@@ -1,0 +1,104 @@
+#
+# Variables filled in by configure
+#
+include @SMP_BUILDDIR@/build/Makehead
+
+#
+# Variable utilities
+ifeq ($(RANLIB),)
+RANLIB = echo
+endif
+
+# Directory where CMAPI headers are located
+#
+LFLAG1	      = @SMP_LDFLAG@
+CMAPI         = ../../cmapi/inc
+CMLASNINC	= ../../cmlasn/inc
+SRL		= ../inc
+
+
+
+## Specifiy Needed libraries and paths
+CMLASN_LIBDIR = $(SMPDISTDIR)/lib
+
+## Needed includes
+INCLUDE       += -I$(CMAPI) -I$(CMLASNINC) -I$(SRL) 
+
+## Specify the sources
+CSRCS	      = $(wildcard *.c)
+CPPSRCS       = $(wildcard *.cpp) 
+COBJS         = $(CSRCS:.c=.o) 	
+CPPOBJS       = $(CPPSRCS:.cpp=.o) 
+OBJS			  = $(COBJS) $(CPPOBJS)
+
+# Compiler information 
+CC            = @CC@
+CXX           = @CXX@
+CPP	     =  @CPP@
+
+LIBPATH = -L$(SNACCLIBDIR) -L$(CMLASN_LIBDIR)
+LIBS += $(CMLASN_LIBS) @LIBS@
+
+DEPENDENCIES = ../inc/AttributeCertificateDefinitions.h \
+	../inc/AuthenticationFramework.h \
+	../inc/CertificateExtensions.h \
+	../inc/cmlasn.h \
+	../inc/cmlasn_c.h \
+	../inc/cmlasn_exts.h \
+	../inc/cmlasn_general.h \
+	../inc/cmlasn_internal.h \
+	../inc/cmlasn_name.h \
+	../inc/InformationFramework.h \
+	../inc/ORAddress.h \
+	../inc/PKIX.h \
+	../inc/sdn702.h \
+	../inc/SelectedAttributeTypes.h \
+	../inc/UpperBounds.h \
+	../inc/UsefulDefinitions.h \
+	../inc/X509Common.h
+
+#determine what platform we are on
+OS	= @OS@
+
+# Add in the C Flags and C++ Flags
+CXXFLAGS = -fPIC @CXXFLAGS@ -D_UNIX
+CFLAGS = @CFLAGS@ -D_UNIX
+
+ifeq ($(USETHREADS), yes)
+CMLASN_LIBS = -lpthread
+endif
+
+# Get debug flags from configure
+ifeq ($(USEDEBUGLIB), yes)
+ifeq ($(ENABLESTATIC), no)
+TARGET = $(CMLASN_LIBDIR)/libcmlasn_d.@SHEXT@
+CMLASN_LIBS = -lc++asn1  
+else
+TARGET2 = $(CMLASN_LIBDIR)/libcmlasn_d.a
+endif
+else
+ifeq ($(ENABLESTATIC), no)
+TARGET = $(CMLASN_LIBDIR)/libcmlasn.@SHEXT@
+CMLASN_LIBS = -lc++asn1  
+else
+TARGET2 = $(CMLASN_LIBDIR)/libcmlasn.a
+endif
+
+endif
+
+#
+# End of Low Level specific make information
+#
+
+.SUFFIXES : .cpp .cpp.o 
+
+
+all: $(COBJS) $(CPPOBJS) $(TARGET) $(TARGET2)
+
+clean:	
+	rm -f *.o
+
+$(CPPOBJS): $(DEPENDENCIES)
+$(COBJS): $(DEPENDENCIES)
+
+include @SMP_BUILDDIR@/build/Maketail.in

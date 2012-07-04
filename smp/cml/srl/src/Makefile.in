@@ -1,0 +1,107 @@
+include ../../../build/Makehead
+#
+# Variable utilities
+ifeq ($(RANLIB),)
+RANLIB = echo
+endif
+
+#determine what platform we are on
+OS	= @OS_TYPE@
+# Directory where CMAPI headers are located
+#
+CMAPI         = ../../cmapi/inc
+CMLASNINC	= ../../cmlasn/inc
+PKCS11CRYPTOPPINC = ../../../pkcs11_cryptopp/inc
+SRL		= ../inc
+CTILMGRINC	= ../../../SMIME/libCtilMgr/inc
+LIBDIR		= $(SMPDISTDIR)/lib
+BUILDDIR	= @SMP_BUILDDIR@
+
+USEDEBUGLIB = @USEDEBUGLIB@
+## Specify the shared library name
+ifeq ($(USEDEBUGLIB), yes)
+SRL_LIBS    = -lcmlasn_d @SOLIB@
+else
+SRL_LIBS    = -lcmlasn @SOLIB@
+endif
+#
+# Check OS for Sun, if sun then LDAP needs the libresolv library
+#
+ifeq ($(OS), SunOS)
+SRL_LIBS += -lresolv
+endif
+## Specify the static library name
+ifeq ($(ENABLESTATIC), yes)
+ifeq ($(USEDEBUGLIB), yes)
+TARGET2 =  $(SMPDISTDIR)/lib/libsrlapi_d.a
+else
+TARGET2 =  $(SMPDISTDIR)/lib/libsrlapi.a
+endif
+else
+ifeq ($(USEDEBUGLIB), yes)
+TARGET = $(SMPDISTDIR)/lib/libsrlapi_d.@SHEXT@
+else
+TARGET = $(SMPDISTDIR)/lib/libsrlapi.@SHEXT@
+endif
+endif
+
+
+
+## Needed includes
+INCLUDE       += -I$(BUILDDIR) -I$(CMAPI) -I$(CMLASNINC) -I$(PKCS11CRYPTOPPINC) -I$(CTILMGRINC) -I$(SRL) 
+
+## Specify the sources
+CSRCS	      = $(wildcard *.c)
+CPPSRCS       = $(wildcard *.cpp) 
+COBJS         = $(CSRCS:.c=.o) 	
+CPPOBJS       = $(CPPSRCS:.cpp=.o) 
+
+# Compiler information 
+CC            = @CC@
+CXX           = @CXX@
+CPP	     =  @CPP@
+
+LIBS += $(SRL_LIBS) @LIBS@
+
+
+DEPENDENCIES = ../inc/SRL_ldap.h \
+	../inc/SRL_db.h \
+	../inc/SRL_internal.h \
+	../inc/srlapi.h
+
+
+# Add in the C Flags and C++ Flags
+CFLAGS = @CFLAGS@ -D_UNIX
+CXXFLAGS = @CXXFLAGS@ -D_UNIX
+
+
+
+#
+# End of Low Level specific make information
+#
+
+.SUFFIXES : .cpp .cpp.o 
+
+
+all: $(COBJS) $(CPPOBJS) $(TARGET) $(TARGET2)
+
+$(CPPOBJS): $(DEPENDENCIES)
+$(COBJS): $(DEPENDENCIES)
+
+clean:
+	rm -f *.o
+
+$(TARGET):  $(COBJS) $(CPPOBJS)
+	echo Making target
+	$(CXX) -g $(LFLAG1) *.o -o $(TARGET) $(LIBS) -L$(LIBDIR)
+	/bin/sh $(top_builddir)/build/install-sh -c -m 755 $(TARGET) $(SMPDISTDIR)/lib
+
+$(TARGET2):  $(COBJS) $(CPPOBJS)
+	echo Making target
+	$(AR) ruv $(TARGET2) *.o
+	$(RANLIB) $(TARGET2)
+	/bin/sh $(top_builddir)/build/install-sh -c -m 755 $(TARGET2) $(SMPDISTDIR)/lib
+
+include ../../../build/Maketail.in
+
+include ../../../build/Makeinstall.in

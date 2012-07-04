@@ -1,0 +1,85 @@
+#
+# Try to install includes in the following directories
+# current, directory called inc, and directory up one
+#
+# Changes:
+# $Log: Makeinstall.in,v $
+# Revision 1.16  2003/04/08 13:01:32  mcphersc
+# *** empty log message ***
+#
+# Revision 1.15  2003/04/08 13:00:55  mcphersc
+# took out echo of target2
+#
+# Revision 1.14  2003/04/07 12:42:26  mcphersc
+# fixed problem with libraries
+#
+# Revision 1.13  2003/03/28 18:48:38  mcphersc
+# added history
+#
+#
+# determine what target to load
+# TARGET = shared library
+# TARGET2 = static library
+#
+# NOTE: Cannot have both library types, so if TARGET2 is set, then overwite
+#       INSTALL_TARGET.
+ifdef TARGET
+  INSTALL_TARGET = $(TARGET)
+endif
+ifdef TARGET2
+  INSTALL_TARGET = $(TARGET2)
+endif
+
+PREFIX = @prefix@
+install:
+	@/bin/sh $(top_builddir)/build/mkinstalldirs $(prefix)/include/smp 
+	@/bin/sh $(top_builddir)/build/mkinstalldirs $(prefix)/include/smp/Modules 
+	@(for files in ./*.h; do \
+        if [ -f $$files ]; then \
+	  echo "Installing $$files into $(prefix)/include/smp"; \
+	  /bin/sh $(top_builddir)/build/install-sh -c -m 644 $$files $(prefix)/include/smp; \
+	fi; \
+	done; \
+	if [ -d ./inc ];then \
+	for files in inc/*.h; do \
+	  echo "Installing $$files into $(prefix)/include/smp"; \
+	  /bin/sh $(top_builddir)/build/install-sh -c -m 644 $$files $(prefix)/include/smp; \
+	done; \
+	fi ; \
+	if [ -d ../inc ];then \
+	for files in ../inc/*.h; do \
+	  echo "Installing $$files into $(prefix)/include/smp"; \
+	  /bin/sh $(top_builddir)/build/install-sh -c -m 644 $$files $(prefix)/include/smp; \
+	done; \
+	fi ; \
+        if [ -d ./src ]; then \
+	for files in ./src/*.asn1; do \
+	  echo "Installing $$files into $(prefix)/include/smp/Modules"; \
+	  /bin/sh $(top_builddir)/build/install-sh -c -m 644 $$files $(prefix)/include/smp/Modules; \
+	done; \
+	fi;  \
+	for files in ./*.asn1; do \
+	if [ -f $$files ]; then \
+	  echo "Installing $$files into $(prefix)/include/smp/Modules"; \
+	  /bin/sh $(top_builddir)/build/install-sh -c -m 644 $$files $(prefix)/include/smp/Modules; \
+	fi; \
+	done; \
+	if [ -d ../Modules ]; then \
+	for files in ../Modules/*.asn1; do \
+	if [ -f $$files ]; then \
+	  echo "Installing $$files into $(prefix)/include/smp/Modules"; \
+	  /bin/sh $(top_builddir)/build/install-sh -c -m 644 $$files $(prefix)/include/smp/Modules; \
+	fi; \
+	done; \
+	fi; \
+	if [ -d ./asn1 ]; then \
+	for files in ./asn1/*.asn1; do \
+	if [ -f $$files ]; then \
+	  /bin/sh $(top_builddir)/build/install-sh -c -m 644 $$files $(prefix)/include/smp/Modules; \
+	fi; \
+	done; \
+	fi; \
+	if [ -f $(INSTALL_TARGET) ]; then \
+	  echo "Installing $(INSTALL_TARGET) into $(prefix)/lib"; \
+	/bin/sh $(top_builddir)/build/install-sh -c -m 755 $(INSTALL_TARGET) $(prefix)/lib; \
+	fi; ) 

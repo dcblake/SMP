@@ -1,0 +1,86 @@
+X509Common --
+
+DEFINITIONS IMPLICIT TAGS ::=
+
+-- These ASN.1 items are from the CertificateExtensions module
+-- They are moved into this module as SNACC cannot compile modules that import 
+--    ASN.1 items from each other.
+
+BEGIN
+
+-- EXPORTS All --
+
+
+IMPORTS
+	ub-name
+		FROM UpperBounds
+	Name
+		FROM InformationFramework
+	ORAddress
+		FROM ORAddressModule
+	DirectoryString
+		FROM SelectedAttributeTypes ;
+
+
+KeyUsage ::= BIT STRING {
+	digitalSignature	(0),
+	nonRepudiation		(1),
+	keyEncipherment 	(2),
+	dataEncipherment	(3),
+	keyAgreement 		(4),
+	keyCertSign 		(5),
+	cRLSign 			(6),
+	encipherOnly		(7),
+	decipherOnly		(8) }
+
+
+-- GeneralNames Definitions
+
+GeneralNames ::= SEQUENCE SIZE (1..MAX) OF GeneralName
+
+GeneralName ::= CHOICE {
+	otherName					[0]	Other-Name,
+	rfc822Name					[1]	IA5String,
+	dNSName						[2]	IA5String,
+	x400Address					[3]	ORAddress,
+	directoryName				[4]	Name,
+	ediPartyName				[5]	EDIPartyName,
+	uniformResourceIdentifier	[6]	IA5String,
+	iPAddress					[7]	OCTET STRING,
+	registeredID				[8]	OBJECT IDENTIFIER }
+
+Other-Name	::= SEQUENCE {
+	id		OBJECT IDENTIFIER,
+	type	[0] ANY DEFINED BY id }
+
+EDIPartyName ::= SEQUENCE {
+	nameAssigner		[0]	DirectoryString (SIZE (1..ub-name)) OPTIONAL,
+	partyName			[1]	DirectoryString (SIZE (1..ub-name)) }
+
+
+CertificatePoliciesSyntax ::= SEQUENCE SIZE (1..MAX) OF PolicyInformation
+
+PolicyInformation ::= SEQUENCE {
+	policyIdentifier   CertPolicyId1,
+	policyQualifiers   SEQUENCE SIZE (1..MAX) OF 
+					PolicyQualifierInfo OPTIONAL }
+
+CertPolicyId1 ::= OBJECT IDENTIFIER
+
+PolicyQualifierInfo ::= SEQUENCE {
+	policyQualifierId	OBJECT IDENTIFIER,
+	qualifier			ANY DEFINED BY policyQualifierId OPTIONAL }
+
+-- SupportedPolicyQualifiers CERT-POLICY-QUALIFIER ::= { ... }
+
+anyPolicy	OBJECT IDENTIFIER	::=	{ 2 5 29 32 0 }
+
+-- CERT-POLICY-QUALIFIER ::= CLASS {
+--	&id			OBJECT IDENTIFIER UNIQUE,
+--	&Qualifier 	OPTIONAL }
+-- WITH SYNTAX {
+--	POLICY-QUALIFIER-ID	&id
+--	[QUALIFIER-TYPE	&Qualifier] }
+
+
+END

@@ -1,0 +1,23 @@
+#
+# Modify these variables as necessary for your specific
+# environment.
+#
+#
+
+# Define our staging directory
+#
+top_srcdir = @top_smpdir@
+STAGINGDIR=@SMPDISTDIR@
+all: libpkcs11_cryptopp
+
+libpkcs11_cryptopp:
+		(/bin/sh $(top_srcdir)/build/mkinstalldirs $(STAGINGDIR)/include/pkcs11)
+		(cd inc; cp -f *.h $(STAGINGDIR)/include/pkcs11)
+		(cd src; make)
+
+install:
+	(cd src; make install)
+
+clean:
+	(cd src; make clean)
+

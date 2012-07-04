@@ -1,0 +1,228 @@
+SDN702
+
+DEFINITIONS IMPLICIT TAGS ::=
+ 
+BEGIN
+
+
+IMPORTS
+	id-at, id-ce, id-mr, informationFramework, authenticationFramework,
+	selectedAttributeTypes, upperBounds
+		FROM UsefulDefinitions
+
+	ub-privacy-mark-length
+		FROM UpperBounds
+
+	ub-integer-options
+		FROM ORAddressModule
+	
+	Attribute
+		FROM InformationFramework 
+
+	SecurityPolicyIdentifier, SecurityClassification, SecurityCategories, Clearance
+		FROM EnhancedSecurity  ;
+
+
+
+id-infosec  OBJECT IDENTIFIER  ::=  {
+	joint-iso-itu-t country (16) us (840) organization (1)
+	us-government (101) dod (2) 1 }
+
+--
+-- Subject Directory Attributes supported extensions for MISSI
+--
+
+id-attributes				OBJECT IDENTIFIER	::=	{ id-infosec 5 }
+id-security-categories		OBJECT IDENTIFIER	::=	{ id-infosec 8 }
+id-cAClearanceConstraints	OBJECT IDENTIFIER	::=	{ id-attributes 60}
+id-sigOrKMPrivileges		OBJECT IDENTIFIER	::= { id-attributes 55}
+id-commPrivileges			OBJECT IDENTIFIER	::= { id-attributes 56}
+id-sslPrivileges			OBJECT IDENTIFIER	::= { id-security-categories 2}
+
+
+id-aa-securityLabel OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+    us(840) rsadsi(113549) pkcs(1) pkcs-9(9) smime(16) id-aa(2) 2}
+
+ESSSecurityLabel ::= SET {
+  security-policy-identifier SecurityPolicyIdentifier,
+  security-classification SecurityClassification OPTIONAL,
+  privacy-mark ESSPrivacyMark OPTIONAL,
+  security-categories SecurityCategories OPTIONAL }
+
+
+ESSPrivacyMark ::= CHOICE {
+    pString      PrintableString (SIZE (1..ub-privacy-mark-length)),
+    utf8String   UTF8String (SIZE (1..MAX))
+}
+
+
+ub-security-categories                       INTEGER ::= 64
+
+TagSetName ::= OBJECT IDENTIFIER
+
+-- OID For  Subject Directory PRBAC Info
+cAClearanceConstraints OBJECT-TYPE 
+	SYNTAX	CAClearanceConstraints
+	ACCESS	read-write
+	STATUS	mandatory
+	::=	{id-cAClearanceConstraints} 
+
+CAClearanceConstraints  ::=  SEQUENCE OF Attribute
+
+
+sigOrKMPrivileges  OBJECT-TYPE 
+	SYNTAX	PrivilegeFlags
+	ACCESS	read-write
+	STATUS	mandatory
+	::=	{id-sigOrKMPrivileges}
+
+sslPrivileges OBJECT-TYPE 
+	SYNTAX	SSLPrivileges
+	ACCESS	read-write
+	STATUS	mandatory
+	::=	{id-sslPrivileges} 
+
+
+PrivilegeFlags	::= CHOICE {
+	sigFlags			[0]  SigPrivFlags,
+	kmFlags				[1]  KmPrivFlags }
+
+SigPrivFlags ::= SEQUENCE {
+	sigPrivId			OBJECT IDENTIFIER,
+	sigPrivFlags		SEQUENCE OF  SigPrivFlag  OPTIONAL }
+
+SigPrivFlag ::= INTEGER {
+	orgRelease		(0),
+	pCA				(1),
+	pAA				(2), 	--this integer value is obsolete
+	guard			(3),
+	aA				(4),
+	sAA				(5),
+	mFI				(6),
+	dSA				(7), 
+	mLA				(8),
+	domainManager	(9),
+	securityOfficer	(10),
+	sRA				(11),
+	acAdmin			(12),
+	oRA				(13),
+	mTA				(14),
+	mS				(15),
+	auditManager	(16),
+	netManager		(17),
+	rekeyManager	(18)}
+
+KmPrivFlags ::= SEQUENCE {
+	kmPrivId		OBJECT IDENTIFIER,
+	kmPrivFlags		SEQUENCE OF KmPrivFlag OPTIONAL }
+
+KmPrivFlag ::= INTEGER {
+	rekeyManager				(0),
+	guard						(1),
+	auditManager				(2),
+	readOnly					(3), 
+	netManager					(4),
+	mLA							(5), 
+	mFI							(6), 
+	facilityRemoteAccessServer 	(7)}
+
+--
+-- id-commPrivileges = 2 16 840 1 101 2 1 5 56
+commPrivileges  OBJECT-TYPE -- ATTRIBUTE  
+	SYNTAX			CommPrecFlags
+	ACCESS	read-write
+	STATUS	mandatory
+--	SINGLE VALUE	TRUE
+	::=			{id-commPrivileges}
+
+CommPrecFlags  ::=  BIT STRING {
+	deferred	(0),
+	routine		(1),
+	priority	(2),
+	immediate	(3),
+	flash		(4),
+	override	(5),
+	ecp			(6),
+	critic		(7) }
+
+
+
+
+SecurityAttribute ::= INTEGER (0..MAX)
+
+SSLPrivileges ::=  SET OF NamedTagSetPrivilege
+
+NamedTagSetPrivilege ::=  SEQUENCE
+{
+    tagSetName
+        TagSetName,
+          securityTagPrivileges
+                 SecurityTagPrivileges
+}
+
+SecurityTagPrivileges ::= SEQUENCE OF SecurityTagPrivilege
+
+SecurityTagPrivilege ::= CHOICE
+{
+        -- Type 1 - for restrictive security attributes
+         restrictivebitMap
+               [1] IMPLICIT BIT STRING,
+        --Type 2 - for permissive or restrictive integers
+        enumeratedAttributes
+               [2] IMPLICIT SET OF SecurityAttribute,
+        -- Type 6 - for permissive security attributes
+        permissivebitMap
+               [6] IMPLICIT BIT STRING
+}
+
+StandardSecurityLabel  ::=  SET OF NamedTagSet
+
+NamedTagSet ::= SEQUENCE 
+{
+    tagSetName          
+        TagSetName,
+    securityTags
+        SecurityTags
+}
+
+
+SecurityTags ::= SEQUENCE OF SecurityTag
+
+SecurityTag ::= CHOICE 
+{
+    -- Type 1 - for restrictive security attributes
+    restrictivebitMap   
+        [1]  IMPLICIT SEQUENCE {
+                        securityLevel
+                                SecurityAttribute OPTIONAL,
+                        attributeFlags
+                                BIT STRING }, 
+    -- Type 2 - for permissive or restrictive integers
+    enumeratedAttributes     
+        [2]  IMPLICIT SEQUENCE {
+                        securityLevel
+                                SecurityAttribute OPTIONAL,
+                        attributeFlags
+                                SET OF SecurityAttribute }, 
+    -- Type 6 - for permissive security attributes
+    permissivebitMap    
+                 [6]  IMPLICIT SEQUENCE {
+                        securityLevel
+                                SecurityAttribute OPTIONAL,
+                        attributeFlags
+                                BIT STRING },
+        -- Type 7 - for markings with no formal access control
+		freeFormField
+                  [7] ANY  -- DEFINED BY TagSetName
+}
+
+-- For MISSI, the freeFormField takes the form of the following:
+TagType7Data ::= CHOICE 
+{
+        bitSetAttributes
+                BIT STRING,
+        securityAttributes
+                SET OF SecurityAttribute
+}
+
+END

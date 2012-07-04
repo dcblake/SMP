@@ -1,0 +1,60 @@
+#
+# This make include is the generic rules for the SMP libraries
+# that will compile and link the libraries.
+#
+SNACCINCLUDES = -I$(SNACCINCDIR)/c++
+
+.SUFFIXES : .asn1 .asn1.cpp  .cpp .cpp.o .a .sl .so
+
+%.a: $(OBJS)
+	$(AR) ruv $@ $(OBJS)
+	$(RANLIB) $@
+
+%.so: $(OBJS)
+	$(LD) $(LFLAG1) $(OBJS) -o $@ $(LIBPATH) $(LIBS)
+
+%.sl:
+	$(LD) $(LFLAG1) $(OBJS) -o $@ $(LIBPATH) $(LIBS)
+
+# Generic ASN compile
+#
+.asn1.cpp: 
+	$(SNACC) $(SNACCFLAGS) $(SNACCOPTIONS) $(ASNMODULES) 
+	for file in $(ASNMODULES) ; do \
+      basefile=`basename $$file`; \
+		if [ "$(@D)" != "." ] ; then \
+			mv -f `echo $$basefile | sed 's/\.asn1/\.cpp/'` $(@D); \
+		   mv -f `echo $$basefile | sed 's/\.asn1/\.h/'` $(ASN_H_PATH); \
+      else \
+			if [ -d "$(ASN_H_PATH)" ] ; then \
+		   	mv -f `echo $$basefile | sed 's/\.asn1/\.h/'` $(ASN_H_PATH); \
+      	fi; \
+		fi; \
+	done;
+#	if [ "$(@D)" != "." ] ; then \
+#		mv -f $(ASNMODULES:"$(@D)"/%.asn1=%.cpp) $(@D); \
+#		mv -f $(ASNMODULES:.asn1=.h) $(@D);\
+#   fi;
+#		if [ -d "$(ASN_H_PATH)" ] ; then \
+#		   mv -f ${ASNMODULES:$(@D)/%.asn1=%.h} $(ASN_H_PATH); \
+#		else \
+#		   mv -f ${ASNMODULES:$(@D)/%.asn1=%.h} $(@D); \
+#		fi; \
+#	else \
+#		if [ -d "$(ASN_H_PATH)" ] ; then \
+#		   mv -f ${ASNMODULES:.asn1=.h} $(ASN_H_PATH); \
+#		fi; \
+#	fi; 
+#
+#	for asnfiles in $(ASNMODULES) ; do \
+#	  /bin/sh $(top_builddir)/build/install-sh -c -m 644 $$asnfiles $(SMPDISTDIR)/include/smp/Modules ; \
+#	  /bin/sh $(top_builddir)/build/install-sh -c -m 644 $(@D)/*.h $(SMPDISTDIR)/include/smp ; \
+#	done;  
+
+.c.o:
+	$(CC) -c $(CFLAGS) $(CMNFLGS) $(INCLUDE) $(SNACCINCLUDES) $<
+
+.cpp.o:
+	$(CXX) -c $(CXXFLAGS) $(CMNFLGS) $(INCLUDE) $(SNACCINCLUDES) $< -o $@
+
+

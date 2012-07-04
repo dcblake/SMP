@@ -1,0 +1,680 @@
+dnl 
+dnl File:     configure.in 
+dnl Project:  Secure Message Protocol Library
+dnl Contents: 
+dnl	Settings needed to build the SMP libraries 
+dnl Created:  12 February  2003
+dnl Author:   C. C. McPherson <Clyde.McPherson@digitalnet.com> 
+dnl 
+dnl
+dnl
+dnl CVS Last Updated: $Date: 2005/03/02 22:01:15 $ 
+dnl 
+dnl Version:  2.2
+dnl 
+dnl $Log: configure.in,v $
+dnl Revision 1.88  2005/03/02 22:01:15  HorvathT
+dnl changed version from 2.2.1 to 2.5
+dnl
+dnl Revision 1.87  2005/03/02 21:57:35  HorvathT
+dnl removed commented out list of SFL test Makefiles from list of Makefiles being created and created a commented out section at end of file with list of SFL and ACL Makefiles that need to be added when running SFL and ACL test source code respectively.
+dnl
+dnl Revision 1.86  2005/02/25 20:25:00  BeauchaS
+dnl Added bsafe processing to include definitions for include, source and library for bsafe.
+dnl
+dnl Revision 1.85  2005/02/17 14:48:16  HorvathT
+dnl changes to find OpenSSL in any directory other than the default.
+dnl
+dnl Revision 1.84  2005/02/15 19:16:38  HorvathT
+dnl changes for OpenSSL/OCSP Makefiles
+dnl
+dnl Revision 1.83  2005/02/14 18:21:32  BeauchaS
+dnl Added changes for bsafe.
+dnl
+dnl Revision 1.82  2005/01/19 18:44:15  BeauchaS
+dnl Made change to comment and AES reference
+dnl
+dnl Revision 1.81  2005/01/19 14:09:11  BeauchaS
+dnl *** empty log message ***
+dnl
+dnl Revision 1.80  2004/10/14 16:17:01  HorvathT
+dnl fixed default SNACC library directory (SNACCLIBDIR) to be /usr/local/lib
+dnl
+dnl Revision 1.79  2004/06/30 12:51:49  horvatht
+dnl Changes for HPUX port.
+dnl
+dnl Revision 1.78  2004/06/05 03:05:29  colestor
+dnl Removed 2nd reference to SMIME/test* directories and Makefile.
+dnl
+dnl Revision 1.77  2004/06/05 02:50:14  colestor
+dnl Changed "cmlonly" setting to "no" as it was originally (RWC, my change
+dnl for some previous testing that made it into CVS, oops!).
+dnl
+dnl Revision 1.76  2004/04/29 21:36:05  colestor
+dnl UNDID changes to disable ACL; it ripples through other Makefiles and test
+dnl scripts.  It appears to be working better at this point.
+dnl
+dnl Revision 1.75  2004/04/29 21:13:38  colestor
+dnl Updated to remove ACL builds (RWC) for this temporary BETA release.
+dnl
+dnl Revision 1.74  2004/04/19 15:50:22  grafb
+dnl Modified the AC_ARG_WITH withval case statement for the SNACCLIBDIR variable
+dnl to prevent it from being set to '/usr/local/lib'.
+dnl
+dnl Revision 1.73  2004/04/19 15:09:10  grafb
+dnl Altered configure.in to eliminate using '/usr/local/lib' with SNACCLIBDIR and
+dnl CRYPTOPPLIBDIR variables.
+dnl
+dnl Revision 1.72  2004/03/24 14:46:10  moellr
+dnl Added crlsrv_dll
+dnl
+dnl Revision 1.71  2003/12/03 15:43:05  colestor
+dnl RWC; Added smp/SMIME/alg_libs/sm_pkcs11/Makefile.in to processing.
+dnl
+dnl Revision 1.70  2003/09/25 16:29:51  leonberp
+dnl add zlib
+dnl
+dnl Revision 1.69  2003/06/10 10:57:37  mcphersc
+dnl SMIME/libcert/asn1 make referenced twice
+dnl
+dnl Revision 1.68  2003/06/04 13:36:23  mcphersc
+dnl fixed problem with fortezza check
+dnl
+dnl Revision 1.67  2003/06/03 16:25:26  mcphersc
+dnl enhanced snacc and crypto++
+dnl
+dnl Revision 1.66  2003/04/16 19:16:44  colestor
+dnl Added 	SMIME/libcert/asn1/Makefile back to configure.
+dnl
+dnl Revision 1.65  2003/04/14 17:01:24  mcphersc
+dnl updated smp version to reflect new release
+dnl
+dnl Revision 1.64  2003/04/14 11:13:49  mcphersc
+dnl Added check for SunOS for ldap libraries check lib because SunOS needs -lresolv and -lsocket
+dnl
+dnl Revision 1.63  2003/04/04 12:28:23  mcphersc
+dnl rechecked in added usethreads=no
+dnl
+dnl Revision 1.62  2003/04/04 11:44:20  mcphersc
+dnl fixed HasCrytoPP
+dnl
+dnl Revision 1.61  2003/04/01 11:59:24  mcphersc
+dnl added in new logic to check for threads
+dnl
+dnl Revision 1.60  2003/04/01 11:16:38  mcphersc
+dnl incorrect threading model check
+dnl
+dnl Revision 1.59  2003/03/28 19:24:16  mcphersc
+dnl $Date: 2005/03/02 22:01:15 $
+dnl
+dnl Revision 1.58  2003/03/28 19:23:36  mcphersc
+dnl $DATE: $
+dnl
+dnl Revision 1.57  2003/03/28 19:23:08  mcphersc
+dnl took out last updated
+dnl
+dnl Revision 1.56  2003/03/28 19:21:26  mcphersc
+dnl *** empty log message ***
+dnl
+dnl Revision 1.55  2003/03/28 19:13:42  mcphersc
+dnl added comments
+dnl
+dnl Revision 1.54  2003/03/28 19:02:29  mcphersc
+dnl took out some debug echo's
+dnl
+dnl Revision 1.53  2003/03/28 18:42:35  mcphersc
+dnl *** empty log message ***
+dnl
+dnl 
+dnl To build configure run autoconf -f
+
+dnl Disable the configure cache
+define([AC_CACHE_LOAD],)
+define([AC_CACHE_SAVE],)
+dnl Define some of our directories
+dnl Process this file with autoconf to produce a configure script.
+
+dnl Our Currnet Version
+AC_INIT(SMP, 2.5,[NO-DEFINE])
+AC_CONFIG_AUX_DIR(build)
+OL_VERSION=`cat $ac_aux_dir/version`
+dnl
+
+echo "          Configuring SMP version $OL_VERSION ...."
+
+dnl Load in the defaults for some variables
+CFLAGS=""
+CXXFLAGS=""
+USETHREADS=yes
+HasCryptoPP=no
+HasBSAFE=no
+HasOPENSSL=no
+HASFORTEZZA=no
+HasFORTEZZA=no
+HAVE_LBER=yes
+AC_SUBST(HasCryptoPP)
+AC_SUBST(HasBSAFE)
+AC_SUBST(HasOPENSSL)
+AC_SUBST(HasFORTEZZA)
+AC_SUBST(HAVE_LBER)
+AC_SUBST(USETHREADS)
+AC_SUBST(CFLAGS)
+AC_SUBST(CXXFLAGS)
+AC_CONFIG_HEADER(config.h)
+
+dnl Enable debug only if user wants debug
+dnl
+dnl autoconf default is to always have debug
+AC_ARG_ENABLE(debug,[--enable-debug [default no]],mydebug=1,)
+AC_SUBST(mydebug)
+
+dnl
+dnl Configure makefiles for building only the CML and supporting libs
+dnl
+onlycml=no
+AC_ARG_ENABLE(onlycml,[--enable-onlycml [default no]],
+[if test $enableval = no; then
+	onlycml=no
+else
+	onlycml=yes
+fi
+])dnl
+AC_SUBST(onlycml)
+dnl
+dnl
+dnl Enable static libraries
+enablestatic=no
+AC_ARG_ENABLE(static,[--enable-static [default yes]],
+[if test $enableval = yes; then
+	CFLAGS="$CFLAGS -DENABLE_STATIC"
+	CXXFLAGS="$CXXFLAGS -DENABLE_STATIC"
+	enablestatic=yes
+	AC_SUBST(CFLAGS)
+	AC_SUBST(CXXFLAGS)
+fi
+])dnl
+AC_SUBST(enablestatic)dnl
+
+dnl
+dnl
+dnl Define our configure arguments for threads
+dnl
+AC_ARG_ENABLE(threads,[--disable-threads [default yes]],
+[if test $enableval = no; then
+		CFLAGS="$CFLAGS -DNOTHREADS"
+		CXXFLAGS="$CXXFLAGS -DNOTHREADS"
+		USETHREADS=no
+		AC_SUBST(USETHREADS)
+		AC_SUBST(CFLAGS)
+		AC_SUBST(CXXFLAGS)
+fi
+])dnl
+dnl
+dnl BSAFE Crypto Library API?
+dnl
+AC_ARG_WITH(bsafelibdir,[--with-bsafelibdir [default /usr/local/lib]],
+[case "$withval" in
+        no)
+            BSAFELIBDIR="no"
+                ;;
+        yes)
+            BSAFELIBDIR="$withval"
+                ;;
+        /*|\\*)
+            BSAFELIBDIR="$withval"
+            ;;
+        *)
+            BSAFELIBDIR="$withval"
+            ;;
+esac
+])dnl
+
+dnl
+dnl BSAFE Crypto Include API?
+dnl
+AC_ARG_WITH(bsafeincdir,[--with-bsafeincdir [default /usr/local/inc/bsafe]],
+[case "$withval" in
+        no)
+            BSAFEINCDIR="no"
+                ;;
+        yes)
+            BSAFEINCDIR="$withval"
+                ;;
+        /*|\\*)
+            BSAFEINCDIR="$withval"
+            ;;
+        *)
+            BSAFEINCDIR="$withval"
+            ;;
+esac
+])dnl
+
+dnl
+dnl BSAFE Crypto Source API?
+dnl
+AC_ARG_WITH(bsafesrcdir,[--with-bsafesrcdir [default /usr/local/src/bsafe]], 
+[case "$withval" in
+        no)
+            BSAFESRCDIR="no"
+                ;;
+        yes)
+            BSAFESRCDIR="$withval"
+                ;;
+        /*|\\*)
+            BSAFESRCDIR="$withval"
+            ;;
+        *)
+            BSAFESRCDIR="$withval"
+            ;;
+esac
+])dnl
+
+dnl
+dnl OpenSSL?
+dnl
+AC_ARG_WITH(openssldir,[--with-openssldir [default /usr/local/ssl]],
+[case "$withval" in
+        no)
+            OPENSSLDIR="no"
+                ;;
+        yes)
+            OPENSSLDIR="$withval"
+                ;;
+        /*|\\*)
+            OPENSSLDIR="$withval"
+            ;;
+        *)
+            OPENSSLDIR="$withval"
+            ;;
+esac
+])dnl
+
+dnl
+dnl Crypto++ API?
+dnl
+AC_ARG_WITH(cryptoppincdir, [--with-cryptoppincdir [default /usr/local/include/cryptopp]], 
+[case "$withval" in
+	no) 
+	    CRYPTOPPINCDIR=0
+		;;
+	yes)
+	    CRYPTOPPINCDIR="$withval"
+	        ;;
+	/*|\\*)
+	    CRYPTOPPINCDIR="$withval"
+	    ;;
+	*)
+	    CRYPTOPPINCDIR="$withval"
+	    ;;
+esac	
+])dnl
+
+dnl
+dnl Crypto++ API lib?
+dnl
+dnl AC_ARG_WITH(cryptopplibdir, [--with-cryptopplibdir [default /usr/local/lib]],
+AC_ARG_WITH(cryptopplibdir, [--with-cryptopplibdir],
+[case "$withval" in
+        no)
+            CRYPTOPPLIBDIR=no
+                ;;
+        yes)
+            CRYPTOPPLIBDIR="$withval"
+                ;;
+        /*|\\*)
+            CRYPTOPPLIBDIR="$withval"
+            ;;
+        *)
+            CRYPTOPPLIBDIR="$withval"
+            ;;
+esac
+])dnl
+
+dnl
+dnl Fortezza Crypto API?
+dnl
+AC_ARG_WITH(fortezzadir,[--with-fortezzadir [default /usr/local]],
+[case "$withval" in
+        no)
+            FORTEZZADIR="no"
+                ;;
+        yes)
+            FORTEZZADIR="$withval"
+                ;;
+        /*|\\*)
+            FORTEZZADIR="$withval"
+            ;;
+        *)
+            FORTEZZADIR="$withval"
+            ;;
+esac
+])dnl
+
+dnl
+dnl Request a different SNACC executable directory
+dnl
+AC_ARG_WITH(snaccdirexec,[--with-snaccdirexec [default /usr/local/bin]],
+[case "$withval" in
+        no)
+		SNACCDIREXEC="$SNACCDIREXEC"
+		Hassnaccdirexec="no"
+		;;
+	yes)
+		SNACCDIREXEC="$withval"
+		Hassnaccdirexec=yes
+	    ;;
+	/*|\\*)
+	        SNACCDIREXEC="$withval"
+		Hassnaccdirexec=yes
+	    ;;
+	*)
+	        SNACCDIREXEC="$withval"
+		Hassnaccdirexec=yes
+	    ;;
+esac
+])dnl
+
+dnl
+dnl Specify a SNACC include and lib  Distribution directory
+dnl
+AC_ARG_WITH(snaccincdir,[--with-snaccincdir [default /usr/local/include]],
+[case "$withval" in
+        no)
+              echo "SNACCLIBDIR not set"
+dnl              SNACCINCDIR=/usr/local/include/esnacc
+              ;;
+        yes)
+              SNACCINCDIR="$withval"
+              ;;
+        /*|\\*)
+              SNACCINCDIR="$withval"
+              ;;
+        *)
+              SNACCINCDIR="$withval"
+              ;;
+esac
+])dnl
+
+dnl
+dnl Specify a SNACC lib  Distribution directory
+dnl
+dnl AC_ARG_WITH(snacclibdir,[--with-snacclibdir [default /usr/local/lib]],
+AC_ARG_WITH(snacclibdir,[--with-snacclibdir],
+[case "$withval" in
+        no)
+              SNACCLIBDIR="$SNACCDIR"/lib
+              ;;
+        yes)
+              SNACCLIBDIR="$withval"
+              ;;
+        /*|\\*)
+              SNACCLIBDIR="$withval"
+              ;;
+        *)
+              SNACCLIBDIR="$withval"
+              ;;
+esac
+])dnl
+
+dnl
+dnl Specify a SMP Distribution (staging) directory
+dnl
+AC_ARG_WITH(smpdistdir,[--with-smpdistdir [default ../SMPDist]],
+[case "$withval" in
+        no)
+              SMPDISTDIR="$SMPDISTDIR"
+              ;;
+        yes)
+              SMPDISTDIR="$withval"
+              ;;
+        /*|\\*)
+              SMPDISTDIR="$withval"
+              ;;
+        *)
+              SMPDISTDIR="$withval"
+              ;;
+esac
+])dnl
+
+dnl
+dnl Specify our top build directory
+dnl
+top_smpdir=`pwd`
+AC_SUBST(top_smpdir)
+AC_SUBST(Hassnaccdirexec)
+dnl
+dnl allow argument passed in via enviroment
+dnl
+dnl Allow for SMPDISTDIR enviroment
+if test -z "$SMPDISTDIR" ; then
+  SMPDISTDIR=$top_smpdir/../SMPDist
+fi
+AC_SUBST(SMPDISTDIR)
+
+if test -z "$SNACCDIR" ; then
+  SNACCDIR=/usr/local
+fi
+if test -z "$SNACCINCDIR" ; then
+  SNACCINCDIR=/usr/local/include/esnacc
+fi
+if test -z "$SNACCLIBDIR" ; then
+dnl  SNACCLIBDIR=/usr/local/lib
+  SNACCLIBDIR=/usr/local/lib
+fi
+SNACCDIR=$SNACCDIR
+AC_SUBST(SNACCLIBDIR)
+AC_SUBST(SNACCINCDIR)
+if test -z $SNACCDIREXEC ; then
+  SNACCDIREXEC=/usr/local/bin
+fi
+SNACCDIREXEC=$SNACCDIREXEC
+AC_SUBST(SNACCDIREXEC)
+dnl
+dnl Allow for environment variables
+dnl
+
+dnl
+dnl Allow for BSAFE include enviroment
+dnl
+if test -z "$BSAFEINCDIR"; then
+ BSAFEINCDIR=/usr/local/include/bsafe
+fi 
+AC_SUBST(BSAFEINCDIR)
+dnl
+
+dnl
+dnl Allow for BSAFE library enviroment
+dnl
+if test -z "$BSAFELIBDIR"; then
+ BSAFELIBDIR=/usr/local/lib
+fi 
+AC_SUBST(BSAFELIBDIR)
+
+dnl
+dnl Allow for BSAFE source enviroment
+dnl
+if test -z "$BSAFESRCDIR"; then
+ BSAFESRCDIR=/usr/local/src/bsafe
+fi 
+AC_SUBST(BSAFESRCDIR)
+
+dnl
+dnl Allow for OpenSSL enviroment
+dnl
+if test -z "$OPENSSLDIR"; then
+ OPENSSLDIR=/usr/local/ssl
+fi 
+AC_SUBST(OPENSSLDIR)
+dnl
+dnl Allow for Crypto++  enviroment
+dnl
+echo setting cryptopp
+if test -z "$CRYPTOPPINCDIR"; then
+ CRYPTOPPINCDIR=/usr/local/include/cryptopp
+fi 
+if test -z "$CRYPTOPPLIBDIR"; then
+dnl  CRYPTOPPLIBDIR=/usr/local/lib
+  echo "CRYPTOPPLIBDIR not set"
+fi
+AC_SUBST(CRYPTOPPDIR)
+AC_SUBST(CRYPTOPPINCDIR)
+AC_SUBST(CRYPTOPPLIBDIR)
+AC_SUBST(CRYPTOPPINCUSERSET)
+dnl
+dnl Allow for Fortezza  enviroment
+dnl
+if test -z "$FORTEZZADIR"; then
+ FORTEZZADIR=/usr/local
+fi 
+AC_SUBST(FORTEZZADIR)
+
+OL_VERSION=`cat $ac_aux_dir/version`
+if test -z "OL_VERSION" ; then
+    AC_MSG_ERROR([could not determin version - exit])
+fi
+SMP_BUILDDIR=`pwd`
+AC_SUBST(SMP_BUILDDIR)
+dnl
+dnl Checks for programs, program versions  and hosts
+dnl
+AC_PROG_CC
+AC_PROG_CC_NO_G
+AC_PROG_CXX_NO_G
+AC_PROG_CXX
+AC_PROG_CPP
+AC_PROG_ADD_SYS
+AC_PROG_LEX
+AC_PROG_YACC
+AC_GET_SNACC
+AC_CHECK_GCC_VERSION
+dnl AC_CHECK_GCC_THREAD
+dnl if test $THREAD_MODEL = no; then
+dnl                 CFLAGS="$CFLAGS -DNOTHREADS"
+dnl                 CXXFLAGS="$CXXFLAGS -DNOTHREADS"
+dnl                 AC_SUBST(CFLAGS)
+dnl                 AC_SUBST(CXXFLAGS)
+dnl fi
+
+AC_CHECK_SNACC_VERSION
+AC_PROG_MAKE_SET
+AC_CANONICAL_HOST
+AC_PROG_RANLIB
+dnl
+dnl Checks for header files.
+dnl
+AC_HEADER_STDC
+AC_CHECK_HEADERS(ldap.h fcntl.h limits.h sys/time.h unistd.h)
+AC_CHECK_HEADER(ldap.h)
+AC_CHECK_HEADER(pthread.h)
+dnl
+dnl Checks for typedefs, structures, and compiler characteristics.
+dnl
+AC_C_CONST
+AC_TYPE_SIZE_T
+AC_HEADER_TIME
+AC_STRUCT_TM
+AC_SUBST(top_builddir)
+dnl
+dnl Get the load arguments based on OS
+dnl
+AC_GET_LD_FLAG
+dnl
+dnl Checks for library functions.
+dnl
+AC_FUNC_MEMCMP
+AC_CHECK_FUNCS(strdup strstr)
+dnl
+dnl If there were no disable-threads argument, then see if 
+dnl thread library is present, if not then disable threads
+dnl Note: We normally support posix threads
+dnl
+if test $USETHREADS = yes; then
+  AC_CHECK_LIB(pthread, pthread_create, [NO_THREADS=yes],[NO_THREADS=no])
+  if test $NO_THREADS = no; then
+                CFLAGS="$CFLAGS -DNOTHREADS"
+                CXXFLAGS="$CXXFLAGS -DNOTHREADS"
+                USETHREADS=no
+                AC_SUBST(USETHREADS)
+                AC_SUBST(CFLAGS)
+                AC_SUBST(CXXFLAGS)
+  fi
+fi
+dnl
+
+AC_CHECK_FUNCS(strcasecmp)
+if test "$OS_TYPE" = "SunOS"; then
+AC_CHECK_LIB(ldap,ldap_simple_bind,i=1,a=1, [-llber -lsocket -lresolv])
+AC_CHECK_LIB(lber,ber_bprint,[HAVE_LBER=yes],[HAVE_LBER=no], [-llber -lsocket -lresolv])
+else
+AC_CHECK_LIB(ldap,ldap_simple_bind,i=1,a=1, -llber)
+AC_CHECK_LIB(lber,ber_bprint,[HAVE_LBER=yes],[HAVE_LBER=no], -llber)
+fi
+AC_SUBST(HAVE_LBER)
+dnl
+dnl Check for different Algs - This determins which ctil's get made
+dnl Check for CRYPTO ++ -  SM_Free CTIL
+AC_SMP_CHECK_CRYPTOPP
+AC_SMP_CHECK_BSAFE
+AC_SMP_CHECK_OPENSSL
+AC_SMP_CHECK_FORTEZZA
+dnl
+dnl AC_CHECK_LIB(cryptopp, Exception, havecryptopp=9, havecryptopp=0)
+dnl if test $hashlibcrypt = 1; then
+dnl 	AC_SUBST(HASCRYPTPP)
+dnl fi
+dnl Check for OpenSSL
+dnl AC_SMP_CHECK_SSL
+dnl Check for Crypto++
+dnl AC_SMP_CHECK_SMFREE
+
+dnl All done, output the files and exit
+dnl
+dnl If the SNACC compiler is present then
+dnl create the ASN.1 Makefiles, if not then
+dnl ignore them
+
+
+
+AC_MSG_WARN(******  Creating Makefiles ******)
+AC_OUTPUT(pkcs11_cryptopp/Makefile \
+	pkcs11_cryptopp/src/Makefile \
+	cml/srl/src/Makefile \
+	cml/Makefile Makefile \
+	cml/cmlasn/src/Makefile  \
+	cml/cmapi/src/Makefile \
+	cml/crlsrv_dll/src/Makefile \
+	cml/cmlasn/Modules/Makefile \
+	cml/ocsp_dll/Makefile\
+	cml/ocsp_dll/src/Makefile\
+	ACL/Makefile \
+	ACL/src/Makefile \
+	SMIME/Makefile \
+	SMIME/libCtilMgr/Makefile \
+	SMIME/libCtilMgr/src/Makefile \
+	SMIME/libsrc/Makefile \
+	SMIME/libsrc/lolevel/Makefile \
+	SMIME/libsrc/hilevel/Makefile \
+	SMIME/libsrc/asn1/Makefile \
+	SMIME/libsrc/zlib/src/Makefile \
+	SMIME/alg_libs/sm_free3/Makefile \
+	SMIME/alg_libs/sm_pkcs11/Makefile \
+	SMIME/alg_libs/sm_rsa/Makefile \
+	SMIME/alg_libs/Makefile  \
+	SMIME/alg_libs/sm_fort/Makefile  \
+	SMIME/libcert/Makefile \
+	SMIME/libcert/src/Makefile \
+	build/Makehead \
+	SMP_Check/Makefile \
+	SMIME/libcert/asn1/Makefile, [ \ 
+date > stamp-h
+echo Please run \"make\" to build the SMP
+echo Please run \"make install\" to install the SMP
+echo Please run \"make check\" to run check on the SMP
+])
+dnl If performing SFL or ACL development testing move the approprite list of
+dnl Makefiles from the two lists below to the section above where the Makefiles
+dnl are created.
+dnl *** USED ONLY FOR SFL DEVELOPMENT TESTING *** DO NOT USE ***
+dnl SMIME/testsrc/util/Makefile SMIME/testutil/mimelib/Makefile SMIME/testsrc/hilevel/Makefile SMIME/testutil/testTripleWrap/Makefile \
+dnl *** USED ONLY FOR ACL DEVELOPMENT TESTING *** DO NOT USE ***
+dnl ACL/sample/src/Makefile ACL/sample/acltool/Makefile SMIME/testsrc/util/Makefile SMIME/testutil/mimelib/Makefile SMIME/testsrc/hilevel/Makefile SMIME/testutil/testTripleWrap/Makefile \

@@ -1,0 +1,58 @@
+#
+# Modify these variables as necessary for your specific
+# environment.
+#
+#
+
+# Define our staging directory
+#
+top_srcdir = @top_smpdir@
+STAGINGDIR=@SMPDISTDIR@
+all: libcmlasn libcmapi libcrlapi libocspapi libsrlapi
+
+libcmapi: 	libcmlasn
+		(/bin/sh $(top_srcdir)/build/mkinstalldirs $(STAGINGDIR)/include/smp)
+		(/bin/sh $(top_srcdir)/build/mkinstalldirs $(STAGINGDIR)/include/smp/Modules)
+		(cd cmapi/inc; cp -f *.h $(STAGINGDIR)/include/smp)
+		(cd cmapi/src; make)
+
+libsrlapi:	libcmlasn libcmapi
+		(/bin/sh $(top_srcdir)/build/mkinstalldirs $(STAGINGDIR)/include/smp)
+		(/bin/sh $(top_srcdir)/build/mkinstalldirs $(STAGINGDIR)/include/smp/Modules)
+		(cd srl/inc; cp -f *.h $(STAGINGDIR)/include/smp)
+		(cd srl/src; make)
+
+libcrlapi:  libcmlasn libcmapi libsrlapi
+		(/bin/sh $(top_srcdir)/build/mkinstalldirs $(STAGINGDIR)/include/smp)
+		(/bin/sh $(top_srcdir)/build/mkinstalldirs $(STAGINGDIR)/include/smp/Modules)
+		(cd crlsrv_dll/inc; cp -f *.h $(STAGINGDIR)/include/smp)
+		(cd crlsrv_dll/src; make)
+
+libocspapi:  libcmlasn libcmapi
+		(/bin/sh $(top_srcdir)/build/mkinstalldirs $(STAGINGDIR)/include/smp)
+		(/bin/sh $(top_srcdir)/build/mkinstalldirs $(STAGINGDIR)/include/smp/Modules)
+		(cd ocsp_dll/inc; cp -f *.h $(STAGINGDIR)/include/smp)
+		(cd ocsp_dll/src; make)
+
+libcmlasn: 	../Makefile
+		(cd cmlasn/Modules; make)
+		(/bin/sh $(top_srcdir)/build/mkinstalldirs $(STAGINGDIR)/include/smp)
+		(/bin/sh $(top_srcdir)/build/mkinstalldirs $(STAGINGDIR)/include/smp/Modules)
+		(cd cmlasn/inc; cp -f *.h $(STAGINGDIR)/include/smp)
+		(cd cmlasn/src; make )
+
+install:
+	(cd cmlasn/src; make install)
+	(cd cmapi/src; make install)
+	(cd crlsrv_dll/src; make install)
+	(cd ocsp_dll/src; make install)
+	(cd srl/src; make install)
+
+clean:
+	(cd cmlasn/src; make clean)
+	(cd cmlasn/Modules; make clean)
+	(cd cmapi/src; make clean)
+	(cd crlsrv_dll/src; make clean)
+	(cd ocsp_dll/src; make clean)
+	(cd srl/src; make clean)
+

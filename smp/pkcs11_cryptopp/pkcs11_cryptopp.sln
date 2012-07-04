@@ -1,0 +1,40 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pkcs11_cryptopp_dll", "pkcs11_cryptopp_dll\pkcs11_cryptopp_dll.vcproj", "{BF73EE6B-0095-480B-B4D2-62072AF2A6F5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D15B915F-74B1-4FDF-8C9F-C6297FE79C9B} = {D15B915F-74B1-4FDF-8C9F-C6297FE79C9B}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cryptlib", "Crypto51\cryptlib.vcproj", "{D15B915F-74B1-4FDF-8C9F-C6297FE79C9B}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		FIPS 140 Debug = FIPS 140 Debug
+		FIPS 140 Release = FIPS 140 Release
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{BF73EE6B-0095-480B-B4D2-62072AF2A6F5}.Debug.ActiveCfg = Debug|Win32
+		{BF73EE6B-0095-480B-B4D2-62072AF2A6F5}.Debug.Build.0 = Debug|Win32
+		{BF73EE6B-0095-480B-B4D2-62072AF2A6F5}.FIPS 140 Debug.ActiveCfg = Debug|Win32
+		{BF73EE6B-0095-480B-B4D2-62072AF2A6F5}.FIPS 140 Debug.Build.0 = Debug|Win32
+		{BF73EE6B-0095-480B-B4D2-62072AF2A6F5}.FIPS 140 Release.ActiveCfg = Release|Win32
+		{BF73EE6B-0095-480B-B4D2-62072AF2A6F5}.FIPS 140 Release.Build.0 = Release|Win32
+		{BF73EE6B-0095-480B-B4D2-62072AF2A6F5}.Release.ActiveCfg = Release|Win32
+		{BF73EE6B-0095-480B-B4D2-62072AF2A6F5}.Release.Build.0 = Release|Win32
+		{D15B915F-74B1-4FDF-8C9F-C6297FE79C9B}.Debug.ActiveCfg = Debug|Win32
+		{D15B915F-74B1-4FDF-8C9F-C6297FE79C9B}.Debug.Build.0 = Debug|Win32
+		{D15B915F-74B1-4FDF-8C9F-C6297FE79C9B}.FIPS 140 Debug.ActiveCfg = FIPS 140 Debug|Win32
+		{D15B915F-74B1-4FDF-8C9F-C6297FE79C9B}.FIPS 140 Debug.Build.0 = FIPS 140 Debug|Win32
+		{D15B915F-74B1-4FDF-8C9F-C6297FE79C9B}.FIPS 140 Release.ActiveCfg = FIPS 140 Release|Win32
+		{D15B915F-74B1-4FDF-8C9F-C6297FE79C9B}.FIPS 140 Release.Build.0 = FIPS 140 Release|Win32
+		{D15B915F-74B1-4FDF-8C9F-C6297FE79C9B}.Release.ActiveCfg = Release|Win32
+		{D15B915F-74B1-4FDF-8C9F-C6297FE79C9B}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
