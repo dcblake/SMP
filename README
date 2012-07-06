@@ -1,0 +1,19 @@
+Secure Message Protocol 
+
+Certificate Management Library
+* Builds and validates X.509 certification paths and CRLs
+* Provides local database functions
+* Provides remote directory retrieval via LDAP
+
+S/MIME Freeware Library
+* Implements IETF S/MIME v3 security heading
+* Security label, signed receipts, mail list support
+
+Access Control Library
+* Provide Rule Based Access Control using security labels and authorizations as per SDN.801
+* Process Attribute Certificates and X.509 Certificates
+* Meets Defense Message System and Bridge Certification Authority Phase II Requirements
+
+Enhanced SNACC ASN.1
+* Implements Disinguised Encoding Rules
+
